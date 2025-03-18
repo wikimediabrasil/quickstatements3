@@ -74,6 +74,7 @@ services:
     depends_on:
       - init_migrations
     command: django-admin send_batches
+    restart: on-failure
 
 volumes:
   mariadb_data:

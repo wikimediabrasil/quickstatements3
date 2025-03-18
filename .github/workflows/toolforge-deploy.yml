@@ -14,7 +14,15 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
-      - name: Run deploy.sh
+      - name: 
         run: |
           ssh ${{ secrets.SSH_USER }}@login.toolforge.org \
-          become qs-dev ./www/python/deploy.sh
+          become qs-dev git -C '$HOME/www/python/src' fetch origin \
+          become qs-dev git -C '$HOME/www/python/src' reset --hard origin/stable \
+          become qs-dev git -C '$HOME/www/python/src' pull origin stable \
+          become qs-dev webservice python3.11 shell -- webservice-python-bootstrap \
+          become qs-dev webservice python3.11 shell -- 'python3' '$HOME/www/python/src/manage.py' migrate \
+          become qs-dev webservice python3.11 shell -- 'python3' '$HOME/www/python/src/manage.py' collectstatic --noinput \
+          become qs-dev webservice python3.11 restart --mem 6Gi \
+          become qs-dev webservice python3.11 status
+
