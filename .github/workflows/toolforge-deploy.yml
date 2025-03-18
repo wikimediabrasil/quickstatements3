@@ -17,9 +17,9 @@ jobs:
       - name: 
         run: |
           ssh ${{ secrets.SSH_USER }}@login.toolforge.org \
-          become qs-dev git -C '$HOME/www/python/src' fetch origin \
-          become qs-dev git -C '$HOME/www/python/src' reset --hard origin/stable \
-          become qs-dev git -C '$HOME/www/python/src' pull origin stable \
+          become qs-dev git -C '$HOME/www/python' fetch origin \
+          become qs-dev git -C '$HOME/www/python' reset --hard origin/main \
+          become qs-dev git -C '$HOME/www/python' pull origin main \
           become qs-dev webservice python3.11 shell -- webservice-python-bootstrap \
           become qs-dev webservice python3.11 shell -- 'python3' '$HOME/www/python/src/manage.py' migrate \
           become qs-dev webservice python3.11 shell -- 'python3' '$HOME/www/python/src/manage.py' collectstatic --noinput \
