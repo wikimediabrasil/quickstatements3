@@ -6,19 +6,28 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  DJANGO_SECRET_KEY: dummysecretkey123
-  OAUTH_CLIENT_ID: dummyoauthclientid
-  OAUTH_CLIENT_SECRET: dummyoauthclientsecret
-  DB_ENGINE: django.db.backends.sqlite3
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.11, 3.12]
+
+    services:
+      mariadb:
+        image: mariadb:11.7.2
+        env:
+          MARIADB_DATABASE: quickstatements
+          MARIADB_ROOT_PASSWORD: quickstatements_pass
+        ports:
+          - 3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=3
 
     steps:
     - uses: actions/checkout@v4
@@ -33,7 +42,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r src/requirements.txt
 
+    - name: Verify MariaDB connection
+      env:
+        PORT: ${{ job.services.mariadb.ports[3306] }}
+      run: |
+        while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+          sleep 1
+        done  
+
     - name: Run Tests
+      env:
+        DB_NAME: quickstatements
+        DB_USER: root
+        DB_PASSWORD: quickstatements_pass
+        DB_HOST: 127.0.0.1
+        QSTS_DEBUG: "True"
+        DJANGO_SECRET_KEY: dummysecretkey123
+        OAUTH_CLIENT_ID: dummyoauthclientid
+        OAUTH_CLIENT_SECRET: dummyoauthclientsecret
+        DB_ENGINE: django.db.backends.mysql
+        DB_PORT: ${{ job.services.mariadb.ports[3306] }}
       run: |
         cd src/
         python manage.py test
