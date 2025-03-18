@@ -96,5 +96,4 @@ Alternatively, define that environment varibale inside the container shell and r
 * Clone the repository at `~/www/python/`
 * Update `uwsgi.ini` with the tool name (in this case, it's `qs-dev`)
 * Create the environment variables file at `~/www/python/src/.env` with `install -m 600 /dev/null ~/www/python/src/.env` so that only your user can read it.
-* Run `deploy.sh`
 * Logs are at `~/uwsgi.log`
