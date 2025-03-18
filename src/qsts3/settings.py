@@ -172,7 +172,7 @@ LOGGING = {
         },
         "qsts3": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": "INFO",
         },
     },
 }
