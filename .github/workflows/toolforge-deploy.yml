@@ -16,9 +16,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Run deployment commands
         run: |
           ssh ${{ secrets.SSH_USER }}@login.toolforge.org \
