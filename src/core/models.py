@@ -9,6 +9,7 @@ from dataclasses import dataclass
 
 from django.conf import settings
 from django.db import models
+from django.db import transaction
 from django.utils.translation import gettext as _
 
 from .client import Client
@@ -242,6 +243,7 @@ class Batch(models.Model):
         else:
             return []
 
+    @transaction.atomic
     def save_batch_and_preview_commands(self):
         self.status = self.STATUS_INITIAL
         if not self.pk:
