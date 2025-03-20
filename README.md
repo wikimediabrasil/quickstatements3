@@ -90,10 +90,50 @@ Then, run the tests with `make integration`.
 
 Alternatively, define that environment varibale inside the container shell and run the tests directly with `python3 manage.py test integration`.
 
-## Toolforge deployment
+## Toolforge Deployment
 
-* Log in and enter into the tool user
-* Clone the repository at `~/www/python/`
-* Update `uwsgi.ini` with the tool name (in this case, it's `qs-dev`)
-* Create the environment variables file at `~/www/python/src/.env` with `install -m 600 /dev/null ~/www/python/src/.env` so that only your user can read it.
-* Logs are at `~/uwsgi.log`
+1. **Log In**: Access your Toolforge account and switch to your tool user by executing:
+   ```bash
+   become <your_tool_name>
+   ```
+
+2. **Clone the Repository**: Clone your project repository into `~/www/python` directory:
+   ```bash
+   git clone https://github.com/WikiMovimentoBrasil/quickstatements3 -C ~/www/python/
+   ```
+
+3. **Update Configuration**: Modify the `uwsgi.ini` file to include your tool name (e.g., `qs-dev`).
+
+4. **Create Environment Variables File**: Set up the environment variables file at `~/www/python/src/.env` with restricted permissions, so that only your user can read it:
+   ```bash
+   install -m 600 /dev/null ~/www/python/src/.env
+   ```
+
+5. **Create a Database**: Follow the [Toolforge documentation](https://wikitech.wikimedia.org/wiki/Help:Toolforge/ToolsDB#Steps_to_create_a_user_database) to create a database for your tool.
+
+6. **Bootstrap the Webservice Environment**: Initialize your webservice environment with the following command:
+   ```bash
+   webservice python3.11 shell -- webservice-python-bootstrap
+   ```
+
+7. **Apply Migrations**: Execute the necessary migrations for your application:
+   ```bash
+   webservice python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' migrate
+   ```
+
+8. **Collect Static Assets**: Centralize your static files in the `STATIC_ROOT` directory by running:
+   ```bash
+   webservice python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' collectstatic --noinput
+   ```
+
+9. **Start Your Webservice**: Make your tool available by starting the webservice:
+   ```bash
+   webservice python3.11 start
+   ```
+
+10. **Check Logs**: Access the logs at:
+    ```bash
+    ~/uwsgi.log
+    ```
+
+> **Note**: When using `toolforge webservice` or `webservice` commands, the specified commands run in a separate container. Alternatively, you can execute `webservice python3.11 shell` to run the bootstrap, migrate, and collectstatic commands interactively within a single container, reserving the (re)start step for a separate execution.
