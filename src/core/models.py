@@ -149,7 +149,7 @@ class Batch(models.Model):
         except StopIteration:
             pass
 
-        if self.commands().filter(status=BatchCommand.STATUS_INITIAL):
+        if self.commands().filter(status=BatchCommand.STATUS_INITIAL).exists():
             logger.warning(f"[{self}] finished running but still has init commands, restarting...")
             self.status = Batch.STATUS_INITIAL
             self.save()
