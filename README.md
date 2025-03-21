@@ -13,7 +13,7 @@ Required tools:
 To build the development container
 
 ```bash
-> make build
+make build
 ```
 
 
@@ -29,7 +29,7 @@ python -c "import secrets; print(secrets.token_urlsafe())"
 To start all services (database, web server, run a shell inside the container)
 
 ```bash
-> make run
+make run
 ```
 
 
@@ -38,7 +38,7 @@ If everything is correct, **Quickstatements** will be available at http://localh
 If you are running this for the first time, you have to create a superuser for the Django admin. You can access the container with `make shell`. From there:
 
 ```bash
-> django-admin createsuperuser
+django-admin createsuperuser
 ```
 
 will run an interactive command which will ask you for your username, password, email, etc... follow the prompts and you should be able to login to the admin at `http://localhost:8000/admin`
@@ -90,11 +90,20 @@ Then, run the tests with `make integration`.
 
 Alternatively, define that environment varibale inside the container shell and run the tests directly with `python3 manage.py test integration`.
 
-## Toolforge deployment
+## Toolforge Deployment
 
-* Log in and enter into the tool user
-* Clone the repository at `~/www/python/`
-* Update `uwsgi.ini` with the tool name (in this case, it's `qs-dev`)
-* Create the environment variables file at `~/www/python/src/.env` with `install -m 600 /dev/null ~/www/python/src/.env` so that only your user can read it.
-* Run `deploy.sh`
-* Logs are at `~/uwsgi.log`
+1. Log in and enter into the tool user
+2. Clone the repository at `~/www/python/`
+3. Update `uwsgi.ini` with the tool name (in this case, it's `qs-dev`)
+4. Create the environment variables file at `~/www/python/src/.env` with `install -m 600 /dev/null ~/www/python/src/.env` so that only your user can read it.
+5. Create a database as in [Toolforge documentation](https://wikitech.wikimedia.org/wiki/Help:Toolforge/ToolsDB#Steps_to_create_a_user_database).
+6. Initialize your webservice environment, database tables and static directory with:
+   ```bash
+   webservice python3.11 shell -- webservice-python-bootstrap
+   webservice python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' migrate
+   webservice python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' collectstatic --noinput
+   ```
+7. Start your webservice: `webservice python3.11 start`
+8. Logs are at `~/uwsgi.log`
+
+> **Note**: When using `toolforge webservice` or `webservice` commands, the specified commands run in a separate container. Alternatively, you can execute `webservice python3.11 shell` to run the bootstrap, migrate, and collectstatic commands interactively within a single container, reserving the (re)start step for a separate execution.

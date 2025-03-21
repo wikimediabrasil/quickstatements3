@@ -7,7 +7,7 @@ x-application-service: &application-service
   depends_on:
     mariadb:
       condition: service_healthy
-  restart: unless-stopped
+  restart: on-failure
   stdin_open: true
   tty: true
   environment: &application-environment
@@ -57,22 +57,24 @@ services:
 
   app:
     <<: *application-service
+    depends_on:
+      init_migrations:
+        condition: service_completed_successfully
     command: django-admin runserver 0.0.0.0:8000
 
   init_collect_static:
     <<: *application-service
     command: django-admin collectstatic --no-input
-    restart: on-failure
 
   init_migrations:
     <<: *application-service
     command: django-admin migrate --no-input
-    restart: on-failure
 
   run_send_batches:
     <<: *application-service
     depends_on:
-      - init_migrations
+      init_migrations:
+        condition: service_completed_successfully
     command: django-admin send_batches
 
 volumes:

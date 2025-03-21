@@ -15,3 +15,6 @@ test:
 
 integration:
 	docker-compose exec app django-admin test integration
+
+clean:
+	docker-compose down -v	
