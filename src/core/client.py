@@ -131,7 +131,7 @@ class Client:
         }
 
     def get(self, url):
-        logger.info(f"Sending GET request at {url}")
+        logger.debug(f"Sending GET request at {url}")
         self.refresh_token_if_needed()
         response = requests.get(url, headers=self.headers())
         self.raise_for_status(response)
@@ -322,7 +322,7 @@ class Client:
             "languages": languages,
             "ids": ids,
         }
-        logger.info(
+        logger.debug(
             f"Sending GET request at {action_api}, languages={languages}, ids={ids}"
         )
         self.refresh_token_if_needed()
