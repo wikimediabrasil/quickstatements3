@@ -12,6 +12,7 @@ PAGE_SIZE = 30
 @require_http_methods(
     [
         "GET",
+        "HEAD",
     ]
 )
 def home(request):
