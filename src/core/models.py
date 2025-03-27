@@ -29,6 +29,15 @@ from .exceptions import LastCouldNotBeEvaluated
 logger = logging.getLogger("qsts3")
 
 
+def get_default_wikibase():
+    default_wikibase_url = settings.BASE_REST_URL.replace("https://", "http://").split(
+        "/w/rest.php"
+    )[0]
+
+    wikibase, _ = Wikibase.objects.get_or_create(url=default_wikibase_url)
+    return wikibase
+
+
 @dataclass
 class CombiningState:
     """
@@ -44,6 +53,14 @@ class CombiningState:
     @classmethod
     def empty(cls):
         return cls(commands=[], entity=None)
+
+
+class Wikibase(models.Model):
+    url = models.URLField(primary_key=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.url
 
 
 class Batch(models.Model):
@@ -77,6 +94,9 @@ class Batch(models.Model):
     modified = models.DateTimeField(auto_now=True, db_index=True)
     block_on_errors = models.BooleanField(default=False)
     combine_commands = models.BooleanField(default=False)
+    wikibase = models.ForeignKey(
+        Wikibase, default=get_default_wikibase, on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return f"Batch #{self.pk}"
@@ -257,18 +277,6 @@ class Batch(models.Model):
             for batch_command in self._preview_commands:
                 batch_command.batch = self
                 batch_command.save()
-
-    def wikibase_url(self):
-        """
-        Returns the wikibase url of this batch.
-
-        In the future this could be a field, so that batches targeting
-        different wikibases (like wikidata and test.wikidata) are
-        possible in the same server.
-        """
-        return settings.BASE_REST_URL.replace("https://", "http://").split(
-            "/w/rest.php"
-        )[0]
 
     # ------
     # REPORT
@@ -586,7 +594,7 @@ class BatchCommand(models.Model):
         # TODO: maybe we can add this elsewhere,
         # because `statement_api_value` above is called a lot
         value = self.json["value"]
-        base = self.batch.wikibase_url()
+        base = self.batch.wikibase.url
         if (
             value["type"] == "quantity"
             and value["value"]["unit"] != "1"
