@@ -146,6 +146,9 @@ class V1CommandParser(BaseParser):
 
         vvalue = self.parse_value(elements[2])
 
+        if vvalue is None:
+            raise ParserException(f"Invalid value {elements[2]}")
+
         if llen >= 3 and elements[1][0] == "A":
             aliases = []
             lang = elements[1][1:]
@@ -215,6 +218,9 @@ class V1CommandParser(BaseParser):
             while index + 1 < llen:
                 key = elements[index].strip()
                 value = self.parse_value(elements[index + 1].strip())
+
+                if value is None:
+                    raise ParserException(f"Invalid value {elements[index + 1].strip()}")
 
                 if key[0] == "P":  # PROPERTIES
                     if not self.is_valid_property_id(key):
