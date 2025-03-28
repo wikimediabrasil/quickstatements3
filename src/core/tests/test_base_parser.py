@@ -115,30 +115,36 @@ class TestBaseParser(TestCase):
     def test_sense_valid_alias_parser(self):
         parser = BaseParser()
         self.assertTrue(parser.is_valid_alias("Aen"))
+        self.assertTrue(parser.is_valid_alias("Apt-br"))
+        self.assertTrue(parser.is_valid_alias("Amul"))
         self.assertFalse(parser.is_valid_alias("Ae"))
-        self.assertFalse(parser.is_valid_alias("Aeadsdasdadasd"))
+        self.assertTrue(parser.is_valid_alias("Aeadsdasdadasd"))
         self.assertFalse(parser.is_valid_alias("A1212"))
         self.assertFalse(parser.is_valid_alias(None))
 
     def test_sense_valid_description_parser(self):
         parser = BaseParser()
         self.assertTrue(parser.is_valid_description("Den"))
+        self.assertTrue(parser.is_valid_description("Dpt-br"))
+        self.assertTrue(parser.is_valid_description("Dmul"))
         self.assertFalse(parser.is_valid_description("De"))
-        self.assertFalse(parser.is_valid_description("Deeqweqweqwe"))
+        self.assertTrue(parser.is_valid_description("Deeqweqweqwe"))
         self.assertFalse(parser.is_valid_description("D1212"))
         self.assertFalse(parser.is_valid_description(None))
 
     def test_sense_valid_label_parser(self):
         parser = BaseParser()
         self.assertTrue(parser.is_valid_label("Len"))
+        self.assertTrue(parser.is_valid_label("Lpt-br"))
+        self.assertTrue(parser.is_valid_label("Lmul"))
         self.assertFalse(parser.is_valid_label("Le"))
-        self.assertFalse(parser.is_valid_label("Lefsfdsfdsf"))
+        self.assertTrue(parser.is_valid_label("Lefsfdsfdsf"))
         self.assertFalse(parser.is_valid_label("L1212"))
         self.assertFalse(parser.is_valid_label(None))
 
     def test_sense_valid_sitelink_parser(self):
         parser = BaseParser()
-        self.assertTrue(parser.is_valid_sitelink("Swikibr"))
+        self.assertTrue(parser.is_valid_sitelink("Sptwiki"))
         self.assertFalse(parser.is_valid_sitelink("S2121212"))
         self.assertFalse(parser.is_valid_sitelink(None))
 
