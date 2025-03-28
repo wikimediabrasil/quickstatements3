@@ -605,7 +605,7 @@ class TestCSVParser(TestCase):
 
     def test_parse_label(self):
         parser = CSVCommandParser()
-        result = parser.parse_line(["Q4115189", "Regina Phalange"], ["qid", "Len"])
+        result = parser.parse_line(["Q4115189", "Regina Phalange"], ["qid", "Lpt-br"])
         self.assertEqual(
             result,
             [
@@ -614,14 +614,14 @@ class TestCSVParser(TestCase):
                     "item": "Q4115189",
                     "value": {"type": "string", "value": "Regina Phalange"},
                     "what": "label",
-                    "language": "en",
+                    "language": "pt-br",
                 },
             ],
         )
 
     def test_parse_description(self):
         parser = CSVCommandParser()
-        result = parser.parse_line(["Q4115189", "Ma maison"], ["qid", "Dfr"])
+        result = parser.parse_line(["Q4115189", "Ma maison"], ["qid", "Dmul"])
         self.assertEqual(
             result,
             [
@@ -630,7 +630,7 @@ class TestCSVParser(TestCase):
                     "item": "Q4115189",
                     "value": {"type": "string", "value": "Ma maison"},
                     "what": "description",
-                    "language": "fr",
+                    "language": "mul",
                 },
             ],
         )

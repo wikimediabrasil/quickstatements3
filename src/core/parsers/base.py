@@ -83,7 +83,7 @@ class BaseParser(object):
         Len
         Lpt
         """
-        return value is not None and re.match("^L[a-z]{2}$", value) is not None
+        return value is not None and re.match(r"^L[a-z-]{2,}$", value) is not None
 
     def is_valid_alias(self, value):
         """
@@ -91,7 +91,7 @@ class BaseParser(object):
         Aen
         Apt
         """
-        return value is not None and re.match("^A[a-z]{2}$", value) is not None
+        return value is not None and re.match(r"^A[a-z-]{2,}$", value) is not None
 
     def is_valid_description(self, value):
         """
@@ -99,14 +99,14 @@ class BaseParser(object):
         Den
         Dpt
         """
-        return value is not None and re.match("^D[a-z]{2}$", value) is not None
+        return value is not None and re.match(r"^D[a-z-]{2,}$", value) is not None
 
     def is_valid_sitelink(self, value):
         """
         Returns True if value is a valid sitelink
         Swiki
         """
-        return value is not None and re.match("^S[a-z]+$", value) is not None
+        return value is not None and re.match(r"^S[a-z]{2,}$", value) is not None
 
     def is_valid_statement_rank(self, value):
         """
