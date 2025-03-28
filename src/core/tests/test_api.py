@@ -1,21 +1,19 @@
-import requests_mock
 from datetime import timedelta
 
-from django.test import TestCase
-from django.test import override_settings
+import requests_mock
 from django.contrib.auth.models import User
 from django.core.cache import cache as django_cache
+from django.test import TestCase, override_settings
 from django.utils.timezone import now
 
-from web.models import Token
-
-from core.client import Client
-from core.models import BatchCommand
-from core.exceptions import NonexistantPropertyOrNoDataType
-from core.exceptions import NoValueTypeForThisDataType
-from core.exceptions import InvalidPropertyValueType
-from core.exceptions import UnauthorizedToken
-from core.exceptions import ServerError
+from core.exceptions import (
+    InvalidPropertyValueType,
+    NonexistantPropertyOrNoDataType,
+    NoValueTypeForThisDataType,
+    ServerError,
+    UnauthorizedToken,
+)
+from core.models import BatchCommand, Client, Token
 from core.parsers.v1 import V1CommandParser
 
 
