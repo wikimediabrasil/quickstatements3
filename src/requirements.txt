@@ -8,3 +8,4 @@ markdown==3.7      # Markdown support for the browsable API.
 django-filter==24.3
 jsonpatch==1.33
 mysqlclient==2.2.7
+factory_boy

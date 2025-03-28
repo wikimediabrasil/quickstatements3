@@ -1,19 +1,18 @@
 import requests_mock
-
 from django.test import TestCase
-from django.contrib.auth.models import User
 
-from core.models import BatchCommand
+from core.factories import TokenFactory
+from core.models import BatchCommand, Client
 from core.parsers.v1 import V1CommandParser
-from core.client import Client
 from core.tests.test_api import ApiMocker
-from web.models import Token
 
 
 class TestBatchCommand(TestCase):
+    def setUp(self):
+        self.api_mocker = ApiMocker()
+        self.token = TokenFactory(user__username="user")
+
     def parse(self, text):
-        user = User.objects.create(username="user")
-        Token.objects.create(user=user, value="tokenvalue")
         v1 = V1CommandParser()
         batch = v1.parse("Test", "user", text)
         batch.save_batch_and_preview_commands()
@@ -209,16 +208,16 @@ class TestBatchCommand(TestCase):
         self.assertFalse(command.is_error_status())
 
     @requests_mock.Mocker()
-    def test_set_stament_api_payload(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.item_empty(mocker, "Q1234")
-        ApiMocker.item_empty(mocker, "Q333")
+    def test_set_statement_api_payload(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.item_empty(mocker, "Q1234")
+        self.api_mocker.item_empty(mocker, "Q333")
         batch = self.parse(
             """Q1234|P1|Q2
         Q333|P3|12|P5|100"""
         )
         commands = batch.commands()
-        client = Client.from_username("user")
+        client = Client(token=self.token, wikibase=self.api_mocker.wikibase)
         self.assertEqual(len(commands), 2)
         self.assertEqual(commands[0].operation, BatchCommand.Operation.SET_STATEMENT)
         self.assertEqual(

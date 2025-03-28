@@ -1,22 +1,26 @@
-import os
-import requests_mock
+from unittest import mock
 
-from django.test import TestCase as DjangoTestCase
-from django.urls import reverse
+import requests_mock
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.test import TestCase as DjangoTestCase
+from django.urls import reverse
 
-from ..models import Token
-from ..utils import user_from_access_token
-from ..utils import user_from_full_token
-from core.client import Client as ApiClient
+from core.models import Client as ApiClient
+from core.models import Token
 from core.tests.test_api import ApiMocker
+
+from ..utils import user_from_access_token, user_from_full_token
 
 
 class TestCase(DjangoTestCase):
     """Custom TestCase class with useful methods"""
 
     URL_NAME = "/"
+
+    def setUp(self):
+        super().setUp()
+        self.api_mocker = ApiMocker()
 
     # ----------------
     # Assertion methods
@@ -91,8 +95,8 @@ class TestCase(DjangoTestCase):
         user = User.objects.create_user(username=username)
         self.client.force_login(user)
 
-        Token.objects.create(user=user, value="TEST_TOKEN")
-        api_client = ApiClient.from_user(user)
+        token = Token.objects.create(user=user, value="TEST_TOKEN")
+        api_client = ApiClient(token=token, wikibase=self.api_mocker.wikibase)
 
         return (user, api_client)
 
@@ -115,7 +119,7 @@ class Profile(TestCase):
 
     @requests_mock.Mocker()
     def test_logout_and_token_expired(self, mocker):
-        ApiMocker.autoconfirmed_failed_unauthorized(mocker)
+        self.api_mocker.autoconfirmed_failed_unauthorized(mocker)
         user, api_client = self.login_user_and_get_token("user")
         res = self.client.get("/auth/profile/")
         self.assertRedirect(res)
@@ -140,7 +144,7 @@ class Login(TestCase):
 
     @requests_mock.Mocker()
     def test_expired_notice_vanishes_after_login_and_logout(self, mocker):
-        ApiMocker.autoconfirmed_failed_unauthorized(mocker)
+        self.api_mocker.autoconfirmed_failed_unauthorized(mocker)
         user, api_client = self.login_user_and_get_token("user")
         self.assertIsAuthenticated()
 
@@ -163,13 +167,13 @@ class Login(TestCase):
 
     @requests_mock.Mocker()
     def test_user_from_full_token(self, mocker):
-        ApiMocker.login_success(mocker, "Maria")
+        self.api_mocker.login_success(mocker, "Maria")
         full_token = {
             "access_token": "access_token",
             "refresh_token": "refresh_token",
             "expires_at": 1729809078,
         }
-        user = user_from_full_token(full_token)
+        user = user_from_full_token(full_token, wikibase=self.api_mocker.wikibase)
         token = Token.objects.get(user=user)
         self.assertEqual(user.username, "Maria")
         self.assertEqual(token.value, "access_token")
@@ -188,30 +192,34 @@ class LoginDev(TestCase):
 
     @requests_mock.Mocker()
     def test_login_fail(self, mocker):
-        ApiMocker.login_fail(mocker)
-        res = self.post(data={"access_token": "my_invalid_token"})
-        self.assertStatus(res, 400)
-        self.assertInRes("Your access token is not valid", res)
+        self.api_mocker.login_fail(mocker)
+
+        with mock.patch("web.views.auth.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            res = self.post(data={"access_token": "my_invalid_token"})
+            self.assertStatus(res, 400)
+            self.assertInRes("Your access token is not valid", res)
 
     @requests_mock.Mocker()
     def test_user_from_access_token(self, mocker):
-        ApiMocker.login_success(mocker, "Maria")
-        user = user_from_access_token("valid_token")
+        self.api_mocker.login_success(mocker, "Maria")
+        user = user_from_access_token("valid_token", wikibase=self.api_mocker.wikibase)
         token = Token.objects.get(user=user)
         self.assertEqual(user.username, "Maria")
         self.assertEqual(token.value, "valid_token")
 
     @requests_mock.Mocker()
     def test_login_success(self, mocker):
-        ApiMocker.login_success(mocker, "Maria")
+        self.api_mocker.login_success(mocker, "Maria")
 
-        res = self.post(data={"access_token": "valid_token"})
-        self.assertRedirectToPath(res, "/")
-
-        user = self.get_user()
-        token = Token.objects.get(user=user)
-        self.assertEqual(user.username, "Maria")
-        self.assertEqual(token.value, "valid_token")
+        with mock.patch("web.views.auth.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            res = self.post(data={"access_token": "valid_token"})
+            self.assertRedirectToPath(res, "/")
+            user = self.get_user()
+            token = Token.objects.get(user=user)
+            self.assertEqual(user.username, "Maria")
+            self.assertEqual(token.value, "valid_token")
 
 
 class Logout(TestCase):
@@ -228,19 +236,6 @@ class Logout(TestCase):
     def test_redirects_to_root(self):
         res = self.get()
         self.assertRedirectToPath(res, "/")
-
-
-class OAuthRedirect(TestCase):
-    URL_NAME = "oauth_redirect"
-
-    def test_redirect(self):
-        res = self.get()
-
-        self.assertRedirect(res)
-        location = res.headers["Location"]
-        self.assertIsNotNone(os.getenv("OAUTH_CLIENT_ID"))
-        self.assertIn(os.getenv("OAUTH_CLIENT_ID"), location)
-        self.assertIn(f"{ApiClient.BASE_REST_URL}/oauth2/authorize", location)
 
 
 class OAuthCallback(TestCase):

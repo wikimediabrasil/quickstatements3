@@ -1,28 +1,24 @@
 from django.contrib.auth.models import User
 
-from .models import Token
-from core.client import Client
+from core.models import Client, Token
 
 
-def user_from_full_token(full_token):
+def user_from_full_token(full_token, wikibase):
     """
     Creates an user and a token given the full token from OAuth.
     """
     access_token = full_token["access_token"]
-    client = Client.from_token(Token(value=access_token))
+    client = Client(token=Token(value=access_token), wikibase=wikibase)
     wikimedia_username = client.get_username()
     user = create_user_and_clear_tokens(wikimedia_username)
 
-    Token.objects.create_from_full_token(
-        user=user,
-        full_token=full_token,
-    )
+    Token.objects.create_from_full_token(user=user, full_token=full_token)
 
     return user
 
 
-def user_from_access_token(access_token):
-    client = Client.from_token(Token(value=access_token))
+def user_from_access_token(access_token, wikibase):
+    client = Client(token=Token(value=access_token), wikibase=wikibase)
     wikimedia_username = client.get_username()
     user = create_user_and_clear_tokens(wikimedia_username)
 

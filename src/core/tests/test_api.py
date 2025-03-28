@@ -1,119 +1,25 @@
-import requests_mock
 from datetime import timedelta
 
-from django.test import TestCase
-from django.test import override_settings
+import requests_mock
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.cache import cache as django_cache
+from django.test import TestCase, override_settings
 from django.utils.timezone import now
 
-from web.models import Token
-
-from core.client import Client
-from core.models import BatchCommand
-from core.exceptions import NonexistantPropertyOrNoDataType
-from core.exceptions import NoValueTypeForThisDataType
-from core.exceptions import InvalidPropertyValueType
-from core.exceptions import UnauthorizedToken
-from core.exceptions import ServerError
+from core.exceptions import (
+    InvalidPropertyValueType,
+    NonexistantPropertyOrNoDataType,
+    NoValueTypeForThisDataType,
+    ServerError,
+    UnauthorizedToken,
+)
+from core.factories import TokenFactory, UserFactory, WikibaseFactory
+from core.models import BatchCommand, Client, Token
 from core.parsers.v1 import V1CommandParser
 
 
 class ApiMocker:
-    # ---
-    # OAuth
-    # ---
-    @classmethod
-    def oauth_profile_endpoint(cls):
-        return Client.ENDPOINT_PROFILE
-
-    @classmethod
-    def oauth_token_endpoint(cls):
-        return f"{Client.BASE_REST_URL}/oauth2/access_token"
-
-    @classmethod
-    def access_token(cls, mocker, full_token):
-        mocker.post(
-            cls.oauth_token_endpoint(),
-            json=full_token,
-            status_code=200,
-        )
-
-    @classmethod
-    def access_token_fails(cls, mocker):
-        mocker.post(
-            cls.oauth_token_endpoint(),
-            json={"error": "error"},
-            status_code=500,
-        )
-
-    @classmethod
-    def login_success(cls, mocker, username):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"username": username},
-            status_code=200,
-        )
-
-    @classmethod
-    def login_fail(cls, mocker):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"error": "access denied"},
-            status_code=401,
-        )
-
-    @classmethod
-    def login_failed_server(cls, mocker):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"error": "server error"},
-            status_code=500,
-        )
-
-    @classmethod
-    def is_autoconfirmed(cls, mocker):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"groups": ["*", "autoconfirmed"]},
-            status_code=200,
-        )
-
-    @classmethod
-    def is_blocked(cls, mocker):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"groups": ["*", "autoconfirmed"], "blocked": True},
-            status_code=200,
-        )
-
-    @classmethod
-    def is_not_autoconfirmed(cls, mocker):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"groups": ["*"]},
-            status_code=200,
-        )
-
-    @classmethod
-    def autoconfirmed_failed_unauthorized(cls, mocker):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"error": "unauthorized"},
-            status_code=401,
-        )
-
-    @classmethod
-    def autoconfirmed_failed_server(cls, mocker):
-        mocker.get(
-            cls.oauth_profile_endpoint(),
-            json={"error": "server error"},
-            status_code=500,
-        )
-
-    # ---
-    # Wikibase
-    # ---
     WIKIDATA_PROPERTY_DATA_TYPES = {
         "commonsMedia": "string",
         "geo-shape": "string",
@@ -135,28 +41,105 @@ class ApiMocker:
         "entity-schema": "wikibase-entityid",
     }
 
-    @classmethod
-    def wikibase_url(cls, endpoint):
-        return f"{Client.WIKIBASE_URL}{endpoint}"
+    def __init__(self):
+        self.wikibase = WikibaseFactory()
 
-    @classmethod
-    def property_data_type(cls, mocker, property_id, data_type):
+    @property
+    def oauth_profile_endpoint(self):
+        return settings.OAUTH_PROFILE_URL
+
+    @property
+    def oauth_token_endpoint(self):
+        return settings.OAUTH_ACCESS_TOKEN_URL
+
+    def access_token(self, mocker, full_token):
+        mocker.post(
+            self.oauth_token_endpoint,
+            json=full_token,
+            status_code=200,
+        )
+
+    def access_token_fails(self, mocker):
+        mocker.post(
+            self.oauth_token_endpoint,
+            json={"error": "error"},
+            status_code=500,
+        )
+
+    def login_success(self, mocker, username):
         mocker.get(
-            cls.wikibase_url(f"/entities/properties/{property_id}"),
+            self.oauth_profile_endpoint,
+            json={"username": username},
+            status_code=200,
+        )
+
+    def login_fail(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"error": "access denied"},
+            status_code=401,
+        )
+
+    def login_failed_server(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"error": "server error"},
+            status_code=500,
+        )
+
+    def is_autoconfirmed(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"groups": ["*", "autoconfirmed"]},
+            status_code=200,
+        )
+
+    def is_blocked(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"groups": ["*", "autoconfirmed"], "blocked": True},
+            status_code=200,
+        )
+
+    def is_not_autoconfirmed(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"groups": ["*"]},
+            status_code=200,
+        )
+
+    def autoconfirmed_failed_unauthorized(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"error": "unauthorized"},
+            status_code=401,
+        )
+
+    def autoconfirmed_failed_server(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"error": "server error"},
+            status_code=500,
+        )
+
+    def wikibase_url(self, endpoint):
+        return f"{self.wikibase.v1_endpoint}{endpoint}"
+
+    def property_data_type(self, mocker, property_id, data_type):
+        mocker.get(
+            self.wikibase_url(f"/entities/properties/{property_id}"),
             json={"data_type": data_type},
             status_code=200,
         )
 
-    @classmethod
-    def item(cls, mocker, item_id, item_json):
+    def item(self, mocker, item_id, item_json):
         mocker.get(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json=item_json,
             status_code=200,
         )
 
-    @classmethod
-    def item_empty(cls, mocker, item_id):
+    def item_empty(self, mocker, item_id):
         EMPTY_ITEM = {
             "type": "item",
             "labels": {},
@@ -167,90 +150,80 @@ class ApiMocker:
             "id": item_id,
         }
         mocker.get(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json=EMPTY_ITEM,
             status_code=200,
         )
 
-    @classmethod
-    def property_data_type_not_found(cls, mocker, property_id):
+    def property_data_type_not_found(self, mocker, property_id):
         mocker.get(
-            cls.wikibase_url(f"/entities/properties/{property_id}"),
+            self.wikibase_url(f"/entities/properties/{property_id}"),
             json={"code": "property-not-found"},
             status_code=404,
         )
 
-    @classmethod
-    def create_item_failed_server(cls, mocker):
+    def create_item_failed_server(self, mocker):
         mocker.post(
-            cls.wikibase_url("/entities/items"),
+            self.wikibase_url("/entities/items"),
             json={"error": "my-error-code"},
             status_code=500,
         )
 
-    @classmethod
-    def patch_item_successful(cls, mocker, item_id, json_result):
+    def patch_item_successful(self, mocker, item_id, json_result):
         mocker.patch(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json=json_result,
             status_code=200,
         )
 
-    @classmethod
-    def patch_item_fail(cls, mocker, item_id, status_code, json_result):
+    def patch_item_fail(self, mocker, item_id, status_code, json_result):
         mocker.patch(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json=json_result,
             status_code=status_code,
         )
 
-    @classmethod
-    def add_statement_successful(cls, mocker, item_id, response_json=None):
+    def add_statement_successful(self, mocker, item_id, response_json=None):
         response_json = (
             response_json if response_json else {"id": f"{item_id}$somestuff"}
         )
         mocker.patch(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json=response_json,
             status_code=200,
         )
 
-    @classmethod
-    def add_statement_failed_server(cls, mocker, item_id):
+    def add_statement_failed_server(self, mocker, item_id):
         mocker.patch(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json={"error": "my-error-code"},
             status_code=500,
         )
 
-    @classmethod
-    def delete_statement_sucessful(cls, mocker, statement_id):
+    def delete_statement_sucessful(self, mocker, statement_id):
         mocker.delete(
-            cls.wikibase_url(f"/statements/{statement_id}"),
+            self.wikibase_url(f"/statements/{statement_id}"),
             json="Statement deleted",
             status_code=200,
         )
 
-    @classmethod
-    def delete_statement_fail(cls, mocker, statement_id):
+    def delete_statement_fail(self, mocker, statement_id):
         mocker.delete(
-            cls.wikibase_url(f"/statements/{statement_id}"),
+            self.wikibase_url(f"/statements/{statement_id}"),
             json="Unknown error",
             status_code=500,
         )
 
-    @classmethod
-    def statements(cls, mocker, item_id, statements):
+    def statements(self, mocker, item_id, statements):
         mocker.get(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json={"statements": statements},
             status_code=200,
         )
 
-    @classmethod
-    def sitelink_success(cls, mocker, item_id, sitelink, value):
+    def sitelink_success(self, mocker, item_id, sitelink, value):
         mocker.patch(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json={
                 "sitelinks": {
                     sitelink: {
@@ -263,10 +236,9 @@ class ApiMocker:
             status_code=200,
         )
 
-    @classmethod
-    def sitelink_invalid(cls, mocker, item_id, sitelink):
+    def sitelink_invalid(self, mocker, item_id, sitelink):
         mocker.patch(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json={
                 "code": "invalid-path-parameter",
                 "message": "Invalid path parameter: 'site_id'",
@@ -275,24 +247,21 @@ class ApiMocker:
             status_code=400,
         )
 
-    @classmethod
-    def sitelinks(cls, mocker, item_id, sitelinks):
+    def sitelinks(self, mocker, item_id, sitelinks):
         mocker.get(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json={"sitelinks": sitelinks},
             status_code=200,
         )
 
-    @classmethod
-    def remove_sitelink_success(cls, mocker, item_id, sitelink):
+    def remove_sitelink_success(self, mocker, item_id, sitelink):
         mocker.patch(
-            cls.wikibase_url(f"/entities/items/{item_id}"),
+            self.wikibase_url(f"/entities/items/{item_id}"),
             json="Sitelink deleted",
             status_code=200,
         )
 
-    @classmethod
-    def labels(cls, mocker, client, labels: dict):
+    def labels(self, mocker, client, labels: dict):
         res_json = {"entities": {}}
         for id, labels in labels.items():
             res_json["entities"].setdefault(id, {})
@@ -301,44 +270,45 @@ class ApiMocker:
                 for language, value in labels.items()
             }
         mocker.get(
-            client.action_api_url(),
+            client.action_api_url,
             json=res_json,
             status_code=200,
         )
 
-    @classmethod
-    def create_item(cls, mocker, item_id):
+    def create_item(self, mocker, item_id):
         mocker.post(
-            cls.wikibase_url("/entities/items"),
+            self.wikibase_url("/entities/items"),
             json={"id": item_id},
             status_code=200,
         )
 
-    @classmethod
-    def property_data_types(cls, mocker, mapper):
+    def property_data_types(self, mocker, mapper):
         mocker.get(
-            cls.wikibase_url("/property-data-types"),
+            self.wikibase_url("/property-data-types"),
             json=mapper,
             status_code=200,
         )
 
-    @classmethod
-    def wikidata_property_data_types(cls, mocker):
-        cls.property_data_types(
+    def wikidata_property_data_types(self, mocker):
+        self.property_data_types(
             mocker,
-            cls.WIKIDATA_PROPERTY_DATA_TYPES,
+            self.WIKIDATA_PROPERTY_DATA_TYPES,
         )
 
 
 class OAuthClientTests(TestCase):
+    def setUp(self):
+        self.api_mocker = ApiMocker()
+        self.wikibase = self.api_mocker.wikibase
+
     @requests_mock.Mocker()
     def test_refresh_expired_token(self, mocker):
         # Replacing microseconds to zero for ease of use when comparing
         # because microseconds aren't saved in the database.
         old_expires = now().replace(microsecond=0)
         new_expires = (now() + timedelta(hours=1)).replace(microsecond=0)
-        ApiMocker.login_success(mocker, "WikiUser")
-        ApiMocker.access_token(
+        self.api_mocker.login_success(mocker, "WikiUser")
+        self.api_mocker.access_token(
             mocker,
             {
                 "refresh_token": "new_refresh",
@@ -353,7 +323,7 @@ class OAuthClientTests(TestCase):
         }
         user = User.objects.create(username="u")
         t = Token.objects.create_from_full_token(user, old_token)
-        client = Client.from_token(t)
+        client = Client(token=t, wikibase=self.wikibase)
         self.assertTrue(client.token.is_expired())
         self.assertEqual(client.token.user.id, user.id)
         self.assertEqual(client.token.value, "old_access")
@@ -379,8 +349,8 @@ class OAuthClientTests(TestCase):
     @requests_mock.Mocker()
     def test_dont_refresh_token(self, mocker):
         expires = (now() + timedelta(hours=2)).replace(microsecond=0)
-        ApiMocker.login_success(mocker, "WikiUser")
-        ApiMocker.access_token_fails(mocker)
+        self.api_mocker.login_success(mocker, "WikiUser")
+        self.api_mocker.access_token_fails(mocker)
         token = {
             "access_token": "access",
             "refresh_token": "refresh",
@@ -388,7 +358,7 @@ class OAuthClientTests(TestCase):
         }
         user = User.objects.create(username="u")
         t = Token.objects.create_from_full_token(user, token)
-        client = Client.from_token(t)
+        client = Client(token=t, wikibase=self.wikibase)
         self.assertFalse(client.token.is_expired())
         self.assertEqual(client.token.user.id, user.id)
         self.assertEqual(client.token.value, "access")
@@ -405,8 +375,8 @@ class OAuthClientTests(TestCase):
     @requests_mock.Mocker()
     def test_failed_to_refresh_raises_unauthorized_token(self, mocker):
         expires = now().replace(microsecond=0)
-        ApiMocker.login_success(mocker, "WikiUser")
-        ApiMocker.access_token_fails(mocker)
+        self.api_mocker.login_success(mocker, "WikiUser")
+        self.api_mocker.access_token_fails(mocker)
         old_token = {
             "access_token": "access",
             "refresh_token": "refresh",
@@ -414,13 +384,16 @@ class OAuthClientTests(TestCase):
         }
         user = User.objects.create(username="u")
         t = Token.objects.create_from_full_token(user, old_token)
-        client = Client.from_token(t)
+        client = Client(token=t, wikibase=self.wikibase)
         self.assertTrue(client.token.is_expired())
         with self.assertRaises(UnauthorizedToken):
             client.get_username()
 
 
 class ClientTests(TestCase):
+    def setUp(self):
+        self.api_mocker = ApiMocker()
+
     def tearDown(self):
         # this is needed for the property-data-types to work correctly,
         # since it uses the cache
@@ -428,14 +401,11 @@ class ClientTests(TestCase):
 
     def api_client(self):
         user, _ = User.objects.get_or_create(username="test_token_user")
-        token, _ = Token.objects.get_or_create(
-            user=user,
-            value="TEST_TOKEN",
-        )
-        return Client.from_token(token)
+        token, _ = Token.objects.get_or_create(user=user, value="TEST_TOKEN")
+        return Client(token=token, wikibase=self.api_mocker.wikibase)
 
     def wikibase_url(self, endpoint):
-        return f"{Client.WIKIBASE_URL}{endpoint}"
+        return f"{self.wikibase.v1_endpoint}{endpoint}"
 
     def test_wikibase_entity_endpoint(self):
         client = self.api_client()
@@ -452,27 +422,27 @@ class ClientTests(TestCase):
         client = self.api_client()
         self.assertEqual(
             client.wikibase_entity_url("P987", "/statements"),
-            f"{client.WIKIBASE_URL}/entities/properties/P987/statements",
+            f"{client.wikibase_v1_endpoint}/entities/properties/P987/statements",
         )
 
     @requests_mock.Mocker()
     def test_get_property_value_type(self, mocker):
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P1104", "quantity")
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P1104", "quantity")
         value_type = self.api_client().get_property_value_type("P1104")
         self.assertEqual(value_type, "quantity")
 
     @requests_mock.Mocker()
     def test_get_property_value_type_error(self, mocker):
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type_not_found(mocker, "P321341234")
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type_not_found(mocker, "P321341234")
         with self.assertRaises(NonexistantPropertyOrNoDataType):
             self.api_client().get_property_value_type("P321341234")
 
     @requests_mock.Mocker()
     def test_no_value_type_for_a_data_type(self, mocker):
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P1", "idonotexist")
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P1", "idonotexist")
         with self.assertRaises(KeyError):
             self.api_client().data_type_to_value_type("idonotexist")
         with self.assertRaises(NoValueTypeForThisDataType):
@@ -487,7 +457,7 @@ class ClientTests(TestCase):
             }
         }
         client = self.api_client()
-        ApiMocker.labels(mocker, client, labels)
+        self.api_mocker.labels(mocker, client, labels)
         returned_labels = client.get_multiple_labels(["Q123"], "pt")
         self.assertEqual(
             returned_labels,
@@ -505,25 +475,25 @@ class ClientTests(TestCase):
 
     @requests_mock.Mocker()
     def test_verify_value_type(self, mocker):
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P1", "commonsMedia")
-        ApiMocker.property_data_type(mocker, "P2", "geo-shape")
-        ApiMocker.property_data_type(mocker, "P3", "tabular-data")
-        ApiMocker.property_data_type(mocker, "P4", "url")
-        ApiMocker.property_data_type(mocker, "P5", "external-id")
-        ApiMocker.property_data_type(mocker, "P6", "wikibase-item")
-        ApiMocker.property_data_type(mocker, "P7", "wikibase-property")
-        ApiMocker.property_data_type(mocker, "P8", "globe-coordinate")
-        ApiMocker.property_data_type(mocker, "P9", "monolingualtext")
-        ApiMocker.property_data_type(mocker, "P10", "quantity")
-        ApiMocker.property_data_type(mocker, "P11", "string")
-        ApiMocker.property_data_type(mocker, "P12", "time")
-        ApiMocker.property_data_type(mocker, "P13", "musical-notation")
-        ApiMocker.property_data_type(mocker, "P14", "math")
-        ApiMocker.property_data_type(mocker, "P15", "wikibase-lexeme")
-        ApiMocker.property_data_type(mocker, "P16", "wikibase-form")
-        ApiMocker.property_data_type(mocker, "P17", "wikibase-sense")
-        ApiMocker.property_data_type(mocker, "P18", "entity-schema")
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P1", "commonsMedia")
+        self.api_mocker.property_data_type(mocker, "P2", "geo-shape")
+        self.api_mocker.property_data_type(mocker, "P3", "tabular-data")
+        self.api_mocker.property_data_type(mocker, "P4", "url")
+        self.api_mocker.property_data_type(mocker, "P5", "external-id")
+        self.api_mocker.property_data_type(mocker, "P6", "wikibase-item")
+        self.api_mocker.property_data_type(mocker, "P7", "wikibase-property")
+        self.api_mocker.property_data_type(mocker, "P8", "globe-coordinate")
+        self.api_mocker.property_data_type(mocker, "P9", "monolingualtext")
+        self.api_mocker.property_data_type(mocker, "P10", "quantity")
+        self.api_mocker.property_data_type(mocker, "P11", "string")
+        self.api_mocker.property_data_type(mocker, "P12", "time")
+        self.api_mocker.property_data_type(mocker, "P13", "musical-notation")
+        self.api_mocker.property_data_type(mocker, "P14", "math")
+        self.api_mocker.property_data_type(mocker, "P15", "wikibase-lexeme")
+        self.api_mocker.property_data_type(mocker, "P16", "wikibase-form")
+        self.api_mocker.property_data_type(mocker, "P17", "wikibase-sense")
+        self.api_mocker.property_data_type(mocker, "P18", "entity-schema")
 
         client = self.api_client()
 
@@ -570,39 +540,39 @@ class ClientTests(TestCase):
 
     @requests_mock.Mocker()
     def test_is_autoconfirmed(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
         client = self.api_client()
         self.assertTrue(client.get_is_autoconfirmed())
 
     @requests_mock.Mocker()
     def test_is_not_autoconfirmed(self, mocker):
-        ApiMocker.is_not_autoconfirmed(mocker)
+        self.api_mocker.is_not_autoconfirmed(mocker)
         client = self.api_client()
         self.assertFalse(client.get_is_autoconfirmed())
 
     @requests_mock.Mocker()
     def test_autoconfirmed_failed(self, mocker):
-        ApiMocker.autoconfirmed_failed_server(mocker)
+        self.api_mocker.autoconfirmed_failed_server(mocker)
         client = self.api_client()
         with self.assertRaises(ServerError):
             client.get_is_autoconfirmed()
 
     @requests_mock.Mocker()
     def test_autoconfirmed_unauthorized(self, mocker):
-        ApiMocker.autoconfirmed_failed_unauthorized(mocker)
+        self.api_mocker.autoconfirmed_failed_unauthorized(mocker)
         client = self.api_client()
         with self.assertRaises(UnauthorizedToken):
             client.get_is_autoconfirmed()
 
     @requests_mock.Mocker()
     def test_login(self, mocker):
-        ApiMocker.login_success(mocker, "username")
+        self.api_mocker.login_success(mocker, "username")
         client = self.api_client()
         self.assertEqual(client.get_username(), "username")
 
     @requests_mock.Mocker()
     def test_login_unauthorized(self, mocker):
-        ApiMocker.login_fail(mocker)
+        self.api_mocker.login_fail(mocker)
         client = self.api_client()
         with self.assertRaises(UnauthorizedToken):
             client.get_profile()
@@ -615,7 +585,7 @@ class ClientTests(TestCase):
 
     @requests_mock.Mocker()
     def test_login_failed_server(self, mocker):
-        ApiMocker.login_failed_server(mocker)
+        self.api_mocker.login_failed_server(mocker)
         client = self.api_client()
         with self.assertRaises(ServerError):
             client.get_profile()
@@ -629,15 +599,15 @@ class ClientTests(TestCase):
     @requests_mock.Mocker()
     def test_arbitrary_property_data_types(self, mocker):
         mapper = {"data1": "value1", "data2": "value2"}
-        ApiMocker.property_data_types(mocker, mapper)
+        self.api_mocker.property_data_types(mocker, mapper)
 
         client = self.api_client()
         self.assertEqual(client.get_property_data_types(), mapper)
 
         # ---
 
-        ApiMocker.property_data_type(mocker, "P1", "data1")
-        ApiMocker.property_data_type(mocker, "P2", "data2")
+        self.api_mocker.property_data_type(mocker, "P1", "data1")
+        self.api_mocker.property_data_type(mocker, "P2", "data2")
 
         client.verify_value_type("P1", "value1")
         client.verify_value_type("P2", "value2")
@@ -656,14 +626,14 @@ class ClientTests(TestCase):
         # ---
 
         # not present in mapper:
-        ApiMocker.property_data_type(mocker, "P3", "data3")
+        self.api_mocker.property_data_type(mocker, "P3", "data3")
 
         with self.assertRaises(NoValueTypeForThisDataType):
             client.verify_value_type("P3", "value3")
 
     @requests_mock.Mocker()
     def test_headers(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
         client = self.api_client()
         headers = {
             "User-Agent": "QuickStatements 3.0",
@@ -674,41 +644,31 @@ class ClientTests(TestCase):
 
 
 class TestBatchCommand(TestCase):
-    def login_user_and_get_token(self, username):
-        """
-        Creates an user and a test token.
-
-        Returns a tuple with the user object and their API client.
-        """
-        user = User.objects.create_user(username=username)
-        self.client.force_login(user)
-        Token.objects.create(user=user, value="TEST_TOKEN")
-        api_client = Client.from_user(user)
-        return (user, api_client)
+    def setUp(self):
+        self.api_mocker = ApiMocker()
+        self.wikibase = self.api_mocker.wikibase
+        self.user = UserFactory()
+        self.token = TokenFactory(user=self.user)
+        self.client.force_login(self.user)
+        self.api_client = Client(token=self.token, wikibase=self.wikibase)
 
     def test_api_payload(self):
-        user = User.objects.create_user(username="test_api_payload")
-        Token.objects.create(user=user, value="TEST_TOKEN")
-        client = Client.from_user(user)
-        payload = BatchCommand().api_payload(client)
+        payload = BatchCommand().api_payload(self.api_client)
         self.assertEqual(payload, {})
         payload = BatchCommand(
             operation=BatchCommand.Operation.CREATE_ITEM
-        ).api_payload(client)
+        ).api_payload(self.api_client)
         self.assertEqual(payload, {"item": {}})
 
     @override_settings(TOOLFORGE_TOOL_NAME="qs-dev")
     def test_api_body(self):
-        user = User.objects.create_user(username="test_api_payload")
-        Token.objects.create(user=user, value="TEST_TOKEN")
-        client = Client.from_user(user)
         batch = V1CommandParser().parse("b", "u", "CREATE /* hello */")
         batch.save_batch_and_preview_commands()
         batch_id = batch.id
         cmd = batch.commands()[0]
         comment = f"[[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: hello"
         self.assertEqual(
-            cmd.api_body(client),
+            cmd.api_body(self.api_client),
             {
                 "item": {},
                 "bot": False,
@@ -718,30 +678,28 @@ class TestBatchCommand(TestCase):
 
     @requests_mock.Mocker()
     def test_send_create_item(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.create_item(mocker, "Q5")
-        user, client = self.login_user_and_get_token("user")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.create_item(mocker, "Q5")
         batch = V1CommandParser().parse("b", "u", "CREATE||LAST|P1|Q1")
         batch.save_batch_and_preview_commands()
         cmd: BatchCommand = batch.commands()[0]
-        cmd.run(client)
+        cmd.run(self.api_client)
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_ITEM)
         self.assertEqual(cmd.status, BatchCommand.STATUS_DONE)
         self.assertEqual(cmd.response_json, {"id": "Q5"})
 
     @requests_mock.Mocker()
     def test_send_create_property(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        user, client = self.login_user_and_get_token("user")
+        self.api_mocker.is_autoconfirmed(mocker)
         batch = V1CommandParser().parse(
             "b", "u", "CREATE_PROPERTY|wikibase-item||LAST|P1|Q1"
         )
         batch.save_batch_and_preview_commands()
         cmd: BatchCommand = batch.commands()[0]
-        cmd.run(client)
+        cmd.run(self.api_client)
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_PROPERTY)
         self.assertEqual(cmd.status, BatchCommand.STATUS_ERROR)
         self.assertEqual(cmd.error, BatchCommand.Error.OP_NOT_IMPLEMENTED)
         self.assertEqual(cmd.response_json, {})
         with self.assertRaises(NotImplementedError):
-            cmd.send_to_api(client)
+            cmd.send_to_api(self.api_client)

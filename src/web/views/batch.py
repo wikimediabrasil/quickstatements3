@@ -1,22 +1,14 @@
 from django.core.paginator import Paginator
-from django.shortcuts import redirect
-from django.shortcuts import render
-from django.urls import reverse
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.http import require_GET
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.views.decorators.http import require_GET, require_http_methods
 
-from core.client import Client
-from core.models import Batch
-from core.models import BatchCommand
-from core.exceptions import NoToken
-from core.exceptions import UnauthorizedToken
-from core.exceptions import ServerError
-
+from core.exceptions import ServerError, UnauthorizedToken
+from core.models import Batch, BatchCommand, Client, Token
 from web.models import Preferences
 
 from .auth import logout_per_token_expired
-
 
 PAGE_SIZE = 30
 
@@ -33,9 +25,8 @@ def batch(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = (
-            request.user.is_authenticated and
-            (request.user.username == batch.user or request.user.is_superuser)
+        user_is_authorized = request.user.is_authenticated and (
+            request.user.username == batch.user or request.user.is_superuser
         )
         is_autoconfirmed = None
         return render(
@@ -63,9 +54,8 @@ def batch_stop(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = (
-            request.user.is_authenticated and
-            (request.user.username == batch.user or request.user.is_superuser)
+        user_is_authorized = request.user.is_authenticated and (
+            request.user.username == batch.user or request.user.is_superuser
         )
         assert user_is_authorized
         batch.stop()
@@ -88,9 +78,8 @@ def batch_restart(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = (
-            request.user.is_authenticated and
-            (request.user.username == batch.user or request.user.is_superuser)
+        user_is_authorized = request.user.is_authenticated and (
+            request.user.username == batch.user or request.user.is_superuser
         )
         assert user_is_authorized
         batch.restart()
@@ -105,16 +94,15 @@ def batch_restart(request, pk):
 def batch_report(request, pk):
     try:
         batch = Batch.objects.get(pk=pk, status=Batch.STATUS_DONE)
-        user_is_authorized = (
-            request.user.is_authenticated and
-            (request.user.username == batch.user or request.user.is_superuser)
+        user_is_authorized = request.user.is_authenticated and (
+            request.user.username == batch.user or request.user.is_superuser
         )
         assert user_is_authorized
         res = HttpResponse(
             content_type="text/csv",
             headers={
                 "Content-Disposition": f'attachment; filename="batch-{pk}-report.csv"'
-                },
+            },
         )
         batch.write_report(res)
         return res
@@ -124,11 +112,7 @@ def batch_report(request, pk):
         return HttpResponse("403 Forbidden", status=403)
 
 
-@require_http_methods(
-    [
-        "GET",
-    ]
-)
+@require_http_methods(["GET"])
 def batch_commands(request, pk):
     """
     RETURNS fragment page with PAGINATED COMMANDs FOR A GIVEN BATCH ID
@@ -141,25 +125,26 @@ def batch_commands(request, pk):
 
     only_errors = int(request.GET.get("show_errors", 0)) == 1
 
-    filters = {"batch__pk": pk}
-    if only_errors:
-        filters["status"] = BatchCommand.STATUS_ERROR
+    batch = get_object_or_404(Batch, pk=pk)
 
-    paginator = Paginator(
-        BatchCommand.objects.filter(**filters).order_by("index"), PAGE_SIZE
-    )
+    qs = batch.batchcommand_set.all()
+    if only_errors:
+        qs = qs.filter(status=BatchCommand.STATUS_ERROR)
+
+    paginator = Paginator(qs.order_by("index"), PAGE_SIZE)
     page = paginator.page(page)
 
     if request.user.is_authenticated:
         try:
+            token = Token.objects.get(user=request.user)
             language = Preferences.objects.get_language(request.user, "en")
-            client = Client.from_user(request.user)
+            client = Client(token=token, wikibase=batch.wikibase)
             BatchCommand.load_labels(client, page.object_list, language)
         except UnauthorizedToken:
             # logout but do not return 302, since this
             # is called through HMTX
             logout_per_token_expired(request)
-        except (NoToken, ServerError):
+        except (ServerError, Token.DoesNotExist):
             pass
 
     base_url = reverse("batch_commands", args=[pk])
@@ -191,7 +176,7 @@ def batch_summary(request, pk):
     INITIAL COMMANDS
     """
     try:
-        from django.db.models import Q, Count
+        from django.db.models import Count, Q
 
         error_commands = Count(
             "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_ERROR)
