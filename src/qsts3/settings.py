@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
-
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -205,12 +205,28 @@ LANGUAGE_CODE = "en"
 # -----------------
 # App configuration
 # -----------------
+OAUTH_CLIENT_ID = os.getenv("OAUTH_CLIENT_ID")
+OAUTH_CLIENT_SECRET = os.getenv("OAUTH_CLIENT_SECRET")
+
+OAUTH_AUTHORIZATION_SERVER = os.getenv(
+    "OAUTH_AUTHORIZATION_SERVER_URL", "https://www.wikidata.org"
+)
+OAUTH_ACCESS_TOKEN_URL = os.getenv(
+    "OAUTH_ACCESS_TOKEN_URL",
+    f"{OAUTH_AUTHORIZATION_SERVER}/w/rest.php/oauth2/access_token",
+)
+OAUTH_AUTHORIZATION_URL = os.getenv(
+    "OAUTH_AUTHORIZATION_URL",
+    f"{OAUTH_AUTHORIZATION_SERVER}/w/rest.php/oauth2/authorize",
+)
+OAUTH_PROFILE_URL = os.getenv(
+    "OAUTH_PROFILE_URL",
+    f"{OAUTH_AUTHORIZATION_SERVER}/w/rest.php/oauth2/resource/profile",
+)
+
 
 # Base REST url
-BASE_REST_URL = os.getenv(
-    "BASE_REST_URL",
-    "https://www.wikidata.org/w/rest.php",
-)
+BASE_REST_URL = os.getenv("BASE_REST_URL", "https://www.wikidata.org")
 
 # To use with EditGroups integration
 TOOLFORGE_TOOL_NAME = os.getenv("TOOLFORGE_TOOL_NAME")

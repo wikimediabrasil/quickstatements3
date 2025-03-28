@@ -45,19 +45,18 @@ will run an interactive command which will ask you for your username, password, 
 
 ## Wikibase server
 
-QuickStatements 3.0 uses the Wikibase REST API to interact with a Wikibase server.
-To define which server it is pointing to, define the `BASE_REST_URL` environment variable, pointing to the `rest.php` endpoint.
-For example: `BASE_REST_URL=https://test.wikidata.org/w/rest.php`.
+QuickStatements 3.0 uses the Wikibase REST API provided in `/wikibase/v1`
 
-QuickStatements 3.0 uses the Wikibase REST API provided in `/wikibase/v1` and the profile endpoint for the Oauth2 API, provided in `/oauth2` to check autoconfirmation status and authorize users.
+You can define which wikibase you can connect to via the admin. There you will need to provide the following information:
 
-Currently it's only possible to point at one Wikibase instance.
+ - URL of the server
+ - Identifier (Any string that is unique to your set of servers)
+ - OAuth Client ID & secret (see section below)
 
 ## OAuth
 
-This application uses OAuth2 with the Mediawiki provider.
-
-The grants we probably need are:
+This application uses OAuth2 with the Mediawiki provider (at www.wikidata.org)
+You will probably need the following grants::
 
 * Perform high volume activity
   * High-volume (bot) access
@@ -65,6 +64,7 @@ The grants we probably need are:
   * Edit existing pages
   * Edit protected pages (risk rating: vandalism)
   * Create, edit, and move pages
+
 
 ### Consumer
 
@@ -89,6 +89,16 @@ After obtaining it, define the environment variable `INTEGRATION_TEST_AUTH_TOKEN
 Then, run the tests with `make integration`.
 
 Alternatively, define that environment varibale inside the container shell and run the tests directly with `python3 manage.py test integration`.
+
+### Custom Authorization Servers
+
+If you want to use QuickStatements for a deploy that is completely independent form wikidata.org, (e.g, you are running your own [deployment of wikibase](https://wikiba.se/)) you will need to customize the following environment variables:
+
+ - `OAUTH_AUTHORIZATION_SERVER` (Default: "https://www.wikidata.org")
+ - `OAUTH_ACCESS_TOKEN_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/access_token)
+ - `OAUTH_ACCESS_TOKEN_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/authorize)
+ - `OAUTH_PROFILE_URL`          (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/resource/profile)
+
 
 ## Toolforge Deployment
 

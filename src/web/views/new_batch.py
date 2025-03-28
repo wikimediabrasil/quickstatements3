@@ -1,28 +1,21 @@
 from datetime import datetime
 
-from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from django.shortcuts import render
-from django.urls import reverse
-from django.views.decorators.http import require_http_methods
-from django.utils.translation import gettext as _
-
-from core.client import Client
-from core.models import BatchCommand
-from core.parsers.base import ParserException
-from core.parsers.v1 import V1CommandParser
-from core.parsers.csv import CSVCommandParser
-from core.exceptions import NoToken
-from core.exceptions import UnauthorizedToken
-from core.exceptions import ServerError
-
 from django.core import serializers
+from django.core.paginator import Paginator
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils.translation import gettext as _
+from django.views.decorators.http import require_http_methods
 
+from core.exceptions import ServerError, UnauthorizedToken
+from core.models import BatchCommand, Client, Token, get_default_wikibase
+from core.parsers.base import ParserException
+from core.parsers.csv import CSVCommandParser
+from core.parsers.v1 import V1CommandParser
 from web.models import Preferences
 
 from .auth import logout_per_token_expired
-
 
 PAGE_SIZE = 30
 
@@ -39,7 +32,7 @@ def preview_batch(request):
         total_count = 0
         initial_count = 0
         error_count = 0
-        batch = list(serializers.deserialize("json", preview_batch))[0]
+        batch = list(serializers.deserialize("json", preview_batch))[0].object
         preview_batch_commands = request.session.get("preview_commands", "[]")
         batch_commands = list(serializers.deserialize("json", preview_batch_commands))
         for bc in batch_commands:
@@ -50,13 +43,15 @@ def preview_batch(request):
                 initial_count += 1
 
         is_autoconfirmed = None
+
         try:
-            client = Client.from_user(request.user)
+            token = Token.objects.get(user=request.user)
+            client = Client(token=token, wikibase=batch.wikibase)
             is_autoconfirmed = client.get_is_autoconfirmed()
             is_blocked = client.get_is_blocked()
         except UnauthorizedToken:
             return logout_per_token_expired(request)
-        except (NoToken, ServerError):
+        except (Token.DoesNotExist, ServerError):
             is_autoconfirmed = False
             is_blocked = False
 
@@ -64,7 +59,7 @@ def preview_batch(request):
             request,
             "preview_batch.html",
             {
-                "batch": batch.object,
+                "batch": batch,
                 "current_owner": True,
                 "is_autoconfirmed": is_autoconfirmed,
                 "is_blocked": is_blocked,
@@ -104,8 +99,17 @@ def preview_batch_commands(request):
         page = paginator.page(page)
         page.object_list = [d.object for d in page.object_list]
 
-        if request.user.is_authenticated:
-            client = Client.from_user(request.user)
+        try:
+            batch_json = request.session.get("preview_batch")
+            deserialized_batch = list(serializers.deserialize("json", batch_json))[0]
+
+            batch = deserialized_batch.object
+            token = Token.objects.get(user=request.user)
+        except (IndexError, Token.DoesNotExist):
+            token = None
+
+        if request.user.is_authenticated and token is not None:
+            client = Client(token=token, wikibase=batch.wikibase)
             language = Preferences.objects.get_language(request.user, "en")
             BatchCommand.load_labels(client, page.object_list, language)
 
@@ -146,6 +150,11 @@ def new_batch(request):
 
             batch = parser.parse(batch_name, batch_owner, batch_commands)
 
+            batch.wikibase = get_default_wikibase()
+
+            # # FIXME: The ORM will keep the default wikibase_id during test.
+            # batch.wikibase_id = batch.wikibase.url
+
             batch.status = batch.STATUS_PREVIEW
             batch.block_on_errors = "block_on_errors" in request.POST
             batch.combine_commands = "do_not_combine_commands" not in request.POST
@@ -176,15 +185,18 @@ def new_batch(request):
 
     else:
         preferred_batch_type = request.session.get("preferred_batch_type", "v1")
+
         try:
-            client = Client.from_user(request.user)
+            token = Token.objects.get(user=request.user)
+            wikibase = get_default_wikibase()
+            client = Client(token=token, wikibase=wikibase)
             is_autoconfirmed = client.get_is_autoconfirmed()
             is_blocked = client.get_is_blocked()
-        except UnauthorizedToken:
-            return logout_per_token_expired(request)
-        except (NoToken, ServerError):
+        except (Token.DoesNotExist, ServerError):
             is_autoconfirmed = False
             is_blocked = False
+        except UnauthorizedToken:
+            return logout_per_token_expired(request)
 
         return render(
             request,
@@ -202,13 +214,23 @@ def batch_allow_start(request):
     """
     Saves and allow a batch that is in the preview state to start running.
     """
+
+    preview_batch = request.session.get("preview_batch")
+    if not preview_batch:
+        return render(request, "batch_not_found.html", status=404)
+
+    wikibase = get_default_wikibase()
+    batch = list(serializers.deserialize("json", preview_batch))[0].object
+
     try:
-        client = Client.from_user(request.user)
+
+        token = Token.objects.get(user=request.user)
+        client = Client(token=token, wikibase=wikibase)
         is_autoconfirmed = client.get_is_autoconfirmed()
         is_blocked = client.get_is_blocked()
     except UnauthorizedToken:
         return logout_per_token_expired(request)
-    except (NoToken, ServerError):
+    except (Token.DoesNotExist, ServerError):
         is_autoconfirmed = False
         is_blocked = False
 
@@ -231,24 +253,14 @@ def batch_allow_start(request):
             },
         )
 
-    try:
-        preview_batch = request.session.get("preview_batch")
-        if preview_batch:
+    preview_batch_commands = request.session.get("preview_commands", "[]")
+    for batch_command in serializers.deserialize("json", preview_batch_commands):
+        batch.add_preview_command(batch_command.object)
 
-            batch = list(serializers.deserialize("json", preview_batch))[0].object
+    batch.wikibase = wikibase
+    batch.save_batch_and_preview_commands()
 
-            preview_batch_commands = request.session.get("preview_commands", "[]")
-            for batch_command in serializers.deserialize(
-                "json", preview_batch_commands
-            ):
-                batch.add_preview_command(batch_command.object)
-            batch.save_batch_and_preview_commands()
+    del request.session["preview_batch"]
+    del request.session["preview_commands"]
 
-            del request.session["preview_batch"]
-            del request.session["preview_commands"]
-
-            return redirect(reverse("batch", args=[batch.pk]))
-        else:
-            return redirect(reverse("new_batch"))
-    except Exception:
-        return render(request, "batch_not_found.html", status=404)
+    return redirect(reverse("batch", args=[batch.pk]))

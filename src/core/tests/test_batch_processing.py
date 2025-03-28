@@ -1,25 +1,26 @@
+from unittest import mock
+
 import requests_mock
-from io import StringIO
-
-from django.core.management import call_command
 from django.test import TestCase
-from django.test import override_settings
-from django.contrib.auth.models import User
 
-from core.tests.test_api import ApiMocker
-from core.client import Client as ApiClient
-from core.models import Batch
-from core.models import BatchCommand
+from core.factories import TokenFactory, UserFactory
+from core.models import Batch, BatchCommand
+from core.models import Client as ApiClient
 from core.parsers.v1 import V1CommandParser
-from web.models import Token
+from core.tests.test_api import ApiMocker
 
 
 class ProcessingTests(TestCase):
+    def setUp(self):
+        self.api_mocker = ApiMocker()
+        self.user = UserFactory(username="user")
+        self.token = TokenFactory(user=self.user)
+        self.api_client = ApiClient(token=self.token, wikibase=self.api_mocker.wikibase)
+
     def parse(self, text):
-        user, _ = User.objects.get_or_create(username="user")
-        Token.objects.get_or_create(user=user, value="tokenvalue")
         v1 = V1CommandParser()
         batch = v1.parse("Test", "user", text)
+        batch.wikibase = self.api_mocker.wikibase
         batch.save_batch_and_preview_commands()
         return batch
 
@@ -36,12 +37,12 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_batch_success(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P65", "quantity")
-        ApiMocker.property_data_type(mocker, "P12", "url")
-        ApiMocker.item_empty(mocker, "Q1234")
-        ApiMocker.add_statement_successful(mocker, "Q1234")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P65", "quantity")
+        self.api_mocker.property_data_type(mocker, "P12", "url")
+        self.api_mocker.item_empty(mocker, "Q1234")
+        self.api_mocker.add_statement_successful(mocker, "Q1234")
 
         batch = self.parse('Q1234|P65|32||Q1234|P12|"""https://myurl.com"""')
         batch.run()
@@ -53,10 +54,10 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_batch_is_blocked_when_value_type_verification_fails(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P65", "quantity")
-        ApiMocker.add_statement_successful(mocker, "Q1234")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P65", "quantity")
+        self.api_mocker.add_statement_successful(mocker, "Q1234")
 
         batch = self.parse('Q1234|P65|32||Q1234|P65|"string"')
         batch.block_on_errors = True
@@ -69,10 +70,10 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_successful_value_type_verification_stays_on_initial(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P111", "quantity")
-        ApiMocker.add_statement_successful(mocker, "Q1234")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P111", "quantity")
+        self.api_mocker.add_statement_successful(mocker, "Q1234")
 
         raw = """Q1234|P111|0
         Q1234|P111|1
@@ -102,29 +103,29 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_all_data_types(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.create_item(mocker, "Q123")
-        ApiMocker.item_empty(mocker, "Q123")
-        ApiMocker.add_statement_successful(mocker, "Q123")
-        ApiMocker.property_data_type(mocker, "P1", "commonsMedia")
-        ApiMocker.property_data_type(mocker, "P2", "geo-shape")
-        ApiMocker.property_data_type(mocker, "P3", "tabular-data")
-        ApiMocker.property_data_type(mocker, "P4", "url")
-        ApiMocker.property_data_type(mocker, "P5", "external-id")
-        ApiMocker.property_data_type(mocker, "P6", "wikibase-item")
-        ApiMocker.property_data_type(mocker, "P7", "wikibase-property")
-        ApiMocker.property_data_type(mocker, "P8", "globe-coordinate")
-        ApiMocker.property_data_type(mocker, "P9", "monolingualtext")
-        ApiMocker.property_data_type(mocker, "P10", "quantity")
-        ApiMocker.property_data_type(mocker, "P11", "string")
-        ApiMocker.property_data_type(mocker, "P12", "time")
-        ApiMocker.property_data_type(mocker, "P13", "musical-notation")
-        ApiMocker.property_data_type(mocker, "P14", "math")
-        ApiMocker.property_data_type(mocker, "P15", "wikibase-lexeme")
-        ApiMocker.property_data_type(mocker, "P16", "wikibase-form")
-        ApiMocker.property_data_type(mocker, "P17", "wikibase-sense")
-        ApiMocker.property_data_type(mocker, "P18", "entity-schema")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.create_item(mocker, "Q123")
+        self.api_mocker.item_empty(mocker, "Q123")
+        self.api_mocker.add_statement_successful(mocker, "Q123")
+        self.api_mocker.property_data_type(mocker, "P1", "commonsMedia")
+        self.api_mocker.property_data_type(mocker, "P2", "geo-shape")
+        self.api_mocker.property_data_type(mocker, "P3", "tabular-data")
+        self.api_mocker.property_data_type(mocker, "P4", "url")
+        self.api_mocker.property_data_type(mocker, "P5", "external-id")
+        self.api_mocker.property_data_type(mocker, "P6", "wikibase-item")
+        self.api_mocker.property_data_type(mocker, "P7", "wikibase-property")
+        self.api_mocker.property_data_type(mocker, "P8", "globe-coordinate")
+        self.api_mocker.property_data_type(mocker, "P9", "monolingualtext")
+        self.api_mocker.property_data_type(mocker, "P10", "quantity")
+        self.api_mocker.property_data_type(mocker, "P11", "string")
+        self.api_mocker.property_data_type(mocker, "P12", "time")
+        self.api_mocker.property_data_type(mocker, "P13", "musical-notation")
+        self.api_mocker.property_data_type(mocker, "P14", "math")
+        self.api_mocker.property_data_type(mocker, "P15", "wikibase-lexeme")
+        self.api_mocker.property_data_type(mocker, "P16", "wikibase-form")
+        self.api_mocker.property_data_type(mocker, "P17", "wikibase-sense")
+        self.api_mocker.property_data_type(mocker, "P18", "entity-schema")
 
         raw = """CREATE
         LAST|P1|"MyCommonsMedia.jpg"
@@ -146,6 +147,7 @@ class ProcessingTests(TestCase):
         LAST|P17|L123-S123
         LAST|P18|Q123"""
         batch = self.parse(raw)
+
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
 
@@ -173,11 +175,11 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_block_on_errors(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P5", "quantity")
-        ApiMocker.item_empty(mocker, "Q1")
-        ApiMocker.add_statement_successful(mocker, "Q1")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P5", "quantity")
+        self.api_mocker.item_empty(mocker, "Q1")
+        self.api_mocker.add_statement_successful(mocker, "Q1")
         raw = """Q1|P5|33||Q1|P5|"string"||Q1|P5|45"""
 
         batch = self.parse(raw)
@@ -191,14 +193,18 @@ class ProcessingTests(TestCase):
         self.assertEqual(commands[2].status, BatchCommand.STATUS_DONE)
         self.assertEqual(len(commands), 3)
 
-        ApiMocker.add_statement_failed_server(mocker, "Q2")
+        self.api_mocker.add_statement_failed_server(mocker, "Q2")
+
+        # FIXME: two different ways to instantiate the batch
         v1 = V1CommandParser()
         batch = v1.parse(
             "Should block", "user", "Q1|P5|123||Q2|P5|123||Q1|P5|123||Q1|P5|123"
         )
+        batch.wikibase = self.api_mocker.wikibase
         batch.block_on_errors = True
         batch.save_batch_and_preview_commands()
         batch.run()
+
         self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
         commands = batch.commands()
         self.assertEqual(commands[0].status, BatchCommand.STATUS_DONE)
@@ -213,12 +219,12 @@ class ProcessingTests(TestCase):
         Checks that when NOT blocking on errors, if a CREATE
         fails, all subsequent LAST commands also fail.
         """
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P1", "quantity")
-        ApiMocker.item_empty(mocker, "Q1")
-        ApiMocker.add_statement_successful(mocker, "Q1")
-        ApiMocker.create_item_failed_server(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P1", "quantity")
+        self.api_mocker.item_empty(mocker, "Q1")
+        self.api_mocker.add_statement_successful(mocker, "Q1")
+        self.api_mocker.create_item_failed_server(mocker)
         batch = self.parse("CREATE||LAST|P1|1||LAST|P1|1||Q1|P1|1")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -242,10 +248,11 @@ class ProcessingTests(TestCase):
         Checks that when we DO block on errors, if a CREATE
         fails, all subsequent LAST commands stay in INITIAL.
         """
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.property_data_type(mocker, "P1", "quantity")
-        ApiMocker.add_statement_successful(mocker, "Q1")
-        ApiMocker.create_item_failed_server(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P1", "quantity")
+        self.api_mocker.add_statement_successful(mocker, "Q1")
+        self.api_mocker.create_item_failed_server(mocker)
         batch = self.parse_with_block_on_errors("CREATE||LAST|P1|1||LAST|P1|1||Q1|P1|1")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
@@ -261,7 +268,7 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_block_on_not_autoconfirmed(self, mocker):
-        ApiMocker.is_not_autoconfirmed(mocker)
+        self.api_mocker.is_not_autoconfirmed(mocker)
         batch = self.parse("CREATE||LAST|P1|Q1")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
@@ -272,7 +279,7 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_block_no_token_server_failed(self, mocker):
-        ApiMocker.autoconfirmed_failed_server(mocker)
+        self.api_mocker.autoconfirmed_failed_server(mocker)
         batch = self.parse("CREATE||LAST|P1|Q1")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
@@ -283,7 +290,7 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_block_no_token_unauthorized(self, mocker):
-        ApiMocker.autoconfirmed_failed_unauthorized(mocker)
+        self.api_mocker.autoconfirmed_failed_unauthorized(mocker)
         batch = self.parse("CREATE||LAST|P1|Q1")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
@@ -294,8 +301,8 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_remove_statement_by_id(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
         batch = self.parse("-STATEMENT|Q1234$abcdefgh-uijkl")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -319,12 +326,11 @@ class ProcessingTests(TestCase):
                 }
             ],
         }
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.statements(mocker, "Q1234", statements)
-        ApiMocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
         batch = self.parse("-Q1234|P5|Q12")
-        client = ApiClient.from_username(batch.user)
-        res = batch.commands()[0].get_final_entity_json(client)
+        res = batch.commands()[0].get_final_entity_json(self.api_client)
         self.assertEqual(len(res["statements"]["P5"]), 0)
 
     @requests_mock.Mocker()
@@ -347,20 +353,19 @@ class ProcessingTests(TestCase):
                 },
             ],
         }
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.statements(mocker, "Q1234", statements)
-        ApiMocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
-        ApiMocker.delete_statement_fail(mocker, "Q1234$defgh-xyzabc")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
+        self.api_mocker.delete_statement_fail(mocker, "Q1234$defgh-xyzabc")
         batch = self.parse("-Q1234|P5|Q12")
-        client = ApiClient.from_username(batch.user)
-        res = batch.commands()[0].get_final_entity_json(client)
+        res = batch.commands()[0].get_final_entity_json(self.api_client)
         self.assertEqual(res["statements"]["P5"][0]["id"], "Q1234$defgh-xyzabc")
 
     @requests_mock.Mocker()
     def test_remove_statement_by_value_fail_no_statements_property(self, mocker):
         statements = {}
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
         batch = self.parse("-Q1234|P5|Q12")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -384,8 +389,8 @@ class ProcessingTests(TestCase):
                 }
             ],
         }
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
         batch = self.parse("-Q1234|P5|Q12")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -398,9 +403,9 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_set_sitelink_success(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.item_empty(mocker, "Q1234")
-        ApiMocker.sitelink_success(mocker, "Q1234", "ptwiki", "Cool article")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.item_empty(mocker, "Q1234")
+        self.api_mocker.sitelink_success(mocker, "Q1234", "ptwiki", "Cool article")
         batch = self.parse("""Q1234|Sptwiki|"Cool article" """)
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -410,9 +415,9 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_set_sitelink_invalid(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.item_empty(mocker, "Q1234")
-        ApiMocker.sitelink_invalid(mocker, "Q1234", "ptwikix")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.item_empty(mocker, "Q1234")
+        self.api_mocker.sitelink_invalid(mocker, "Q1234", "ptwikix")
         batch = self.parse("""Q1234|Sptwikix|"Cool article" """)
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -422,12 +427,14 @@ class ProcessingTests(TestCase):
         self.assertEqual(commands[0].error, BatchCommand.Error.SITELINK_INVALID)
 
     @requests_mock.Mocker()
-    @override_settings(BASE_REST_URL="https://test.wikidata.org/w/rest.php")
     def test_remove_quantity_tolerance(self, mocker):
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.property_data_type(mocker, "P89982", "quantity")
-        ApiMocker.statements(
+        unit_url = f"{self.api_mocker.wikibase.url}/entity/Q208592".replace(
+            "https://", "http://"
+        )
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.property_data_type(mocker, "P89982", "quantity")
+        self.api_mocker.statements(
             mocker,
             "Q1",
             {
@@ -442,7 +449,7 @@ class ProcessingTests(TestCase):
                             "type": "value",
                             "content": {
                                 "amount": "+30",
-                                "unit": "http://test.wikidata.org/entity/Q208592",
+                                "unit": unit_url,
                                 "upperBound": "+40",
                                 "lowerBound": "+10",
                             },
@@ -451,33 +458,32 @@ class ProcessingTests(TestCase):
                 ]
             },
         )
-        ApiMocker.patch_item_successful(mocker, "Q1", {})
+        self.api_mocker.patch_item_successful(mocker, "Q1", {})
         batch = self.parse("-Q1|P89982|30[10,40]U208592")
         batch.run()
-        client = ApiClient.from_username(batch.user)
         self.assertEqual(batch.status, Batch.STATUS_DONE)
         command = batch.commands()[0]
         self.assertEqual(command.status, command.STATUS_DONE)
-        entity = command.get_final_entity_json(client)
+        entity = command.get_final_entity_json(self.api_client)
         self.assertEqual(len(entity["statements"]["P89982"]), 0)
 
     @requests_mock.Mocker()
     def test_all_errors(self, mocker):
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.item_empty(mocker, "Q1234")
-        ApiMocker.item_empty(mocker, "Q5")
-        ApiMocker.item_empty(mocker, "Q7")
-        ApiMocker.property_data_type(mocker, "P5", "quantity")
-        ApiMocker.sitelink_invalid(mocker, "Q1234", "ptwikix")
-        ApiMocker.patch_item_fail(
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.item_empty(mocker, "Q1234")
+        self.api_mocker.item_empty(mocker, "Q5")
+        self.api_mocker.item_empty(mocker, "Q7")
+        self.api_mocker.property_data_type(mocker, "P5", "quantity")
+        self.api_mocker.sitelink_invalid(mocker, "Q1234", "ptwikix")
+        self.api_mocker.patch_item_fail(
             mocker, "Q5", 400, {"code": "code", "message": "message"}
         )
-        ApiMocker.patch_item_fail(
+        self.api_mocker.patch_item_fail(
             mocker, "Q7", 500, {"code": "code", "message": "message"}
         )
-        ApiMocker.statements(mocker, "Q9", {})
-        ApiMocker.statements(
+        self.api_mocker.statements(mocker, "Q9", {})
+        self.api_mocker.statements(
             mocker,
             "Q11",
             {
@@ -531,14 +537,14 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_get_label(self, mocker):
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.create_item(mocker, "Q1")
-        ApiMocker.item_empty(mocker, "Q1")
-        ApiMocker.item_empty(mocker, "Q2")
-        ApiMocker.property_data_type(mocker, "P1", "quantity")
-        ApiMocker.patch_item_successful(mocker, "Q1", {})
-        ApiMocker.patch_item_successful(mocker, "Q2", {})
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.create_item(mocker, "Q1")
+        self.api_mocker.item_empty(mocker, "Q1")
+        self.api_mocker.item_empty(mocker, "Q2")
+        self.api_mocker.property_data_type(mocker, "P1", "quantity")
+        self.api_mocker.patch_item_successful(mocker, "Q1", {})
+        self.api_mocker.patch_item_successful(mocker, "Q2", {})
         batch = self.parse(
             """
         CREATE
@@ -548,42 +554,41 @@ class ProcessingTests(TestCase):
         )
         batch.combine_commands = True
         commands = batch.commands()
-        client = ApiClient.from_username(batch.user)
         labels = {
             "Q1": {"pt": "pt1", "en": "en1"},
             "Q2": {"pt": "pt2", "en": "en2"},
         }
-        ApiMocker.labels(mocker, client, labels)
-        BatchCommand.load_labels(client, commands, "pt")
+        self.api_mocker.labels(mocker, self.api_client, labels)
+        BatchCommand.load_labels(self.api_client, commands, "pt")
         self.assertEqual(commands[0].display_label, None)
         self.assertEqual(commands[1].display_label, None)
         self.assertEqual(commands[2].display_label, "pt2")
-        BatchCommand.load_labels(client, commands, "de")
+        BatchCommand.load_labels(self.api_client, commands, "de")
         self.assertEqual(commands[0].display_label, None)
         self.assertEqual(commands[1].display_label, None)
         self.assertEqual(commands[2].display_label, "en2")
-        BatchCommand.load_labels(client, commands, "en")
+        BatchCommand.load_labels(self.api_client, commands, "en")
         self.assertEqual(commands[0].display_label, None)
         self.assertEqual(commands[1].display_label, None)
         self.assertEqual(commands[2].display_label, "en2")
         batch.run()  # -> load Q1 into commands[0] and commands[1]
         commands = batch.commands()
-        BatchCommand.load_labels(client, commands, "pt")
+        BatchCommand.load_labels(self.api_client, commands, "pt")
         self.assertEqual(commands[0].display_label, "pt1")
         self.assertEqual(commands[1].display_label, "pt1")
         self.assertEqual(commands[2].display_label, "pt2")
-        BatchCommand.load_labels(client, commands, "de")
+        BatchCommand.load_labels(self.api_client, commands, "de")
         self.assertEqual(commands[0].display_label, "en1")
         self.assertEqual(commands[1].display_label, "en1")
         self.assertEqual(commands[2].display_label, "en2")
-        BatchCommand.load_labels(client, commands, "en")
+        BatchCommand.load_labels(self.api_client, commands, "en")
         self.assertEqual(commands[0].display_label, "en1")
         self.assertEqual(commands[1].display_label, "en1")
         self.assertEqual(commands[2].display_label, "en2")
 
     @requests_mock.Mocker()
     def test_remove_qual_or_ref_errors(self, mocker):
-        ApiMocker.item(
+        self.api_mocker.item(
             mocker,
             "Q1",
             {
@@ -626,10 +631,10 @@ class ProcessingTests(TestCase):
                 },
             },
         )
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.property_data_type(mocker, "P5", "wikibase-item")
-        ApiMocker.patch_item_successful(mocker, "Q1", {})
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.property_data_type(mocker, "P5", "wikibase-item")
+        self.api_mocker.patch_item_successful(mocker, "Q1", {})
         batch = self.parse(
             """
         REMOVE_QUAL|Q1|P5|Q12|P123|123
@@ -657,12 +662,12 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_combine_with_create(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.create_item(mocker, "Q123")
-        ApiMocker.item_empty(mocker, "Q123")
-        ApiMocker.add_statement_successful(mocker, "Q123", {"id": "Q123$abcdef"})
-        ApiMocker.property_data_type(mocker, "P11", "string")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.create_item(mocker, "Q123")
+        self.api_mocker.item_empty(mocker, "Q123")
+        self.api_mocker.add_statement_successful(mocker, "Q123", {"id": "Q123$abcdef"})
+        self.api_mocker.property_data_type(mocker, "P11", "string")
         # ---
         # COMBINING COMMANDS
         # ---
@@ -691,6 +696,7 @@ class ProcessingTests(TestCase):
         # ---
         v1 = V1CommandParser()
         batch = v1.parse("without", "user", raw)
+        batch.wikibase = self.api_mocker.wikibase
         batch.save_batch_and_preview_commands()
         batch.combine_commands = False
         batch.run()
@@ -714,11 +720,11 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_combine_failed_data_type_should_fail(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.item_empty(mocker, "Q1")
-        ApiMocker.property_data_type(mocker, "P11", "string")
-        ApiMocker.add_statement_successful(mocker, "Q1", {"id": "Q1$abcdef"})
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.item_empty(mocker, "Q1")
+        self.api_mocker.property_data_type(mocker, "P11", "string")
+        self.api_mocker.add_statement_successful(mocker, "Q1", {"id": "Q1$abcdef"})
         raw = """
         Q1|P11|"string"
         Q1|P11|"string"
@@ -740,12 +746,12 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_create_and_last_should_combine(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.create_item(mocker, "Q123")
-        ApiMocker.item_empty(mocker, "Q123")
-        ApiMocker.property_data_type(mocker, "P11", "string")
-        ApiMocker.add_statement_successful(mocker, "Q123", {"id": "Q123$abcdef"})
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.create_item(mocker, "Q123")
+        self.api_mocker.item_empty(mocker, "Q123")
+        self.api_mocker.property_data_type(mocker, "P11", "string")
+        self.api_mocker.add_statement_successful(mocker, "Q123", {"id": "Q123$abcdef"})
         # ---
         # COMBINING COMMANDS
         # ---
@@ -786,6 +792,7 @@ class ProcessingTests(TestCase):
         # ---
         v1 = V1CommandParser()
         batch = v1.parse("without", "user", raw)
+        batch.wikibase = self.api_mocker.wikibase
         batch.save_batch_and_preview_commands()
         batch.combine_commands = False
         batch.run()
@@ -810,10 +817,10 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_create_and_last_with_failure(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.property_data_type(mocker, "P11", "string")
-        ApiMocker.create_item_failed_server(mocker)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P11", "string")
+        self.api_mocker.create_item_failed_server(mocker)
         # ---
         # COMBINING COMMANDS
         # ---
@@ -844,49 +851,62 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_batch_wont_verify_commands_already_verified(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.item_empty(mocker, "Q1")
-        ApiMocker.property_data_type(mocker, "P1", "string")
-        ApiMocker.property_data_type(mocker, "P2", "quantity")
-        ApiMocker.patch_item_successful(mocker, "Q1", {})
-        raw = """
-        Q1|P1|"string"
-        Q1|P2|14
-        Q1|P2|"won't error"
-        Q1|P1|32
-        """
-        batch = self.parse(raw)
-        batch.block_on_errors = True
-        batch.combine_commands = True
-        commands = batch.commands()
-        command = commands[2]
-        command.value_type_verified = True
-        command.save()
-        command = commands[3]
-        command.value_type_verified = True
-        command.save()
-        batch.run()
-        self.assertEqual(batch.status, Batch.STATUS_DONE)
-        self.assertEqual(commands[0].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[1].status, BatchCommand.STATUS_DONE)
-        v1 = V1CommandParser()
-        batch = v1.parse("now it will", "user", raw)
-        batch.save_batch_and_preview_commands()
-        batch.block_on_errors = True
-        batch.run()
-        commands = batch.commands()
-        self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
-        self.assertEqual(commands[0].status, BatchCommand.STATUS_INITIAL)
-        self.assertEqual(commands[1].status, BatchCommand.STATUS_INITIAL)
-        self.assertEqual(commands[2].status, BatchCommand.STATUS_ERROR)
-        self.assertEqual(commands[3].status, BatchCommand.STATUS_INITIAL)
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.item_empty(mocker, "Q1")
+        self.api_mocker.property_data_type(mocker, "P1", "string")
+        self.api_mocker.property_data_type(mocker, "P2", "quantity")
+        self.api_mocker.patch_item_successful(mocker, "Q1", {})
+
+        with mock.patch("core.models.get_default_wikibase") as mocked_wikibase:
+            mocked_wikibase.return_value = self.api_mocker.wikibase
+            raw = """
+            Q1|P1|"string"
+            Q1|P2|14
+            Q1|P2|"won't error"
+            Q1|P1|32
+            """
+            batch = self.parse(raw)
+            batch.block_on_errors = True
+            batch.combine_commands = True
+            commands = batch.commands()
+            command = commands[2]
+            command.value_type_verified = True
+            command.save()
+            command = commands[3]
+            command.value_type_verified = True
+            command.save()
+            batch.run()
+            self.assertEqual(batch.status, Batch.STATUS_DONE)
+            self.assertEqual(commands[0].status, BatchCommand.STATUS_DONE)
+            self.assertEqual(commands[1].status, BatchCommand.STATUS_DONE)
+            v1 = V1CommandParser()
+            batch = v1.parse("now it will", "user", raw)
+            batch.save_batch_and_preview_commands()
+            batch.block_on_errors = True
+            batch.wikibase = self.api_mocker.wikibase
+            batch.run()
+            commands = batch.commands()
+            self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
+
+            expected = {
+                0: BatchCommand.STATUS_INITIAL,
+                1: BatchCommand.STATUS_INITIAL,
+                2: BatchCommand.STATUS_ERROR,
+                3: BatchCommand.STATUS_INITIAL,
+            }
+
+            for idx, status in expected.items():
+                command = commands[idx]
+                self.assertEqual(
+                    command.status, status, f"command is {command.get_status_display()}"
+                )
 
     @requests_mock.Mocker()
     def test_batch_will_skip_done_commands(self, mocker):
-        ApiMocker.is_autoconfirmed(mocker)
-        ApiMocker.wikidata_property_data_types(mocker)
-        ApiMocker.create_item(mocker, "Q3")
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.create_item(mocker, "Q3")
         raw = """
         CREATE
         LAST|Lpt|"label"

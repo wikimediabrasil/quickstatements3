@@ -1,11 +1,8 @@
-import requests_mock
+from urllib.parse import urlencode
 
 from django.contrib.auth.models import User
-from django.test import TestCase
-from django.test import Client
-
+from django.test import Client, TestCase
 from rest_framework.authtoken.models import Token
-from urllib.parse import urlencode
 
 
 class ProfileTest(TestCase):

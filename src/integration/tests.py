@@ -1,31 +1,31 @@
 import os
 from unittest import skipIf
 
-from django.test import TestCase
-from django.test import override_settings
 from django.contrib.auth.models import User
+from django.test import TestCase, override_settings
 
-from core.client import Client
+from core.factories import WikibaseFactory
+from core.models import Batch, Client, Token
 from core.parsers.v1 import V1CommandParser
-from core.models import Batch
-from web.models import Token
 
 TOKEN = os.environ.get("INTEGRATION_TEST_AUTH_TOKEN")
 SKIP_INTEGRATION = TOKEN is None
 
 
 @skipIf(SKIP_INTEGRATION, "Integration")
-@override_settings(BASE_REST_URL="https://test.wikidata.org/w/rest.php")
 @override_settings(TOOLFORGE_TOOL_NAME=None)
 class IntegrationTests(TestCase):
     maxDiff = None
 
     def setUp(self):
         self.username = "integration_user"
+        self.wikibase = WikibaseFactory(
+            url="https://test.wikidata.org", identifier="test"
+        )
         user = User.objects.create(username=self.username)
-        web_token = Token.objects.create(user=user, value=TOKEN)
+        token = Token.objects.create(user=user, value=TOKEN)
         self.client.force_login(user)
-        self.api_client = Client.from_token(web_token)
+        self.api_client = Client(token=token, wikibase=self.wikibase)
 
     def parse_run(self, text):
         v1 = V1CommandParser()

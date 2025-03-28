@@ -1,18 +1,12 @@
 from authlib.integrations.base_client.errors import MismatchingStateError
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from core.exceptions import NoToken
-from core.exceptions import UnauthorizedToken
-from core.exceptions import ServerError
-
-from web.oauth import oauth
-from web.utils import user_from_access_token
-from web.utils import user_from_full_token
-from web.utils import clear_tokens
+from core.exceptions import NoToken, ServerError, UnauthorizedToken
+from core.models import get_default_wikibase, oauth
+from web.utils import clear_tokens, user_from_access_token, user_from_full_token
 
 
 def logout_per_token_expired(request):
@@ -61,9 +55,9 @@ def login_dev(request):
     if request.method == "POST":
         # obtain dev token
         access_token = request.POST["access_token"]
-
+        wikibase = get_default_wikibase()
         try:
-            user = user_from_access_token(access_token)
+            user = user_from_access_token(access_token, wikibase)
             django_login(request, user)
         except (NoToken, UnauthorizedToken, ServerError) as e:
             data = {"error": e}

@@ -1,4 +1,4 @@
-FROM docker-registry.tools.wmflabs.org/toolforge-python311-sssd-web:latest as builder
+FROM docker-registry.tools.wmflabs.org/toolforge-python311-sssd-web:latest AS builder
 LABEL maintainer="Miguel Galves <mgalves@gmail.com>"
 
 # Install system dependencies
@@ -31,8 +31,11 @@ WORKDIR /home/wmb/www/python/src/
 
 RUN webservice-python-bootstrap
 
-FROM builder as development
+FROM builder AS development
 
 COPY requirements-dev.txt /home/wmb/www/python/
 RUN sudo chown wmb:wmb /home/wmb/www/python/requirements-dev.txt
 RUN pip install -r /home/wmb/www/python/requirements-dev.txt
+
+COPY pytest.ini /home/wmb/www/python/
+RUN sudo chown wmb:wmb /home/wmb/www/python/pytest.ini
