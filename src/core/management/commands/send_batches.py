@@ -1,6 +1,7 @@
 import logging
 import threading
 import time
+from datetime import datetime
 
 from core.models import Batch
 from django.core.management.base import BaseCommand
