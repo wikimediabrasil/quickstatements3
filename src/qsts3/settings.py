@@ -174,6 +174,11 @@ LOGGING = {
             "handlers": ["console"],
             "level": "INFO",
         },
+        'urllib3': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
     },
 }
 

@@ -2,6 +2,9 @@ import requests
 import logging
 from typing import List
 
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
 from django.core.cache import cache as django_cache
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -65,9 +68,26 @@ class Client:
         self.token = token
         self.value_type_cache = {}
         self.labels_cache = {}
+        self.session = self._init_session()
 
     def __str__(self):
         return "API Client with token [redacted]"
+
+    def _init_session(self):
+        """
+        Setup a requests.Session with retries.
+        """
+        session = requests.Session()
+        retries = Retry(
+            total=10,
+            backoff_factor=1,
+            status_forcelist=[429],
+            allowed_methods=["GET", "POST", "PATCH", "DELETE"],
+        )
+        adapter = HTTPAdapter(max_retries=retries)
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+        return session
 
     # ---
     # Constructors
@@ -133,7 +153,7 @@ class Client:
     def get(self, url):
         logger.debug(f"Sending GET request at {url}")
         self.refresh_token_if_needed()
-        response = requests.get(url, headers=self.headers())
+        response = self.session.get(url, headers=self.headers())
         self.raise_for_status(response)
         return response
 
@@ -211,7 +231,7 @@ class Client:
 
         logger.debug(f"{method} request at {url} | sending with body {body}")
 
-        res = getattr(requests, method.lower())(url, **kwargs)
+        res = getattr(self.session, method.lower())(url, **kwargs)
 
         logger.debug(f"{method} request at {url} | response: {res.json()}")
         self.raise_for_status(res)
@@ -326,6 +346,6 @@ class Client:
             f"Sending GET request at {action_api}, languages={languages}, ids={ids}"
         )
         self.refresh_token_if_needed()
-        res = requests.get(action_api, headers=self.headers(), params=params)
+        res = self.session.get(action_api, headers=self.headers(), params=params)
         self.raise_for_status(res)
         return res.json()
