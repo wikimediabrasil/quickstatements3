@@ -20,11 +20,20 @@ def process_batches(batches):
 class Command(BaseCommand):
     TIMEOUT_SEC = 2
     help = "Sends all available batches to the Wikidata API"
+
     def handle(self, *args, **options):
         logger.info("[command] send_batches management command started!")
         user_threads = {}
 
         # Restart batches and commands that were left RUNNING after a server restart
+        commands = []
+        for command in BatchCommand.objects.filter(batch__status=Batch.STATUS_RUNNING,
+                                                   status=BatchCommand.STATUS_RUNNING):
+            command.message = f"Restarted after a server restart: {datetime.now()}"
+            command.status = BatchCommand.STATUS_INITIAL
+            commands.append(command)
+        BatchCommand.objects.bulk_update(commands, ["message", "status"])
+
         batches = []
         for batch in Batch.objects.filter(status=Batch.STATUS_RUNNING):
             logger.info(f"[{batch}] restarting by server restart...")
@@ -32,13 +41,6 @@ class Command(BaseCommand):
             batch.status = Batch.STATUS_INITIAL
             batches.append(batch)
         Batch.objects.bulk_update(batches, ["message", "status"])
-        
-        commands = []
-        for command in BatchCommand.objects.filter(batch__status=running, status=running):
-                command.message = f"Restarted after a server restart: {datetime.now()}"
-                command.status = BatchCommand.STATUS_INITIAL
-                commands.append(command)
-        BatchCommand.objects.bulk_update(commands, ["message", "status"])
 
         while True:
             batches = Batch.objects.filter(status=Batch.STATUS_INITIAL)
