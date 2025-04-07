@@ -26,18 +26,19 @@ class Command(BaseCommand):
 
         # Restart batches and commands that were left RUNNING after a server restart
         batches = []
-        commands = []
         for batch in Batch.objects.filter(status=Batch.STATUS_RUNNING):
             logger.info(f"[{batch}] restarting by server restart...")
             batch.message = f"Restarted after a server restart: {datetime.now()}"
             batch.status = Batch.STATUS_INITIAL
-            for command in batch.commands().filter(status=BatchCommand.STATUS_RUNNING):
+            batches.append(batch)
+        Batch.objects.bulk_update(batches, ["message", "status"])
+        
+        commands = []
+        for command in BatchCommand.objects.filter(batch__status=running, status=running):
                 command.message = f"Restarted after a server restart: {datetime.now()}"
                 command.status = BatchCommand.STATUS_INITIAL
                 commands.append(command)
-            batches.append(batch)
         BatchCommand.objects.bulk_update(commands, ["message", "status"])
-        Batch.objects.bulk_update(batches, ["message", "status"])
 
         while True:
             batches = Batch.objects.filter(status=Batch.STATUS_INITIAL)
