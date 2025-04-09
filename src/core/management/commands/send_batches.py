@@ -29,10 +29,9 @@ class Command(BaseCommand):
         commands = []
         for command in BatchCommand.objects.filter(batch__status=Batch.STATUS_RUNNING,
                                                    status=BatchCommand.STATUS_RUNNING):
-            command.message = f"Restarted after a server restart: {datetime.now()}"
             command.status = BatchCommand.STATUS_INITIAL
             commands.append(command)
-        BatchCommand.objects.bulk_update(commands, ["message", "status"])
+        BatchCommand.objects.bulk_update(commands, ["status"])
 
         batches = []
         for batch in Batch.objects.filter(status=Batch.STATUS_RUNNING):
