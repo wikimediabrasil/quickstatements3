@@ -4,9 +4,6 @@ x-application-service: &application-service
   build:
     context: ./
     dockerfile: Dockerfile
-  depends_on:
-    mariadb:
-      condition: service_healthy
   restart: on-failure
   stdin_open: true
   tty: true
@@ -47,8 +44,6 @@ services:
   webserver:
     image: nginx
     restart: unless-stopped
-    depends_on:
-      - app
     ports:
       - "8000:80"
     volumes:
@@ -57,9 +52,6 @@ services:
 
   app:
     <<: *application-service
-    depends_on:
-      init_migrations:
-        condition: service_completed_successfully
     command: django-admin runserver 0.0.0.0:8000
 
   init_collect_static:
@@ -72,9 +64,6 @@ services:
 
   run_send_batches:
     <<: *application-service
-    depends_on:
-      init_migrations:
-        condition: service_completed_successfully
     command: django-admin send_batches
 
 volumes:

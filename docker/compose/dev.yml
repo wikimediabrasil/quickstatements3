@@ -1,0 +1,36 @@
+x-developer: &application-developer
+  user: "${UID:-1000}:${GID:-1000}"
+
+services:
+  mariadb:
+    <<: *application-developer
+
+  app:
+    <<: *application-developer
+
+  webserver:
+    <<: *application-developer
+    volumes:
+      - nginx-data:/tmp
+
+volumes:
+  static-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${QSTS_VOLUME_STATIC_DATA_PATH?Missing env var for static volume path}"
+
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${QSTS_VOLUME_DATABASE_PATH?Missing env var for maria db volume path}"
+
+  nginx-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${QSTS_VOLUME_NGINX_DATA_PATH?Missing env var for nginx volume path}"
