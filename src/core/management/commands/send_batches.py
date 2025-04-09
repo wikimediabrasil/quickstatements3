@@ -3,7 +3,7 @@ import threading
 import time
 from datetime import datetime
 
-from core.models import Batch
+from core.models import Batch, BatchCommand
 from django.core.management.base import BaseCommand
 
 logger = logging.getLogger("qsts3")
@@ -20,11 +20,19 @@ def process_batches(batches):
 class Command(BaseCommand):
     TIMEOUT_SEC = 2
     help = "Sends all available batches to the Wikidata API"
+
     def handle(self, *args, **options):
         logger.info("[command] send_batches management command started!")
         user_threads = {}
 
-        # Restart batches that were left RUNNING after a server restart
+        # Restart batches and commands that were left RUNNING after a server restart
+        commands = []
+        for command in BatchCommand.objects.filter(batch__status=Batch.STATUS_RUNNING,
+                                                   status=BatchCommand.STATUS_RUNNING):
+            command.status = BatchCommand.STATUS_INITIAL
+            commands.append(command)
+        BatchCommand.objects.bulk_update(commands, ["status"])
+
         batches = []
         for batch in Batch.objects.filter(status=Batch.STATUS_RUNNING):
             logger.info(f"[{batch}] restarting by server restart...")
