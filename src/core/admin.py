@@ -1,11 +1,19 @@
 from django.contrib import admin
 
-from core.models import Batch, BatchCommand, Wikibase
+from core.models import Batch, BatchCommand, Token, Wikibase
 
 
 @admin.register(Wikibase)
 class WikibaseAdmin(admin.ModelAdmin):
     list_display = ("url", "description")
+
+
+@admin.register(Token)
+class TokenAdmin(admin.ModelAdmin):
+    list_display = ("user", "expires_at")
+    list_filter = ("expires_at",)
+    search_field = ("user",)
+    raw_id_fields = ("user",)
 
 
 @admin.register(BatchCommand)
