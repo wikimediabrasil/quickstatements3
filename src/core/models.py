@@ -889,7 +889,7 @@ class BatchCommand(models.Model):
 
     def entity_url(self):
         entity_id = self.entity_id()
-        base = self.batch.wikibase.url.replace("https://", "http://")
+        base = self.batch.wikibase.url
         if entity_id and entity_id != "LAST":
             return f"{base}/entity/{entity_id}"
         else:
