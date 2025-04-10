@@ -7,6 +7,8 @@ x-application-service: &application-service
   restart: on-failure
   stdin_open: true
   tty: true
+  depends_on:
+    - mariadb
   environment: &application-environment
     DJANGO_SETTINGS_MODULE: qsts3.settings
     DB_NAME: quickstatements
