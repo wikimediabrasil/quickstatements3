@@ -96,7 +96,7 @@ If you want to use QuickStatements for a deploy that is completely independent f
 
  - `OAUTH_AUTHORIZATION_SERVER` (Default: "https://www.wikidata.org")
  - `OAUTH_ACCESS_TOKEN_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/access_token)
- - `OAUTH_ACCESS_TOKEN_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/authorize)
+ - `OAUTH_AUTHORIZATION_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/authorize)
  - `OAUTH_PROFILE_URL`          (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/resource/profile)
 
 
