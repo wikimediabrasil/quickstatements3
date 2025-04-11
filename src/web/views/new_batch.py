@@ -83,6 +83,15 @@ def preview_batch_commands(request):
         batch_commands = list(serializers.deserialize("json", preview_batch_commands))
 
         try:
+            batch_json = request.session.get("preview_batch")
+            deserialized_batch = list(serializers.deserialize("json", batch_json))[0]
+
+            batch = deserialized_batch.object
+            token = Token.objects.get(user=request.user)
+        except (IndexError, Token.DoesNotExist):
+            token = None
+
+        try:
             page = int(request.GET.get("page", 1))
         except (TypeError, ValueError):
             page = 1
@@ -95,18 +104,12 @@ def preview_batch_commands(request):
                 if bc.object.status == BatchCommand.STATUS_ERROR
             ]
 
+        for command in batch_commands:
+            command.batch = batch
+
         paginator = Paginator(batch_commands, PAGE_SIZE)
         page = paginator.page(page)
         page.object_list = [d.object for d in page.object_list]
-
-        try:
-            batch_json = request.session.get("preview_batch")
-            deserialized_batch = list(serializers.deserialize("json", batch_json))[0]
-
-            batch = deserialized_batch.object
-            token = Token.objects.get(user=request.user)
-        except (IndexError, Token.DoesNotExist):
-            token = None
 
         if request.user.is_authenticated and token is not None:
             client = Client(token=token, wikibase=batch.wikibase)

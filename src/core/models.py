@@ -4,6 +4,7 @@ import logging
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import List, Optional
+from urllib.parse import urlparse
 
 import jsonpatch
 import requests
@@ -47,7 +48,10 @@ oauth.register(
 
 
 def get_default_wikibase():
-    default_wikibase_url = settings.BASE_REST_URL
+    parsed_root_enpoint = urlparse(settings.BASE_REST_URL)
+    default_wikibase_url = (
+        f"{parsed_root_enpoint.scheme}://{parsed_root_enpoint.netloc}"
+    )
     wikibase, _ = Wikibase.objects.get_or_create(url=default_wikibase_url)
     return wikibase
 

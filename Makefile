@@ -11,10 +11,10 @@ watch:
 	docker-compose logs -f app
 
 test:
-	docker-compose exec app django-admin test
+	docker-compose exec app pytest
 
 integration:
 	docker-compose exec app django-admin test integration
 
 clean:
-	docker-compose down -v	
+	docker-compose down -v
