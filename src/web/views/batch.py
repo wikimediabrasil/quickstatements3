@@ -90,6 +90,31 @@ def batch_restart(request, pk):
         return HttpResponse("403 Forbidden", status=403)
 
 
+
+@require_http_methods(
+    [
+        "POST",
+    ]
+)
+def batch_rerun(request, pk):
+    """
+    Rerun a batch that was finished but left command with errors
+    """
+    try:
+        batch = Batch.objects.get(pk=pk)
+        user_is_authorized = (
+            request.user.is_authenticated and
+            (request.user.username == batch.user or request.user.is_superuser)
+        )
+        assert user_is_authorized
+        batch.rerun()
+        return redirect(reverse("batch", args=[batch.pk]))
+    except Batch.DoesNotExist:
+        return render(request, "batch_not_found.html", {"pk": pk}, status=404)
+    except AssertionError:
+        return HttpResponse("403 Forbidden", status=403)
+
+
 @require_GET
 def batch_report(request, pk):
     try:
