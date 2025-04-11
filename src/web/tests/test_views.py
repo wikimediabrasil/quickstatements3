@@ -690,9 +690,9 @@ class ViewsTest(TestCase):
         self.api_mocker.property_data_type(mocker, "P2", "wikibase-item")
         self.api_mocker.item_empty(mocker, "Q1234")
         self.api_mocker.item_empty(mocker, "Q11")
-        self.api_mocker.patch_item_successful(mocker, "Q1234", {"id": "Q1234$stuff"})
-        self.api_mocker.patch_item_successful(
-            mocker, "Q11", {"id": "Q11", "labels": {"en": "label"}}
+        self.api_mocker.patch_item_fail(mocker, "Q1234", 418, {"id": "Q1234$stuff"})
+        self.api_mocker.patch_item_fail(
+            mocker, "Q11", 418, {"id": "Q11", "labels": {"en": "label"}}
         )
         user, api_client = self.login_user_and_get_token("wikiuser")
         parser = V1CommandParser()

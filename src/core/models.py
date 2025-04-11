@@ -588,7 +588,7 @@ class Batch(models.Model):
             self.save()
 
     def rerun(self):
-        if self.is_done:
+        if self.is_done_and_has_pending:
             logger.info(f"[{self}] rerunning...")
             commands = []
             for command in self.commands().exclude(status=BatchCommand.STATUS_DONE):
@@ -648,6 +648,14 @@ class Batch(models.Model):
     @property
     def is_done(self):
         return self.status == Batch.STATUS_DONE
+
+    @property
+    def has_pending_commands(self):
+        return self.commands().exclude(status=BatchCommand.STATUS_DONE).exists()
+    
+    @property
+    def is_done_and_has_pending(self):
+        return self.is_done and self.has_pending_commands
 
     def add_preview_command(self, preview_command: "BatchCommand") -> bool:
         if not hasattr(self, "_preview_commands"):
