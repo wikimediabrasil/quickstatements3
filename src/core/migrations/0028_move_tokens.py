@@ -25,6 +25,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-            code=move_web_tokens_to_core, reverse_code=migrations.RunPython.noop
+            code=move_web_tokens_to_core,
+            reverse_code=migrations.RunPython.noop,
+            elidable=True,
         )
     ]
