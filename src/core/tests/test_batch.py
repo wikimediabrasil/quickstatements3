@@ -138,7 +138,7 @@ class TestBatch(TestCase):
         batch.stop()
         self.assertTrue(batch.is_stopped)
         self.assertTrue(
-            batch.message.startswith("Batch stopped processing by owner at")
+            batch.message.startswith("Batch stopped processing at")
         )
 
     def test_batch_restart(self):
@@ -157,7 +157,25 @@ class TestBatch(TestCase):
         batch.save()
         batch.restart()
         self.assertTrue(batch.is_initial)
-        self.assertTrue(batch.message.startswith("Batch restarted by owner"))
+        self.assertTrue(batch.message.startswith("Batch restarted at"))
+
+    def test_batch_rerun(self):
+        batch = Batch.objects.create(name="teste", status=Batch.STATUS_BLOCKED)
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        batch.status = Batch.STATUS_RUNNING
+        batch.save()
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        batch.status = Batch.STATUS_STOPPED
+        batch.save()
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        batch.status = Batch.STATUS_DONE
+        batch.save()
+        batch.rerun()
+        self.assertTrue(batch.is_initial)
+        self.assertTrue(batch.message.startswith("Batch rerun at"))
 
 
 class TestV1Batch(TestCase):

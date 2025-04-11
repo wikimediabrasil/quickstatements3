@@ -22,7 +22,7 @@
 </hgroup>
 </div>
 
-<div style="float: right;">
+<div class="grid" style="float: right; grid-template-columns: 2fr 1fr;">
   {% if user_is_authorized %}
     {% if batch.is_initial_or_running %}
     <button class="secondary" onclick="showStopModal();">{% translate "Stop execution" %}</button>
@@ -34,6 +34,10 @@
     {% elif batch.is_done %}
     <form method="GET" action="{% url 'batch_report' pk=batch.pk %}">
       <input type="submit" value="Download report">
+    </form>
+    <form method="POST" action="{% url 'batch_rerun' pk=batch.pk %}">
+      {% csrf_token %}
+      <input class="secondary" type="submit" value="Rerun">
     </form>
     {% endif %}
   {% endif %}
