@@ -37,9 +37,10 @@ def oauth_redirect(request):
 
 def oauth_callback(request):
     data = {}
+    wikibase = get_default_wikibase()
     try:
         full_token = oauth.mediawiki.authorize_access_token(request)
-        user = user_from_full_token(full_token)
+        user = user_from_full_token(full_token, wikibase)
         django_login(request, user)
         return redirect("/")
     except (UnauthorizedToken, KeyError):
