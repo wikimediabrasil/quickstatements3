@@ -209,7 +209,7 @@ OAUTH_CLIENT_ID = os.getenv("OAUTH_CLIENT_ID")
 OAUTH_CLIENT_SECRET = os.getenv("OAUTH_CLIENT_SECRET")
 
 OAUTH_AUTHORIZATION_SERVER = os.getenv(
-    "OAUTH_AUTHORIZATION_SERVER_URL", "https://www.wikidata.org"
+    "OAUTH_AUTHORIZATION_SERVER", "https://www.wikidata.org"
 )
 OAUTH_ACCESS_TOKEN_URL = os.getenv(
     "OAUTH_ACCESS_TOKEN_URL",
