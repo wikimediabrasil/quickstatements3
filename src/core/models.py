@@ -287,6 +287,7 @@ class Client:
             "props": "labels",
             "languages": languages,
             "ids": ids,
+            "languagefallback": "",
         }
         logger.debug(
             f"Sending GET request at {action_api}, languages={languages}, ids={ids}"
