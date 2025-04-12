@@ -38,7 +38,7 @@
         <th scope="col">{% translate 'Actions' %}</th>
       </tr>
     </thead>
-    <tbody id="lastBatchesTBody" hx-get="/batches/{% if username is not None %}{{ username }}/{% endif %}"
+    <tbody id="lastBatchesTBody" hx-get="/batches/{% if username is not None %}{{ username }}/{% endif %}?page={{page.number}}&page_size={{page_size}}"
       hx-trigger="load delay:5s" hx-select="#lastBatchesTBody" hx-swap="outerHTML"
       hx-indicator="#spinner">
       {% for batch in page.object_list %}
@@ -66,7 +66,6 @@
     </tbody>
   </table>
 
-
   {% if page.has_other_pages %}
   <div style="display: inline-block; width: 100%;">
       
@@ -74,13 +73,13 @@
       
         {% if page.has_previous %}
         <span class="pagination prev-page">
-          <a href="{{base_url}}?page=1">
+          <a href="{{base_url}}?page=1&page_size={{page_size}}">
             << {% translate 'FIRST' %}
           </a>
         </span> 
         
         <span class="pagination prev-page">
-          <a href="{{base_url}}?page={{page.previous_page_number}}">
+          <a href="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}">
             < {% translate 'PREVIOUS' %}
           </a>
         </span> 
@@ -100,13 +99,13 @@
     
       {% if page.has_next %}
       <span class="pagination next-page">
-        <a href="{{base_url}}?page={{page.next_page_number}}">
+        <a href="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}">
             {% translate 'NEXT' %} >
         </a>
       </span> 
         
       <span class="pagination next-page">
-        <a href="{{base_url}}?page={{page.paginator.num_pages}}">
+        <a href="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}">
             {% translate 'LAST' %}>>
         </a>
       </span> 
@@ -117,4 +116,23 @@
   </div>
   {% endif %}
 
+  <div style="float: right; font-size: medium;">
+    <label for="page_size">{% translate 'Page size:' %}</label>
+    <select id="page_size"
+            style="font-size: medium;"
+            name="page_size"
+            aria-label="{% translate 'Page size:' %}"
+            required
+            onchange="location.href='{{ base_url }}?page=1&page_size=' + this.value">
+      <option selected disabled value="">
+        {% translate 'Page size:' %}
+      </option>
+      <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
+      <option value="25" {% if page_size == 25 %}selected{% endif %}>25</option>
+      <option value="50" {% if page_size == 50 %}selected{% endif %}>50</option>
+      <option value="100" {% if page_size == 100 %}selected{% endif %}>100</option>
+      <option value="500" {% if page_size == 500 %}selected{% endif %}>500</option>
+    </select>
+  </div>
+  
 {% endblock %}
