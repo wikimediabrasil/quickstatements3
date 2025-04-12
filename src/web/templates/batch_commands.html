@@ -88,7 +88,7 @@
       
         {% if page.has_previous %}
         <span class="pagination prev-page">
-          <a href="#" hx-get="{{base_url}}?page=1{% if only_errors %}&show_errors=1{% endif %}"
+          <a href="#" hx-get="{{base_url}}?page=1&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
               hx-target="#batchCommandsDiv" 
               hx-swap="innerHTML">
             << {% translate "FIRST" %}
@@ -96,7 +96,7 @@
         </span> 
         
         <span class="pagination prev-page">
-          <a href="#" hx-get="{{base_url}}?page={{page.previous_page_number}}{% if only_errors %}&show_errors=1{% endif %}"
+          <a href="#" hx-get="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
               hx-target="#batchCommandsDiv" 
               hx-swap="innerHTML">
             < {% translate "PREVIOUS" %}
@@ -118,7 +118,7 @@
     
       {% if page.has_next %}
       <span class="pagination next-page">
-        <a href="#" hx-get="{{base_url}}?page={{page.next_page_number}}{% if only_errors %}&show_errors=1{% endif %}"
+        <a href="#" hx-get="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
           hx-target="#batchCommandsDiv" 
           hx-swap="innerHTML">
             {% translate "NEXT" %} >
@@ -126,7 +126,7 @@
       </span> 
         
       <span class="pagination next-page">
-        <a href="#" hx-get="{{base_url}}?page={{page.paginator.num_pages}}{% if only_errors %}&show_errors=1{% endif %}"
+        <a href="#" hx-get="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
             hx-target="#batchCommandsDiv" 
             hx-swap="innerHTML">
             {% translate "LAST" %}>>
@@ -138,3 +138,27 @@
   
   </div>
   {% endif %}
+
+<div style="float: right; font-size: medium;">
+  <label for="page_size">{% translate 'Page size:' %}</label>
+  <select id="page_size"
+          style="font-size: medium;"
+          name="page_size"
+          aria-label="{% translate 'Page size:' %}"
+          required
+          hx-get="{{ base_url }}?page=1&page_size="
+          hx-target="#batchCommandsDiv"
+          hx-swap="innerHTML"
+          hx-trigger="change"
+          hx-include="this.value">
+    <option selected disabled value="">
+      {% translate 'Page size:' %}
+    </option>
+    <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
+    <option value="25" {% if page_size == 25 %}selected{% endif %}>25</option>
+    <option value="50" {% if page_size == 50 %}selected{% endif %}>50</option>
+    <option value="100" {% if page_size == 100 %}selected{% endif %}>100</option>
+    <option value="500" {% if page_size == 500 %}selected{% endif %}>500</option>
+  </select>
+</div>
+  
