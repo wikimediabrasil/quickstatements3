@@ -684,6 +684,48 @@ class ViewsTest(TestCase):
             self.assertInRes("Stop execution", response)
 
     @requests_mock.Mocker()
+    def test_rerun_button(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P2", "wikibase-item")
+        self.api_mocker.item_empty(mocker, "Q1234")
+        self.api_mocker.item_empty(mocker, "Q11")
+        self.api_mocker.patch_item_fail(mocker, "Q1234", 418, {"id": "Q1234$stuff"})
+        self.api_mocker.patch_item_fail(
+            mocker, "Q11", 418, {"id": "Q11", "labels": {"en": "label"}}
+        )
+        user, api_client = self.login_user_and_get_token("wikiuser")
+        parser = V1CommandParser()
+        batch = parser.parse("Batch", "wikiuser", """Q1234\tP2\tQ1||Q11|Len|"label" """)
+        batch.wikibase = self.api_mocker.wikibase
+        batch.save_batch_and_preview_commands()
+        pk = batch.pk
+
+        response = self.client.get(f"/batch/{pk}/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("batch.html")
+        self.assertNotInRes(
+            f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
+        )
+        self.assertNotInRes(
+            """<input class="secondary" type="submit" value="Rerun">""", response
+        )
+
+        batch.run()
+
+        response = self.client.get(f"/batch/{pk}/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("batch.html")
+        self.assertInRes(
+            f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
+        )
+        self.assertInRes("""<input class="secondary" type="submit" value="Rerun">""", response)
+
+        response = self.client.post(f"/batch/{pk}/rerun/")
+        response = self.client.get(response.url)
+        self.assertInRes("Stop execution", response)
+
+    @requests_mock.Mocker()
     def test_batch_preview_commands(self, mocker):
         self.api_mocker.is_autoconfirmed(mocker)
         user, api_client = self.login_user_and_get_token("user")
@@ -1079,6 +1121,91 @@ class ViewsTest(TestCase):
 
             # Test as not authenticated user
             response = attempt_to_restart(None, authorized=False)
+            self.assertEqual(response.status_code, 403)
+
+    @requests_mock.Mocker()
+    def test_batch_rerun_permissions(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.property_data_type(mocker, "P2", "wikibase-item")
+        self.api_mocker.item_empty(mocker, "Q1234")
+        self.api_mocker.item_empty(mocker, "Q11")
+        self.api_mocker.patch_item_fail(mocker, "Q1234", 418, {"id": "Q1234$stuff"})
+        self.api_mocker.patch_item_fail(
+            mocker, "Q11", 418, {"id": "Q11", "labels": {"en": "label"}}
+        )
+
+        with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            admin = User.objects.create_superuser(username="admin")
+            other_user, _ = self.login_user_and_get_token("other_user")
+            creator, api_client = self.login_user_and_get_token("creator")
+
+            self.client.force_login(creator)
+
+            # Creates the batch and runs it
+            response = self.client.post(
+                "/batch/new/",
+                data={
+                    "name": "My v1 batch",
+                    "type": "v1",
+                    "commands": """Q1234\tP2\tQ1||Q11|Len|"label" """,
+                },
+            )
+            self.assertEqual(response.status_code, 302)
+
+            response = self.client.post("/batch/new/preview/allow_start/")
+            response = self.client.get(response.url)
+            self.assertInRes("Stop execution", response)
+
+            batch = response.context["batch"]
+            pk = batch.pk
+            self.assertNotInRes(
+                f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
+            )
+            self.assertNotInRes(
+                """<input class="secondary" type="submit" value="Rerun">""", response
+            )
+            batch.run()
+
+            def attempt_to_rerun(user, authorized):
+                batch.refresh_from_db()
+                batch.run()
+                if not user:
+                    self.client.logout()
+                else:
+                    self.client.force_login(user)
+
+                response = self.client.get(f"/batch/{pk}/")
+                self.assertEqual(response.status_code, 200)
+
+                # Checks if the user can access the batch rerun option
+                if authorized:
+                    self.assertInRes("rerun", response)
+                    self.assertInRes(
+                        f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
+                    )
+                else:
+                    self.assertNotInRes("rerun", response)
+                    self.assertNotInRes(
+                        f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
+                    )
+                return self.client.post(f"/batch/{pk}/rerun/")
+
+            # Test as batch creator
+            response = attempt_to_rerun(creator, authorized=True)
+            self.assertEqual(response.status_code, 302)
+
+            # Test as admin
+            response = attempt_to_rerun(admin, authorized=True)
+            self.assertEqual(response.status_code, 302)
+
+            # Test as other user
+            response = attempt_to_rerun(other_user, authorized=False)
+            self.assertEqual(response.status_code, 403)
+
+            # Test as not authenticated user
+            response = attempt_to_rerun(None, authorized=False)
             self.assertEqual(response.status_code, 403)
 
     @requests_mock.Mocker()
