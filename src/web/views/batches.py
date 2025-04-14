@@ -6,7 +6,7 @@ from django.urls import reverse
 from core.models import Batch
 
 
-PAGE_SIZE = 25
+PAGE_SIZE = 30
 
 
 @require_http_methods(
@@ -33,15 +33,12 @@ def last_batches(request):
     """
     try:
         page = int(request.GET.get("page", 1))
-        page_size = int(request.GET.get("page_size", PAGE_SIZE))
     except (TypeError, ValueError):
         page = 1
-        page_size = PAGE_SIZE
-
-    paginator = Paginator(Batch.objects.all().order_by("-modified"), page_size)
+    paginator = Paginator(Batch.objects.all().order_by("-modified"), PAGE_SIZE)
     base_url = reverse("last_batches")
     return render(
-        request, "batches.html", {"page": paginator.page(page), "base_url": base_url, "page_size": page_size}
+        request, "batches.html", {"page": paginator.page(page), "base_url": base_url}
     )
 
 
@@ -56,18 +53,15 @@ def last_batches_by_user(request, user):
     """
     try:
         page = int(request.GET.get("page", 1))
-        page_size = int(request.GET.get("page_size", PAGE_SIZE))
     except (TypeError, ValueError):
         page = 1
-        page_size = PAGE_SIZE
-
     paginator = Paginator(
-        Batch.objects.filter(user=user).order_by("-modified"), page_size
+        Batch.objects.filter(user=user).order_by("-modified"), PAGE_SIZE
     )
     base_url = reverse("last_batches_by_user", args=[user])
     # we need to use `username` since `user` is always supplied by django templates
     return render(
         request,
         "batches.html",
-        {"username": user, "page": paginator.page(page), "base_url": base_url, "page_size": page_size},
+        {"username": user, "page": paginator.page(page), "base_url": base_url},
     )

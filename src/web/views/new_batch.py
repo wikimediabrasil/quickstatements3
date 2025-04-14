@@ -17,7 +17,7 @@ from web.models import Preferences
 
 from .auth import logout_per_token_expired
 
-PAGE_SIZE = 25
+PAGE_SIZE = 30
 
 
 @require_http_methods(["GET"])
@@ -93,10 +93,8 @@ def preview_batch_commands(request):
 
         try:
             page = int(request.GET.get("page", 1))
-            page_size = int(request.GET.get("page_size", PAGE_SIZE))
         except (TypeError, ValueError):
             page = 1
-            page_size = PAGE_SIZE
 
         only_errors = int(request.GET.get("show_errors", 0)) == 1
         if only_errors:
@@ -109,7 +107,7 @@ def preview_batch_commands(request):
         for command in batch_commands:
             command.batch = batch
 
-        paginator = Paginator(batch_commands, page_size)
+        paginator = Paginator(batch_commands, PAGE_SIZE)
         page = paginator.page(page)
         page.object_list = [d.object for d in page.object_list]
 
@@ -122,7 +120,7 @@ def preview_batch_commands(request):
     return render(
         request,
         "batch_commands.html",
-        {"page": page, "only_errors": only_errors, "base_url": base_url, "page_size": page_size,},
+        {"page": page, "only_errors": only_errors, "base_url": base_url},
     )
 
 
