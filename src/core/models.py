@@ -1550,13 +1550,20 @@ class BatchCommand(models.Model):
         It loops twice through the commands list.
         """
         ids = set()
+        entities = dict()
+
         for command in commands:
             id = command.entity_id()
             if id is not None and id != "LAST":
                 ids.add(command.entity_id())
         ids = list(ids)
-        api_json = client.get_multiple_labels(ids, language)
-        entities = api_json.get("entities", {})
+
+        batch_size = 50
+        for i in range(0, len(ids), batch_size):
+            batch_ids = ids[i:i + batch_size]
+            api_json = client.get_multiple_labels(batch_ids, language)
+            entities.update(api_json.get("entities", {}))
+
         for command in commands:
             id = command.entity_id()
             response_labels = entities.get(id, {}).get("labels", {})
