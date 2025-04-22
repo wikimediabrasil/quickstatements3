@@ -138,7 +138,7 @@ class TestBatch(TestCase):
         batch.stop()
         self.assertTrue(batch.is_stopped)
         self.assertTrue(
-            batch.message.startswith("Batch stopped processing by owner at")
+            batch.message.startswith("Batch stopped processing at")
         )
 
     def test_batch_restart(self):
@@ -157,7 +157,47 @@ class TestBatch(TestCase):
         batch.save()
         batch.restart()
         self.assertTrue(batch.is_initial)
-        self.assertTrue(batch.message.startswith("Batch restarted by owner"))
+        self.assertTrue(batch.message.startswith("Batch restarted at"))
+
+    def test_batch_rerun(self):
+        batch = Batch.objects.create(name="teste", status=Batch.STATUS_BLOCKED)
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        batch.status = Batch.STATUS_RUNNING
+        batch.save()
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        batch.status = Batch.STATUS_STOPPED
+        batch.save()
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        batch.status = Batch.STATUS_DONE
+        batch.save()
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        BatchCommand.objects.create(batch=batch,
+                                    index=0,
+                                    json={},
+                                    raw="{}",
+                                    status=BatchCommand.STATUS_DONE)
+        batch.rerun()
+        self.assertFalse(batch.is_initial)
+        BatchCommand.objects.create(batch=batch,
+                                    index=1,
+                                    json={},
+                                    raw="{}",
+                                    status=BatchCommand.STATUS_RUNNING)
+        BatchCommand.objects.create(batch=batch,
+                                    index=2,
+                                    json={},
+                                    raw="{}",
+                                    status=BatchCommand.STATUS_ERROR)
+        batch.rerun()
+        self.assertTrue(batch.is_initial)
+        self.assertTrue(batch.message.startswith("Batch rerun at"))
+        self.assertEqual(batch.commands()[0].status, BatchCommand.STATUS_DONE)
+        self.assertEqual(batch.commands()[1].status, BatchCommand.STATUS_INITIAL)
+        self.assertEqual(batch.commands()[2].status, BatchCommand.STATUS_INITIAL)
 
 
 class TestV1Batch(TestCase):
@@ -766,7 +806,7 @@ Q4115189,Q5,my comment"""
     def test_edit_summary_with_editgroups(self):
         COMMAND = """qid,P31,#
 Q4115189,Q5,my comment
-Q4115189,Q5, 
+Q4115189,Q5,
 """
         par = CSVCommandParser()
         batch = par.parse("b", "u", COMMAND)
@@ -787,7 +827,7 @@ Q4115189,Q5,
     def test_edit_summary_without_editgroups(self):
         COMMAND = """qid,P31,#
 Q4115189,Q5,my comment
-Q4115189,Q5, 
+Q4115189,Q5,
 """
         par = CSVCommandParser()
         batch = par.parse("b", "u", COMMAND)

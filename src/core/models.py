@@ -575,7 +575,7 @@ class Batch(models.Model):
     def stop(self):
         if not self.is_done:
             logger.info(f"[{self}] stop...")
-            self.message = f"Batch stopped processing by owner at {datetime.now()}"
+            self.message = f"Batch stopped processing at {datetime.now()}"
             self.status = self.STATUS_STOPPED
             self.save()
         else:
@@ -584,7 +584,19 @@ class Batch(models.Model):
     def restart(self):
         if self.is_stopped:
             logger.info(f"[{self}] restarting...")
-            self.message = f"Batch restarted by owner {datetime.now()}"
+            self.message = f"Batch restarted at {datetime.now()}"
+            self.status = self.STATUS_INITIAL
+            self.save()
+
+    def rerun(self):
+        if self.is_done_and_has_pending:
+            logger.info(f"[{self}] rerunning...")
+            commands = []
+            for command in self.commands().exclude(status=BatchCommand.STATUS_DONE):
+                command.status = BatchCommand.STATUS_INITIAL
+                commands.append(command)
+            BatchCommand.objects.bulk_update(commands, ["status"])
+            self.message = f"Batch rerun at {datetime.now()}"
             self.status = self.STATUS_INITIAL
             self.save()
 
@@ -637,6 +649,14 @@ class Batch(models.Model):
     @property
     def is_done(self):
         return self.status == Batch.STATUS_DONE
+
+    @property
+    def has_pending_commands(self):
+        return self.commands().exclude(status=BatchCommand.STATUS_DONE).exists()
+    
+    @property
+    def is_done_and_has_pending(self):
+        return self.is_done and self.has_pending_commands
 
     def add_preview_command(self, preview_command: "BatchCommand") -> bool:
         if not hasattr(self, "_preview_commands"):
