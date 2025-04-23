@@ -1,5 +1,7 @@
 {% load i18n %}
-{% load static %}
+{% load static quickstatements %}
+
+{% has_multiple_wikibases as multiple_wikis %}
 
 <!DOCTYPE HTML>
 <html>
@@ -58,7 +60,7 @@
 
     {% block css %}
     {% endblock %}
-    
+
   </style>
 </head>
 

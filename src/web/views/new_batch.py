@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 
 from core.exceptions import ServerError, UnauthorizedToken
-from core.models import BatchCommand, Client, Token, get_default_wikibase
+from core.models import BatchCommand, Client, Token, Wikibase, get_default_wikibase
 from core.parsers.base import ParserException
 from core.parsers.csv import CSVCommandParser
 from core.parsers.v1 import V1CommandParser
@@ -155,10 +155,9 @@ def new_batch(request):
 
             batch = parser.parse(batch_name, batch_owner, batch_commands)
 
-            batch.wikibase = get_default_wikibase()
-
-            # # FIXME: The ORM will keep the default wikibase_id during test.
-            # batch.wikibase_id = batch.wikibase.url
+            wikibase_url = request.POST.get("wikibase")
+            wikibase = Wikibase.objects.filter(url=wikibase_url).first()
+            batch.wikibase = wikibase or get_default_wikibase()
 
             batch.status = batch.STATUS_PREVIEW
             batch.block_on_errors = "block_on_errors" in request.POST
@@ -185,6 +184,7 @@ def new_batch(request):
                 "name": batch_name,
                 "batch_type": batch_type,
                 "commands": batch_commands,
+                "wikibases": Wikibase.objects.all(),
             },
         )
 
@@ -210,6 +210,7 @@ def new_batch(request):
                 "batch_type": preferred_batch_type,
                 "is_autoconfirmed": is_autoconfirmed,
                 "is_blocked": is_blocked,
+                "wikibases": Wikibase.objects.all(),
             },
         )
 
@@ -255,6 +256,7 @@ def batch_allow_start(request):
                 "is_autoconfirmed": is_autoconfirmed,
                 "is_blocked": is_blocked,
                 "error": error_message,
+                "wikibases": Wikibase.objects.all(),
             },
         )
 
