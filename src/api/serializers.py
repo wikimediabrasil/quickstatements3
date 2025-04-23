@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse_lazy
 
-from core.models import Batch
-from core.models import BatchCommand
+from core.models import Batch, BatchCommand
 
 
 class BatchListSerializer(serializers.HyperlinkedModelSerializer):
@@ -94,7 +93,7 @@ class BatchCommandListSerializer(serializers.HyperlinkedModelSerializer):
             "index",
             "action",
             "json",
-            "response_json",
+            "response_id",
             "status",
             "created",
             "modified",
@@ -125,7 +124,7 @@ class BatchCommandDetailSerializer(serializers.HyperlinkedModelSerializer):
             "action",
             "raw",
             "json",
-            "response_json",
+            "response_id",
             "status",
             "created",
             "modified",

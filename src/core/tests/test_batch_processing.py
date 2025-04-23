@@ -311,7 +311,6 @@ class ProcessingTests(TestCase):
             commands[0].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_ID
         )
         self.assertEqual(commands[0].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[0].response_json, "Statement deleted")
 
     @requests_mock.Mocker()
     def test_remove_statement_by_value_success(self, mocker):
@@ -682,12 +681,10 @@ class ProcessingTests(TestCase):
         commands = batch.commands()
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
-        self.assertEqual(commands[0].response_json, {})  # no API connection
-        self.assertEqual(commands[1].response_json, {})  # no API connection
-        self.assertEqual(commands[2].response_json, {})  # no API connection
-        self.assertEqual(
-            commands[3].response_json, {"id": "Q123"}
-        )  # created: API connection
+        self.assertIsNone(commands[0].response_id)  # no API connection
+        self.assertIsNone(commands[1].response_id)  # no API connection
+        self.assertIsNone(commands[2].response_id)  # no API connection
+        self.assertEqual(commands[3].response_id, "Q123")  # created: API connection
         self.assertEqual(len(commands), 4)
         for command in commands:
             self.assertEqual(command.status, BatchCommand.STATUS_DONE)
@@ -702,18 +699,10 @@ class ProcessingTests(TestCase):
         batch.run()
         commands = batch.commands()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
-        self.assertEqual(
-            commands[0].response_json, {"id": "Q123"}
-        )  # with API connection
-        self.assertEqual(
-            commands[1].response_json, {"id": "Q123$abcdef"}
-        )  # with API connection
-        self.assertEqual(
-            commands[2].response_json, {"id": "Q123$abcdef"}
-        )  # with API connection
-        self.assertEqual(
-            commands[3].response_json, {"id": "Q123$abcdef"}
-        )  # with API connection
+        self.assertEqual(commands[0].response_id, "Q123")  # with API connection
+        self.assertEqual(commands[1].response_id, "Q123$abcdef")  # with API connection
+        self.assertEqual(commands[2].response_id, "Q123$abcdef")  # with API connection
+        self.assertEqual(commands[3].response_id, "Q123$abcdef")  # with API connection
         self.assertEqual(len(commands), 4)
         for command in commands:
             self.assertEqual(command.status, BatchCommand.STATUS_DONE)
@@ -736,12 +725,12 @@ class ProcessingTests(TestCase):
         commands = batch.commands()
         self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[0].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[0].response_json, {})
+        self.assertIsNone(commands[0].response_id)
         self.assertEqual(commands[1].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[1].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[1].response_json, {})
+        self.assertIsNone(commands[1].response_id)
         self.assertEqual(commands[2].status, BatchCommand.STATUS_ERROR)
-        self.assertEqual(commands[2].response_json, {})
+        self.assertIsNone(commands[2].response_id)
         self.assertEqual(len(commands), 3)
 
     @requests_mock.Mocker()
@@ -771,21 +760,21 @@ class ProcessingTests(TestCase):
         self.assertEqual(batch.status, Batch.STATUS_DONE)
         self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[0].error, BatchCommand.Error.LAST_NOT_EVALUATED)
-        self.assertEqual(commands[0].response_json, {})
+        self.assertIsNone(commands[0].response_id)
         self.assertEqual(commands[1].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[1].response_json, {"id": "Q123"})
+        self.assertEqual(commands[1].response_id, "Q123")
         self.assertEqual(commands[2].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[2].response_json, {})
+        self.assertIsNone(commands[2].response_id)
         self.assertEqual(commands[3].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[3].response_json, {"id": "Q123"})
+        self.assertEqual(commands[3].response_id, "Q123")
         self.assertEqual(commands[4].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[4].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[4].response_json, {})
+        self.assertIsNone(commands[4].response_id)
         self.assertEqual(commands[5].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[5].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[5].response_json, {})
+        self.assertIsNone(commands[5].response_id)
         self.assertEqual(commands[6].status, BatchCommand.STATUS_ERROR)
-        self.assertEqual(commands[6].response_json, {})
+        self.assertIsNone(commands[6].response_id)
         self.assertEqual(len(commands), 7)
         # ---
         # WITHOUT COMBINING COMMANDS
@@ -800,19 +789,19 @@ class ProcessingTests(TestCase):
         self.assertEqual(batch.status, Batch.STATUS_DONE)
         self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[0].error, BatchCommand.Error.LAST_NOT_EVALUATED)
-        self.assertEqual(commands[0].response_json, {})
+        self.assertIsNone(commands[0].response_id)
         self.assertEqual(commands[1].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[1].response_json, {"id": "Q123"})
+        self.assertEqual(commands[1].response_id, "Q123")
         self.assertEqual(commands[2].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[2].response_json, {"id": "Q123"})
+        self.assertEqual(commands[2].response_id, "Q123")
         self.assertEqual(commands[3].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[3].response_json, {"id": "Q123$abcdef"})
+        self.assertEqual(commands[3].response_id, "Q123$abcdef")
         self.assertEqual(commands[4].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[4].response_json, {"id": "Q123"})
+        self.assertEqual(commands[4].response_id, "Q123")
         self.assertEqual(commands[5].status, BatchCommand.STATUS_DONE)
-        self.assertEqual(commands[5].response_json, {"id": "Q123$abcdef"})
+        self.assertEqual(commands[5].response_id, "Q123$abcdef")
         self.assertEqual(commands[6].status, BatchCommand.STATUS_ERROR)
-        self.assertEqual(commands[6].response_json, {})
+        self.assertIsNone(commands[6].response_id)
         self.assertEqual(len(commands), 7)
 
     @requests_mock.Mocker()
@@ -837,16 +826,16 @@ class ProcessingTests(TestCase):
         self.assertEqual(batch.status, Batch.STATUS_DONE)
         self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[0].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[0].response_json, {})
+        self.assertIsNone(commands[0].response_id)
         self.assertEqual(commands[1].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[1].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[1].response_json, {})
+        self.assertIsNone(commands[1].response_id)
         self.assertEqual(commands[2].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[2].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[2].response_json, {})
+        self.assertIsNone(commands[2].response_id)
         self.assertEqual(commands[3].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[3].error, BatchCommand.Error.API_SERVER_ERROR)
-        self.assertEqual(commands[3].response_json, {})
+        self.assertIsNone(commands[3].response_id)
         self.assertEqual(len(commands), 4)
 
     @requests_mock.Mocker()

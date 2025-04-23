@@ -554,7 +554,7 @@ class Batch(models.Model):
 
                 state = current.final_combining_state
                 if current.action == BatchCommand.ACTION_CREATE:
-                    last_id = current.response_id()
+                    last_id = current.response_id
 
                 current = upcoming
 
@@ -663,7 +663,7 @@ class Batch(models.Model):
     @property
     def has_pending_commands(self):
         return self.commands().exclude(status=BatchCommand.STATUS_DONE).exists()
-    
+
     @property
     def is_done_and_has_pending(self):
         return self.is_done and self.has_pending_commands
@@ -827,7 +827,7 @@ class BatchCommand(models.Model):
     # Post-running fields
     # -------
     message = models.TextField(blank=True, null=True)
-    response_json = models.JSONField(default=dict, blank=True)
+    response_id = models.CharField(max_length=48, null=True, blank=True)
 
     class Error(models.TextChoices):
         OP_NOT_IMPLEMENTED = "op_not_implemented", _("Operation not implemented")
@@ -867,7 +867,7 @@ class BatchCommand(models.Model):
         logger.info(f"[{self}] finished")
         self.status = BatchCommand.STATUS_DONE
         if self.is_id_last_or_create_item():
-            self.set_entity_id(self.response_id())
+            self.set_entity_id(self.response_id)
         self.save()
         self.propagate_to_previous_commands()
 
@@ -1135,17 +1135,9 @@ class BatchCommand(models.Model):
             self.entity_id() == "LAST" or self.operation == self.Operation.CREATE_ITEM
         )
 
-    # -----------------
-    # LAST related methods
-    # -----------------
-
-    def response_id(self):
-        """
-        Returns the response's id.
-
-        It is the created entity id when in a CREATE action.
-        """
-        return self.response_json.get("id")
+    # # -----------------
+    # # LAST related methods
+    # # -----------------
 
     def update_last_id(self, last_id=None):
         """
@@ -1179,7 +1171,11 @@ class BatchCommand(models.Model):
             if self.can_combine_with_next:
                 self.update_combining_state(client)
             else:
-                self.response_json = self.send_to_api(client)
+                response_json = self.send_to_api(client)
+                try:
+                    self.response_id = response_json.get("id")
+                except AttributeError:
+                    pass
                 self.finish()
         except NotImplementedError:
             self.error_with_value(self.Error.OP_NOT_IMPLEMENTED)
@@ -1590,7 +1586,7 @@ class BatchCommand(models.Model):
 
         batch_size = 50
         for i in range(0, len(ids), batch_size):
-            batch_ids = ids[i:i + batch_size]
+            batch_ids = ids[i : i + batch_size]
             api_json = client.get_multiple_labels(batch_ids, language)
             entities.update(api_json.get("entities", {}))
 
