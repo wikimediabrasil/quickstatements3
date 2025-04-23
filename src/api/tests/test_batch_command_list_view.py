@@ -1,12 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-
 from rest_framework.authtoken.models import Token
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
-from core.models import Batch
-from core.models import BatchCommand
+from core.models import Batch, BatchCommand
 from core.parsers.v1 import V1CommandParser
 
 
@@ -62,7 +60,7 @@ class BatchCommandDetailViewTest(TestCase):
         self.assertEqual(c0["url"], f"http://testserver/api/v1/commands/{cmd1_pk}")
         self.assertEqual(c0["action"], "CREATE")
         self.assertEqual(c0["json"], {"action": "create", "type": "item"})
-        self.assertEqual(c0["response_json"], {})
+        self.assertIsNone(c0["response_id"])
         self.assertEqual(c0["status"], 0)
 
         c1 = data["commands"][1]
@@ -79,7 +77,7 @@ class BatchCommandDetailViewTest(TestCase):
                 "value": {"type": "quantity", "value": {"amount": "+12", "unit": "1"}},
             },
         )
-        self.assertEqual(c1["response_json"], {})
+        self.assertIsNone(c1["response_id"])
         self.assertEqual(c1["status"], 0)
 
     def test_batch_command_list_paginated_authenticated_request(self):

@@ -686,7 +686,7 @@ class TestBatchCommand(TestCase):
         cmd.run(self.api_client)
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_ITEM)
         self.assertEqual(cmd.status, BatchCommand.STATUS_DONE)
-        self.assertEqual(cmd.response_json, {"id": "Q5"})
+        self.assertEqual(cmd.response_id, "Q5")
 
     @requests_mock.Mocker()
     def test_send_create_property(self, mocker):
@@ -700,6 +700,6 @@ class TestBatchCommand(TestCase):
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_PROPERTY)
         self.assertEqual(cmd.status, BatchCommand.STATUS_ERROR)
         self.assertEqual(cmd.error, BatchCommand.Error.OP_NOT_IMPLEMENTED)
-        self.assertEqual(cmd.response_json, {})
+        self.assertIsNone(cmd.response_id)
         with self.assertRaises(NotImplementedError):
             cmd.send_to_api(self.api_client)

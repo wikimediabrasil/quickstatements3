@@ -1,12 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-
 from rest_framework.authtoken.models import Token
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
-from core.models import Batch
-from core.models import BatchCommand
+from core.models import Batch, BatchCommand
 
 
 class BatchCommandDetailViewTest(TestCase):
@@ -59,7 +57,7 @@ class BatchCommandDetailViewTest(TestCase):
         self.assertEqual(data["action"], "ADD")
         self.assertEqual(data["raw"], "")
         self.assertEqual(data["json"], {})
-        self.assertEqual(data["response_json"], {})
+        self.assertIsNone(data["response_id"])
         self.assertEqual(data["status"], {"code": 0, "display": "Initial"})
 
         command.status = BatchCommand.STATUS_RUNNING
@@ -82,7 +80,7 @@ class BatchCommandDetailViewTest(TestCase):
         self.assertEqual(data["action"], "ADD")
         self.assertEqual(data["raw"], "CREATE")
         self.assertEqual(data["json"], {"action": "create", "type": "item"})
-        self.assertEqual(data["response_json"], {})
+        self.assertIsNone(data["response_id"])
         self.assertEqual(data["status"], {"code": 1, "display": "Running"})
 
         command.status = BatchCommand.STATUS_DONE
@@ -104,7 +102,7 @@ class BatchCommandDetailViewTest(TestCase):
         self.assertEqual(data["action"], "CREATE")
         self.assertEqual(data["raw"], "CREATE")
         self.assertEqual(data["json"], {"action": "create", "type": "item"})
-        self.assertEqual(data["response_json"], {})
+        self.assertIsNone(data["response_id"])
         self.assertEqual(data["status"], {"code": 2, "display": "Done"})
 
         command.status = BatchCommand.STATUS_ERROR
@@ -125,7 +123,7 @@ class BatchCommandDetailViewTest(TestCase):
         self.assertEqual(data["action"], "CREATE")
         self.assertEqual(data["raw"], "CREATE")
         self.assertEqual(data["json"], {"action": "create", "type": "item"})
-        self.assertEqual(data["response_json"], {})
+        self.assertIsNone(data["response_id"])
         self.assertEqual(data["status"], {"code": -1, "display": "Error"})
 
     def test_non_allowed_methods_request(self):
