@@ -9,6 +9,9 @@
     <hgroup>
         <h2> {% translate "Batch Preview" %} <img id="spinner" class="htmx-indicator"></h2>
         <p><b>{{batch.name}}</b></p>
+        {% if multiple_wikis %}
+        <p>{{ batch.wikibase }}</p>
+        {% endif %}
     </hgroup>
 </div>
 <div style="float: right;">

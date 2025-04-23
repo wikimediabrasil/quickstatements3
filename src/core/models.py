@@ -48,7 +48,7 @@ oauth.register(
 
 
 def get_default_wikibase():
-    parsed_root_enpoint = urlparse(settings.BASE_REST_URL)
+    parsed_root_enpoint = urlparse(settings.DEFAULT_WIKIBASE_URL)
     default_wikibase_url = (
         f"{parsed_root_enpoint.scheme}://{parsed_root_enpoint.netloc}"
     )
@@ -148,7 +148,17 @@ class Client:
         return profile.get("groups", [])
 
     def get_is_autoconfirmed(self):
-        return "autoconfirmed" in self.get_user_groups()
+        if "autoconfirmed" in self.get_user_groups():
+            return True
+
+        try:
+            username = self.get_username()
+            if username in settings.WHITELISTED_USERS:
+                return True
+        except ServerError:
+            pass
+
+        return False
 
     def get_is_blocked(self):
         profile = self.get_profile()

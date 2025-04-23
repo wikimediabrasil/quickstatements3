@@ -8,11 +8,13 @@
 {% endblock %}
 
 {% block content %}
-
 <div style="float: left;">
 <hgroup>
   <h2> {% translate "Batch" %} #{{ batch.pk }} <img id="spinner" class="htmx-indicator"></h2>
   <p><b>{{batch.name}}</b></p>
+  {% if multiple_wikis %}
+  <p>{% translate 'Submitted to' %}: {{ batch.wikibase }}</p>
+  {% endif %}
   <p>
     {% translate 'Created by' %}
     <a href="https://www.wikidata.org/wiki/User:{{batch.user}}">{{ batch.user }}</a>
@@ -52,7 +54,7 @@
 {% endif %}
 
 
-<div id="batchProgressDiv" 
+<div id="batchProgressDiv"
       hx-get="{% url 'batch_summary' pk=batch.pk %}"
       hx-trigger="load"
       hx-swap="outerHTML"
@@ -63,10 +65,10 @@
 
 <h4>{% translate "Commands" %}</h4>
 
-<div class="overflow-auto" 
-    id="batchCommandsDiv" 
+<div class="overflow-auto"
+    id="batchCommandsDiv"
     hx-get="{% url 'batch_commands' pk=batch.pk %}"
-    hx-trigger="load, reload" 
+    hx-trigger="load, reload"
     hx-indicator="#spinner"
     hx-swap="innerHTML">
 {% translate "Loading commands..." %}
@@ -107,4 +109,3 @@ function stop() {
 
 </script>
 {% endblock scripts %}
-

@@ -1,5 +1,6 @@
 version: '3.8'
 
+
 x-application-service: &application-service
   build:
     context: ./
@@ -23,7 +24,12 @@ x-application-service: &application-service
     - ./etc/env
   volumes:
     - ./src:/home/wmb/www/python/src
-    - static-data:/home/wmb/www/python/static
+    - qs-static-data:/home/wmb/www/python/static
+
+x-wikibase-volumes: &wikibase-volumes
+  volumes:
+    - wikibase-config-data:/config
+    - wikibase-static-data:/var/www/html/images
 
 services:
   mariadb:
@@ -34,10 +40,8 @@ services:
       # use the root user
       MARIADB_DATABASE: quickstatements
       MARIADB_ROOT_PASSWORD: quickstatements_pass
-    expose:
-      - "3306"
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - qs-mariadb-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       start_period: 10s
@@ -51,8 +55,10 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - static-data:/static
+      - qs-static-data:/static
       - ./etc/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
 
   app:
     <<: *application-service
@@ -70,6 +76,57 @@ services:
     <<: *application-service
     command: django-admin send_batches
 
+  wikibase:
+    <<: *wikibase-volumes
+    image: wikibase/wikibase:4.0
+    ports:
+      - 8888:80
+    environment:
+      MW_ADMIN_NAME: "${WIKIBASE_ADMIN_USERNAME:-admin}"
+      MW_ADMIN_PASS: "${WIKIBASE_ADMIN_PASSWORD:-wikibase_admin_pass}"
+      MW_ADMIN_EMAIL: "${WIKIBASE_ADMIN_EMAIL:-admin@wikibase.example}"
+      MW_WG_SERVER: http://localhost:8888
+      DB_SERVER: wikibase-db:3306
+      DB_NAME: wikibase
+      DB_USER: wikibase
+      DB_PASS: wikibase_pass
+    healthcheck:
+      test: curl --silent --fail localhost/wiki/Main_Page
+      interval: 10s
+      start_period: 5m
+    depends_on:
+      wikibase-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  wikibase-jobrunner:
+    <<: *wikibase-volumes
+    image: wikibase/wikibase:4.0
+    command: /jobrunner-entrypoint.sh
+    depends_on:
+      wikibase:
+        condition: service_healthy
+    restart: unless-stopped
+
+  wikibase-db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: wikibase
+      MARIADB_USER: wikibase
+      MARIADB_PASSWORD: wikibase_pass
+      MARIADB_RANDOM_ROOT_PASSWORD: yes
+    healthcheck:
+      test: healthcheck.sh --connect --innodb_initialized
+      start_period: 1m
+      interval: 20s
+      timeout: 5s
+    restart: unless-stopped
+    volumes:
+      - wikibase-db-data:/var/lib/mysql
+
 volumes:
-  mariadb_data:
-  static-data:
+  qs-mariadb-data:
+  qs-static-data:
+  wikibase-config-data:
+  wikibase-static-data:
+  wikibase-db-data:

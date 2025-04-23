@@ -174,10 +174,10 @@ LOGGING = {
             "handlers": ["console"],
             "level": "INFO",
         },
-        'urllib3': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': True,
+        "urllib3": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
         },
     },
 }
@@ -224,9 +224,10 @@ OAUTH_PROFILE_URL = os.getenv(
     f"{OAUTH_AUTHORIZATION_SERVER}/w/rest.php/oauth2/resource/profile",
 )
 
+WHITELISTED_USERS = [n.strip() for n in os.getenv("WHITELISTED_USERS", "").split(",")]
 
-# Base REST url
-BASE_REST_URL = os.getenv("BASE_REST_URL", "https://www.wikidata.org")
+# Default Wikibase
+DEFAULT_WIKIBASE_URL = os.getenv("DEFAULT_WIKIBASE_URL", "https://www.wikidata.org")
 
 # To use with EditGroups integration
 TOOLFORGE_TOOL_NAME = os.getenv("TOOLFORGE_TOOL_NAME")

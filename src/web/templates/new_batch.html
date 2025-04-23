@@ -22,6 +22,18 @@
 <form method="POST">
   {% csrf_token %}
   <fieldset>
+    {% if multiple_wikis %}
+    <label for="wikibase">{% translate "Wikibase" %}</label>
+
+    <select name="wikibase" id="wikibase">
+      {% for wikibase in wikibases %}
+      <option value="{{ wikibase.url }}">{{ wikibase.url }} ({{ wikibase.description|default:"No description" }}) </option>
+      {% endfor %}
+    </select>
+    {% else %}
+    <input name="wikibase" type="hidden" value="{{ wikibases.0.url }}" />
+    {% endif %}
+
     <label for="batch_type">{% translate "Command format" %}</label>
 
     <select name="type" id="batch_type">
