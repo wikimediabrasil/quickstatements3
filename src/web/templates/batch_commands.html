@@ -1,141 +1,183 @@
 {% load i18n %}
-  <table class="commands striped">
-    <tbody>
-      {% for command in page.object_list %}
-      <tr>
-        <th scope="row">#{{ command.index }}</th>
-        
+{% load quickstatements %}
+
+<table class="commands striped">
+  <tbody>
+    {% for command in page.object_list %}
+    <tr>
+      <th scope="row">#{{ command.index }}</th>
+      <td>
+        <span class="status status_{{ command.status_info.lower }}">
+          {{ command.status_info }}
+        </span>
+      </td>
+
+      <td >
+        {% if command.labels|get:command.entity_id %}
+          {{ command.labels|get:command.entity_id }}
+        {% endif %}
+        {% if command.entity_url %}<a href="{{ command.entity_url }}">{% endif %}
+          {{ command.entity_info }}
+        {% if command.entity_url %}</a>{% endif %}
+      </td>
+
+      {% if command.is_error_status %}
         <td>
-          <span class="status status_{{ command.status_info.lower }}">
-            {{ command.status_info }}
+          {{command.message}}
+        </td>
+        <td>
+          {{command.raw}}
+        </td>
+
+      {% else %}
+        <td >
+          <span class="action action_{{ command.get_action_display.lower }}">
+            {% if command.operation %}
+              {{ command.get_operation_display|upper }}
+            {% else %}
+              {{ command.get_action_display }}
+            {% endif %}
           </span>
         </td>
 
-        <td >
-            {% if command.display_label %}
-            {{ command.display_label }}
-            {% endif %}
-            {% if command.entity_url %}<a href="{{ command.entity_url }}">{% endif %}
-            {{ command.entity_info }}
-            {% if command.entity_url %}</a>{% endif %}
-        </td>
+        <td>
+          {% if command.is_label_alias_description_command %}
+            <i>{{ command.language }}</i>:
+          {% elif command.is_merge_command %}
+            {{ command.json.item1 }} - {{ command.json.item2 }}
+          {% elif command.is_sitelink_command %}
+            <i>{{ command.sitelink }}</i>:
+          {% elif command.prop != "" %}
+            {{ command.labels|get:command.prop }}
+            <a href="{{ command.batch.wikibase.url }}/entity/{{ command.prop }}">
+              [{{ command.prop }}]
+            </a>:
+          {% endif %}
 
-        {% if command.is_error_status %}
+          {% if command.value_type == "wikibase-entityid" %}
+            {{ command.labels|get:command.value_value }}
+            <a href="{{ command.batch.wikibase.url }}/entity/{{ command.value_value }}">
+              [{{ command.value_value }}]<br>
+            </a>
+          {% else %}
+            {{ command.value_value }}<br>
+          {% endif %}
 
-          <td>
-            {{command.message}}
-          </td>
-          <td>
-            {{command.raw}}
-          </td>
-
-        {% else %}
-          
-          <td >
-            <span class="action action_{{ command.get_action_display.lower }}">
-              {% if command.operation %}
-              {{ command.get_operation_display|upper }}
+        {% if command.qualifiers|length > 0 %}
+        <hr style="margin: revert;">
+            {% for qual in command.qualifiers %}
+            <b data-tooltip="{% translate 'Qualifier' %}">Q.</b> {{ command.labels|get:qual.property }}
+            <a href="{{ command.batch.wikibase.url }}/entity/{{ qual.property }}">
+              [{{ qual.property }}]
+            </a>:
+              {% if qual.value.type == "wikibase-entityid" %}
+              {{ command.labels|get:qual.value.value }}
+              <a href="{{ command.batch.wikibase.url }}/entity/{{ qual.value.value }}">
+                [{{ qual.value.value }}]
+              </a><br>
               {% else %}
-              {{ command.get_action_display }}
+                {{ qual.value.value }}<br>
               {% endif %}
-            </span>
-          </td>
-
-          <td>
-            {% if command.is_label_alias_description_command %}
-              <i>{{ command.language }}</i>:
-            {% elif command.is_merge_command %}
-              {{ command.json.item1 }} - {{ command.json.item2 }} 
-            {% elif command.is_sitelink_command %}
-              <i>{{ command.sitelink }}</i>:
-            {% else %}
-              {{ command.prop }}:
-            {% endif %}
-            {{ command.value_value }}
-          </td>
-
+            {% endfor %}
         {% endif %}
 
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        {% if command.reference_parts|length > 0 %}
+          {% for reference_block in command.references %}
+            <hr style="margin: revert;">
+            {% for ref in reference_block %}
+              <b data-tooltip="{% translate 'Reference Part' %}">R.</b> {{ command.labels|get:ref.property }}
+              <a href="{{ command.batch.wikibase.url }}/entity/{{ ref.property }}">
+                [{{ ref.property }}]
+              </a>:
+              {% if ref.value.type == "wikibase-entityid" %}
+                {{ command.labels|get:ref.value.value }}
+                <a href="{{ command.batch.wikibase.url }}/entity/{{ ref.value.value }}">
+                  [{{ ref.value.value }}]
+                </a><br>
+              {% else %}
+                {{ ref.value.value }}<br>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+          </td>
+        {% endif %}
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
   <div style="text-align: right; font-size: 10px; margin-bottom: 24px;">
     {% if only_errors %}
-    {% translate 'SHOWING ONLY ERRORS' context 'batch-commands-showing-only-errors' %} - 
+    {% translate 'SHOWING ONLY ERRORS' context 'batch-commands-showing-only-errors' %} -
     <a  style="cursor: pointer;"
         hx-get="{{base_url}}"
-        hx-target="#batchCommandsDiv" 
+        hx-target="#batchCommandsDiv"
         hx-swap="innerHTML">
         {% translate 'SHOW ALL' context 'batch-commands-show-all' %}
     </a>
     {% else %}
-    {% translate 'SHOWING ALL' context 'batch-commands-showing-all' %} - 
+    {% translate 'SHOWING ALL' context 'batch-commands-showing-all' %} -
     <a  style="cursor: pointer;"
         hx-get="{{base_url}}?show_errors=1"
-        hx-target="#batchCommandsDiv" 
+        hx-target="#batchCommandsDiv"
         hx-swap="innerHTML">
         {% translate 'SHOW ONLY ERRORS' context 'batch-commands-show-only-errors' %}
     </a>
     {% endif %}
   </div>
 
-  {% if page.has_other_pages %}
+{% if page.has_other_pages %}
   <div style="display: inline-block; width: 100%;">
-      
     <div style="display: inline-block; width: 35%;">
-      
-        {% if page.has_previous %}
+      {% if page.has_previous %}
         <span class="pagination prev-page">
           <a href="#" hx-get="{{base_url}}?page=1&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
-              hx-target="#batchCommandsDiv" 
+              hx-target="#batchCommandsDiv"
               hx-swap="innerHTML">
             << {% translate 'FIRST' context 'batch-commands-first' %}
           </a>
-        </span> 
-        
+        </span>
+
         <span class="pagination prev-page">
           <a href="#" hx-get="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
-              hx-target="#batchCommandsDiv" 
+              hx-target="#batchCommandsDiv"
               hx-swap="innerHTML">
             < {% translate 'PREVIOUS' context 'batch-commands-previous' %}
           </a>
-        </span> 
+        </span>
         {% endif%}
-    
     </div>
 
     <div style="display: inline-block; text-align: center; width: 30%;">
-        <span class="pagination current-page">
-          {% blocktranslate with 1=page.number 2=page.paginator.num_pages context 'batch-commands-pagination' %}Pg. {{1}} of {{2}}{% endblocktranslate %}
-        </span> 
+      <span class="pagination current-page">
+        {% blocktranslate with page=page.number total=page.paginator.num_pages %}
+          Pg. {{page}} of {{total}}
+        {% endblocktranslate %}
+      </span>
     </div>
 
     <div  style="display: inline-block; text-align: right;  width: 33%;">
-    
       {% if page.has_next %}
       <span class="pagination next-page">
         <a href="#" hx-get="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
-          hx-target="#batchCommandsDiv" 
+          hx-target="#batchCommandsDiv"
           hx-swap="innerHTML">
             {% translate 'NEXT' context 'batch-commands-next' %} >
         </a>
-      </span> 
-        
+      </span>
+
       <span class="pagination next-page">
         <a href="#" hx-get="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
-            hx-target="#batchCommandsDiv" 
+            hx-target="#batchCommandsDiv"
             hx-swap="innerHTML">
             {% translate 'LAST' context 'batch-commands-last' %}>>
         </a>
-      </span> 
+      </span>
       {% endif%}
-  
     </div>
-  
   </div>
-  {% endif %}
+{% endif %}
 
 <div style="float: right; font-size: medium;">
   <label for="page_size">{% translate 'Page size:' context 'batch-commands-page-size' %}</label>
@@ -159,4 +201,3 @@
     <option value="500" {% if page_size == 500 %}selected{% endif %}>500</option>
   </select>
 </div>
-  
