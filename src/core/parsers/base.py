@@ -14,40 +14,65 @@ class BaseParser(object):
     Base parser. Can parse basic data ids for wikidata
     """
 
+    def _is_valid_numeric_id_range(self, value):
+        for num in [int(num) for num in filter(None, re.split("[QMPLFS\-]", value))]:
+                if num > 0 and num < 2147483648:
+                    return True
+
     def is_valid_property_id(self, value):
         """
         Returns True if value is a valid PROPERTY ID
         PXXXX
         """
-        return value is not None and re.match("^P\\d+$", value) is not None
+        return (
+            value is not None and
+            re.match("^P\\d+$", value) is not None and
+            self._is_valid_numeric_id_range(value)
+        )
 
     def is_valid_source_id(self, value):
         """
         Returns True if value is a valid SOURCE ID
         SXXXX
         """
-        return value is not None and re.match("^S\\d+$", value) is not None
+        return (
+            value is not None and
+            re.match("^S\\d+$", value) is not None and
+            self._is_valid_numeric_id_range(value)
+        )
 
     def is_valid_lexeme_id(self, value):
         """
         Returns True if value is a valid LEXEME ID
         LXXXX
         """
-        return value is not None and re.match("^L\\d+$", value) is not None
+        return (
+            value is not None and
+            re.match("^L\\d+$", value) is not None and
+            self._is_valid_numeric_id_range(value)
+        )
 
     def is_valid_form_id(self, value):
         """
         Returns True if value is a valid FORM ID
         LXXXX-FXXXX
         """
-        return value is not None and re.match("^L\\d+\\-F\\d+", value) is not None
+        return (
+            value is not None and
+            re.match("^L\\d+\\-F\\d+", value) is not None and
+            self._is_valid_numeric_id_range(value)
+        )
 
     def is_valid_sense_id(self, value):
         """
         Returns True if value is a valid SENSE ID
         LXXXX-SXXXX
         """
-        return value is not None and re.match("^L\\d+\\-S\\d+", value) is not None
+        return (
+            value is not None and
+            re.match("^L\\d+\\-S\\d+", value) is not None and
+            self._is_valid_numeric_id_range(value)
+        )
 
     def is_valid_item_id(self, value):
         """
@@ -58,7 +83,7 @@ class BaseParser(object):
         return value is not None and (
             re.match("^Q\\d+$", value) is not None
             or re.match("^M\\d+$", value) is not None
-        )
+        ) and self._is_valid_numeric_id_range(value)
 
     def is_valid_entity_id(self, value):
         """
@@ -75,7 +100,7 @@ class BaseParser(object):
         return value is not None and (
             re.match(r"^[QMPL]\d+$", value) is not None
             or re.match(r"^L\d+\-[FS]\d+$", value) is not None
-        )
+        ) and self._is_valid_numeric_id_range(value)
 
     def is_valid_label(self, value):
         """
