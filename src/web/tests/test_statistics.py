@@ -1,6 +1,7 @@
 import requests_mock
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.core.cache import cache
 
 from core.factories import TokenFactory, UserFactory
 from core.parsers.v1 import V1CommandParser
@@ -16,14 +17,18 @@ class ProfileTest(TestCase):
         user = User.objects.create_user(username="john")
         self.client.force_login(user)
         response = self.client.get("/statistics/counters/")
-        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "statistics_all_time_counters.html")
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["batches_count"], 0)
         self.assertEqual(response.context["commands_count"], 0)
         self.assertEqual(response.context["average_commands_per_batch"], 0)
         self.assertEqual(response.context["items_created"], 0)
         self.assertEqual(response.context["editors"], 0)
         self.assertEqual(response.context["edits"], 0)
+        response = self.client.get("/statistics/")
+        self.assertTemplateUsed(response, "statistics.html")
+        self.assertEqual(response.status_code, 200)
+        cache.clear()
 
     @requests_mock.Mocker()
     def test_basic(self, mocker):
@@ -54,11 +59,15 @@ class ProfileTest(TestCase):
         batch.run()
         self.client.force_login(user)
         response = self.client.get("/statistics/counters/")
-        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "statistics_all_time_counters.html")
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["batches_count"], 3)
         self.assertEqual(response.context["commands_count"], 8)
         self.assertEqual(response.context["average_commands_per_batch"], 3)
         self.assertEqual(response.context["items_created"], 3)
         self.assertEqual(response.context["editors"], 2)
         self.assertEqual(response.context["edits"], 3)
+        response = self.client.get("/statistics/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "statistics.html")
+        cache.clear()

@@ -19,9 +19,8 @@ logger = logging.getLogger("qsts3")
 def statistics(request):
     # ----
     today = now().date()
-    basedate = Batch.objects.order_by("created").first().created.date() - timedelta(
-        days=1
-    )
+    first_batch = Batch.objects.order_by("created").first()
+    basedate = first_batch.created.date() - timedelta(days=1) if first_batch else today
     delta = (today - basedate).days
     # ---
     created_batches_per_day = {
