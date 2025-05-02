@@ -21,6 +21,7 @@ from .views.new_batch import preview_batch
 from .views.new_batch import preview_batch_commands
 from .views.profile import profile
 from .views.statistics import statistics
+from .views.statistics import all_time_counters
 
 
 urlpatterns = [
@@ -49,5 +50,6 @@ urlpatterns = [
         name="preview_batch_commands",
     ),
     path("batch/new/preview/allow_start/", batch_allow_start, name="batch_allow_start"),
-    path("statistics/", statistics, name="statistics")
+    path("statistics/", statistics, name="statistics"),
+    path("statistics/counters/", all_time_counters, name="statistics_all_time_counters"),
 ]
