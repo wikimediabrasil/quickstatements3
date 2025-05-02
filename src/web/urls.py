@@ -20,6 +20,7 @@ from .views.new_batch import new_batch
 from .views.new_batch import preview_batch
 from .views.new_batch import preview_batch_commands
 from .views.profile import profile
+from .views.statistics import statistics
 
 
 urlpatterns = [
@@ -48,4 +49,5 @@ urlpatterns = [
         name="preview_batch_commands",
     ),
     path("batch/new/preview/allow_start/", batch_allow_start, name="batch_allow_start"),
+    path("statistics/", statistics, name="statistics")
 ]

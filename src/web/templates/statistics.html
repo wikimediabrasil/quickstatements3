@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block pagetitle %}
+{% translate "QuickStatements 3.0 - Statistics" %}
+{% endblock pagetitle %}
+
+{% block content %}
+
+<h1> Statistics </h1>
+
+<h2> All-time numbers </h2>
+
+<div class="grid" style="text-align: center;">
+
+<article>
+  <header>{% translate "Batches" %}</header>
+  <b style="font-size: 1.5em;">{{ batches_count }}</b>
+</article>
+
+<article>
+  <header>{% translate "Commands" %}</header>
+  <b style="font-size: 1.5em;">{{ batches_count }}</b>
+</article>
+
+<article>
+  <header>{% translate "Average number of commands per batch" %}</header>
+  <b style="font-size: 1.5em;">{{ batches_count }}</b>
+</article>
+
+</div>
+
+<div class="grid" style="text-align: center;">
+
+<article>
+  <header>{% translate "Items created" %}</header>
+  <b style="font-size: 1.5em;">{{ items_created }}</b>
+</article>
+
+<article>
+  <header>{% translate "Editors" %}</header>
+  <b style="font-size: 1.5em;">{{ editors }}</b>
+</article>
+
+<article>
+  <header>{% translate "Edits" %}</header>
+  <b style="font-size: 1.5em;">{{ edits }}</b>
+</article>
+
+</div>
+
+{% endblock content %}
