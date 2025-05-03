@@ -2,6 +2,9 @@ name: Toolforge Deploy
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "uwsgi.ini"
+      - "src/**"
 
 jobs:
   deploy:

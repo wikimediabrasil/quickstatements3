@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 os.rmdir(os.path.join(root, name))
 
         # Step 2: Load JSON translations
-        json_dir = os.path.join(settings.BASE_DIR, 'translations')
+        json_dir = os.path.join(settings.BASE_DIR, '../translations')
         for filename in os.listdir(json_dir):
             if filename.endswith('.json'):
                 filepath = os.path.join(json_dir, filename)
