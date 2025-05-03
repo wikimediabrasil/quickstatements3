@@ -15,18 +15,22 @@ from core.models import BatchCommand
 logger = logging.getLogger("qsts3")
 
 
-@cache_page(60)
-def statistics(request):
+def statistics_data(request, username):
+    if username:
+        all_batches = Batch.objects.filter(user=username)
+        all_commands = BatchCommand.objects.filter(batch__user=username)
+    else:
+        all_batches = Batch.objects.all()
+        all_commands = BatchCommand.objects.all()
     # ----
     today = now().date()
-    first_batch = Batch.objects.order_by("created").first()
+    first_batch = all_batches.order_by("created").first()
     basedate = first_batch.created.date() - timedelta(days=1) if first_batch else today
     delta = (today - basedate).days
     # ---
     created_batches_per_day = {
         q["date"].date(): q["count"]
-        for q in Batch.objects.all()
-        .annotate(date=TruncDay("created"))
+        for q in all_batches.annotate(date=TruncDay("created"))
         .values("date")
         .annotate(count=Count("pk"))
         .order_by("date")
@@ -39,8 +43,7 @@ def statistics(request):
     # ---
     query_commands_per_day = {
         q["date"].date(): (q["done_count"], q["error_count"])
-        for q in BatchCommand.objects.all()
-        .annotate(date=TruncDay("created"))
+        for q in all_commands.annotate(date=TruncDay("created"))
         .values("date")
         .annotate(done_count=Count("pk", filter=Q(status=BatchCommand.STATUS_DONE)))
         .annotate(error_count=Count("pk", filter=Q(status=BatchCommand.STATUS_ERROR)))
@@ -51,32 +54,40 @@ def statistics(request):
         commands_per_day[date] = query_commands_per_day.get(date, (0, 0))
     # ---
     data = {
+        "username": username,
         "batches_per_day": batches_per_day,
         "commands_per_day": commands_per_day,
     }
-    return render(request, "statistics.html", data)
+    return data
 
 
-@cache_page(60)
-def all_time_counters(request):
-    batches_count = Batch.objects.all().count()
-    editors = Batch.objects.values("user").distinct().count()
-    commands_count = BatchCommand.objects.all().count()
+def all_time_counters_data(request, username):
+    if username:
+        all_batches = Batch.objects.filter(user=username)
+        all_commands = BatchCommand.objects.filter(batch__user=username)
+    else:
+        all_batches = Batch.objects.all()
+        all_commands = BatchCommand.objects.all()
+    # ----
+    batches_count = all_batches.count()
+    editors = all_batches.values("user").distinct().count()
+    commands_count = all_commands.count()
     average_commands_per_batch = (
         round(commands_count / batches_count) if batches_count > 0 else 0
     )
     # TODO: we can refactor a lot of this into a BatchCommand model manager
-    items_created = BatchCommand.objects.filter(
+    items_created = all_commands.filter(
         operation=BatchCommand.Operation.CREATE_ITEM,
         status=BatchCommand.STATUS_DONE,
     ).count()
     edits = (
-        BatchCommand.objects.filter(status=BatchCommand.STATUS_DONE)
+        all_commands.filter(status=BatchCommand.STATUS_DONE)
         .exclude(response_id__isnull=True)
         .exclude(response_id="")
         .count()
     )
     data = {
+        "username": username,
         "batches_count": batches_count,
         "commands_count": commands_count,
         "average_commands_per_batch": average_commands_per_batch,
@@ -84,4 +95,28 @@ def all_time_counters(request):
         "editors": editors,
         "edits": edits,
     }
+    return data
+
+
+@cache_page(60)
+def statistics(request):
+    data = statistics_data(request, None)
+    return render(request, "statistics.html", data)
+
+
+@cache_page(60)
+def statistics_user(request, username):
+    data = statistics_data(request, username)
+    return render(request, "statistics.html", data)
+
+
+@cache_page(60)
+def all_time_counters(request):
+    data = all_time_counters_data(request, None)
+    return render(request, "statistics_all_time_counters.html", data)
+
+
+@cache_page(60)
+def all_time_counters_user(request, username):
+    data = all_time_counters_data(request, username)
     return render(request, "statistics_all_time_counters.html", data)

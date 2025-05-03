@@ -9,7 +9,15 @@
 
 {% if user.is_authenticated %}
 
-<h1> {{ user.username }} </h1>
+
+<nav>
+  <ul>
+    <h1> {{ user.username }} </h1>
+  </ul>
+  <ul>
+    <li><a href="{% url 'statistics_user' username=user.username %}">Your statistics</a></li>
+  </ul>
+</nav>
 
 <article>
     <h2>{% translate "Autoconfirmed status" %}</h2>

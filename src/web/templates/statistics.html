@@ -10,7 +10,7 @@
 <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/Chart.js/4.4.1/chart.umd.min.js
 "></script>
 
-<h1> Statistics </h1>
+<h1> Statistics {% if username %} of {{ username }} {% endif %}</h1>
 
 <h2> Cumulative number of batches </h2>
 
@@ -84,7 +84,14 @@
 
 <h2> All-time numbers </h2>
 
-<div hx-get="/statistics/counters/" hx-trigger="load delay:300ms">
+<div
+  {% if username %}
+  hx-get="{% url 'statistics_all_time_counters_user' username=username %}"
+  {% else %}
+  hx-get="{% url 'statistics_all_time_counters' %}"
+  {% endif %}
+  hx-trigger="load delay:300ms"
+>
   {% include 'statistics_all_time_counters.html' with loading=True %}
 </div>
 

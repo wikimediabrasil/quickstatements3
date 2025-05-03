@@ -29,6 +29,7 @@
   <article>
     <header>{% translate "Editors" %}</header>
     <b style="font-size: 1.5em;" {% if loading %}aria-busy="true"{% endif %}>{{ editors }}</b>
+    {% if username %}<br><span style="font-size: 0.7em;">Hey, it's you!<span>{% endif %}
   </article>
 
   <article>
