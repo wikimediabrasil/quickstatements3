@@ -10,7 +10,7 @@
       style="margin: 20px 0; font-size: 14px;">
 
 <div class="progress" id="batchprogress">
-  <div class="progress-status">{% translate "BATCH STATUS" %}
+  <div class="progress-status">{% translate 'BATCH STATUS' context 'batch-summary-batch-status' %}
     <b class="status status_{{ status | lower }}">{{status | upper}}</b>
   </div>
   <div class="progress-meter">
@@ -29,15 +29,15 @@
 </div>
 
 <div>
-    {% translate "COMMANDS SUMMARY" %}
-    <b class="status status_total">{% translate "TOTAL" %}: {{total_count}}</b>
-    {% if initial_count %}<b class="status status_initial">{% translate "INIT" %}: {{initial_count}}</b>{% endif %}
-    {% if running_count %}<b class="status status_running">{% translate "RUNNING" %}: {{running_count}}</b>{% endif %}
-    {% if done_count %}<b class="status status_done">{% translate "DONE" %}: {{done_count}}</b>{% endif %}
-    {% if error_count %}<b class="status status_error">{% translate "ERRORS" %}: {{error_count}}</b>{% endif %}
+    {% translate 'COMMANDS SUMMARY' context 'batch-summary-commands-summary' %}
+    <b class="status status_total">{% translate 'TOTAL' context 'batch-summary-total' %}: {{total_count}}</b>
+    {% if initial_count %}<b class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{initial_count}}</b>{% endif %}
+    {% if running_count %}<b class="status status_running">{% translate 'RUNNING' context 'batch-summary-running' %}: {{running_count}}</b>{% endif %}
+    {% if done_count %}<b class="status status_done">{% translate 'DONE' context 'batch-summary-done' %}: {{done_count}}</b>{% endif %}
+    {% if error_count %}<b class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{error_count}}</b>{% endif %}
     {% if show_block_on_errors_notice %}
     <small>
-      {% translate "This batch will be blocked if a command fails." %}
+      {% translate 'This batch will be blocked if a command fails.' context 'batch-summary-this-batch-will-be-blocked-if-a-command-fails.' %}
     </small>
     {% endif %}
 </div>

@@ -9,8 +9,8 @@
 
 <form id="batchForm">
   <fieldset role="group">
-    <input id="batchInput" type="text" placeholder="{% translate 'Batch ID' %}" oninput="updateBatchForm()" />
-    <input type="submit" value="{% translate 'See batch details' %}" />
+    <input id="batchInput" type="text" placeholder="{% translate 'Batch ID' context 'batch-not-found-batch-id' %}" oninput="updateBatchForm()" />
+    <input type="submit" value="{% translate 'See batch details' context 'batch-not-found-see-batch-details' %}" />
   </fieldset>
 </form>
 

@@ -453,6 +453,13 @@ class Token(models.Model):
             raise UnauthorizedToken()
 
 
+class UserBatch(models.Model):
+    """
+    Represents a user that are associated with a batch.
+    """
+    user = models.CharField(max_length=128, blank=False, null=False, db_index=True)
+    
+
 class Batch(models.Model):
     """
     Represents a BATCH, containing multiple commands
@@ -475,7 +482,9 @@ class Batch(models.Model):
     )
 
     name = models.CharField(max_length=255, blank=False, null=False)
-    user = models.CharField(max_length=128, blank=False, null=False, db_index=True)
+    user = models.ForeignKey(
+        UserBatch, related_name="batches", on_delete=models.CASCADE, null=False
+    )
     status = models.IntegerField(
         default=STATUS_INITIAL, choices=STATUS_CHOICES, null=False, db_index=True
     )

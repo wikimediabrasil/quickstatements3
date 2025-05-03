@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% load i18n %}
 
-{% block pagetitle %}{% translate "QuickStatements 3.0 - Login" %}{% endblock%}
+{% block pagetitle %}{% translate 'QuickStatements 3.0 - Login' context 'login-quickstatements-3.0---login' %}{% endblock%}
 
 {% block content %}
 
-<h1>{% translate "Login" context "LOGIN PAGE TITLE" %}</h1>
+<h1>{% translate 'Login" context "LOGIN PAGE TITLE' context 'login-login"-context-"login-page-title' %}</h1>
 
 {% if token_expired %}
 <p>
@@ -31,9 +31,9 @@
 {% endif %}
 
 <form action="{% url 'oauth_redirect' %}">
-  <input type="submit" value="{% translate 'Sign in with Wikimedia account' %}">
+  <input type="submit" value="{% translate 'Sign in with Wikimedia account' context 'login-sign-in-with-wikimedia-account' %}">
 </form>
 
-<p><a href="{% url 'login_dev' %}">{% translate "Advanced: login with a developer consumer key" %}</a></p>
+<p><a href="{% url 'login_dev' %}">{% translate 'Advanced: login with a developer consumer key' context 'login-advanced:-login-with-a-developer-consumer-key' %}</a></p>
 
 {% endblock content %}
