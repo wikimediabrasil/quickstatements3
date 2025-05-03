@@ -2,7 +2,7 @@
 {% load i18n %}
 
 
-{% block pagetitle %}{% translate 'QuickStatements 3.0 - Last batches' %}{% endblock%}
+{% block pagetitle %}{% translate 'QuickStatements 3.0 - Last batches' context 'batches-quickstatements-last-batches' %}{% endblock%}
 
 {% block css %}
 
@@ -22,7 +22,7 @@
 {% block content %}
 
 <div style="display: flex; align-items: center; gap: 10px;">
-  <h2> {% translate 'Last batches' %} {% if username is not None %} {% translate 'from' context 'From the prase Last batches from username' %} {{username}}{% endif %}</h2>
+  <h2> {% translate 'Last batches' context 'batches-last-batches' %} {% if username is not None %} {% translate 'from' context 'batches-from' %} {{username}}{% endif %}</h2>
   <img id="spinner" class="htmx-indicator" style="margin-bottom: 1em;">
 </div>
 
@@ -31,11 +31,11 @@
     <thead>
       <tr>
         <th scope="col"> # </th>
-        {% if username is None %}<th scope="col">{% translate 'User' %}</th>{% endif %}
-        <th scope="col">{% translate 'Name' %}</th>
-        <th scope="col">{% translate 'Status' %}</th>
-        <th scope="col">{% translate 'Modified' %}</th>
-        <th scope="col">{% translate 'Actions' %}</th>
+        {% if username is None %}<th scope="col">{% translate 'User' context 'batches-user' %}</th>{% endif %}
+        <th scope="col">{% translate 'Name' context 'batches-name' %}</th>
+        <th scope="col">{% translate 'Status' context 'batches-status' %}</th>
+        <th scope="col">{% translate 'Modified' context 'batches-modified' %}</th>
+        <th scope="col">{% translate 'Actions' context 'batches-actions' %}</th>
       </tr>
     </thead>
     <tbody id="lastBatchesTBody" hx-get="/batches/{% if username is not None %}{{ username }}/{% endif %}?page={{page.number}}&page_size={{page_size}}"
@@ -50,7 +50,7 @@
             {{ batch.user }}
           </a>
           <br>
-          [<a href="{% url 'last_batches_by_user' user=batch.user %}">{% translate 'View batches' %}</a>]
+          [<a href="{% url 'last_batches_by_user' user=batch.user %}">{% translate 'View batches' context 'batches-view-batches' %}</a>]
           </a>
         </td>
         {% endif %}
@@ -58,8 +58,8 @@
         <td><span class="status status_{{ batch.get_status_display | lower }}">{{ batch.get_status_display | upper }}</td>
         <td>{{ batch.modified }}</td>
         <td>
-          <a href="{% url 'batch' pk=batch.pk %}">{% translate 'View' %}</a><br>
-          <a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' %}</a>
+          <a href="{% url 'batch' pk=batch.pk %}">{% translate 'View' context 'batches-view' %}</a><br>
+          <a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batches-revert-discuss' %}</a>
         </td>
       </tr>
       {% endfor %}
@@ -74,13 +74,13 @@
         {% if page.has_previous %}
         <span class="pagination prev-page">
           <a href="{{base_url}}?page=1&page_size={{page_size}}">
-            << {% translate 'FIRST' %}
+            << {% translate 'FIRST' context 'batches-first' %}
           </a>
         </span> 
         
         <span class="pagination prev-page">
           <a href="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}">
-            < {% translate 'PREVIOUS' %}
+            < {% translate 'PREVIOUS' context 'batches-previous' %}
           </a>
         </span> 
         {% endif%}
@@ -89,9 +89,7 @@
 
     <div style="display: inline-block; text-align: center; width: 30%;">
         <span class="pagination current-page">
-          {% blocktranslate with page=page.number total=page.paginator.num_pages %}
-            Pg. {{page}} of {{total}}
-          {% endblocktranslate %}
+          {% blocktranslate with 1=page.number 2=page.paginator.num_pages context 'batch-commands-pagination' %}Pg. {{1}} of {{2}}{% endblocktranslate %}
         </span> 
     </div>
 
@@ -100,13 +98,13 @@
       {% if page.has_next %}
       <span class="pagination next-page">
         <a href="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}">
-            {% translate 'NEXT' %} >
+            {% translate 'NEXT' context 'batches-next' %} >
         </a>
       </span> 
         
       <span class="pagination next-page">
         <a href="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}">
-            {% translate 'LAST' %}>>
+            {% translate 'LAST' context 'batches-last' %}>>
         </a>
       </span> 
       {% endif%}
@@ -117,15 +115,15 @@
   {% endif %}
 
   <div style="float: right; font-size: medium;">
-    <label for="page_size">{% translate 'Page size:' %}</label>
+    <label for="page_size">{% translate 'Page size:' context 'batches-page-size' %}</label>
     <select id="page_size"
             style="font-size: medium;"
             name="page_size"
-            aria-label="{% translate 'Page size:' %}"
+            aria-label="{% translate 'Page size:' context 'batches-page-size' %}"
             required
             onchange="location.href='{{ base_url }}?page=1&page_size=' + this.value">
       <option selected disabled value="">
-        {% translate 'Page size:' %}
+        {% translate 'Page size:' context 'batches-page-size' %}
       </option>
       <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
       <option value="25" {% if page_size == 25 %}selected{% endif %}>25</option>

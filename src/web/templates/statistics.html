@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block pagetitle %}
-{% translate "QuickStatements 3.0 - Statistics" %}
+{% translate 'QuickStatements 3.0 - Statistics' context 'statistics-quickstatements-statistics' %}
 {% endblock pagetitle %}
 
 {% block content %}
@@ -37,7 +37,7 @@
     data: {
       labels: labels,
       datasets: [{
-        label: "{% translate 'Number of batches' %}",
+        label: "{% translate 'Number of batches' context 'statistics-number-of-batches' %}",
         data: data,
         borderWidth: 1
       }]
@@ -58,12 +58,12 @@
       labels: labels,
       datasets: [
         {
-          label: "{% translate 'Done status' %}",
+          label: "{% translate 'Done status' context 'statistics-done-status' %}",
           data: data_done,
           borderWidth: 1
         },
         {
-          label: "{% translate 'Error status' %}",
+          label: "{% translate 'Error status' context 'statistics-error-status' %}",
           data: data_error,
           borderWidth: 1
         }

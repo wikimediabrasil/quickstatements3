@@ -4,13 +4,13 @@
 {% block content %}
 
 <p>
-  {% blocktranslate %}Batch <code>#{{ pk }}</code> not found.{% endblocktranslate %}
+  {% blocktranslate with 1=pk context 'batch-not-found-number' %}Batch <code>#{{1}}</code> not found.{% endblocktranslate %}
 </p>
 
 <form id="batchForm">
   <fieldset role="group">
-    <input id="batchInput" type="text" placeholder="{% translate 'Batch ID' %}" oninput="updateBatchForm()" />
-    <input type="submit" value="{% translate 'See batch details' %}" />
+    <input id="batchInput" type="text" placeholder="{% translate 'Batch ID' context 'batch-not-found-batch-id' %}" oninput="updateBatchForm()" />
+    <input type="submit" value="{% translate 'See batch details' context 'batch-not-found-see-batch-details' %}" />
   </fieldset>
 </form>
 

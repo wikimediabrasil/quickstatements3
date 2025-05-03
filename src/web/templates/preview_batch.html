@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% load i18n %}
-{% block pagetitle %}QuickStatements 3.0 - {% translate "Batch" %} #{{ batch.pk }}{% endblock%}
+{% block pagetitle %}QuickStatements 3.0 - {% translate 'Batch' context 'preview-batch-batch' %} #{{ batch.pk }}{% endblock%}
 {% block css %}
 {% include '_batch_css.html' %}
 {% endblock %}
 {% block content %}
 <div style="float: left;">
     <hgroup>
-        <h2> {% translate "Batch Preview" %} <img id="spinner" class="htmx-indicator"></h2>
+        <h2> {% translate 'Batch Preview' context 'preview-batch-batch-preview' %} <img id="spinner" class="htmx-indicator"></h2>
         <p><b>{{batch.name}}</b></p>
         {% if multiple_wikis %}
         <p>{{ batch.wikibase }}</p>
@@ -18,14 +18,14 @@
     <form method="POST" action="{% url 'batch_allow_start' %}">
         {% if is_autoconfirmed and not is_blocked %}
         {% csrf_token %}
-        <input type="submit" value="{% translate 'Save and run batch' %}">
+        <input type="submit" value="{% translate 'Save and run batch' context 'preview-batch-save-and-run-batch' %}">
         {% else %}
-        <input type="submit" value="{% translate 'Save and run batch' %}" disabled>
+        <input type="submit" value="{% translate 'Save and run batch' context 'preview-batch-save-and-run-batch' %}" disabled>
         <small>
           {% if is_blocked %}
-          {% translate "Your account is blocked and you will not be able to run any batches." %}
+          {% translate 'Your account is blocked and you will not be able to run any batches.' context 'preview-batch-your-account-is-blocked' %}
           {% else %}
-          {% translate "Note: only autoconfirmed users can run batches." %}
+          {% translate 'Note: only autoconfirmed users can run batches.' context 'preview-batch-note-only-autoconfirmed' %}
           {% endif %}
         </small>
         {% endif %}
@@ -33,14 +33,14 @@
 </div>
 <div class="preview_notice">
   <p>
-      {% translate "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER CLICKING 'Save and run batch'." %}
+      {% translate "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER CLICKING 'Save and run batch'." context 'preview-batch-this-batch-is-in-preview-mode' %}
   </p>
 </div>
 <div id="batchProgressDiv" style="margin: 20px 0; font-size: 14px; ">
     {% include 'batch_summary.html' with batch=batch done_count=0 done_percentage=0 finish_percentage=0 done_to_finish_percentage=0 status="Preview" show_block_on_errors_notice=batch.block_on_errors %}
 </div>
-<h4>{% translate "Commands" %}</h4>
+<h4>{% translate 'Commands' context 'preview-batch-commands' %}</h4>
 <div class="overflow-auto" id="batchCommandsDiv" hx-get="{% url 'preview_batch_commands' %}" hx-trigger="load, reload" hx-indicator="#spinner" hx-swap="innerHTML">
-    {% translate "Loading commands..." %}
+    {% translate 'Loading commands...' context 'preview-batch-loading-commands' %}
 </div>
 {% endblock %}

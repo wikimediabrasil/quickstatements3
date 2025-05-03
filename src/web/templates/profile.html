@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block pagetitle %}
-{% translate "QuickStatements 3.0 - Profile" %}
+{% translate 'QuickStatements 3.0 - Profile' context 'profile-quickstatements-profile' %}
 {% endblock%}
 
 {% block content %}
@@ -20,26 +20,26 @@
 </nav>
 
 <article>
-    <h2>{% translate "Autoconfirmed status" %}</h2>
+    <h2>{% translate 'Autoconfirmed status' context 'profile-autoconfirmed-status' %}</h2>
     <p>
-        {% translate "Only autoconfirmed users can run batches on Quickstatements" %} 
+        {% translate 'Only autoconfirmed users can run batches on Quickstatements' context 'profile-only-autoconfirmed-users-can-run-batches-on-quickstatements' %} 
         (<a href="https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:Autoconfirmed_users">
-        {% translate "Read about autoconfirmed user definition" %}
+        {% translate 'Read about autoconfirmed user definition' context 'profile-read-about-autoconfirmed-user-definition' %}
         </a>)
     <p>
         {% if is_autoconfirmed %}
         <article style="background: var(--pico-color-jade-50);">
             <center>
-                {% translate "We have successfully verified that you are an autoconfirmed user." %}
+                {% translate 'We have successfully verified that you are an autoconfirmed user.' context 'profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user' %}
             <center>
         </article>
         {% else %}
         <article style="background: var(--pico-color-red-100);">
             <center>
                 {% if token_failed %}
-                {% translate "We could not verify you are an autoconfirmed user." %}
+                {% translate 'We could not verify you are an autoconfirmed user.' context 'profile-we-could-not-verify-you-are-an-autoconfirmed-user' %}
                 {% else %}
-                {% translate "You are not an autoconfirmed user." %}
+                {% translate 'You are not an autoconfirmed user.' context 'profile-you-are-not-an-autoconfirmed-user' %}
                 {% endif %}
             <center>
         </article>
@@ -48,44 +48,44 @@
 </article>
 
 <article>
-    <h2> {% translate "Preferences" %} </h2>
+    <h2> {% translate 'Preferences' context 'profile-preferences' %} </h2>
     <form method="POST">
         {% csrf_token %}
-        <label for="language">{% translate "Preferred language" %}</label>
+        <label for="language">{% translate 'Preferred language' context 'profile-preferred-language' %}</label>
         <select name="language" required>
             {% for code, name in language_choices %}
             <option {% if code == language %}selected{% endif %} value="{{ code }}"> {{ code }}: {{ name }} </option>
             {% endfor %}
         </select>
         <input type="hidden" name="action" value="update_language">
-        <input type="submit" value="{% translate 'Update preferred language' %}">
+        <input type="submit" value="{% translate 'Update preferred language' context 'profile-update-preferred-language' %}">
     </form>
 </article>
 
 <article>
-    <h2>{% translate "API Token" %}</h2>
+    <h2>{% translate 'API Token' context 'profile-api-token' %}</h2>
     <form method="POST">
         {% csrf_token %}
-        <p>{% translate "Here, you can generate a token to use when querying batch jobs programatically." %}</p>
+        <p>{% translate 'Here, you can generate a token to use when querying batch jobs programatically.' context 'profile-here-you-can-generate-a-token' %}</p>
         <p>
-            {% translate "You currently have the following token. This token must be kept private:" %}
+            {% translate 'You currently have the following token. This token must be kept private:' context 'profile-you-currently-have-the-following-token' %}
             <article style="background: var(--pico-color-grey-100);">
                 <center><h5>{{token}}</h5><center>
             </article>
         </p>
         <input type="hidden" name="action" value="update_token">
-        <input type="submit" value="{% translate 'Update token' %}">
+        <input type="submit" value="{% translate 'Update token' context 'profile-update-token' %}">
     </form>
 </article>
 
 <article>
-<p><a href="{% url 'logout' %}">{% translate "Click here to log out." %}</a></p>
+<p><a href="{% url 'logout' %}">{% translate 'Click here to log out.' context 'profile-click-here-to-log-out' %}</a></p>
 </article>
 
 {% else %}
 
-<h1>{% translate "You're not logged in." %}</h1>
-<p><a href="{% url 'login' %}">{% translate "Click here to log in." %}</a></p>
+<h1>{% translate "You're not logged in." context 'profile-youre-not-logged-in' %}</h1>
+<p><a href="{% url 'login' %}">{% translate 'Click here to log in.' context 'profile-click-here-to-log-in' %}</a></p>
 
 {% endif %}
 

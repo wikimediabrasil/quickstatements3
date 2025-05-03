@@ -3,17 +3,17 @@
 <div class="grid" style="text-align: center;">
 
   <article>
-    <header>{% translate "Batches" %}</header>
+    <header>{% translate 'Batches' context 'statistics-batches' %}</header>
     <b style="font-size: 1.5em;" {% if loading %}aria-busy="true"{% endif %}>{{ batches_count }}</b>
   </article>
 
   <article>
-    <header>{% translate "Commands" %}</header>
+    <header>{% translate 'Commands' context 'statistics-commands' %}</header>
     <b style="font-size: 1.5em;" {% if loading %}aria-busy="true"{% endif %}>{{ commands_count }}</b>
   </article>
 
   <article>
-    <header>{% translate "Average number of commands per batch" %}</header>
+    <header>{% translate 'Average number of commands per batch' context 'statistics-avg-commands' %}</header>
     <b style="font-size: 1.5em;" {% if loading %}aria-busy="true"{% endif %}>{{ average_commands_per_batch }}</b>
   </article>
 
@@ -22,20 +22,27 @@
 <div class="grid" style="text-align: center;">
 
   <article>
-    <header>{% translate "Items created" %}</header>
+    <header>{% translate 'Items created' context 'statistics-items-created' %}</header>
     <b style="font-size: 1.5em;" {% if loading %}aria-busy="true"{% endif %}>{{ items_created }}</b>
   </article>
 
   <article>
-    <header>{% translate "Editors" %}</header>
+    <header>{% translate 'Editors' context 'statistics-editors' %}</header>
     <b style="font-size: 1.5em;" {% if loading %}aria-busy="true"{% endif %}>{{ editors }}</b>
-    {% if username %}<br><span style="font-size: 0.7em;">
-      Hey, it's {% if user.username == username %}you!{% else %}{{ username }}!{% endif %}
-    <span>{% endif %}
+    {% if username %}
+    <br>
+    <span style="font-size: 0.7em;">
+      {% if user.username == username %}
+        {% translate "Hey, it's you!" context 'statistics-hey-its-you' %}
+      {% else %}
+        {% blocktranslate with 1=username context "statistics-hey-its-them" %}Hey it's {{1}}!{% endblocktranslate %}
+      {% endif %}
+    </span>
+    {% endif %}
   </article>
 
   <article>
-    <header>{% translate "Edits" %}</header>
+    <header>{% translate "Edits" context "statistics-edits" %}</header>
     <b style="font-size: 1.5em;" {% if loading %}aria-busy="true"{% endif %}>{{ edits }}</b>
   </article>
 

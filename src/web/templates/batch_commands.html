@@ -63,20 +63,20 @@
 
   <div style="text-align: right; font-size: 10px; margin-bottom: 24px;">
     {% if only_errors %}
-    {% translate "SHOWING ONLY ERRORS" %} - 
+    {% translate 'SHOWING ONLY ERRORS' context 'batch-commands-showing-only-errors' %} - 
     <a  style="cursor: pointer;"
         hx-get="{{base_url}}"
         hx-target="#batchCommandsDiv" 
         hx-swap="innerHTML">
-        {% translate "SHOW ALL" %}
+        {% translate 'SHOW ALL' context 'batch-commands-show-all' %}
     </a>
     {% else %}
-    {% translate "SHOWING ALL" %} - 
+    {% translate 'SHOWING ALL' context 'batch-commands-showing-all' %} - 
     <a  style="cursor: pointer;"
         hx-get="{{base_url}}?show_errors=1"
         hx-target="#batchCommandsDiv" 
         hx-swap="innerHTML">
-        {% translate "SHOW ONLY ERRORS" %}
+        {% translate 'SHOW ONLY ERRORS' context 'batch-commands-show-only-errors' %}
     </a>
     {% endif %}
   </div>
@@ -91,7 +91,7 @@
           <a href="#" hx-get="{{base_url}}?page=1&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
               hx-target="#batchCommandsDiv" 
               hx-swap="innerHTML">
-            << {% translate "FIRST" %}
+            << {% translate 'FIRST' context 'batch-commands-first' %}
           </a>
         </span> 
         
@@ -99,7 +99,7 @@
           <a href="#" hx-get="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
               hx-target="#batchCommandsDiv" 
               hx-swap="innerHTML">
-            < {% translate "PREVIOUS" %}
+            < {% translate 'PREVIOUS' context 'batch-commands-previous' %}
           </a>
         </span> 
         {% endif%}
@@ -108,9 +108,7 @@
 
     <div style="display: inline-block; text-align: center; width: 30%;">
         <span class="pagination current-page">
-          {% blocktranslate with page=page.number total=page.paginator.num_pages %}
-            Pg. {{page}} of {{total}}
-          {% endblocktranslate %}
+          {% blocktranslate with 1=page.number 2=page.paginator.num_pages context 'batch-commands-pagination' %}Pg. {{1}} of {{2}}{% endblocktranslate %}
         </span> 
     </div>
 
@@ -121,7 +119,7 @@
         <a href="#" hx-get="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
           hx-target="#batchCommandsDiv" 
           hx-swap="innerHTML">
-            {% translate "NEXT" %} >
+            {% translate 'NEXT' context 'batch-commands-next' %} >
         </a>
       </span> 
         
@@ -129,7 +127,7 @@
         <a href="#" hx-get="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}{% if only_errors %}&show_errors=1{% endif %}"
             hx-target="#batchCommandsDiv" 
             hx-swap="innerHTML">
-            {% translate "LAST" %}>>
+            {% translate 'LAST' context 'batch-commands-last' %}>>
         </a>
       </span> 
       {% endif%}
@@ -140,11 +138,11 @@
   {% endif %}
 
 <div style="float: right; font-size: medium;">
-  <label for="page_size">{% translate 'Page size:' %}</label>
+  <label for="page_size">{% translate 'Page size:' context 'batch-commands-page-size' %}</label>
   <select id="page_size"
           style="font-size: medium;"
           name="page_size"
-          aria-label="{% translate 'Page size:' %}"
+          aria-label="{% translate 'Page size:' context 'batch-commands-page-size' %}"
           required
           hx-get="{{ base_url }}?page=1&page_size="
           hx-target="#batchCommandsDiv"
@@ -152,7 +150,7 @@
           hx-trigger="change"
           hx-include="this.value">
     <option selected disabled value="">
-      {% translate 'Page size:' %}
+      {% translate 'Page size:' context 'batch-commands-page-size' %}
     </option>
     <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
     <option value="25" {% if page_size == 25 %}selected{% endif %}>25</option>
