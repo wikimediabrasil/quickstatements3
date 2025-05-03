@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block pagetitle %}
-{% translate 'QuickStatements 3.0 - Profile' context 'profile-quickstatements-3.0---profile' %}
+{% translate 'QuickStatements 3.0 - Profile' context 'profile-quickstatements-profile' %}
 {% endblock%}
 
 {% block content %}
@@ -30,16 +30,16 @@
         {% if is_autoconfirmed %}
         <article style="background: var(--pico-color-jade-50);">
             <center>
-                {% translate 'We have successfully verified that you are an autoconfirmed user.' context 'profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user.' %}
+                {% translate 'We have successfully verified that you are an autoconfirmed user.' context 'profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user' %}
             <center>
         </article>
         {% else %}
         <article style="background: var(--pico-color-red-100);">
             <center>
                 {% if token_failed %}
-                {% translate 'We could not verify you are an autoconfirmed user.' context 'profile-we-could-not-verify-you-are-an-autoconfirmed-user.' %}
+                {% translate 'We could not verify you are an autoconfirmed user.' context 'profile-we-could-not-verify-you-are-an-autoconfirmed-user' %}
                 {% else %}
-                {% translate 'You are not an autoconfirmed user.' context 'profile-you-are-not-an-autoconfirmed-user.' %}
+                {% translate 'You are not an autoconfirmed user.' context 'profile-you-are-not-an-autoconfirmed-user' %}
                 {% endif %}
             <center>
         </article>
@@ -66,9 +66,9 @@
     <h2>{% translate 'API Token' context 'profile-api-token' %}</h2>
     <form method="POST">
         {% csrf_token %}
-        <p>{% translate 'Here, you can generate a token to use when querying batch jobs programatically.' context 'profile-here,-you-can-generate-a-token-to-use-when-querying-batch-jobs-programatically.' %}</p>
+        <p>{% translate 'Here, you can generate a token to use when querying batch jobs programatically.' context 'profile-here-you-can-generate-a-token' %}</p>
         <p>
-            {% translate 'You currently have the following token. This token must be kept private:' context 'profile-you-currently-have-the-following-token.-this-token-must-be-kept-private:' %}
+            {% translate 'You currently have the following token. This token must be kept private:' context 'profile-you-currently-have-the-following-token' %}
             <article style="background: var(--pico-color-grey-100);">
                 <center><h5>{{token}}</h5><center>
             </article>
@@ -79,13 +79,13 @@
 </article>
 
 <article>
-<p><a href="{% url 'logout' %}">{% translate 'Click here to log out.' context 'profile-click-here-to-log-out.' %}</a></p>
+<p><a href="{% url 'logout' %}">{% translate 'Click here to log out.' context 'profile-click-here-to-log-out' %}</a></p>
 </article>
 
 {% else %}
 
-<h1>{% translate 'You're not logged in.' context 'profile-you're-not-logged-in.' %}</h1>
-<p><a href="{% url 'login' %}">{% translate 'Click here to log in.' context 'profile-click-here-to-log-in.' %}</a></p>
+<h1>{% translate "You're not logged in." context 'profile-youre-not-logged-in' %}</h1>
+<p><a href="{% url 'login' %}">{% translate 'Click here to log in.' context 'profile-click-here-to-log-in' %}</a></p>
 
 {% endif %}
 

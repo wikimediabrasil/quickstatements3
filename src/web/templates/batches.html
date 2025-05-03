@@ -2,7 +2,7 @@
 {% load i18n %}
 
 
-{% block pagetitle %}{% translate 'QuickStatements 3.0 - Last batches' context 'batches-quickstatements-3.0---last-batches' %}{% endblock%}
+{% block pagetitle %}{% translate 'QuickStatements 3.0 - Last batches' context 'batches-quickstatements-last-batches' %}{% endblock%}
 
 {% block css %}
 
@@ -59,7 +59,7 @@
         <td>{{ batch.modified }}</td>
         <td>
           <a href="{% url 'batch' pk=batch.pk %}">{% translate 'View' context 'batches-view' %}</a><br>
-          <a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batches-revert-/-discuss' %}</a>
+          <a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batches-revert-discuss' %}</a>
         </td>
       </tr>
       {% endfor %}
@@ -89,9 +89,7 @@
 
     <div style="display: inline-block; text-align: center; width: 30%;">
         <span class="pagination current-page">
-          {% blocktranslate with page=page.number total=page.paginator.num_pages %}
-            Pg. {{page}} of {{total}}
-          {% endblocktranslate %}
+          {% blocktranslate with 1=page.number 2=page.paginator.num_pages context 'batch-commands-pagination' %}Pg. {{1}} of {{2}}{% endblocktranslate %}
         </span> 
     </div>
 
@@ -117,15 +115,15 @@
   {% endif %}
 
   <div style="float: right; font-size: medium;">
-    <label for="page_size">{% translate 'Page size:' context 'batches-page-size:' %}</label>
+    <label for="page_size">{% translate 'Page size:' context 'batches-page-size' %}</label>
     <select id="page_size"
             style="font-size: medium;"
             name="page_size"
-            aria-label="{% translate 'Page size:' context 'batches-page-size:' %}"
+            aria-label="{% translate 'Page size:' context 'batches-page-size' %}"
             required
             onchange="location.href='{{ base_url }}?page=1&page_size=' + this.value">
       <option selected disabled value="">
-        {% translate 'Page size:' context 'batches-page-size:' %}
+        {% translate 'Page size:' context 'batches-page-size' %}
       </option>
       <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
       <option value="25" {% if page_size == 25 %}selected{% endif %}>25</option>

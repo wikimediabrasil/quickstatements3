@@ -19,7 +19,7 @@
     {% translate 'Created by' context 'batch-created-by' %}
     <a href="https://www.wikidata.org/wiki/User:{{batch.user}}">{{ batch.user }}</a>
     [<a href="{% url 'last_batches_by_user' user=batch.user %}">{% translate 'View batches' context 'batch-view-batches' %}</a>]
-    [<a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batch-revert-/-discuss' %}</a>]
+    [<a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batch-revert-discuss' %}</a>]
   </p>
 </hgroup>
 </div>
@@ -60,7 +60,7 @@
       hx-swap="outerHTML"
       hx-indicator="#spinner"
       style="margin: 20px 0; font-size: 14px;">
-      {% translate 'Loading summary...' context 'batch-loading-summary...' %}
+      {% translate 'Loading summary...' context 'batch-loading-summary' %}
 </div>
 
 <h4>{% translate 'Commands' context 'batch-commands' %}</h4>
@@ -71,7 +71,7 @@
     hx-trigger="load, reload"
     hx-indicator="#spinner"
     hx-swap="innerHTML">
-{% translate 'Loading commands...' context 'batch-loading-commands...' %}
+{% translate 'Loading commands...' context 'batch-loading-commands' %}
 </div>
 
 <form action="{% url 'batch_stop' pk=batch.pk %}" id="stopbatch" method="POST">
@@ -80,12 +80,12 @@
 
 <dialog id="confirmStop">
   <article>
-    <h2>{% blocktranslate %}Stop batch #{{batch.pk}} processing{% endblocktranslate %}</h2>
+    <h2>{% blocktranslate with 1=batch.pk context 'batch-stop-batch' %}Stop batch #{{1}} processing{% endblocktranslate %}</h2>
     <p>
-      {% translate 'Are you sure you want to stop the current batch processing?' context 'batch-are-you-sure-you-want-to-stop-the-current-batch-processing?' %}
+      {% translate 'Are you sure you want to stop the current batch processing?' context 'batch-are-you-sure-you-want-to-stop-the-current-batch-processing' %}
     </p>
     <footer>
-      <button class="secondary" onclick="closeStopModal()">{% translate 'No, continue' context 'batch-no,-continue' %}</button>
+      <button class="secondary" onclick="closeStopModal()">{% translate 'No, continue' context 'batch-no-continue' %}</button>
       <button onclick="stop()">{% translate 'Stop processing' context 'batch-stop-processing' %}</button>
     </footer>
   </article>

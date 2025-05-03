@@ -23,9 +23,9 @@
         <input type="submit" value="{% translate 'Save and run batch' context 'preview-batch-save-and-run-batch' %}" disabled>
         <small>
           {% if is_blocked %}
-          {% translate 'Your account is blocked and you will not be able to run any batches.' context 'preview-batch-your-account-is-blocked-and-you-will-not-be-able-to-run-any-batches.' %}
+          {% translate 'Your account is blocked and you will not be able to run any batches.' context 'preview-batch-your-account-is-blocked' %}
           {% else %}
-          {% translate 'Note: only autoconfirmed users can run batches.' context 'preview-batch-note:-only-autoconfirmed-users-can-run-batches.' %}
+          {% translate 'Note: only autoconfirmed users can run batches.' context 'preview-batch-note-only-autoconfirmed' %}
           {% endif %}
         </small>
         {% endif %}
@@ -33,7 +33,7 @@
 </div>
 <div class="preview_notice">
   <p>
-      {% translate 'THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER CLICKING 'Save and run batch'.' context 'preview-batch-this-batch-is-in-preview-mode,-and-will-be-only-saved-and-processed-after-clicking-'save-and-run-batch'.' %}
+      {% translate "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER CLICKING 'Save and run batch'." context 'preview-batch-this-batch-is-in-preview-mode' %}
   </p>
 </div>
 <div id="batchProgressDiv" style="margin: 20px 0; font-size: 14px; ">
@@ -41,6 +41,6 @@
 </div>
 <h4>{% translate 'Commands' context 'preview-batch-commands' %}</h4>
 <div class="overflow-auto" id="batchCommandsDiv" hx-get="{% url 'preview_batch_commands' %}" hx-trigger="load, reload" hx-indicator="#spinner" hx-swap="innerHTML">
-    {% translate 'Loading commands...' context 'preview-batch-loading-commands...' %}
+    {% translate 'Loading commands...' context 'preview-batch-loading-commands' %}
 </div>
 {% endblock %}

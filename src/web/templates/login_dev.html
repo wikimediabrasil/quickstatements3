@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 {% load i18n %}
 
-{% block pagetitle %}{% translate 'QuickStatements 3.0 - Login' context 'login-dev-quickstatements-3.0---login' %}{% endblock%}
+{% block pagetitle %}{% translate 'QuickStatements 3.0 - Login' context 'login-dev-login' %}{% endblock%}
 
 
 {% block content %}
 
 <h2>{% translate 'Developer access' context 'login-dev-developer-access' %}</h2>
 
-<p>{% translate 'Submit your access token below.' context 'login-dev-submit-your-access-token-below.' %}</p>
+<p>{% translate 'Submit your access token below.' context 'login-dev-submit-your-access-token-below' %}</p>
 
 <form method="POST">
   <fieldset class="grid">
@@ -27,7 +27,7 @@
 
 {% if error %}
 <small>
-  <p style="color: red;">{% translate 'Your access token is not valid:' context 'login-dev-your-access-token-is-not-valid:' %} {{ error }}</p>
+  <p style="color: red;">{% translate 'Your access token is not valid:' context 'login-dev-your-access-token-is-not-valid' %} {{ error }}</p>
 </small>
 {% endif %}
 

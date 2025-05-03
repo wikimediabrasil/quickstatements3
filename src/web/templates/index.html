@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<h1>{% translate 'Welcome to QuickStatements 3.0' context 'index-welcome-to-quickstatements-3.0' %}</h1>
+<h1>{% translate 'Welcome to QuickStatements 3.0' context 'index-welcome-to-quickstatements' %}</h1>
 
 <article>
   <a role="button" href="{% url 'new_batch' %}">{% translate 'New batch' context 'index-new-batch' %}</a>
@@ -14,14 +14,14 @@
 
 <form id="batchForm">
   <fieldset role="group">
-    <input id="batchInput" type="number" placeholder="{% translate 'Batch ID...' context 'index-batch-id...' %}" oninput="updateBatchForm()" required />
+    <input id="batchInput" type="number" placeholder="{% translate 'Batch ID...' context 'index-batch-id' %}" oninput="updateBatchForm()" required />
     <input type="submit" value="{% translate 'See batch details' context 'index-see-batch-details' %}" />
   </fieldset>
 </form>
 
 <form id="userForm">
   <fieldset role="group">
-    <input id="userInput" type="text" placeholder="{% translate 'Username...' context 'index-username...' %}" oninput="updateUserForm()" required />
+    <input id="userInput" type="text" placeholder="{% translate 'Username...' context 'index-username' %}" oninput="updateUserForm()" required />
     <input type="submit" value="{% translate 'See batches by user' context 'index-see-batches-by-user' %}" />
   </fieldset>
 </form>

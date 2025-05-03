@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% load i18n %}
 
-{% block pagetitle %}{% translate 'QuickStatements 3.0 - New batch' context 'new-batch-quickstatements-3.0---new-batch' %}{% endblock%}
+{% block pagetitle %}{% translate 'QuickStatements 3.0 - New batch' context 'new-batch-quickstatements-new-batch' %}{% endblock%}
 
 {% block content %}
 
@@ -14,7 +14,7 @@
 {% if is_blocked %}
 
 <article class="pico-background-red-600">
-  {% translate 'Your account is blocked and you will not be able to run any batches.' context 'new-batch-your-account-is-blocked-and-you-will-not-be-able-to-run-any-batches.' %}
+  {% translate 'Your account is blocked and you will not be able to run any batches.' context 'new-batch-your-account-is-blocked' %}
 </article>
 
 {% endif %}
@@ -42,22 +42,22 @@
     </select>
 
     <input type="text" name="name" aria-label="batch name"
-      placeholder="{% translate 'Custom batch name...' context 'new-batch-custom-batch-name...' %}"
+      placeholder="{% translate 'Custom batch name...' context 'new-batch-custom-batch-name' %}"
       {% if name %}value="{{name}}" {% endif %}>
 
     <label>
       <input type="checkbox" name="block_on_errors" role="switch" >
       {% translate 'Block batch if a command fails' context 'new-batch-block-batch-if-a-command-fails' %}
-      <em data-tooltip="{% translate 'The batch will stop processing if a command gives an error.' context 'new-batch-the-batch-will-stop-processing-if-a-command-gives-an-error.' %}">(i)</em>
+      <em data-tooltip="{% translate 'The batch will stop processing if a command gives an error.' context 'new-batch-the-batch-will-stop' %}">(i)</em>
     </label>
 
     <label>
       <input type="checkbox" name="do_not_combine_commands" role="switch" >
       {% translate 'Do not combine commands' context 'new-batch-do-not-combine-commands' %}
-      <em data-tooltip="{% translate 'Commands targeting the same entity will not be combined into one edit.' context 'new-batch-commands-targeting-the-same-entity-will-not-be-combined-into-one-edit.' %}">(i)</em>
+      <em data-tooltip="{% translate 'Commands targeting the same entity will not be combined into one edit.' context 'new-batch-commands-targeting' %}">(i)</em>
     </label>
 
-    <textarea name="commands" aria-label="commands" placeholder="{% translate 'Enter your commands here...' context 'new-batch-enter-your-commands-here...' %}"
+    <textarea name="commands" aria-label="commands" placeholder="{% translate 'Enter your commands here...' context 'new-batch-enter-your-commands-here' %}"
       style="height: 400px">{% if commands %}{{commands}}{% endif %}</textarea>
   </fieldset>
   {% if is_autoconfirmed %}
@@ -65,7 +65,7 @@
   {% else %}
   <input type="submit" value="Preview" />
   <small>
-    {% translate 'Note: only autoconfirmed users can run batches.' context 'new-batch-note:-only-autoconfirmed-users-can-run-batches.' %}
+    {% translate 'Note: only autoconfirmed users can run batches.' context 'new-batch-note-only-autoconfirmed' %}
   </small>
   {% endif %}
 </form>

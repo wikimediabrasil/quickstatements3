@@ -25,7 +25,7 @@
     >
     </div>
   </div>
-  <div class="progress-summary">{{finish_percentage}}% ({% blocktranslate %}{{done_count}} of {{total_count}} done{% endblocktranslate %})</div>
+  <div class="progress-summary">{{finish_percentage}}% ({% blocktranslate with 1=done_count 2=total_count context 'batch-summary-done-count' %}{{1}} of {{2}} done{% endblocktranslate %})</div>
 </div>
 
 <div>
@@ -37,7 +37,7 @@
     {% if error_count %}<b class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{error_count}}</b>{% endif %}
     {% if show_block_on_errors_notice %}
     <small>
-      {% translate 'This batch will be blocked if a command fails.' context 'batch-summary-this-batch-will-be-blocked-if-a-command-fails.' %}
+      {% translate 'This batch will be blocked if a command fails.' context 'batch-summary-this-batch' %}
     </small>
     {% endif %}
 </div>

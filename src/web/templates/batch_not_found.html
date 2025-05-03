@@ -4,7 +4,7 @@
 {% block content %}
 
 <p>
-  {% blocktranslate %}Batch <code>#{{ pk }}</code> not found.{% endblocktranslate %}
+  {% blocktranslate with 1=pk context 'batch-not-found-number' %}Batch <code>#{{1}}</code> not found.{% endblocktranslate %}
 </p>
 
 <form id="batchForm">
