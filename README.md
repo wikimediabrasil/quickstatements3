@@ -2,7 +2,7 @@
 
 Repository for the development of a version 3 of the [QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements) tool for making bulk edits to [Wikidata](https://www.wikidata.org).
 
-## Local development HOW TO
+## Local setup
 
 Required tools:
 
@@ -10,15 +10,21 @@ Required tools:
 * [docker-compose](https://docs.docker.com/compose/install/)
 * Make
 
+Make sure that you have an env file inside the local etc/ dir.
+This file contains all the **ENVIRONMENT VARIABLES** used by the system and must never be added to your git repo.
+
+Copy the etc/env.SAMPLE file. No changes are needed for local development:
+
+```bash
+cp etc/env.SAMPLE etc/env
+```
+If you do not have `autoconfirmed` rights on test.wikidata.org, you will need to change the value of WHITELISTED_USERS to your user name.
+
 To build the development container
 
 ```bash
-make build
+docker-compose build
 ```
-
-
-Make sure that you have an env file inside the local etc/ dir.
-This file contains all the **ENVIRONMENT VARIABLES** used by the system and must never be added to your git repo.
 
 To generate a good secret key you can run with python 3.6+
 
@@ -29,19 +35,37 @@ python -c "import secrets; print(secrets.token_urlsafe())"
 To start all services (database, web server, run a shell inside the container)
 
 ```bash
-make run
+docker-compose up
 ```
 
+If everything is correct, QuickStatements will be available at http://localhost:8000/
 
-If everything is correct, **Quickstatements** will be available at http://localhost:8000/
+To authenticate it locally, you will need to use the developer access page, available at http://localhost:8000/auth/login/dev/.
 
-If you are running this for the first time, you have to create a superuser for the Django admin. You can access the container with `make shell`. From there:
+You may get the access token at https://api.wikimedia.org/wiki/Special:AppManagement, click on "Create key". You may use any App name and App description (e.g "Test"). You should ask for a Personal API token, allow it to create and edit items and save. 
+
+The long access token may be used on "http://localhost:8000/auth/login/dev/".
+
+### Checking set up
+
+To check your local set up you may go to http://localhost:8000/batch/new/ and add a test batch on test.wikidata.org. 
+
+For example, you may run the V1 command, which should create:
+
+```
+CREATE
+LAST|P65|42
+```
+
+### Admin access 
+
+To gain admin access you will have to create a superuser for the Django admin. You can access the container with `make shell`. From there:
 
 ```bash
 django-admin createsuperuser
 ```
-
 will run an interactive command which will ask you for your username, password, email, etc... follow the prompts and you should be able to login to the admin at `http://localhost:8000/admin`
+
 
 ## Wikibase server
 
@@ -56,7 +80,7 @@ You can define which wikibase you can connect to via the admin. There you will n
 ## OAuth
 
 This application uses OAuth2 with the Mediawiki provider (at www.wikidata.org)
-You will probably need the following grants::
+You will probably need the following grants:
 
 * Perform high volume activity
   * High-volume (bot) access
