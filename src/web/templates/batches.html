@@ -22,7 +22,7 @@
 {% block content %}
 
 <div style="display: flex; align-items: center; gap: 10px;">
-  <h2> {% translate 'Last batches' context 'batches-last-batches' %} {% if username is not None %} {% translate 'from' context 'From the prase Last batches from username' context 'batches-from'-context-'from-the-prase-last-batches-from-username' %} {{username}}{% endif %}</h2>
+  <h2> {% translate 'Last batches' context 'batches-last-batches' %} {% if username is not None %} {% translate 'from' context 'batches-from' %} {{username}}{% endif %}</h2>
   <img id="spinner" class="htmx-indicator" style="margin-bottom: 1em;">
 </div>
 
