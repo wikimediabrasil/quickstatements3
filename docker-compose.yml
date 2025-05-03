@@ -114,7 +114,7 @@ services:
       MARIADB_DATABASE: wikibase
       MARIADB_USER: wikibase
       MARIADB_PASSWORD: wikibase_pass
-      MARIADB_RANDOM_ROOT_PASSWORD: yes
+      MARIADB_RANDOM_ROOT_PASSWORD: "true"
     healthcheck:
       test: healthcheck.sh --connect --innodb_initialized
       start_period: 1m
