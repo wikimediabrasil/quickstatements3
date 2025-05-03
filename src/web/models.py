@@ -5,7 +5,7 @@ from datetime import UTC
 from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import User
-from django.utils.translation import gettext as _
+from django.utils.translation import pgettext_lazy
 
 from .languages import LANGUAGE_CHOICES
 
@@ -49,8 +49,8 @@ class Token(models.Model):
             return "Anonymous token: [redacted]"
 
     class Meta:
-        verbose_name = _("Token")
-        verbose_name_plural = _("Tokens")
+        verbose_name = pgettext_lazy("web-models-token", "Token")
+        verbose_name_plural = pgettext_lazy("web-models-tokens", "Tokens")
 
     def is_expired(self, buffer_minutes=5):
         """
@@ -99,5 +99,5 @@ class Preferences(models.Model):
         return f"Preferences for {self.user}"
 
     class Meta:
-        verbose_name = _("Preferences")
-        verbose_name_plural = _("Preferences")
+        verbose_name = pgettext_lazy("web-models-preferences", "Preferences")
+        verbose_name_plural = pgettext_lazy("web-models-preferences", "Preferences")

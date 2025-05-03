@@ -5,7 +5,7 @@ from django.core import serializers
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.translation import pgettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from django.views.decorators.http import require_http_methods
 
 from core.exceptions import ServerError, UnauthorizedToken
@@ -242,8 +242,8 @@ def batch_allow_start(request):
 
     can_start = is_autoconfirmed and not is_blocked
     if not can_start:
-        not_confirmed = _("batch-py-user-not-autoconfirmed", "User is not autoconfirmed. Only autoconfirmed users can run batches.")
-        blocked = _("batch-py-user-blocked", "User is blocked and can not run batches.")
+        not_confirmed = pgettext_lazy("batch-py-user-not-autoconfirmed", "User is not autoconfirmed. Only autoconfirmed users can run batches.")
+        blocked = pgettext_lazy("batch-py-user-blocked", "User is blocked and can not run batches.")
 
         error_message = not_confirmed if not is_autoconfirmed else blocked
 

@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from django.core.cache import cache as django_cache
 from django.db import models, transaction
 from django.utils.timezone import now
-from django.utils.translation import pgettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from requests.exceptions import HTTPError
 from urllib3.util.retry import Retry
 
@@ -466,12 +466,12 @@ class Batch(models.Model):
     STATUS_DONE = 3
 
     STATUS_CHOICES = (
-        (STATUS_STOPPED, _("batch-py-status-stopped", "Stopped")),
-        (STATUS_BLOCKED, _("batch-py-status-blocked", "Blocked")),
-        (STATUS_PREVIEW, _("batch-py-status-preview", "Preview")),
-        (STATUS_INITIAL, _("batch-py-status-initial", "Initial")),
-        (STATUS_RUNNING, _("batch-py-status-running", "Running")),
-        (STATUS_DONE, _("batch-py-status-done", "Done")),
+        (STATUS_STOPPED, pgettext_lazy("batch-py-status-stopped", "Stopped")),
+        (STATUS_BLOCKED, pgettext_lazy("batch-py-status-blocked", "Blocked")),
+        (STATUS_PREVIEW, pgettext_lazy("batch-py-status-preview", "Preview")),
+        (STATUS_INITIAL, pgettext_lazy("batch-py-status-initial", "Initial")),
+        (STATUS_RUNNING, pgettext_lazy("batch-py-status-running", "Running")),
+        (STATUS_DONE, pgettext_lazy("batch-py-status-done", "Done")),
     )
 
     name = models.CharField(max_length=255, blank=False, null=False)
@@ -492,8 +492,8 @@ class Batch(models.Model):
         return f"Batch #{self.pk}"
 
     class Meta:
-        verbose_name = _("batch-py-batch", "Batch")
-        verbose_name_plural = _("batch-py-batches", "Batches")
+        verbose_name = pgettext_lazy("batch-py-batch", "Batch")
+        verbose_name_plural = pgettext_lazy("batch-py-batches", "Batches")
 
     def commands(self):
         return BatchCommand.objects.filter(batch=self).all().order_by("index")
@@ -739,10 +739,10 @@ class BatchCommand(models.Model):
     STATUS_DONE = 2
 
     STATUS_CHOICES = (
-        (STATUS_ERROR, _("batchcommand-py-status-error","Error")),
-        (STATUS_INITIAL, _("batchcommand-py-status-initial","Initial")),
-        (STATUS_RUNNING, _("batchcommand-py-status-running","Running")),
-        (STATUS_DONE, _("batchcommand-py-status-done","Done")),
+        (STATUS_ERROR, pgettext_lazy("batchcommand-py-status-error","Error")),
+        (STATUS_INITIAL, pgettext_lazy("batchcommand-py-status-initial","Initial")),
+        (STATUS_RUNNING, pgettext_lazy("batchcommand-py-status-running","Running")),
+        (STATUS_DONE, pgettext_lazy("batchcommand-py-status-done","Done")),
     )
 
     ACTION_CREATE = 0
@@ -751,10 +751,10 @@ class BatchCommand(models.Model):
     ACTION_MERGE = 3
 
     ACTION_CHOICES = (
-        (ACTION_CREATE, _("batchcommand-py-action-create","CREATE")),
-        (ACTION_ADD, _("batchcommand-py-action-add","ADD")),
-        (ACTION_REMOVE, _("batchcommand-py-action-remove","REMOVE")),
-        (ACTION_MERGE, _("batchcommand-py-action-merge","MERGE")),
+        (ACTION_CREATE, pgettext_lazy("batchcommand-py-action-create","CREATE")),
+        (ACTION_ADD, pgettext_lazy("batchcommand-py-action-add","ADD")),
+        (ACTION_REMOVE, pgettext_lazy("batchcommand-py-action-remove","REMOVE")),
+        (ACTION_MERGE, pgettext_lazy("batchcommand-py-action-merge","MERGE")),
     )
 
     # -------
@@ -784,28 +784,28 @@ class BatchCommand(models.Model):
     user_summary = models.TextField(blank=True, null=True)
 
     class Operation(models.TextChoices):
-        CREATE_ITEM = "create_item", _("batchcommand-py-operation-create-item","Create item")
-        CREATE_PROPERTY = "create_property", _("batchcommand-py-operation-create-property","Create property")
+        CREATE_ITEM = "create_item", pgettext_lazy("batchcommand-py-operation-create-item","Create item")
+        CREATE_PROPERTY = "create_property", pgettext_lazy("batchcommand-py-operation-create-property","Create property")
         #
-        SET_STATEMENT = "set_statement", _("batchcommand-py-operation-set-statement","Set statement")
-        CREATE_STATEMENT = "create_statement", _("batchcommand-py-operation-create-statement","Create statement")
+        SET_STATEMENT = "set_statement", pgettext_lazy("batchcommand-py-operation-set-statement","Set statement")
+        CREATE_STATEMENT = "create_statement", pgettext_lazy("batchcommand-py-operation-create-statement","Create statement")
         #
-        REMOVE_STATEMENT_BY_ID = "remove_statement_by_id", _("batchcommand-py-operation-remove-statement-by-id","Remove statement by id")
-        REMOVE_STATEMENT_BY_VALUE = "remove_statement_by_value", _("batchcommand-py-operation-remove-statement-by-value","Remove statement by value")
+        REMOVE_STATEMENT_BY_ID = "remove_statement_by_id", pgettext_lazy("batchcommand-py-operation-remove-statement-by-id","Remove statement by id")
+        REMOVE_STATEMENT_BY_VALUE = "remove_statement_by_value", pgettext_lazy("batchcommand-py-operation-remove-statement-by-value","Remove statement by value")
         #
-        REMOVE_QUALIFIER = "remove_qualifier", _("batchcommand-py-operation-remove-qualifier","Remove qualifier")
-        REMOVE_REFERENCE = "remove_reference", _("batchcommand-py-operation-remove-reference","Remove reference")
+        REMOVE_QUALIFIER = "remove_qualifier", pgettext_lazy("batchcommand-py-operation-remove-qualifier","Remove qualifier")
+        REMOVE_REFERENCE = "remove_reference", pgettext_lazy("batchcommand-py-operation-remove-reference","Remove reference")
         #
-        SET_SITELINK = "set_sitelink", _("batchcommand-py-operation-set-sitelink","Set sitelink")
-        SET_LABEL = "set_label", _("batchcommand-py-operation-set-label","Set label")
-        SET_DESCRIPTION = "set_description", _("batchcommand-py-operation-set-description","Set description")
+        SET_SITELINK = "set_sitelink", pgettext_lazy("batchcommand-py-operation-set-sitelink","Set sitelink")
+        SET_LABEL = "set_label", pgettext_lazy("batchcommand-py-operation-set-label","Set label")
+        SET_DESCRIPTION = "set_description", pgettext_lazy("batchcommand-py-operation-set-description","Set description")
         #
-        REMOVE_SITELINK = "remove_sitelink", _("batchcommand-py-operation-remove-sitelink","Remove sitelink")
-        REMOVE_LABEL = "remove_label", _("batchcommand-py-operation-remove-label","Remove label")
-        REMOVE_DESCRIPTION = "remove_description", _("batchcommand-py-operation-remove-description","Remove description")
+        REMOVE_SITELINK = "remove_sitelink", pgettext_lazy("batchcommand-py-operation-remove-sitelink","Remove sitelink")
+        REMOVE_LABEL = "remove_label", pgettext_lazy("batchcommand-py-operation-remove-label","Remove label")
+        REMOVE_DESCRIPTION = "remove_description", pgettext_lazy("batchcommand-py-operation-remove-description","Remove description")
         #
-        ADD_ALIAS = "add_alias", _("batchcommand-py-operation-add-alias","Add alias")
-        REMOVE_ALIAS = "remove_alias", _("batchcommand-py-operation-remove-alias","Remove alias")
+        ADD_ALIAS = "add_alias", pgettext_lazy("batchcommand-py-operation-add-alias","Add alias")
+        REMOVE_ALIAS = "remove_alias", pgettext_lazy("batchcommand-py-operation-remove-alias","Remove alias")
 
     operation = models.TextField(
         null=True,
@@ -828,16 +828,16 @@ class BatchCommand(models.Model):
     response_id = models.CharField(max_length=48, null=True, blank=True)
 
     class Error(models.TextChoices):
-        OP_NOT_IMPLEMENTED = "op_not_implemented", _("batchcommand-py-error-op-not-implemented","Operation not implemented")
-        NO_STATEMENTS_PROPERTY = "no_statements_property", _("batchcommand-py-error-no-statements-property","No statements for given property")
-        NO_STATEMENTS_VALUE = "no_statements_value", _("batchcommand-py-error-no-statements-value","No statements with given value")
-        NO_QUALIIFERS = "no_qualifiers", _("batchcommand-py-error-no-qualifiers","No qualifiers with given value")
-        NO_REFERENCE_PARTS = "no_reference_parts", _("batchcommand-py-error-no-reference-parts","No reference parts with given value")
-        SITELINK_INVALID = "sitelink_invalid", _("batchcommand-py-error-sitelink-invalid","The sitelink id is invalid")
-        COMBINING_COMMAND_FAILED = "combining_failed", _("batchcommand-py-error-combining-failed","The next command failed")
-        API_USER_ERROR = "api_user_error", _("batchcommand-py-error-api-user-error","API returned a User error")
-        API_SERVER_ERROR = "api_server_error", _("batchcommand-py-error-api-server-error","API returned a server error")
-        LAST_NOT_EVALUATED = "last_not_evaluated", _("batchcommand-py-error-last-not-evaluated","LAST could not be evaluated.")
+        OP_NOT_IMPLEMENTED = "op_not_implemented", pgettext_lazy("batchcommand-py-error-op-not-implemented","Operation not implemented")
+        NO_STATEMENTS_PROPERTY = "no_statements_property", pgettext_lazy("batchcommand-py-error-no-statements-property","No statements for given property")
+        NO_STATEMENTS_VALUE = "no_statements_value", pgettext_lazy("batchcommand-py-error-no-statements-value","No statements with given value")
+        NO_QUALIIFERS = "no_qualifiers", pgettext_lazy("batchcommand-py-error-no-qualifiers","No qualifiers with given value")
+        NO_REFERENCE_PARTS = "no_reference_parts", pgettext_lazy("batchcommand-py-error-no-reference-parts","No reference parts with given value")
+        SITELINK_INVALID = "sitelink_invalid", pgettext_lazy("batchcommand-py-error-sitelink-invalid","The sitelink id is invalid")
+        COMBINING_COMMAND_FAILED = "combining_failed", pgettext_lazy("batchcommand-py-error-combining-failed","The next command failed")
+        API_USER_ERROR = "api_user_error", pgettext_lazy("batchcommand-py-error-api-user-error","API returned a User error")
+        API_SERVER_ERROR = "api_server_error", pgettext_lazy("batchcommand-py-error-api-server-error","API returned a server error")
+        LAST_NOT_EVALUATED = "last_not_evaluated", pgettext_lazy("batchcommand-py-error-last-not-evaluated","LAST could not be evaluated.")
 
     error = models.TextField(
         null=True,
@@ -1645,6 +1645,6 @@ class BatchCommand(models.Model):
     # -----------------
 
     class Meta:
-        verbose_name = _("batchcommand-py-batchcommand", "Batch Command")
-        verbose_name_plural = _("batchcommand-py-batchcommands", "Batch Commands")
+        verbose_name = pgettext_lazy("batchcommand-py-batchcommand", "Batch Command")
+        verbose_name_plural = pgettext_lazy("batchcommand-py-batchcommands", "Batch Commands")
         index_together = ("batch", "index")
