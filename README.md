@@ -10,7 +10,7 @@ Required tools:
 * [docker-compose](https://docs.docker.com/compose/install/)
 * Make
 
-To build the development container
+To build the deelopment container
 
 ```bash
 make build
