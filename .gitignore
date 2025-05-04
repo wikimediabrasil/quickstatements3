@@ -58,7 +58,7 @@ coverage.xml
 cover/
 
 # Translations
-*.mo
+# *.mo -> it's not trivial to generate them on Toolforge
 *.pot
 
 # Django stuff:
