@@ -1,7 +1,7 @@
 import requests_mock
 from django.test import TestCase
 
-from core.factories import TokenFactory
+from core.factories import TokenFactory, BatchFactory
 from core.models import BatchCommand, Client
 from core.parsers.v1 import V1CommandParser
 from core.tests.test_api import ApiMocker
@@ -14,14 +14,12 @@ class TestBatchCommand(TestCase):
 
     def parse(self, text):
         v1 = V1CommandParser()
-        batch = v1.parse("Test", "user", text)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "Test", "user", text)
         return batch
 
     def test_error_status(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", "CREATE")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(parser, "Batch", "wikiuser", "CREATE")
         command = batch.batchcommand_set.first()
         command.status = BatchCommand.STATUS_ERROR
         command.save()
@@ -38,8 +36,7 @@ class TestBatchCommand(TestCase):
 
     def test_create_command(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", "CREATE")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(parser, "Batch", "wikiuser", "CREATE")
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "")
@@ -57,8 +54,9 @@ class TestBatchCommand(TestCase):
 
     def test_merge_command(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", "MERGE\tQ1\tQ2")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", "MERGE\tQ1\tQ2"
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "")
@@ -76,8 +74,9 @@ class TestBatchCommand(TestCase):
 
     def test_remove_item(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", "-Q1234\tP2\tQ1")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", "-Q1234\tP2\tQ1"
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "[Q1234]")
@@ -95,8 +94,9 @@ class TestBatchCommand(TestCase):
 
     def test_remove_time(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", "-Q1234\tP1\t12")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", "-Q1234\tP1\t12"
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "[Q1234]")
@@ -114,8 +114,9 @@ class TestBatchCommand(TestCase):
 
     def test_add_item(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", "Q1234\tP2\tQ1")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", "Q1234\tP2\tQ1"
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "[Q1234]")
@@ -133,8 +134,9 @@ class TestBatchCommand(TestCase):
 
     def test_add_alias(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", 'Q1234\tApt\t"Texto brasileiro"')
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", 'Q1234\tApt\t"Texto brasileiro"'
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "[Q1234]")
@@ -152,8 +154,9 @@ class TestBatchCommand(TestCase):
 
     def test_add_description(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", 'Q1234\tDen\t"Item description"')
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", 'Q1234\tDen\t"Item description"'
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "[Q1234]")
@@ -171,8 +174,9 @@ class TestBatchCommand(TestCase):
 
     def test_add_label(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", 'Q1234\tLfr\t"Note en français"')
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", 'Q1234\tLfr\t"Note en français"'
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "[Q1234]")
@@ -190,8 +194,9 @@ class TestBatchCommand(TestCase):
 
     def test_add_site(self):
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", 'Q1234\tSmysite\t"Site mysite"')
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", 'Q1234\tSmysite\t"Site mysite"'
+        )
         command = batch.batchcommand_set.first()
         self.assertEqual(command.status_info, "INITIAL")
         self.assertEqual(command.entity_info, "[Q1234]")

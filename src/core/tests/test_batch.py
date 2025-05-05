@@ -1,8 +1,8 @@
 from django.test import TestCase
 from django.test import override_settings
 
-from core.models import Batch
-from core.models import BatchCommand
+from core.factories import BatchFactory
+from core.models import Batch, BatchCommand
 from core.parsers.v1 import V1CommandParser
 from core.parsers.csv import CSVCommandParser
 
@@ -137,9 +137,7 @@ class TestBatch(TestCase):
         self.assertFalse(batch.is_stopped)
         batch.stop()
         self.assertTrue(batch.is_stopped)
-        self.assertTrue(
-            batch.message.startswith("Batch stopped processing at")
-        )
+        self.assertTrue(batch.message.startswith("Batch stopped processing at"))
 
     def test_batch_restart(self):
         batch = Batch.objects.create(name="teste", status=Batch.STATUS_BLOCKED)
@@ -175,23 +173,17 @@ class TestBatch(TestCase):
         batch.save()
         batch.rerun()
         self.assertFalse(batch.is_initial)
-        BatchCommand.objects.create(batch=batch,
-                                    index=0,
-                                    json={},
-                                    raw="{}",
-                                    status=BatchCommand.STATUS_DONE)
+        BatchCommand.objects.create(
+            batch=batch, index=0, json={}, raw="{}", status=BatchCommand.STATUS_DONE
+        )
         batch.rerun()
         self.assertFalse(batch.is_initial)
-        BatchCommand.objects.create(batch=batch,
-                                    index=1,
-                                    json={},
-                                    raw="{}",
-                                    status=BatchCommand.STATUS_RUNNING)
-        BatchCommand.objects.create(batch=batch,
-                                    index=2,
-                                    json={},
-                                    raw="{}",
-                                    status=BatchCommand.STATUS_ERROR)
+        BatchCommand.objects.create(
+            batch=batch, index=1, json={}, raw="{}", status=BatchCommand.STATUS_RUNNING
+        )
+        BatchCommand.objects.create(
+            batch=batch, index=2, json={}, raw="{}", status=BatchCommand.STATUS_ERROR
+        )
         batch.rerun()
         self.assertTrue(batch.is_initial)
         self.assertTrue(batch.message.startswith("Batch rerun at"))
@@ -205,8 +197,9 @@ class TestV1Batch(TestCase):
         v1 = V1CommandParser()
         self.assertFalse(Batch.objects.count())
         self.assertFalse(BatchCommand.objects.count())
-        batch = v1.parse("My batch", "myuser", "CREATE||-Q1234|P1|12||Q222|P4|9~0.1")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "My batch", "myuser", "CREATE||-Q1234|P1|12||Q222|P4|9~0.1"
+        )
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch")
         self.assertEqual(BatchCommand.objects.count(), 3)
@@ -221,24 +214,25 @@ class TestV1Batch(TestCase):
 
     def test_create_property(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", "CREATE_PROPERTY|wikibase-item||LAST|P1|Q2")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", "CREATE_PROPERTY|wikibase-item||LAST|P1|Q2"
+        )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.raw, "CREATE_PROPERTY\twikibase-item")
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_PROPERTY)
 
     def test_remove_statemeny_by_id(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", "-STATEMENT|Q1234$abcdefgh-uijkl")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", "-STATEMENT|Q1234$abcdefgh-uijkl"
+        )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_ID)
         self.assertEqual(cmd.entity_id(), "Q1234")
 
     def test_remove_statemeny_by_value(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", "-Q1234|P5|Q31")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "b", "u", "-Q1234|P5|Q31")
         cmd = batch.commands()[0]
         self.assertEqual(
             cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
@@ -249,8 +243,9 @@ class TestV1Batch(TestCase):
 
     def test_remove_statemeny_by_value_2(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", """-Q1234|P5|"my string" """)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", """-Q1234|P5|"my string" """
+        )
         cmd = batch.commands()[0]
         self.assertEqual(
             cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
@@ -263,16 +258,16 @@ class TestV1Batch(TestCase):
 
     def test_user_summary(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", "Q1|P1|Q2 /* my comment */")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "b", "u", "Q1|P1|Q2 /* my comment */")
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(cmd.user_summary, "my comment")
 
     @override_settings(TOOLFORGE_TOOL_NAME="abcdef")
     def test_edit_summary_with_editgroups(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", "Q1|P1|Q2 /* my comment */||Q1|P1|Q3")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", "Q1|P1|Q2 /* my comment */||Q1|P1|Q3"
+        )
         batch_id = batch.id
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(
@@ -287,8 +282,9 @@ class TestV1Batch(TestCase):
 
     def test_set_sitelink(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", """Q1234|Sptwiki|"Cool article" """)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", """Q1234|Sptwiki|"Cool article" """
+        )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_SITELINK)
         self.assertEqual(cmd.entity_id(), "Q1234")
@@ -297,8 +293,7 @@ class TestV1Batch(TestCase):
 
     def test_remove_sitelink(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", """Q1234|Sptwiki|"" """)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "b", "u", """Q1234|Sptwiki|"" """)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_SITELINK)
         self.assertEqual(cmd.entity_id(), "Q1234")
@@ -306,8 +301,7 @@ class TestV1Batch(TestCase):
 
     def test_set_label(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", """Q1234|Lpt|"oi" """)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "b", "u", """Q1234|Lpt|"oi" """)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_LABEL)
         self.assertEqual(cmd.entity_id(), "Q1234")
@@ -316,8 +310,7 @@ class TestV1Batch(TestCase):
 
     def test_remove_label(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", """Q1234|Lpt|"" """)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "b", "u", """Q1234|Lpt|"" """)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_LABEL)
         self.assertEqual(cmd.entity_id(), "Q1234")
@@ -325,8 +318,9 @@ class TestV1Batch(TestCase):
 
     def test_remove_qualifier(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", """REMOVE_QUAL|Q1234|P1|Q2|P3|Q4""")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", """REMOVE_QUAL|Q1234|P1|Q2|P3|Q4"""
+        )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_QUALIFIER)
         self.assertEqual(cmd.entity_id(), "Q1234")
@@ -338,8 +332,9 @@ class TestV1Batch(TestCase):
 
     def test_remove_reference(self):
         v1 = V1CommandParser()
-        batch = v1.parse("b", "u", """REMOVE_REF|Q1234|P1|Q2|S3|Q4""")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", """REMOVE_REF|Q1234|P1|Q2|S3|Q4"""
+        )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_REFERENCE)
         self.assertEqual(cmd.entity_id(), "Q1234")
@@ -368,8 +363,7 @@ class TestCSVBatch(TestCase):
         self.assertFalse(BatchCommand.objects.count())
 
         v1 = CSVCommandParser()
-        batch = v1.parse("My batch CREATE", "myuser", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "My batch CREATE", "myuser", COMMAND)
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch CREATE")
         self.assertEqual(BatchCommand.objects.count(), 4)
@@ -418,8 +412,9 @@ Q4115189,Q5,Q5"""
         self.assertFalse(BatchCommand.objects.count())
 
         v1 = CSVCommandParser()
-        batch = v1.parse("My batch CREATE REMOVE", "myuser", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "My batch CREATE REMOVE", "myuser", COMMAND
+        )
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch CREATE REMOVE")
         self.assertEqual(BatchCommand.objects.count(), 2)
@@ -460,8 +455,7 @@ L123-F1,Q5"""
         self.assertFalse(BatchCommand.objects.count())
 
         v1 = CSVCommandParser()
-        batch = v1.parse("My batch 1", "myuser", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "My batch 1", "myuser", COMMAND)
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch 1")
         self.assertEqual(BatchCommand.objects.count(), 6)
@@ -543,8 +537,7 @@ Q4115189,"Patterns, Predictors, and Outcome"
         self.assertFalse(BatchCommand.objects.count())
 
         v1 = CSVCommandParser()
-        batch = v1.parse("My batch LABEL", "myuser", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "My batch LABEL", "myuser", COMMAND)
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch LABEL")
         self.assertEqual(BatchCommand.objects.count(), 2)
@@ -585,8 +578,7 @@ Q411518,"Patterns, Predictors, and Outcome and Questions"
         self.assertFalse(BatchCommand.objects.count())
 
         v1 = CSVCommandParser()
-        batch = v1.parse("My batch ALIAS", "myuser", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "My batch ALIAS", "myuser", COMMAND)
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch ALIAS")
         self.assertEqual(BatchCommand.objects.count(), 2)
@@ -627,8 +619,9 @@ Q411518,"Patterns, Predictors, and Outcome and Descriptions"
         self.assertFalse(BatchCommand.objects.count())
 
         v1 = CSVCommandParser()
-        batch = v1.parse("My batch DESCRIPTION", "myuser", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "My batch DESCRIPTION", "myuser", COMMAND
+        )
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch DESCRIPTION")
         self.assertEqual(BatchCommand.objects.count(), 2)
@@ -669,8 +662,9 @@ Q4115189,Douglas Adams,author,Douglas Noël Adams,Q5,Q36180,Q6581097,Q463035,\"\
         self.assertFalse(BatchCommand.objects.count())
 
         v1 = CSVCommandParser()
-        batch = v1.parse("My batch DESCRIPTION", "myuser", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "My batch DESCRIPTION", "myuser", COMMAND
+        )
         self.assertEqual(batch.user, "myuser")
         self.assertEqual(batch.name, "My batch DESCRIPTION")
         self.assertEqual(BatchCommand.objects.count(), 8)
@@ -797,8 +791,7 @@ Q4115189,Douglas Adams,author,Douglas Noël Adams,Q5,Q36180,Q6581097,Q463035,\"\
         COMMAND = """qid,P31,#
 Q4115189,Q5,my comment"""
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(cmd.user_summary, "my comment")
 
@@ -809,8 +802,7 @@ Q4115189,Q5,my comment
 Q4115189,Q5,
 """
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         batch_id = batch.id
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(
@@ -830,8 +822,7 @@ Q4115189,Q5,my comment
 Q4115189,Q5,
 """
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(cmd.edit_summary(), "my comment")
         cmd = BatchCommand.objects.get(batch=batch, index=1)
@@ -841,8 +832,7 @@ Q4115189,Q5,
         COMMAND = """qid,P31,-P31
 Q4115189,Q5,Q6"""
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[1]
         self.assertEqual(
             cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
@@ -856,8 +846,7 @@ Q4115189,Q5,Q6"""
 Q4115189,"Cool article"
 """
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_SITELINK)
         self.assertEqual(cmd.entity_id(), "Q4115189")
@@ -869,8 +858,7 @@ Q4115189,"Cool article"
 Q4115189,"x"
 """
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_SITELINK)
         self.assertEqual(cmd.entity_id(), "Q4115189")
@@ -881,8 +869,7 @@ Q4115189,"x"
 Q4115189,"Cool label"
 """
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_LABEL)
         self.assertEqual(cmd.entity_id(), "Q4115189")
@@ -894,8 +881,7 @@ Q4115189,"Cool label"
 Q4115189,"x"
 """
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_LABEL)
         self.assertEqual(cmd.entity_id(), "Q4115189")
@@ -906,6 +892,5 @@ Q4115189,"x"
 Q4115189,""
 """
         par = CSVCommandParser()
-        batch = par.parse("b", "u", COMMAND)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         self.assertEqual(len(batch.commands()), 0)

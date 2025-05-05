@@ -1,13 +1,12 @@
 import re
+from typing import List
 
 from .base import BaseParser
 from .base import ParserException
-from core.models import Batch
 from core.models import BatchCommand
 
 
 class V1CommandParser(BaseParser):
-
     CREATE_PROPERTY_ALLOWED_DATATYPES = [
         "commonsMedia",
         "globe-coordinate",
@@ -220,7 +219,9 @@ class V1CommandParser(BaseParser):
                 value = self.parse_value(elements[index + 1].strip())
 
                 if value is None:
-                    raise ParserException(f"Invalid value {elements[index + 1].strip()}")
+                    raise ParserException(
+                        f"Invalid value {elements[index + 1].strip()}"
+                    )
 
                 if key[0] == "P":  # PROPERTIES
                     if not self.is_valid_property_id(key):
@@ -289,14 +290,14 @@ class V1CommandParser(BaseParser):
 
         return data
 
-    def parse(self, batch_name, batch_owner, raw_commands):
-        batch = Batch(name=batch_name, user=batch_owner)
+    def parse(self, raw_commands) -> List[BatchCommand]:
+        batch_commands = []
+
         commands = raw_commands.replace("||", "\n").replace("|", "\t")
         commands = [c.strip() for c in commands.split("\n") if c.strip()]
 
         for index, raw_command in enumerate(commands):
             bc = BatchCommand(
-                batch=batch,
                 index=index,
                 raw=raw_command,
                 json={},
@@ -357,6 +358,6 @@ class V1CommandParser(BaseParser):
                 bc.status = BatchCommand.STATUS_ERROR
                 bc.message = e.message
 
-            batch.add_preview_command(bc)
+            batch_commands.append(bc)
 
-        return batch
+        return batch_commands

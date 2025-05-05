@@ -14,7 +14,7 @@ from core.exceptions import (
     ServerError,
     UnauthorizedToken,
 )
-from core.factories import TokenFactory, UserFactory, WikibaseFactory
+from core.factories import TokenFactory, UserFactory, WikibaseFactory, BatchFactory
 from core.models import BatchCommand, Client, Token
 from core.parsers.v1 import V1CommandParser
 
@@ -662,8 +662,8 @@ class TestBatchCommand(TestCase):
 
     @override_settings(TOOLFORGE_TOOL_NAME="qs-dev")
     def test_api_body(self):
-        batch = V1CommandParser().parse("b", "u", "CREATE /* hello */")
-        batch.save_batch_and_preview_commands()
+        parser = V1CommandParser()
+        batch = BatchFactory.load_from_parser(parser, "b", "u", "CREATE /* hello */")
         batch_id = batch.id
         cmd = batch.commands()[0]
         comment = f"[[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: hello"
@@ -680,8 +680,8 @@ class TestBatchCommand(TestCase):
     def test_send_create_item(self, mocker):
         self.api_mocker.is_autoconfirmed(mocker)
         self.api_mocker.create_item(mocker, "Q5")
-        batch = V1CommandParser().parse("b", "u", "CREATE||LAST|P1|Q1")
-        batch.save_batch_and_preview_commands()
+        parser = V1CommandParser()
+        batch = BatchFactory.load_from_parser(parser, "b", "u", "CREATE||LAST|P1|Q1")
         cmd: BatchCommand = batch.commands()[0]
         cmd.run(self.api_client)
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_ITEM)
@@ -691,10 +691,10 @@ class TestBatchCommand(TestCase):
     @requests_mock.Mocker()
     def test_send_create_property(self, mocker):
         self.api_mocker.is_autoconfirmed(mocker)
-        batch = V1CommandParser().parse(
-            "b", "u", "CREATE_PROPERTY|wikibase-item||LAST|P1|Q1"
+        parser = V1CommandParser()
+        batch = BatchFactory.load_from_parser(
+            parser, "b", "u", "CREATE_PROPERTY|wikibase-item||LAST|P1|Q1"
         )
-        batch.save_batch_and_preview_commands()
         cmd: BatchCommand = batch.commands()[0]
         cmd.run(self.api_client)
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_PROPERTY)

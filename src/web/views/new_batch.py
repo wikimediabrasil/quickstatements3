@@ -9,7 +9,15 @@ from django.utils.translation import pgettext_lazy
 from django.views.decorators.http import require_http_methods
 
 from core.exceptions import ServerError, UnauthorizedToken
-from core.models import BatchCommand, Client, Token, Wikibase, get_default_wikibase
+from core.models import (
+    Batch,
+    BatchCommand,
+    BatchEditingSession,
+    Client,
+    Token,
+    Wikibase,
+    get_default_wikibase,
+)
 from core.parsers.base import ParserException
 from core.parsers.csv import CSVCommandParser
 from core.parsers.v1 import V1CommandParser
@@ -27,17 +35,16 @@ def preview_batch(request):
     Used for ajax calls
     """
 
-    preview_batch = request.session.get("preview_batch")
-    if preview_batch:
+    batch = Batch.objects.filter(
+        editing_session__session_key=request.session.session_key
+    ).first()
+    if batch:
         total_count = 0
         initial_count = 0
         error_count = 0
-        batch = list(serializers.deserialize("json", preview_batch))[0].object
-        preview_batch_commands = request.session.get("preview_commands", "[]")
-        batch_commands = list(serializers.deserialize("json", preview_batch_commands))
-        for bc in batch_commands:
+        for bc in batch.batchcommand_set.all():
             total_count += 1
-            if bc.object.status == BatchCommand.STATUS_ERROR:
+            if bc.status == BatchCommand.STATUS_ERROR:
                 error_count += 1
             else:
                 initial_count += 1
@@ -78,19 +85,12 @@ def preview_batch_commands(request):
     RETURNS fragment page with PAGINATED COMMANDs FOR A GIVEN BATCH ID
     Used for ajax calls
     """
-    preview_batch_commands = request.session.get("preview_commands")
-    if preview_batch_commands:
-        batch_commands = list(serializers.deserialize("json", preview_batch_commands))
 
-        try:
-            batch_json = request.session.get("preview_batch")
-            deserialized_batch = list(serializers.deserialize("json", batch_json))[0]
-
-            batch = deserialized_batch.object
-            token = Token.objects.get(user=request.user)
-        except (IndexError, Token.DoesNotExist):
-            token = None
-
+    batch = Batch.objects.filter(
+        editing_session__session_key=request.session.session_key
+    ).first()
+    if batch:
+        batch_commands = batch.batchcommand_set.all()
         try:
             page = int(request.GET.get("page", 1))
             page_size = int(request.GET.get("page_size", PAGE_SIZE))
@@ -101,22 +101,18 @@ def preview_batch_commands(request):
         only_errors = int(request.GET.get("show_errors", 0)) == 1
         if only_errors:
             batch_commands = [
-                bc
-                for bc in batch_commands
-                if bc.object.status == BatchCommand.STATUS_ERROR
+                bc for bc in batch_commands if bc.status == BatchCommand.STATUS_ERROR
             ]
-
-        for command in batch_commands:
-            command.batch = batch
 
         paginator = Paginator(batch_commands, page_size)
         page = paginator.page(page)
-        page.object_list = [d.object for d in page.object_list]
 
-        if request.user.is_authenticated and token is not None:
-            client = Client(token=token, wikibase=batch.wikibase)
-            language = Preferences.objects.get_language(request.user, "en")
-            BatchCommand.load_labels(client, page.object_list, language)
+        if request.user.is_authenticated:
+            token = Token.objects.filter(user=request.user).first()
+            if token is not None:
+                client = Client(token=token, wikibase=batch.wikibase)
+                language = Preferences.objects.get_language(request.user, "en")
+                BatchCommand.load_labels(client, page.object_list, language)
 
     base_url = reverse("preview_batch_commands")
     return render(
@@ -139,42 +135,48 @@ def new_batch(request):
 
     if request.method == "POST":
         try:
-            batch_owner = request.user.username
+            batch_type = request.POST.get("type", "v1")
             batch_commands = request.POST.get("commands")
             batch_name = request.POST.get(
-                "name", f"Batch  user:{batch_owner} {datetime.now().isoformat()}"
-            )
-            batch_type = request.POST.get("type", "v1")
-            request.session["preferred_batch_type"] = batch_type
+                "name",
+                f"Batch user:{request.user.username} {datetime.now().isoformat()}",
+            ).strip()
 
             batch_commands = batch_commands.strip()
             if not batch_commands:
                 raise ParserException("Command string cannot be empty")
-
-            batch_name = batch_name.strip()
 
             if batch_type == "v1":
                 parser = V1CommandParser()
             else:
                 parser = CSVCommandParser()
 
-            batch = parser.parse(batch_name, batch_owner, batch_commands)
-
             wikibase_url = request.POST.get("wikibase")
-            wikibase = Wikibase.objects.filter(url=wikibase_url).first()
-            batch.wikibase = wikibase or get_default_wikibase()
-
-            batch.status = batch.STATUS_PREVIEW
-            batch.block_on_errors = "block_on_errors" in request.POST
-            batch.combine_commands = "do_not_combine_commands" not in request.POST
-
-            serialized_batch = serializers.serialize("json", [batch])
-            serialized_commands = serializers.serialize(
-                "json", batch.get_preview_commands()
+            wikibase = (
+                wikibase_url and Wikibase.objects.filter(url=wikibase_url).first()
             )
+            batch = Batch.objects.create(
+                name=batch_name,
+                user=request.user.username,
+                wikibase=wikibase or get_default_wikibase(),
+                status=Batch.STATUS_PREVIEW,
+                block_on_errors="block_on_errors" in request.POST,
+                combine_commands="do_not_combine_commands" not in request.POST,
+            )
+            for batch_command in parser.parse(batch_commands):
+                batch_command.batch = batch
+                batch_command.save()
 
-            request.session["preview_batch"] = serialized_batch
-            request.session["preview_commands"] = serialized_commands
+            request.session["preferred_batch_type"] = batch_type
+            # We delete any previous batch from the editing session.
+            BatchEditingSession.objects.filter(
+                session_key=request.session.session_key
+            ).delete()
+
+            # So that we can create the new one...
+            BatchEditingSession.objects.create(
+                batch=batch, session_key=request.session.session_key
+            )
 
             return redirect(reverse("preview_batch"))
         except ParserException as p:
@@ -194,11 +196,12 @@ def new_batch(request):
         )
 
     else:
-        preferred_batch_type = request.session.get("preferred_batch_type", "v1")
-
+        batch = Batch.objects.filter(
+            editing_session__session_key=request.session.session_key
+        ).first()
         try:
             token = Token.objects.get(user=request.user)
-            wikibase = get_default_wikibase()
+            wikibase = batch and batch.wikibase or get_default_wikibase()
             client = Client(token=token, wikibase=wikibase)
             is_autoconfirmed = client.get_is_autoconfirmed()
             is_blocked = client.get_is_blocked()
@@ -212,7 +215,7 @@ def new_batch(request):
             request,
             "new_batch.html",
             {
-                "batch_type": preferred_batch_type,
+                "batch_type": request.session.get("preferred_batch_type", "v1"),
                 "is_autoconfirmed": is_autoconfirmed,
                 "is_blocked": is_blocked,
                 "wikibases": Wikibase.objects.all(),
@@ -221,16 +224,13 @@ def new_batch(request):
 
 
 @require_http_methods(["POST"])
+@login_required()
 def batch_allow_start(request):
-    """
-    Saves and allow a batch that is in the preview state to start running.
-    """
-
-    preview_batch = request.session.get("preview_batch")
-    if not preview_batch:
+    batch = Batch.objects.filter(
+        editing_session__session_key=request.session.session_key
+    ).first()
+    if not batch:
         return render(request, "batch_not_found.html", status=404)
-
-    batch = list(serializers.deserialize("json", preview_batch))[0].object
 
     try:
         token = Token.objects.get(user=request.user)
@@ -266,13 +266,6 @@ def batch_allow_start(request):
             },
         )
 
-    preview_batch_commands = request.session.get("preview_commands", "[]")
-    for batch_command in serializers.deserialize("json", preview_batch_commands):
-        batch.add_preview_command(batch_command.object)
-
-    batch.save_batch_and_preview_commands()
-
-    del request.session["preview_batch"]
-    del request.session["preview_commands"]
-
+    batch.status = Batch.STATUS_INITIAL
+    batch.save()
     return redirect(reverse("batch", args=[batch.pk]))

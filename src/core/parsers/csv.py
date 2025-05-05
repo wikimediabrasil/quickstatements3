@@ -1,6 +1,7 @@
 import re
 import csv
 import io
+from typing import List
 
 from .base import BaseParser
 from .base import ParserException
@@ -176,9 +177,8 @@ class CSVCommandParser(BaseParser):
                     raise ParserException("A valid property must precede a source")
         return True
 
-    def parse(self, batch_name, batch_owner, raw_csv):
-        batch = Batch(name=batch_name, user=batch_owner)
-
+    def parse(self, raw_csv) -> List[BatchCommand]:
+        batch_commands = []
         memory_file = io.StringIO(raw_csv, newline="")
 
         first_line = True
@@ -215,7 +215,6 @@ class CSVCommandParser(BaseParser):
                     user_summary = command.pop("summary", None)
 
                     bc = BatchCommand(
-                        batch=batch,
                         index=index,
                         json=command,
                         raw=raw_csv,
@@ -225,8 +224,7 @@ class CSVCommandParser(BaseParser):
                         user_summary=user_summary,
                     )
 
-                    batch.add_preview_command(bc)
-
+                    batch_commands.append(bc)
                     index += 1
 
-        return batch
+        return batch_commands

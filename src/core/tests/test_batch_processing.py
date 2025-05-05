@@ -3,7 +3,7 @@ from unittest import mock
 import requests_mock
 from django.test import TestCase
 
-from core.factories import TokenFactory, UserFactory
+from core.factories import TokenFactory, UserFactory, BatchFactory
 from core.models import Batch, BatchCommand
 from core.models import Client as ApiClient
 from core.parsers.v1 import V1CommandParser
@@ -19,9 +19,9 @@ class ProcessingTests(TestCase):
 
     def parse(self, text):
         v1 = V1CommandParser()
-        batch = v1.parse("Test", "user", text)
-        batch.wikibase = self.api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "Test", "user", text, wikibase=self.api_mocker.wikibase
+        )
         return batch
 
     def parse_run(self, text):
@@ -32,7 +32,7 @@ class ProcessingTests(TestCase):
     def parse_with_block_on_errors(self, text):
         batch = self.parse(text)
         batch.block_on_errors = True
-        batch.save_batch_and_preview_commands()
+        batch.save()
         return batch
 
     @requests_mock.Mocker()
@@ -184,7 +184,6 @@ class ProcessingTests(TestCase):
 
         batch = self.parse(raw)
         batch.block_on_errors = False
-        batch.save_batch_and_preview_commands()
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
         commands = batch.commands()
@@ -197,12 +196,14 @@ class ProcessingTests(TestCase):
 
         # FIXME: two different ways to instantiate the batch
         v1 = V1CommandParser()
-        batch = v1.parse(
-            "Should block", "user", "Q1|P5|123||Q2|P5|123||Q1|P5|123||Q1|P5|123"
+        batch = BatchFactory.load_from_parser(
+            v1,
+            "Should block",
+            "user",
+            "Q1|P5|123||Q2|P5|123||Q1|P5|123||Q1|P5|123",
+            wikibase=self.api_mocker.wikibase,
+            block_on_errors=True,
         )
-        batch.wikibase = self.api_mocker.wikibase
-        batch.block_on_errors = True
-        batch.save_batch_and_preview_commands()
         batch.run()
 
         self.assertEqual(batch.status, Batch.STATUS_BLOCKED)
@@ -692,10 +693,14 @@ class ProcessingTests(TestCase):
         # WITHOUT COMBINING COMMANDS
         # ---
         v1 = V1CommandParser()
-        batch = v1.parse("without", "user", raw)
-        batch.wikibase = self.api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
-        batch.combine_commands = False
+        batch = BatchFactory.load_from_parser(
+            v1,
+            "without",
+            "user",
+            raw,
+            wikibase=self.api_mocker.wikibase,
+            combine_commands=False,
+        )
         batch.run()
         commands = batch.commands()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -780,10 +785,14 @@ class ProcessingTests(TestCase):
         # WITHOUT COMBINING COMMANDS
         # ---
         v1 = V1CommandParser()
-        batch = v1.parse("without", "user", raw)
-        batch.wikibase = self.api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
-        batch.combine_commands = False
+        batch = BatchFactory.load_from_parser(
+            v1,
+            "without",
+            "user",
+            raw,
+            wikibase=self.api_mocker.wikibase,
+            combine_commands=False,
+        )
         batch.run()
         commands = batch.commands()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -870,8 +879,7 @@ class ProcessingTests(TestCase):
             self.assertEqual(commands[0].status, BatchCommand.STATUS_DONE)
             self.assertEqual(commands[1].status, BatchCommand.STATUS_DONE)
             v1 = V1CommandParser()
-            batch = v1.parse("now it will", "user", raw)
-            batch.save_batch_and_preview_commands()
+            batch = BatchFactory.load_from_parser(v1, "now it will", "user", raw)
             batch.block_on_errors = True
             batch.wikibase = self.api_mocker.wikibase
             batch.run()

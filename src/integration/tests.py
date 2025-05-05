@@ -4,7 +4,7 @@ from unittest import skipIf
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 
-from core.factories import WikibaseFactory
+from core.factories import WikibaseFactory, BatchFactory
 from core.models import Batch, Client, Token
 from core.parsers.v1 import V1CommandParser
 
@@ -29,9 +29,9 @@ class IntegrationTests(TestCase):
 
     def parse_run(self, text):
         v1 = V1CommandParser()
-        batch = v1.parse("Integration", self.username, text)
-        batch.combine_commands = True
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "Integration", self.username, text, combine_commands=True
+        )
         batch.run()
         return batch
 
