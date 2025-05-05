@@ -18,222 +18,222 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: core/models.py:469
+#: core/models.py:477
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
 msgstr "Stopped"
 
-#: core/models.py:470
+#: core/models.py:478
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
 msgstr "Blocked"
 
-#: core/models.py:471
+#: core/models.py:479
 msgctxt "batch-py-status-preview"
 msgid "Preview"
 msgstr "Preview"
 
-#: core/models.py:472
+#: core/models.py:480
 msgctxt "batch-py-status-initial"
 msgid "Initial"
 msgstr "Initial"
 
-#: core/models.py:473
+#: core/models.py:481
 msgctxt "batch-py-status-running"
 msgid "Running"
 msgstr "Running"
 
-#: core/models.py:474
+#: core/models.py:482
 msgctxt "batch-py-status-done"
 msgid "Done"
 msgstr "Done"
 
-#: core/models.py:495
+#: core/models.py:503
 msgctxt "batch-py-batch"
 msgid "Batch"
 msgstr "Batch"
 
-#: core/models.py:496
+#: core/models.py:504
 msgctxt "batch-py-batches"
 msgid "Batches"
 msgstr "Batches"
 
-#: core/models.py:742
+#: core/models.py:750
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
 msgstr "Error"
 
-#: core/models.py:743
+#: core/models.py:751
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
 msgstr "Initial"
 
-#: core/models.py:744
+#: core/models.py:752
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
 msgstr "Running"
 
-#: core/models.py:745
+#: core/models.py:753
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
 msgstr "Done"
 
-#: core/models.py:754
+#: core/models.py:762
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
 msgstr "CREATE"
 
-#: core/models.py:755
+#: core/models.py:763
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
 msgstr "ADD"
 
-#: core/models.py:756
+#: core/models.py:764
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
 msgstr "REMOVE"
 
-#: core/models.py:757
+#: core/models.py:765
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
 msgstr "MERGE"
 
-#: core/models.py:787
+#: core/models.py:797
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
 msgstr "Create item"
 
-#: core/models.py:788
+#: core/models.py:802
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
 msgstr "Create property"
 
-#: core/models.py:790
+#: core/models.py:808
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
 msgstr "Set statement"
 
-#: core/models.py:791
+#: core/models.py:813
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
 msgstr "Create statement"
 
-#: core/models.py:793
+#: core/models.py:821
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
 msgstr "Remove statement by id"
 
-#: core/models.py:794
+#: core/models.py:828
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
 msgstr "Remove statement by value"
 
-#: core/models.py:796
+#: core/models.py:835
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
 msgstr "Remove qualifier"
 
-#: core/models.py:797
+#: core/models.py:841
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
 msgstr "Remove reference"
 
-#: core/models.py:799
+#: core/models.py:847
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
 msgstr "Set sitelink"
 
-#: core/models.py:800
+#: core/models.py:851
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
 msgstr "Set label"
 
-#: core/models.py:801
+#: core/models.py:856
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
 msgstr "Set description"
 
-#: core/models.py:803
+#: core/models.py:863
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
 msgstr "Remove sitelink"
 
-#: core/models.py:804
+#: core/models.py:868
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
 msgstr "Remove label"
 
-#: core/models.py:805
+#: core/models.py:873
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
 msgstr "Remove description"
 
-#: core/models.py:807
+#: core/models.py:879
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
 msgstr "Add alias"
 
-#: core/models.py:808
+#: core/models.py:883
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
 msgstr "Remove alias"
 
-#: core/models.py:831
+#: core/models.py:910
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
 msgstr "Operation not implemented"
 
-#: core/models.py:832
+#: core/models.py:917
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
 msgstr "No statements for given property"
 
-#: core/models.py:833
+#: core/models.py:924
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
 msgstr "No statements with given value"
 
-#: core/models.py:834
+#: core/models.py:930
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
 msgstr "No qualifiers with given value"
 
-#: core/models.py:835
+#: core/models.py:937
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
 msgstr "No reference parts with given value"
 
-#: core/models.py:836
+#: core/models.py:943
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
 msgstr "The sitelink id is invalid"
 
-#: core/models.py:837
+#: core/models.py:949
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
 msgstr "The next command failed"
 
-#: core/models.py:838
+#: core/models.py:955
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
 msgstr "API returned a User error"
 
-#: core/models.py:839
+#: core/models.py:961
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
 msgstr "API returned a server error"
 
-#: core/models.py:840
+#: core/models.py:968
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
 msgstr "LAST could not be evaluated."
 
-#: core/models.py:1648
+#: core/models.py:1778
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
 msgstr "Batch Command"
 
-#: core/models.py:1649
+#: core/models.py:1780
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Batch Commands"
@@ -349,7 +349,7 @@ msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
 msgstr "PREVIOUS"
 
-#: web/templates/batch_commands.html:111 web/templates/batches.html:92
+#: web/templates/batch_commands.html:111 web/templates/batches.html:94
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
@@ -483,33 +483,33 @@ msgctxt "batches-view"
 msgid "View"
 msgstr "View"
 
-#: web/templates/batches.html:62
+#: web/templates/batches.html:63
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
 msgstr "Revert / Discuss"
 
-#: web/templates/batches.html:77
+#: web/templates/batches.html:79
 msgctxt "batches-first"
 msgid "FIRST"
 msgstr "FIRST"
 
-#: web/templates/batches.html:83
+#: web/templates/batches.html:85
 msgctxt "batches-previous"
 msgid "PREVIOUS"
 msgstr "PREVIOUS"
 
-#: web/templates/batches.html:101
+#: web/templates/batches.html:103
 msgctxt "batches-next"
 msgid "NEXT"
 msgstr "NEXT"
 
-#: web/templates/batches.html:107
+#: web/templates/batches.html:109
 msgctxt "batches-last"
 msgid "LAST"
 msgstr "LAST"
 
-#: web/templates/batches.html:118 web/templates/batches.html:122
-#: web/templates/batches.html:126
+#: web/templates/batches.html:120 web/templates/batches.html:124
+#: web/templates/batches.html:128
 msgctxt "batches-page-size"
 msgid "Page size:"
 msgstr "Page size:"
@@ -882,12 +882,12 @@ msgctxt "statistics-edits"
 msgid "Edits"
 msgstr "Edits"
 
-#: web/views/new_batch.py:245
+#: web/views/new_batch.py:250
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
 
-#: web/views/new_batch.py:246
+#: web/views/new_batch.py:253
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "User is blocked and can not run batches."
