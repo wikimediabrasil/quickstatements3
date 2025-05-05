@@ -93,6 +93,9 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST", "mariadb"),
         "PORT": os.getenv("DB_PORT", 3306),
+        "TEST": {
+            "MIGRATE": False,
+        },
     },
 }
 

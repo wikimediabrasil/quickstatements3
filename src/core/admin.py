@@ -5,7 +5,7 @@ from core.models import Batch, BatchCommand, Token, Wikibase
 
 @admin.register(Wikibase)
 class WikibaseAdmin(admin.ModelAdmin):
-    list_display = ("url", "description")
+    list_display = ("url", "description", "has_discussion_links", "listing_order")
 
 
 @admin.register(Token)
