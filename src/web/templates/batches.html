@@ -7,7 +7,7 @@
 {% block css %}
 
 .list {
-  font-size: 13px;  
+  font-size: 13px;
 }
 
 .pagination {
@@ -59,7 +59,9 @@
         <td>{{ batch.modified }}</td>
         <td>
           <a href="{% url 'batch' pk=batch.pk %}">{% translate 'View' context 'batches-view' %}</a><br>
+          {% if batck.wikibase.has_discussion_links %}
           <a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batches-revert-discuss' %}</a>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}
@@ -68,49 +70,49 @@
 
   {% if page.has_other_pages %}
   <div style="display: inline-block; width: 100%;">
-      
+
     <div style="display: inline-block; width: 35%;">
-      
+
         {% if page.has_previous %}
         <span class="pagination prev-page">
           <a href="{{base_url}}?page=1&page_size={{page_size}}">
             << {% translate 'FIRST' context 'batches-first' %}
           </a>
-        </span> 
-        
+        </span>
+
         <span class="pagination prev-page">
           <a href="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}">
             < {% translate 'PREVIOUS' context 'batches-previous' %}
           </a>
-        </span> 
+        </span>
         {% endif%}
-    
+
     </div>
 
     <div style="display: inline-block; text-align: center; width: 30%;">
         <span class="pagination current-page">
           {% blocktranslate with 1=page.number 2=page.paginator.num_pages context 'batch-commands-pagination' %}Pg. {{1}} of {{2}}{% endblocktranslate %}
-        </span> 
+        </span>
     </div>
 
     <div  style="display: inline-block; text-align: right;  width: 33%;">
-    
+
       {% if page.has_next %}
       <span class="pagination next-page">
         <a href="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}">
             {% translate 'NEXT' context 'batches-next' %} >
         </a>
-      </span> 
-        
+      </span>
+
       <span class="pagination next-page">
         <a href="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}">
             {% translate 'LAST' context 'batches-last' %}>>
         </a>
-      </span> 
+      </span>
       {% endif%}
-  
+
     </div>
-  
+
   </div>
   {% endif %}
 
@@ -132,5 +134,5 @@
       <option value="500" {% if page_size == 500 %}selected{% endif %}>500</option>
     </select>
   </div>
-  
+
 {% endblock %}
