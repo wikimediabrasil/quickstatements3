@@ -122,7 +122,12 @@ def preview_batch_commands(request):
     return render(
         request,
         "batch_commands.html",
-        {"page": page, "only_errors": only_errors, "base_url": base_url, "page_size": page_size,},
+        {
+            "page": page,
+            "only_errors": only_errors,
+            "base_url": base_url,
+            "page_size": page_size,
+        },
     )
 
 
@@ -225,13 +230,11 @@ def batch_allow_start(request):
     if not preview_batch:
         return render(request, "batch_not_found.html", status=404)
 
-    wikibase = get_default_wikibase()
     batch = list(serializers.deserialize("json", preview_batch))[0].object
 
     try:
-
         token = Token.objects.get(user=request.user)
-        client = Client(token=token, wikibase=wikibase)
+        client = Client(token=token, wikibase=batch.wikibase)
         is_autoconfirmed = client.get_is_autoconfirmed()
         is_blocked = client.get_is_blocked()
     except UnauthorizedToken:
@@ -242,8 +245,13 @@ def batch_allow_start(request):
 
     can_start = is_autoconfirmed and not is_blocked
     if not can_start:
-        not_confirmed = pgettext_lazy("batch-py-user-not-autoconfirmed", "User is not autoconfirmed. Only autoconfirmed users can run batches.")
-        blocked = pgettext_lazy("batch-py-user-blocked", "User is blocked and can not run batches.")
+        not_confirmed = pgettext_lazy(
+            "batch-py-user-not-autoconfirmed",
+            "User is not autoconfirmed. Only autoconfirmed users can run batches.",
+        )
+        blocked = pgettext_lazy(
+            "batch-py-user-blocked", "User is blocked and can not run batches."
+        )
 
         error_message = not_confirmed if not is_autoconfirmed else blocked
 
@@ -262,7 +270,6 @@ def batch_allow_start(request):
     for batch_command in serializers.deserialize("json", preview_batch_commands):
         batch.add_preview_command(batch_command.object)
 
-    batch.wikibase = wikibase
     batch.save_batch_and_preview_commands()
 
     del request.session["preview_batch"]
