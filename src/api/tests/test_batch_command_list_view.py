@@ -7,6 +7,8 @@ from rest_framework.test import APIClient
 from core.models import Batch, BatchCommand
 from core.parsers.v1 import V1CommandParser
 
+from core.factories import BatchFactory
+
 
 class BatchCommandDetailViewTest(TestCase):
     def setUp(self):
@@ -32,8 +34,9 @@ class BatchCommandDetailViewTest(TestCase):
         v1 = V1CommandParser()
         self.assertFalse(Batch.objects.count())
         self.assertFalse(BatchCommand.objects.count())
-        batch = v1.parse("My batch", "myuser", "CREATE||-Q1234|P1|12||Q222|P4|9~0.1")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "My batch", "myuser", "CREATE||-Q1234|P1|12||Q222|P4|9~0.1"
+        )
         commands = batch.commands()
         cmd1_pk = commands[0].pk
         cmd2_pk = commands[1].pk
@@ -147,8 +150,9 @@ class BatchCommandDetailViewTest(TestCase):
         v1 = V1CommandParser()
         self.assertFalse(Batch.objects.count())
         self.assertFalse(BatchCommand.objects.count())
-        batch = v1.parse("My batch", "myuser", "CREATE||-Q1234|P1|12||Q222|P4|9~0.1")
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            v1, "My batch", "myuser", "CREATE||-Q1234|P1|12||Q222|P4|9~0.1"
+        )
 
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
         url = f"http://testserver/api/v1/batches/{batch.pk}/commands/"

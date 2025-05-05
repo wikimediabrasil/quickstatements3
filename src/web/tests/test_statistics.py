@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.core.cache import cache
 
-from core.factories import TokenFactory, UserFactory
+from core.factories import TokenFactory, UserFactory, BatchFactory
 from core.parsers.v1 import V1CommandParser
 from core.tests.test_api import ApiMocker
 
@@ -53,21 +53,33 @@ class ProfileTest(TestCase):
         user2 = UserFactory(username="ikiw")
         TokenFactory(user=user)
         TokenFactory(user=user2)
-        v1 = V1CommandParser()
-        batch = v1.parse("Test", "wiki", "CREATE||LAST|P1|Q1||LAST|P1|Q2")
-        batch.combine_commands = True
-        batch.wikibase = api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
+        parser = V1CommandParser()
+        batch = BatchFactory.load_from_parser(
+            parser,
+            "Test",
+            "wiki",
+            "CREATE||LAST|P1|Q1||LAST|P1|Q2",
+            combine_commands=True,
+            wikibase=api_mocker.wikibase,
+        )
         batch.run()
-        batch = v1.parse("Test", "wiki", "CREATE||LAST|P1|Q5")
-        batch.combine_commands = True
-        batch.wikibase = api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser,
+            "Test",
+            "wiki",
+            "CREATE||LAST|P1|Q5",
+            combine_commands=True,
+            wikibase=api_mocker.wikibase,
+        )
         batch.run()
-        batch = v1.parse("Test", "ikiw", "CREATE||LAST|P1|Q1||LAST|P1|Q2")
-        batch.combine_commands = True
-        batch.wikibase = api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser,
+            "Test",
+            "ikiw",
+            "CREATE||LAST|P1|Q1||LAST|P1|Q2",
+            combine_commands=True,
+            wikibase=api_mocker.wikibase,
+        )
         batch.run()
         self.client.force_login(user)
         response = self.client.get("/statistics/counters/")

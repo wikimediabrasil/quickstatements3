@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
+from core.factories import BatchFactory
 from core.models import Batch, BatchCommand
 from core.models import Client as ApiClient
 from core.models import Token
@@ -320,7 +321,6 @@ class ViewsTest(TestCase):
             self.assertTrue(batch.is_initial)
 
     def test_create_batch_anonymous_user(self):
-
         response = self.client.get("/batch/new/")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.headers["Location"], "/auth/login/?next=/batch/new/")
@@ -341,9 +341,13 @@ class ViewsTest(TestCase):
         user, api_client = self.login_user_and_get_token("wikiuser")
 
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", "Q1234\tP2\tQ1")
-        batch.wikibase = self.api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser,
+            "Batch",
+            "wikiuser",
+            "Q1234\tP2\tQ1",
+            wikibase=self.api_mocker.wikibase,
+        )
 
         labels = {
             "Q1234": {
@@ -585,7 +589,6 @@ class ViewsTest(TestCase):
             batch_url = response.url
             response = self.client.get(batch_url)
             batch = response.context["batch"]
-            batch.save_batch_and_preview_commands()
             res = self.client.get(batch_url)
             self.assertEqual(res.context["is_autoconfirmed"], None)
             batch.stop()
@@ -696,9 +699,13 @@ class ViewsTest(TestCase):
         )
         user, api_client = self.login_user_and_get_token("wikiuser")
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", """Q1234\tP2\tQ1||Q11|Len|"label" """)
-        batch.wikibase = self.api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser,
+            "Batch",
+            "wikiuser",
+            """Q1234\tP2\tQ1||Q11|Len|"label" """,
+            wikibase=self.api_mocker.wikibase,
+        )
         pk = batch.pk
 
         response = self.client.get(f"/batch/{pk}/")
@@ -719,7 +726,9 @@ class ViewsTest(TestCase):
         self.assertInRes(
             f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
         )
-        self.assertInRes("""<input class="secondary" type="submit" value="Rerun">""", response)
+        self.assertInRes(
+            """<input class="secondary" type="submit" value="Rerun">""", response
+        )
 
         response = self.client.post(f"/batch/{pk}/rerun/")
         response = self.client.get(response.url)
@@ -765,9 +774,10 @@ class ViewsTest(TestCase):
         )
         user, api_client = self.login_user_and_get_token("wikiuser")
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", """Q1234\tP2\tQ1||Q11|Len|"label" """)
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", """Q1234\tP2\tQ1||Q11|Len|"label" """
+        )
         batch.wikibase = self.api_mocker.wikibase
-        batch.save_batch_and_preview_commands()
         pk = batch.pk
 
         response = self.client.get(f"/batch/{pk}/")
@@ -944,8 +954,9 @@ class ViewsTest(TestCase):
         self.api_mocker.patch_item_successful(mocker, "Q1", {})
         user, api_client = self.login_user_and_get_token("wikiuser")
         parser = V1CommandParser()
-        batch = parser.parse("Batch", "wikiuser", """Q11|Len|"label" """)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(
+            parser, "Batch", "wikiuser", """Q11|Len|"label" """
+        )
         pk = batch.pk
         response = self.client.get(f"/batch/{pk}/")
         self.assertEqual(response.status_code, 200)
@@ -1183,12 +1194,14 @@ class ViewsTest(TestCase):
                 if authorized:
                     self.assertInRes("rerun", response)
                     self.assertInRes(
-                        f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
+                        f"""<form method="POST" action="/batch/{pk}/rerun/">""",
+                        response,
                     )
                 else:
                     self.assertNotInRes("rerun", response)
                     self.assertNotInRes(
-                        f"""<form method="POST" action="/batch/{pk}/rerun/">""", response
+                        f"""<form method="POST" action="/batch/{pk}/rerun/">""",
+                        response,
                     )
                 return self.client.post(f"/batch/{pk}/rerun/")
 

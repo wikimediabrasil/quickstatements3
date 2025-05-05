@@ -676,30 +676,6 @@ class Batch(models.Model):
     def is_done_and_has_pending(self):
         return self.is_done and self.has_pending_commands
 
-    def add_preview_command(self, preview_command: "BatchCommand") -> bool:
-        if not hasattr(self, "_preview_commands"):
-            self._preview_commands = []
-        if preview_command is not None and isinstance(preview_command, BatchCommand):
-            self._preview_commands.append(preview_command)
-            return True
-        return False
-
-    def get_preview_commands(self) -> list:
-        if hasattr(self, "_preview_commands"):
-            return self._preview_commands
-        else:
-            return []
-
-    @transaction.atomic
-    def save_batch_and_preview_commands(self):
-        self.status = self.STATUS_INITIAL
-        if not self.pk:
-            super(Batch, self).save()
-        if hasattr(self, "_preview_commands"):
-            for batch_command in self._preview_commands:
-                batch_command.batch = self
-                batch_command.save()
-
     # ------
     # REPORT
     # ------
@@ -1780,3 +1756,10 @@ class BatchCommand(models.Model):
             "batchcommand-py-batchcommands", "Batch Commands"
         )
         index_together = ("batch", "index")
+
+
+class BatchEditingSession(models.Model):
+    batch = models.OneToOneField(
+        Batch, related_name="editing_session", on_delete=models.CASCADE
+    )
+    session_key = models.CharField(max_length=64, blank=True, null=True, db_index=True)

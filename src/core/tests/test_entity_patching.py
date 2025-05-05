@@ -1,6 +1,7 @@
 import copy
 from django.test import TestCase
 
+from core.factories import BatchFactory
 from core.parsers.v1 import V1CommandParser
 from core.exceptions import NoQualifiers
 from core.exceptions import NoReferenceParts
@@ -126,8 +127,7 @@ class RemoveQualRefTests(TestCase):
 
     def parse(self, text):
         v1 = V1CommandParser()
-        batch = v1.parse("Test", "user", text)
-        batch.save_batch_and_preview_commands()
+        batch = BatchFactory.load_from_parser(v1, "Test", "user", text)
         return batch
 
     def assertStmtnCount(self, entity: dict, property_id: str, length: int):

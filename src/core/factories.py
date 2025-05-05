@@ -1,7 +1,7 @@
 import factory
 from django.contrib.auth.models import User
 
-from .models import Token, Wikibase
+from .models import Token, Wikibase, Batch
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -25,3 +25,21 @@ class TokenFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Token
+
+
+class BatchFactory(factory.django.DjangoModelFactory):
+    name = factory.Sequence(lambda n: f"Test Batch #{n:03d}")
+    user = "test_user"
+    status = Batch.STATUS_INITIAL
+
+    class Meta:
+        model = Batch
+
+    @classmethod
+    def load_from_parser(cls, parser, name, user, data, **extra):
+        batch = cls(name=name, user=user, **extra)
+        for batch_command in parser.parse(data):
+            batch_command.batch = batch
+            batch_command.save()
+
+        return batch
