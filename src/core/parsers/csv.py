@@ -1,13 +1,16 @@
 import re
 import csv
 import io
-from typing import List
+from typing import Iterator
+import logging
 
 from .base import BaseParser
 from .base import ParserException
 
-from core.models import Batch
 from core.models import BatchCommand
+
+
+logger = logging.getLogger(__name__)
 
 
 class CSVCommandParser(BaseParser):
@@ -177,8 +180,7 @@ class CSVCommandParser(BaseParser):
                     raise ParserException("A valid property must precede a source")
         return True
 
-    def parse(self, raw_csv) -> List[BatchCommand]:
-        batch_commands = []
+    def parse(self, raw_csv) -> Iterator[BatchCommand]:
         memory_file = io.StringIO(raw_csv, newline="")
 
         first_line = True
@@ -214,17 +216,15 @@ class CSVCommandParser(BaseParser):
 
                     user_summary = command.pop("summary", None)
 
-                    bc = BatchCommand(
+                    logger.debug(f"Parsed line {row}")
+
+                    yield BatchCommand(
                         index=index,
                         json=command,
-                        raw=raw_csv,
+                        raw=row,
                         action=action,
                         operation=operation,
                         status=BatchCommand.STATUS_INITIAL,
                         user_summary=user_summary,
                     )
-
-                    batch_commands.append(bc)
                     index += 1
-
-        return batch_commands

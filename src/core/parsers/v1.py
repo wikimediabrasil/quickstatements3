@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import Iterator
 
 from .base import BaseParser
 from .base import ParserException
@@ -290,9 +290,7 @@ class V1CommandParser(BaseParser):
 
         return data
 
-    def parse(self, raw_commands) -> List[BatchCommand]:
-        batch_commands = []
-
+    def parse(self, raw_commands) -> Iterator[BatchCommand]:
         commands = raw_commands.replace("||", "\n").replace("|", "\t")
         commands = [c.strip() for c in commands.split("\n") if c.strip()]
 
@@ -358,6 +356,4 @@ class V1CommandParser(BaseParser):
                 bc.status = BatchCommand.STATUS_ERROR
                 bc.message = e.message
 
-            batch_commands.append(bc)
-
-        return batch_commands
+            yield bc

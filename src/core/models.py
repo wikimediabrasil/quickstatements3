@@ -12,7 +12,7 @@ from authlib.integrations.django_client import OAuth
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.cache import cache as django_cache
-from django.db import models, transaction
+from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import pgettext_lazy
 from requests.exceptions import HTTPError
@@ -952,7 +952,7 @@ class BatchCommand(models.Model):
     )
 
     def __str__(self):
-        return f"Batch #{self.batch.pk} Command #{self.pk} ##{self.index}"
+        return f"Batch #{self.batch_id} Command #{self.pk} ##{self.index}"
 
     # -----------------
     # Status-changing methods
@@ -1756,6 +1756,7 @@ class BatchCommand(models.Model):
             "batchcommand-py-batchcommands", "Batch Commands"
         )
         index_together = ("batch", "index")
+        ordering = ("batch", "index")
 
 
 class BatchEditingSession(models.Model):

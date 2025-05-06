@@ -35,19 +35,19 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "https://qs-dev.toolforge.org/"
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "core",
-    "web",
-    "api",
-    "rest_framework",
-    "rest_framework.authtoken",
 ]
+
+THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken"]
+PROJECT_APPS = ["core", "web", "api"]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -59,6 +59,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "web.middleware.language_cookie_middleware",
 ]
+
 
 ROOT_URLCONF = "qsts3.urls"
 
@@ -146,6 +147,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 APPEND_SLASH = True
 
 
+LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
+APP_LOG_CONFIG = {
+    "handlers": ["console"],
+    "level": LOG_LEVEL,
+    "propagate": True,
+}
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -173,17 +180,17 @@ LOGGING = {
             "handlers": ["django"],
             "level": "INFO",
         },
-        "qsts3": {
-            "handlers": ["console"],
-            "level": "INFO",
-        },
         "urllib3": {
             "handlers": ["console"],
             "level": "INFO",
             "propagate": True,
         },
+        "qsts3": APP_LOG_CONFIG,
     },
 }
+
+for app in PROJECT_APPS:
+    LOGGING["loggers"][app] = APP_LOG_CONFIG
 
 
 REST_FRAMEWORK = {
