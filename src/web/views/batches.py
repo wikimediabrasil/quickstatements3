@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse
 
-from core.models import Batch
+from core.models import Batch, BatchCommand
 
 
 PAGE_SIZE = 25
@@ -38,7 +38,29 @@ def last_batches(request):
         page = 1
         page_size = PAGE_SIZE
 
-    paginator = Paginator(Batch.objects.all().order_by("-modified"), page_size)
+    from django.db.models import Count, Q
+
+    error_commands = Count(
+        "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_ERROR)
+    )
+    initial_commands = Count(
+        "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_INITIAL)
+    )
+    running_commands = Count(
+        "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_RUNNING)
+    )
+    done_commands = Count(
+        "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_DONE)
+    )
+
+    queryset = (Batch.objects.all().order_by("-modified")
+                .annotate(initial_commands=initial_commands)
+                .annotate(running_commands=running_commands)
+                .annotate(done_commands=done_commands)
+                .annotate(error_commands=error_commands))
+
+    paginator = Paginator(queryset, page_size)
+
     base_url = reverse("last_batches")
     return render(
         request, "batches.html", {"page": paginator.page(page), "base_url": base_url, "page_size": page_size}
