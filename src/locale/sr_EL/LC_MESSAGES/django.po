@@ -16,227 +16,226 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: core/models.py:477
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Stopped"
+msgstr "Zaustavljeno"
 
 #: core/models.py:478
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Blocked"
+msgstr "Blokirano"
 
 #: core/models.py:479
 msgctxt "batch-py-status-preview"
 msgid "Preview"
-msgstr "Preview"
+msgstr "Pregled"
 
 #: core/models.py:480
 msgctxt "batch-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "Početno"
 
 #: core/models.py:481
 msgctxt "batch-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "U toku"
 
 #: core/models.py:482
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Završeno"
 
 #: core/models.py:503
 msgctxt "batch-py-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Serija"
 
 #: core/models.py:504
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Serije"
 
 #: core/models.py:726
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
-msgstr "Error"
+msgstr "Greška"
 
 #: core/models.py:727
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "Početno"
 
 #: core/models.py:728
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "U toku"
 
 #: core/models.py:729
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Završeno"
 
 #: core/models.py:738
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "KREIRAJ"
 
 #: core/models.py:739
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
-msgstr "ADD"
+msgstr "DODAJ"
 
 #: core/models.py:740
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "REMOVE"
+msgstr "UKLONI"
 
 #: core/models.py:741
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "MERGE"
+msgstr "SPOJI"
 
 #: core/models.py:773
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Create item"
+msgstr "Kreiraj stavku"
 
 #: core/models.py:778
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
-msgstr "Create property"
+msgstr "Kreiraj svojstvo"
 
 #: core/models.py:784
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Set statement"
+msgstr "Postavi izjavu"
 
 #: core/models.py:789
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Create statement"
+msgstr "Kreiraj izjavu"
 
 #: core/models.py:797
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
-msgstr "Remove statement by id"
+msgstr "Ukloni izjavu po ID-u"
 
 #: core/models.py:804
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
-msgstr "Remove statement by value"
+msgstr "Ukloni izjavu po vrednosti"
 
 #: core/models.py:811
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
-msgstr "Remove qualifier"
+msgstr "Ukloni kvalifikator"
 
 #: core/models.py:817
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Remove reference"
+msgstr "Ukloni referencu"
 
 #: core/models.py:823
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
-msgstr "Set sitelink"
+msgstr "Postavi link ka projektu"
 
 #: core/models.py:827
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Set label"
+msgstr "Postavi oznaku"
 
 #: core/models.py:832
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Set description"
+msgstr "Postavi opis"
 
 #: core/models.py:839
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
-msgstr "Remove sitelink"
+msgstr "Ukloni link ka projektu"
 
 #: core/models.py:844
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Remove label"
+msgstr "Ukloni oznaku"
 
 #: core/models.py:849
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Remove description"
+msgstr "Ukloni opis"
 
 #: core/models.py:855
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Add alias"
+msgstr "Dodaj alternativno ime"
 
 #: core/models.py:859
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Remove alias"
+msgstr "Ukloni alternativno ime"
 
 #: core/models.py:886
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
-msgstr "Operation not implemented"
+msgstr "Operacija nije implementirana"
 
 #: core/models.py:893
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
-msgstr "No statements for given property"
+msgstr "Nema izjava za dato svojstvo"
 
 #: core/models.py:900
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
-msgstr "No statements with given value"
+msgstr "Nema izjava sa datom vrednošću"
 
 #: core/models.py:906
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
-msgstr "No qualifiers with given value"
+msgstr "Nema kvalifikatora sa datom vrednošću"
 
 #: core/models.py:913
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
-msgstr "No reference parts with given value"
+msgstr "Nema delova reference sa datom vrednošću"
 
 #: core/models.py:919
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "The sitelink id is invalid"
+msgstr "ID linka na projekat je nevažeći"
 
 #: core/models.py:925
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
-msgstr "The next command failed"
+msgstr "Sledeća komanda nije uspela"
 
 #: core/models.py:931
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
-msgstr "API returned a User error"
+msgstr "API je vratio korisničku grešku"
 
 #: core/models.py:937
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
-msgstr "API returned a server error"
+msgstr "API je vratio grešku servera"
 
 #: core/models.py:944
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
-msgstr "LAST could not be evaluated."
+msgstr "LAST nije mogao biti ocenjen."
 
 #: core/models.py:1754
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
-msgstr "Batch Command"
+msgstr "Komanda serije"
 
 #: core/models.py:1756
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
-msgstr "Batch Commands"
+msgstr "Komande serija"
 
 #: web/models.py:52
 msgctxt "web-models-token"
@@ -246,217 +245,217 @@ msgstr "Token"
 #: web/models.py:53
 msgctxt "web-models-tokens"
 msgid "Tokens"
-msgstr "Tokens"
+msgstr "Tokeni"
 
 #: web/models.py:102 web/models.py:103
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Podešavanja"
 
 #: web/templates/batch.html:4 web/templates/batch.html:13
 msgctxt "batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Serija"
 
 #: web/templates/batch.html:16
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
-msgstr "Submitted to"
+msgstr "Postupak podnet do"
 
 #: web/templates/batch.html:19
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Created by"
+msgstr "Kreirano od"
 
 #: web/templates/batch.html:21
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Prikaži serije"
 
 #: web/templates/batch.html:22
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "Poništi / Raspravi"
 
 #: web/templates/batch.html:30
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
-msgstr "Stop execution"
+msgstr "Zaustavi izvršavanje"
 
 #: web/templates/batch.html:63
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
-msgstr "Loading summary..."
+msgstr "Učitavanje rezimea..."
 
 #: web/templates/batch.html:66
 msgctxt "batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Komande"
 
 #: web/templates/batch.html:74
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "Učitavanje komandi..."
 
 #: web/templates/batch.html:83
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
-msgstr "Stop batch #%(1)s processing"
+msgstr "Zaustavi obradu serije #%(1)s"
 
 #: web/templates/batch.html:85
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
-msgstr "Are you sure you want to stop the current batch processing?"
+msgstr "Da li ste sigurni da želite da zaustavite trenutnu obradu serije?"
 
 #: web/templates/batch.html:88
 msgctxt "batch-no-continue"
 msgid "No, continue"
-msgstr "No, continue"
+msgstr "Ne, nastavi"
 
 #: web/templates/batch.html:89
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
-msgstr "Stop processing"
+msgstr "Zaustavi obradu"
 
 #: web/templates/batch_commands.html:66
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "SHOWING ONLY ERRORS"
+msgstr "PRIKAZUJU SE SAMO GREŠKE"
 
 #: web/templates/batch_commands.html:71
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "SHOW ALL"
+msgstr "PRIKAŽI SVE"
 
 #: web/templates/batch_commands.html:74
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "SHOWING ALL"
+msgstr "PRIKAZUJU SE SVE"
 
 #: web/templates/batch_commands.html:79
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "SHOW ONLY ERRORS"
+msgstr "PRIKAŽI SAMO GREŠKE"
 
 #: web/templates/batch_commands.html:94
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "PRVO"
 
 #: web/templates/batch_commands.html:102
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "PRETHODNO"
 
 #: web/templates/batch_commands.html:111 web/templates/batches.html:94
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Pg. %(1)s of %(2)s"
+msgstr "Strana %(1)s od %(2)s"
 
 #: web/templates/batch_commands.html:122
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "SLEDEĆE"
 
 #: web/templates/batch_commands.html:130
 msgctxt "batch-commands-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "POSLEDNjE"
 
 #: web/templates/batch_commands.html:141 web/templates/batch_commands.html:145
 #: web/templates/batch_commands.html:153
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Veličina stranice:"
 
 #: web/templates/batch_not_found.html:7
 #, python-format
 msgctxt "batch-not-found-number"
 msgid "Batch <code>#%(1)s</code> not found."
-msgstr "Batch <code>#%(1)s</code> not found."
+msgstr "Serija `#%(1)s` nije pronađena."
 
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "Batch ID"
+msgstr "ID serije"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Pogledaj detalje serije"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "BATCH STATUS"
+msgstr "STATUS SERIJE"
 
 #: web/templates/batch_summary.html:28
 #, python-format
 msgctxt "batch-summary-done-count"
 msgid "%(1)s of %(2)s done"
-msgstr "%(1)s of %(2)s done"
+msgstr "%(1)s od %(2)s završeno"
 
 #: web/templates/batch_summary.html:32
 msgctxt "batch-summary-commands-summary"
 msgid "COMMANDS SUMMARY"
-msgstr "COMMANDS SUMMARY"
+msgstr "REZIME KOMANDI"
 
 #: web/templates/batch_summary.html:33
 msgctxt "batch-summary-total"
 msgid "TOTAL"
-msgstr "TOTAL"
+msgstr "UKUPNO"
 
 #: web/templates/batch_summary.html:34
 msgctxt "batch-summary-init"
 msgid "INIT"
-msgstr "INIT"
+msgstr "POČETNO"
 
 #: web/templates/batch_summary.html:35
 msgctxt "batch-summary-running"
 msgid "RUNNING"
-msgstr "RUNNING"
+msgstr "U TOKU"
 
 #: web/templates/batch_summary.html:36
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "DONE"
+msgstr "ZAVRŠENO"
 
 #: web/templates/batch_summary.html:37
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "ERRORS"
+msgstr "GREŠKE"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
 msgid "This batch will be blocked if a command fails."
-msgstr "This batch will be blocked if a command fails."
+msgstr "Ova serija će biti blokirana ako komanda ne uspe."
 
 #: web/templates/batches.html:5
 msgctxt "batches-quickstatements-last-batches"
 msgid "QuickStatements 3.0 - Last batches"
-msgstr "QuickStatements 3.0 - Last batches"
+msgstr "QuickStatements 3.0 - Poslednje serije"
 
 #: web/templates/batches.html:25
 msgctxt "batches-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Poslednje serije"
 
 #: web/templates/batches.html:25
 msgctxt "batches-from"
 msgid "from"
-msgstr "from"
+msgstr "od"
 
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "User"
+msgstr "Korisnik"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Name"
+msgstr "Naziv"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
@@ -466,249 +465,248 @@ msgstr "Status"
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
 msgid "Modified"
-msgstr "Modified"
+msgstr "Izmenjeno"
 
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Actions"
+msgstr "Akcije"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Prikaži serije"
 
 #: web/templates/batches.html:61
 msgctxt "batches-view"
 msgid "View"
-msgstr "View"
+msgstr "Prikaži"
 
 #: web/templates/batches.html:63
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "Poništi / Raspravi"
 
 #: web/templates/batches.html:79
 msgctxt "batches-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "PRVO"
 
 #: web/templates/batches.html:85
 msgctxt "batches-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "PRETHODNO"
 
 #: web/templates/batches.html:103
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "SLEDEĆE"
 
 #: web/templates/batches.html:109
 msgctxt "batches-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "POSLEDNjE"
 
 #: web/templates/batches.html:120 web/templates/batches.html:124
 #: web/templates/batches.html:128
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Veličina stranice:"
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
 msgid "Welcome to QuickStatements 3.0"
-msgstr "Welcome to QuickStatements 3.0"
+msgstr "Dobrodošli u QuickStatements 3.0"
 
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nova serija"
 
 #: web/templates/index.html:17
 msgctxt "index-batch-id"
 msgid "Batch ID..."
-msgstr "Batch ID..."
+msgstr "ID serije..."
 
 #: web/templates/index.html:18
 msgctxt "index-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Pogledaj detalje serije"
 
 #: web/templates/index.html:24
 msgctxt "index-username"
 msgid "Username..."
-msgstr "Username..."
+msgstr "Korisničko ime..."
 
 #: web/templates/index.html:25
 msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
-msgstr "See batches by user"
+msgstr "Pogledaj serije po korisniku"
 
 #: web/templates/layout.html:72
 msgctxt "layout-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nova serija"
 
 #: web/templates/layout.html:73
 msgctxt "layout-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Poslednje serije"
 
 #: web/templates/layout.html:74
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistika"
 
 #: web/templates/layout.html:80
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Login"
+msgstr "Prijava"
 
 #: web/templates/layout.html:82
 msgctxt "layout-user"
 msgid "User"
-msgstr "User"
+msgstr "Korisnik"
 
 #: web/templates/layout.html:83
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
-msgstr "Your last batches"
+msgstr "Vaše poslednje serije"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 - Login"
+msgstr "QuickStatements 3.0 - Prijava"
 
 #: web/templates/login.html:8
 msgctxt "login-page-title"
 msgid "Login"
-msgstr "Login"
+msgstr "Prijava"
 
 #: web/templates/login.html:34
 msgctxt "login-sign-in-with-wikimedia-account"
 msgid "Sign in with Wikimedia account"
-msgstr "Sign in with Wikimedia account"
+msgstr "Prijavite se preko naloga na Vikimedijinim projektima"
 
 #: web/templates/login.html:37
 msgctxt "login-advanced-consumer-key"
 msgid "Advanced: login with a developer consumer key"
-msgstr "Advanced: login with a developer consumer key"
+msgstr "Napredno: prijava sa ključem za programere"
 
 #: web/templates/login_dev.html:4
 msgctxt "login-dev-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 - Login"
+msgstr "QuickStatements 3.0 - Prijava"
 
 #: web/templates/login_dev.html:9
 msgctxt "login-dev-developer-access"
 msgid "Developer access"
-msgstr "Developer access"
+msgstr "Pristup za programere"
 
 #: web/templates/login_dev.html:11
 msgctxt "login-dev-submit-your-access-token-below"
 msgid "Submit your access token below."
-msgstr "Submit your access token below."
+msgstr "Unesite svoj token ispod."
 
 #: web/templates/login_dev.html:19 web/templates/login_dev.html:20
 msgctxt "login-dev-access-token"
 msgid "Access Token"
-msgstr "Access Token"
+msgstr "Token za pristup"
 
 #: web/templates/login_dev.html:23
 msgctxt "login-dev-log-in"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Prijavite se"
 
 #: web/templates/login_dev.html:30
 msgctxt "login-dev-your-access-token-is-not-valid"
 msgid "Your access token is not valid:"
-msgstr "Your access token is not valid:"
+msgstr "Vaš token nije važeći:"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
 msgid "QuickStatements 3.0 - New batch"
-msgstr "QuickStatements 3.0 - New batch"
+msgstr "QuickStatements 3.0 - Nova serija"
 
 #: web/templates/new_batch.html:8
 msgctxt "new-batch-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nova serija"
 
 #: web/templates/new_batch.html:17
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "Vaš nalog je blokiran i nećete moći da pokrenete serije."
 
 #: web/templates/new_batch.html:26
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
-msgstr "Wikibase"
+msgstr "Vikipodaci"
 
 #: web/templates/new_batch.html:37
 msgctxt "new-batch-command-format"
 msgid "Command format"
-msgstr "Command format"
+msgstr "Format komande"
 
 #: web/templates/new_batch.html:45
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
-msgstr "Custom batch name..."
+msgstr "Prilagođeni naziv serije..."
 
 #: web/templates/new_batch.html:50
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
-msgstr "Block batch if a command fails"
+msgstr "Blokiraj seriju ako komanda ne uspe"
 
 #: web/templates/new_batch.html:51
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
-msgstr "The batch will stop processing if a command gives an error."
+msgstr "Serija će prestati sa obradom ako komanda da grešku."
 
 #: web/templates/new_batch.html:56
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
-msgstr "Do not combine commands"
+msgstr "Ne kombinuj komande"
 
 #: web/templates/new_batch.html:57
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
-msgstr ""
-"Commands targeting the same entity will not be combined into one edit."
+msgstr "Komande usmerene na isti entitet neće biti spojene."
 
 #: web/templates/new_batch.html:60
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
-msgstr "Enter your commands here..."
+msgstr "Unesite svoje komande ovde..."
 
 #: web/templates/new_batch.html:68
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr "Note: only autoconfirmed users can run batches."
+msgstr "Napomena: samo automatski potvrđeni korisnici mogu pokrenuti serije."
 
 #: web/templates/preview_batch.html:3
 msgctxt "preview-batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Serija"
 
 #: web/templates/preview_batch.html:10
 msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
-msgstr "Batch Preview"
+msgstr "Pregled serije"
 
 #: web/templates/preview_batch.html:21 web/templates/preview_batch.html:23
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
-msgstr "Save and run batch"
+msgstr "Sačuvaj i pokreni seriju"
 
 #: web/templates/preview_batch.html:26
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "Vaš nalog je blokiran i nećete moći da pokrenete serije."
 
 #: web/templates/preview_batch.html:28
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr "Note: only autoconfirmed users can run batches."
+msgstr "Napomena: samo automatski potvrđeni korisnici mogu pokrenuti serije."
 
 #: web/templates/preview_batch.html:36
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
@@ -716,178 +714,178 @@ msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
 "CLICKING 'Save and run batch'."
 msgstr ""
-"THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
-"CLICKING 'Save and run batch'."
+"OVA SERIJA JE U REŽIMU PREGLEDA I BIĆE SAČUVANA I OBRAĐENA NAKON KLIKA NA "
+"'Sačuvaj i pokreni seriju'."
 
 #: web/templates/preview_batch.html:42
 msgctxt "preview-batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Komande"
 
 #: web/templates/preview_batch.html:44
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "Učitavanje komandi..."
 
 #: web/templates/profile.html:5
 msgctxt "profile-quickstatements-profile"
 msgid "QuickStatements 3.0 - Profile"
-msgstr "QuickStatements 3.0 - Profile"
+msgstr "QuickStatements 3.0 - Profil"
 
 #: web/templates/profile.html:23
 msgctxt "profile-autoconfirmed-status"
 msgid "Autoconfirmed status"
-msgstr "Autoconfirmed status"
+msgstr "Status automatske potvrđenosti"
 
 #: web/templates/profile.html:25
 msgctxt "profile-only-autoconfirmed-users-can-run-batches-on-quickstatements"
 msgid "Only autoconfirmed users can run batches on Quickstatements"
-msgstr "Only autoconfirmed users can run batches on Quickstatements"
+msgstr ""
+"Samo automatski potvrđeni korisnici mogu pokretati serije na Quickstatements"
 
 #: web/templates/profile.html:27
 msgctxt "profile-read-about-autoconfirmed-user-definition"
 msgid "Read about autoconfirmed user definition"
-msgstr "Read about autoconfirmed user definition"
+msgstr "Pročitaj o definiciji automatski potvrđenog korisnika"
 
 #: web/templates/profile.html:33
 msgctxt ""
 "profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user"
 msgid "We have successfully verified that you are an autoconfirmed user."
-msgstr "We have successfully verified that you are an autoconfirmed user."
+msgstr "Uspešno smo proverili da ste automatski potvrđeni korisnik."
 
 #: web/templates/profile.html:40
 msgctxt "profile-we-could-not-verify-you-are-an-autoconfirmed-user"
 msgid "We could not verify you are an autoconfirmed user."
-msgstr "We could not verify you are an autoconfirmed user."
+msgstr "Nismo mogli da proverimo da ste automatski potvrđeni korisnik."
 
 #: web/templates/profile.html:42
 msgctxt "profile-you-are-not-an-autoconfirmed-user"
 msgid "You are not an autoconfirmed user."
-msgstr "You are not an autoconfirmed user."
+msgstr "Niste automatski potvrđeni korisnik."
 
 #: web/templates/profile.html:51
 msgctxt "profile-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Postavke"
 
 #: web/templates/profile.html:54
 msgctxt "profile-preferred-language"
 msgid "Preferred language"
-msgstr "Preferred language"
+msgstr "Željeni jezik"
 
 #: web/templates/profile.html:61
 msgctxt "profile-update-preferred-language"
 msgid "Update preferred language"
-msgstr "Update preferred language"
+msgstr "Ažuriraj željeni jezik"
 
 #: web/templates/profile.html:66
 msgctxt "profile-api-token"
 msgid "API Token"
-msgstr "API Token"
+msgstr "API token"
 
 #: web/templates/profile.html:69
 msgctxt "profile-here-you-can-generate-a-token"
 msgid ""
 "Here, you can generate a token to use when querying batch jobs "
 "programatically."
-msgstr ""
-"Here, you can generate a token to use when querying batch jobs "
-"programatically."
+msgstr "Ovde možete generisati token za programski pristup serijama."
 
 #: web/templates/profile.html:71
 msgctxt "profile-you-currently-have-the-following-token"
 msgid ""
 "You currently have the following token. This token must be kept private:"
-msgstr ""
-"You currently have the following token. This token must be kept private:"
+msgstr "Trenutno imate sledeći token. Ovaj token mora biti čuvan poverljivo:"
 
 #: web/templates/profile.html:77
 msgctxt "profile-update-token"
 msgid "Update token"
-msgstr "Update token"
+msgstr "Ažuriraj token"
 
 #: web/templates/profile.html:82
 msgctxt "profile-click-here-to-log-out"
 msgid "Click here to log out."
-msgstr "Click here to log out."
+msgstr "Kliknite ovde za odjavu."
 
 #: web/templates/profile.html:87
 msgctxt "profile-youre-not-logged-in"
 msgid "You're not logged in."
-msgstr "You're not logged in."
+msgstr "Niste prijavljeni."
 
 #: web/templates/profile.html:88
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Click here to log in."
+msgstr "Kliknite ovde za prijavu."
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
-msgstr "QuickStatements 3.0 - Statistics"
+msgstr "QuickStatements 3.0 - Statistika"
 
 #: web/templates/statistics.html:40
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
-msgstr "Number of batches"
+msgstr "Broj serija"
 
 #: web/templates/statistics.html:61
 msgctxt "statistics-done-status"
 msgid "Done status"
-msgstr "Done status"
+msgstr "Status završeno"
 
 #: web/templates/statistics.html:66
 msgctxt "statistics-error-status"
 msgid "Error status"
-msgstr "Error status"
+msgstr "Status greške"
 
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Serije"
 
 #: web/templates/statistics_all_time_counters.html:11
 msgctxt "statistics-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Komande"
 
 #: web/templates/statistics_all_time_counters.html:16
 msgctxt "statistics-avg-commands"
 msgid "Average number of commands per batch"
-msgstr "Average number of commands per batch"
+msgstr "Prosečan broj komandi po seriji"
 
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Items created"
+msgstr "Kreirane stavke"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Editors"
+msgstr "Urednici"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
 msgid "Hey, it's you!"
-msgstr "Hey, it's you!"
+msgstr "Hej, to ste vi!"
 
 #: web/templates/statistics_all_time_counters.html:38
 #, python-format
 msgctxt "statistics-hey-its-them"
 msgid "Hey it's %(1)s!"
-msgstr "Hey it's %(1)s!"
+msgstr "Hej, to je %(1)s!"
 
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Edits"
+msgstr "Izmene"
 
 #: web/views/new_batch.py:250
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
-msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
+msgstr ""
+"Korisnik nije automatski potvrđen. Samo automatski potvrđeni korisnici mogu "
+"pokrenuti serije."
 
 #: web/views/new_batch.py:253
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
-msgstr "User is blocked and can not run batches."
+msgstr "Korisnik je blokiran i ne može pokretati serije."
