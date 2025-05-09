@@ -282,7 +282,7 @@ class Client:
     # Action API GET/reading
     # ---
 
-    def get_multiple_labels(self, entity_ids: List[str], language: str) -> dict:
+    def fetch_entity_labels(self, entity_ids: List[str], language: str):
         """
         Obtains multiple labels using the Action API.
 
@@ -308,7 +308,16 @@ class Client:
         self.token.refresh_if_needed()
         res = requests.get(action_api, headers=self.headers(), params=params)
         self.raise_for_status(res)
-        return res.json()
+        response_data = res.json()
+        for entity_id, entity_data in response_data["entities"].items():
+            labels = entity_data.get("labels") or {}
+            for language, localized_label in labels.items():
+                value = localized_label["value"]
+                Label.objects.update_or_create(
+                    entity_id=entity_id,
+                    language=language,
+                    defaults={"value": value},
+                )
 
     @staticmethod
     def wikibase_entity_endpoint(entity_id, entity_endpoint=""):
@@ -352,6 +361,19 @@ class TokenManager(models.Manager):
             refresh_token=refresh_token,
             expires_at=expires_at,
         )
+
+
+class Label(models.Model):
+    entity_id = models.CharField(max_length=20, db_index=True)
+    language = models.CharField(max_length=5, db_index=True)
+    value = models.CharField(max_length=300)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=("entity_id", "language"), name="unique_language_per_entity"
+            )
+        ]
 
 
 class Wikibase(models.Model):
@@ -766,6 +788,7 @@ class BatchCommand(models.Model):
         default=ACTION_CREATE, choices=ACTION_CHOICES, null=False, blank=False
     )
     user_summary = models.TextField(blank=True, null=True)
+    labels = models.ManyToManyField(Label)
 
     class Operation(models.TextChoices):
         CREATE_ITEM = (
@@ -1050,6 +1073,51 @@ class BatchCommand(models.Model):
     @property
     def what(self):
         return self.json.get("what", "").upper()
+
+    @property
+    def related_identifiers_set(self):
+        """
+        Returns the set of ids from entity/property/qualifiers related to this command
+        """
+
+        result = set()
+
+        if self.entity_id is not None and self.entity_id != "LAST":
+            result.add(self.entity_id)
+
+        if self.prop is not None and self.prop != "":
+            result.add(self.prop)
+
+        if self.value_value is not None and self.value_type == "wikibase-entityid":
+            result.add(self.value_value)
+
+        for qual in self.qualifiers():
+            property_id = qual.get("property")
+            if property_id is not None:
+                result.add(property_id)
+
+            value = qual["value"]["value"]
+            if (
+                value is not None
+                and isinstance(qual["value"], dict)
+                and "type" in qual["value"]
+                and qual["value"]["type"] == "wikibase-entityid"
+            ):
+                result.add(value)
+
+        for ref in self.reference_parts():
+            reference_id = ref.get("property")
+            if reference_id is not None:
+                result.add(reference_id)
+            value = ref["value"]["value"]
+            if (
+                value is not None
+                and isinstance(ref["value"], dict)
+                and "type" in ref["value"]
+                and ref["value"]["type"] == "wikibase-entityid"
+            ):
+                result.add(value)
+        return result
 
     @property
     def what_plural_lowercase(self):
@@ -1663,84 +1731,35 @@ class BatchCommand(models.Model):
     # Visualization/label methods
     # -----------------
 
-    @classmethod
-    def load_labels(cls, client: Client, commands: List["BatchCommand"], language="en"):
+    @staticmethod
+    def load_labels(client: Client, commands: List["BatchCommand"], language="en"):
         """
-        This commands loads labels for wikibase entities
-        in a dict where the keys are the IDs and the
-        values are their matching labels.
+        Get labels from all wikibase entities related to the set of commands provided
 
-        If the label for that specific item is not
-        returned from the API, it sets such as None.
-
-        It loops twice through the commands list and
-        runs in batches of 50 entities per API request.
+        It loops twice through the commands list and runs in batches
+        of 50 entities per API request.
         """
 
-        ids = set()
-        entities = dict()
-
+        related_ids = set()
         # Collects the IDs from the commands main entity, its property and value (when applicable),
-        # its qualifiers and references; stores them in a per command set and global set, the first
-        # to be used for the command labeling and the second to be used for the API request.
-        for command in commands:
-            command.ids = set()
+        # its qualifiers and references; stores them in a per command map
+        command_label_map = {c.id: c.related_identifiers_set for c in commands}
 
-            id = command.entity_id
-            if id is not None and id != "LAST":
-                command.ids.add(id)
+        for label_id_set in command_label_map.values():
+            related_ids.update(label_id_set)
 
-            id = command.prop
-            if id is not None and id != "":
-                command.ids.add(id)
-
-            id = command.value_value
-            if id is not None and command.value_type == "wikibase-entityid":
-                command.ids.add(id)
-
-            for qual in command.qualifiers():
-                id = qual["property"]
-                if id is not None:
-                    command.ids.add(id)
-                id = qual["value"]["value"]
-                if (
-                    id is not None
-                    and isinstance(qual["value"], dict)
-                    and "type" in qual["value"]
-                    and qual["value"]["type"] == "wikibase-entityid"
-                ):
-                    command.ids.add(id)
-
-            for ref in command.reference_parts():
-                id = ref["property"]
-                if id is not None:
-                    command.ids.add(id)
-                id = ref["value"]["value"]
-                if (
-                    id is not None
-                    and isinstance(ref["value"], dict)
-                    and "type" in ref["value"]
-                    and ref["value"]["type"] == "wikibase-entityid"
-                ):
-                    command.ids.add(id)
-            ids.update(command.ids)
-        ids = list(ids)
+        ids = list(related_ids)
 
         # TODO: parallelize this
         batch_size = 50
         for i in range(0, len(ids), batch_size):
             batch_ids = ids[i : i + batch_size]
-            api_json = client.get_multiple_labels(batch_ids, language)
-            entities.update(api_json.get("entities", {}))
+            client.fetch_entity_labels(batch_ids, language)
 
         for command in commands:
-            command.labels = dict()
-            for id in command.ids:
-                response_labels = entities.get(id, {}).get("labels", {})
-                label = response_labels.get(language, {}).get("value", None)
-                if not label:
-                    label = response_labels.get("en", {}).get("value", None)
-                command.labels[id] = label
+            command.labels.set(
+                Label.objects.filter(entity_id__in=command_label_map[command.id])
+            )
 
     # -----------------
     # Value type verification

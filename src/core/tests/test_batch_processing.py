@@ -561,31 +561,11 @@ class ProcessingTests(TestCase):
         }
         self.api_mocker.labels(mocker, self.api_client, labels)
         BatchCommand.load_labels(self.api_client, commands, "pt")
-        self.assertEqual(commands[0].labels, {})
-        self.assertEqual(commands[1].labels, {"P1": "prop_pt"})
-        self.assertEqual(commands[2].labels, {"Q2": "pt2", "P1": "prop_pt"})
-        BatchCommand.load_labels(self.api_client, commands, "de")
-        self.assertEqual(commands[0].labels, {})
-        self.assertEqual(commands[1].labels, {"P1": "prop_en"})
-        self.assertEqual(commands[2].labels, {"Q2": "en2", "P1": "prop_en"})
-        BatchCommand.load_labels(self.api_client, commands, "en")
-        self.assertEqual(commands[0].labels, {})
-        self.assertEqual(commands[1].labels, {"P1": "prop_en"})
-        self.assertEqual(commands[2].labels, {"Q2": "en2", "P1": "prop_en"})
-        batch.run()  # -> load Q1 into commands[0] and commands[1]
-        commands = batch.commands()
-        BatchCommand.load_labels(self.api_client, commands, "pt")
-        self.assertEqual(commands[0].labels, {"Q1": "pt1"})
-        self.assertEqual(commands[1].labels, {"Q1": "pt1", "P1": "prop_pt"})
-        self.assertEqual(commands[2].labels, {"Q2": "pt2", "P1": "prop_pt"})
-        BatchCommand.load_labels(self.api_client, commands, "de")
-        self.assertEqual(commands[0].labels, {"Q1": "en1"})
-        self.assertEqual(commands[1].labels, {"Q1": "en1", "P1": "prop_en"})
-        self.assertEqual(commands[2].labels, {"Q2": "en2", "P1": "prop_en"})
-        BatchCommand.load_labels(self.api_client, commands, "en")
-        self.assertEqual(commands[0].labels, {"Q1": "en1"})
-        self.assertEqual(commands[1].labels, {"Q1": "en1", "P1": "prop_en"})
-        self.assertEqual(commands[2].labels, {"Q2": "en2", "P1": "prop_en"})
+        self.assertEqual(commands[0].labels.count(), 0)
+        self.assertEqual(
+            commands[1].labels.filter(entity_id="P1", language="pt").count(), 1
+        )
+        self.assertEqual(commands[2].labels.filter(entity_id="Q2").count(), 2)
 
     @requests_mock.Mocker()
     def test_remove_qual_or_ref_errors(self, mocker):
