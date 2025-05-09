@@ -16,12 +16,11 @@ logger = logging.getLogger("qsts3")
 
 
 def statistics_data(request, username):
+    all_batches = Batch.objects.exclude(status=Batch.STATUS_PREVIEW)
+    all_commands = BatchCommand.objects.exclude(batch__status=Batch.STATUS_PREVIEW)
     if username:
-        all_batches = Batch.objects.filter(user=username)
-        all_commands = BatchCommand.objects.filter(batch__user=username)
-    else:
-        all_batches = Batch.objects.all()
-        all_commands = BatchCommand.objects.all()
+        all_batches = all_batches.filter(user=username)
+        all_commands = all_commands.filter(batch__user=username)
     # ----
     today = now().date()
     first_batch = all_batches.order_by("created").first()
@@ -62,12 +61,11 @@ def statistics_data(request, username):
 
 
 def all_time_counters_data(request, username):
+    all_batches = Batch.objects.exclude(status=Batch.STATUS_PREVIEW)
+    all_commands = BatchCommand.objects.exclude(batch__status=Batch.STATUS_PREVIEW)
     if username:
-        all_batches = Batch.objects.filter(user=username)
-        all_commands = BatchCommand.objects.filter(batch__user=username)
-    else:
-        all_batches = Batch.objects.all()
-        all_commands = BatchCommand.objects.all()
+        all_batches = all_batches.filter(user=username)
+        all_commands = all_commands.filter(batch__user=username)
     # ----
     batches_count = all_batches.count()
     editors = all_batches.values("user").distinct().count()
