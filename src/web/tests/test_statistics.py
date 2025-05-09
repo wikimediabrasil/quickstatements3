@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.core.cache import cache
 
 from core.factories import TokenFactory, UserFactory, BatchFactory
+from core.models import Batch
 from core.parsers.v1 import V1CommandParser
 from core.tests.test_api import ApiMocker
 
@@ -54,6 +55,15 @@ class ProfileTest(TestCase):
         TokenFactory(user=user)
         TokenFactory(user=user2)
         parser = V1CommandParser()
+        _ignored_batch = BatchFactory.load_from_parser(
+            parser,
+            "Test",
+            "wiki",
+            "CREATE||LAST|P1|Q1||LAST|P1|Q2",
+            combine_commands=True,
+            wikibase=api_mocker.wikibase,
+            status=Batch.STATUS_PREVIEW,
+        )
         batch = BatchFactory.load_from_parser(
             parser,
             "Test",
