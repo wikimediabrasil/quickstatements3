@@ -15,7 +15,7 @@ from core.exceptions import (
     UnauthorizedToken,
 )
 from core.factories import TokenFactory, UserFactory, WikibaseFactory, BatchFactory
-from core.models import BatchCommand, Client, Token
+from core.models import BatchCommand, Client, Token, Label
 from core.parsers.v1 import V1CommandParser
 
 
@@ -457,20 +457,19 @@ class ClientTests(TestCase):
             }
         }
         client = self.api_client()
+        Label.objects.all().delete()
         self.api_mocker.labels(mocker, client, labels)
-        returned_labels = client.get_multiple_labels(["Q123"], "pt")
-        self.assertEqual(
-            returned_labels,
-            {
-                "entities": {
-                    "Q123": {
-                        "labels": {
-                            "en": {"language": "en", "value": "English label"},
-                            "pt": {"language": "pt", "value": "Portuguese label"},
-                        }
-                    }
-                }
-            },
+        client.fetch_entity_labels(["Q123"], "pt")
+        self.assertEqual(Label.objects.count(), 2)
+        self.assertTrue(
+            Label.objects.filter(
+                entity_id="Q123", language="en", value="English label"
+            ).exists()
+        )
+        self.assertTrue(
+            Label.objects.filter(
+                entity_id="Q123", language="pt", value="Portuguese label"
+            ).exists()
         )
 
     @requests_mock.Mocker()

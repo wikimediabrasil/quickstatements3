@@ -12,13 +12,13 @@
         </span>
       </td>
 
-      <td >
-        {% if command.labels|get:command.entity_id %}
-          {{ command.labels|get:command.entity_id }}
+      <td>
+        {{ command.entity_id|label_display:user }}
+        {% if command.entity_url %}
+        <a href="{{ command.entity_url }}">{{ command.entity_info }}</a>
+        {% else %}
+        {{ command.entity_info }}
         {% endif %}
-        {% if command.entity_url %}<a href="{{ command.entity_url }}">{% endif %}
-          {{ command.entity_info }}
-        {% if command.entity_url %}</a>{% endif %}
       </td>
 
       {% if command.is_error_status %}
@@ -48,14 +48,14 @@
           {% elif command.is_sitelink_command %}
             <i>{{ command.sitelink }}</i>:
           {% elif command.prop != "" %}
-            {{ command.labels|get:command.prop }}
+            {{ command.prop|label_display:user }}
             <a href="{{ command.batch.wikibase.url }}/entity/{{ command.prop }}">
               [{{ command.prop }}]
             </a>:
-          {% endif %}
+            {% endif %}
 
-          {% if command.value_type == "wikibase-entityid" %}
-            {{ command.labels|get:command.value_value }}
+            {% if command.value_type == "wikibase-entityid" %}
+            {{ command.value_value|label_display:user }}
             <a href="{{ command.batch.wikibase.url }}/entity/{{ command.value_value }}">
               [{{ command.value_value }}]<br>
             </a>
@@ -66,12 +66,12 @@
         {% if command.qualifiers|length > 0 %}
         <hr style="margin: revert;">
             {% for qual in command.qualifiers %}
-            <b data-tooltip="{% translate 'Qualifier' %}">Q.</b> {{ command.labels|get:qual.property }}
+            <b data-tooltip="{% translate 'Qualifier' %}">Q.</b> {{ qual.property|label_display:user }}
             <a href="{{ command.batch.wikibase.url }}/entity/{{ qual.property }}">
               [{{ qual.property }}]
             </a>:
               {% if qual.value.type == "wikibase-entityid" %}
-              {{ command.labels|get:qual.value.value }}
+              {{ qual.value.value|label_display:user }}
               <a href="{{ command.batch.wikibase.url }}/entity/{{ qual.value.value }}">
                 [{{ qual.value.value }}]
               </a><br>
@@ -85,12 +85,12 @@
           {% for reference_block in command.references %}
             <hr style="margin: revert;">
             {% for ref in reference_block %}
-              <b data-tooltip="{% translate 'Reference Part' %}">R.</b> {{ command.labels|get:ref.property }}
+              <b data-tooltip="{% translate 'Reference Part' %}">R.</b> {{ ref.property|label_display:user }}
               <a href="{{ command.batch.wikibase.url }}/entity/{{ ref.property }}">
                 [{{ ref.property }}]
               </a>:
               {% if ref.value.type == "wikibase-entityid" %}
-                {{ command.labels|get:ref.value.value }}
+                {{ ref.value.value|label_display:user }}
                 <a href="{{ command.batch.wikibase.url }}/entity/{{ ref.value.value }}">
                   [{{ ref.value.value }}]
                 </a><br>
