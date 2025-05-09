@@ -156,7 +156,15 @@ def new_batch(request):
             if batch_type == "v1":
                 parser = V1CommandParser()
             else:
+                if "\n" not in batch_commands:
+                    raise ParserException("Only the header has been provided for the CSV parser")
                 parser = CSVCommandParser()
+
+            # Take a sentinel value to make sure that the batch_commands won't be empty
+            parsed_commands = parser.parse(batch_commands)
+            first_command = next(parsed_commands, None)
+            if not first_command:
+                raise ParserException("No commands found in your input")
 
             wikibase_url = request.POST.get("wikibase")
             wikibase = (
@@ -171,7 +179,9 @@ def new_batch(request):
                 block_on_errors="block_on_errors" in request.POST,
                 combine_commands="do_not_combine_commands" not in request.POST,
             )
-            for batch_command in parser.parse(batch_commands):
+            first_command.batch = batch
+            first_command.save()
+            for batch_command in parsed_commands:
                 batch_command.batch = batch
                 batch_command.save()
 
