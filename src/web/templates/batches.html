@@ -55,7 +55,17 @@
         </td>
         {% endif %}
         <td>{% if batch.name %}{{ batch.name }}{% else %}-{% endif %}</td>
-        <td><span class="status status_{{ batch.get_status_display | lower }}">{{ batch.get_status_display | upper }}</td>
+        <td>
+          <div style="margin-bottom: 10px;">
+            <b>{{ batch.get_status_display | upper }}</b>
+          </div>
+          <div>
+            {% if batch.initial_commands %}<span class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{batch.initial_commands}}</span>{% endif %}
+            {% if batch.running_commands %}<span class="status status_running">{% translate 'RUNNING' context 'batch-summary-running' %}: {{batch.running_commands}}</span>{% endif %}
+            {% if batch.done_commands %}<span class="status status_done">{% translate 'DONE' context 'batch-summary-done' %}: {{batch.done_commands}}</span>{% endif %}
+            {% if batch.error_commands %}<span class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{batch.error_commands}}</span>{% endif %}
+          </div>
+        </td>
         <td>{{ batch.modified }}</td>
         <td>
           <a href="{% url 'batch' pk=batch.pk %}">{% translate 'View' context 'batches-view' %}</a><br>
