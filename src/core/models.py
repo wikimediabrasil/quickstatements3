@@ -706,7 +706,7 @@ class Batch(models.Model):
                     cmd.get_status_display(),
                     cmd.error,
                     cmd.message,
-                    cmd.entity_id(),
+                    cmd.entity_id,
                     cmd.raw.replace("\t", "|"),  # tabs are weird in csv
                 ]
             )
@@ -997,7 +997,7 @@ class BatchCommand(models.Model):
                 cmd.error = self.Error.COMBINING_COMMAND_FAILED
                 cmd.message = cmd.error.label
             elif cmd.is_id_last_or_create_item():
-                cmd.set_entity_id(self.entity_id())
+                cmd.set_entity_id(self.entity_id)
             cmd.save()
 
     # -----------------
@@ -1006,9 +1006,10 @@ class BatchCommand(models.Model):
 
     @property
     def entity_info(self):
-        entity_id = self.entity_id()
+        entity_id = self.entity_id
         return f"[{entity_id}]" if entity_id else ""
 
+    @property
     def entity_id(self):
         item = self.json.get("item", None)
         if item:
@@ -1023,7 +1024,7 @@ class BatchCommand(models.Model):
             self.json["entity"]["id"] = value
 
     def entity_url(self):
-        entity_id = self.entity_id()
+        entity_id = self.entity_id
         base = self.batch.wikibase.url
         if entity_id and entity_id != "LAST":
             return f"{base}/entity/{entity_id}"
@@ -1231,9 +1232,7 @@ class BatchCommand(models.Model):
         return self.operation != self.Operation.CREATE_ITEM
 
     def is_id_last_or_create_item(self):
-        return (
-            self.entity_id() == "LAST" or self.operation == self.Operation.CREATE_ITEM
-        )
+        return self.entity_id == "LAST" or self.operation == self.Operation.CREATE_ITEM
 
     # # -----------------
     # # LAST related methods
@@ -1243,7 +1242,7 @@ class BatchCommand(models.Model):
         """
         Updates this command's entity id, if it's LAST, to the argument.
         """
-        if self.entity_id() == "LAST" and last_id is not None:
+        if self.entity_id == "LAST" and last_id is not None:
             self.set_entity_id(last_id)
             self.save()
 
@@ -1386,8 +1385,8 @@ class BatchCommand(models.Model):
         has LAST as entity id, or if both have the same entity id.
         """
         return (
-            self.operation == self.Operation.CREATE_ITEM and next.entity_id() == "LAST"
-        ) or (self.entity_id() == next.entity_id())
+            self.operation == self.Operation.CREATE_ITEM and next.entity_id == "LAST"
+        ) or (self.entity_id == next.entity_id)
 
     def update_combining_state(self, client: Client):
         """
@@ -1417,7 +1416,7 @@ class BatchCommand(models.Model):
         to save a copy into it, so that the get_previous_entity_json
         method does not have to call the API agian.
         """
-        entity = client.get_entity(self.entity_id())
+        entity = client.get_entity(self.entity_id)
         if getattr(self, "previous_entity_json", None) is None:
             self.previous_entity_json = copy.deepcopy(entity)
         return entity
@@ -1438,9 +1437,9 @@ class BatchCommand(models.Model):
                 "id": None,
             }
         else:
-            if self.entity_id() == "LAST":
+            if self.entity_id == "LAST":
                 raise LastCouldNotBeEvaluated()
-            return client.get_entity(self.entity_id())
+            return client.get_entity(self.entity_id)
 
     def get_previous_entity_json(self, client: Client):
         """
@@ -1555,13 +1554,13 @@ class BatchCommand(models.Model):
         """
         statements = entity["statements"].get(self.prop, [])
         if len(statements) == 0:
-            raise NoStatementsForThatProperty(self.entity_id(), self.prop)
+            raise NoStatementsForThatProperty(self.entity_id, self.prop)
 
         for i, statement in enumerate(statements):
             if statement["value"] == self.statement_api_value:
                 return entity["statements"][self.prop].pop(i)
         raise NoStatementsWithThatValue(
-            self.entity_id(), self.prop, self.statement_api_value
+            self.entity_id, self.prop, self.statement_api_value
         )
 
     def _update_entity_aliases(self, entity: dict):
@@ -1654,7 +1653,7 @@ class BatchCommand(models.Model):
             if self.is_id_last_or_create_item():
                 return ("POST", "/entities/items")
             else:
-                return ("PATCH", Client.wikibase_entity_endpoint(self.entity_id()))
+                return ("PATCH", Client.wikibase_entity_endpoint(self.entity_id))
         match self.operation:
             case self.Operation.REMOVE_STATEMENT_BY_ID:
                 statement_id = self.json["id"]
@@ -1677,7 +1676,6 @@ class BatchCommand(models.Model):
         It loops twice through the commands list and
         runs in batches of 50 entities per API request.
         """
-        from core.parsers.v1 import BaseParser
 
         ids = set()
         entities = dict()
@@ -1688,7 +1686,7 @@ class BatchCommand(models.Model):
         for command in commands:
             command.ids = set()
 
-            id = command.entity_id()
+            id = command.entity_id
             if id is not None and id != "LAST":
                 command.ids.add(id)
 
@@ -1706,10 +1704,10 @@ class BatchCommand(models.Model):
                     command.ids.add(id)
                 id = qual["value"]["value"]
                 if (
-                    id is not None and
-                    isinstance(qual["value"], dict) and
-                    "type" in qual["value"] and
-                    qual["value"]["type"] == "wikibase-entityid"
+                    id is not None
+                    and isinstance(qual["value"], dict)
+                    and "type" in qual["value"]
+                    and qual["value"]["type"] == "wikibase-entityid"
                 ):
                     command.ids.add(id)
 
@@ -1719,10 +1717,10 @@ class BatchCommand(models.Model):
                     command.ids.add(id)
                 id = ref["value"]["value"]
                 if (
-                    id is not None and
-                    isinstance(ref["value"], dict) and
-                    "type" in ref["value"] and
-                    ref["value"]["type"] == "wikibase-entityid"
+                    id is not None
+                    and isinstance(ref["value"], dict)
+                    and "type" in ref["value"]
+                    and ref["value"]["type"] == "wikibase-entityid"
                 ):
                     command.ids.add(id)
             ids.update(command.ids)
@@ -1742,7 +1740,7 @@ class BatchCommand(models.Model):
                 label = response_labels.get(language, {}).get("value", None)
                 if not label:
                     label = response_labels.get("en", {}).get("value", None)
-                command.labels[id]=label
+                command.labels[id] = label
 
     # -----------------
     # Value type verification

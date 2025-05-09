@@ -228,7 +228,7 @@ class TestV1Batch(TestCase):
         )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_ID)
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
 
     def test_remove_statemeny_by_value(self):
         v1 = V1CommandParser()
@@ -237,7 +237,7 @@ class TestV1Batch(TestCase):
         self.assertEqual(
             cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
         )
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(cmd.prop, "P5")
         self.assertEqual(cmd.statement_api_value, {"type": "value", "content": "Q31"})
 
@@ -250,7 +250,7 @@ class TestV1Batch(TestCase):
         self.assertEqual(
             cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
         )
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(cmd.prop, "P5")
         self.assertEqual(
             cmd.statement_api_value, {"type": "value", "content": "my string"}
@@ -287,7 +287,7 @@ class TestV1Batch(TestCase):
         )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_SITELINK)
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(cmd.sitelink, "ptwiki")
         self.assertEqual(cmd.value_value, "Cool article")
 
@@ -296,7 +296,7 @@ class TestV1Batch(TestCase):
         batch = BatchFactory.load_from_parser(v1, "b", "u", """Q1234|Sptwiki|"" """)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_SITELINK)
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(cmd.sitelink, "ptwiki")
 
     def test_set_label(self):
@@ -304,7 +304,7 @@ class TestV1Batch(TestCase):
         batch = BatchFactory.load_from_parser(v1, "b", "u", """Q1234|Lpt|"oi" """)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_LABEL)
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(cmd.language, "pt")
         self.assertEqual(cmd.value_value, "oi")
 
@@ -313,7 +313,7 @@ class TestV1Batch(TestCase):
         batch = BatchFactory.load_from_parser(v1, "b", "u", """Q1234|Lpt|"" """)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_LABEL)
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(cmd.language, "pt")
 
     def test_remove_qualifier(self):
@@ -323,7 +323,7 @@ class TestV1Batch(TestCase):
         )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_QUALIFIER)
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(len(cmd.references()), 0)
         self.assertEqual(
             cmd.qualifiers_for_api(),
@@ -337,7 +337,7 @@ class TestV1Batch(TestCase):
         )
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_REFERENCE)
-        self.assertEqual(cmd.entity_id(), "Q1234")
+        self.assertEqual(cmd.entity_id, "Q1234")
         self.assertEqual(len(cmd.qualifiers()), 0)
         self.assertEqual(
             cmd.references_for_api(),
@@ -837,7 +837,7 @@ Q4115189,Q5,Q6"""
         self.assertEqual(
             cmd.operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
         )
-        self.assertEqual(cmd.entity_id(), "Q4115189")
+        self.assertEqual(cmd.entity_id, "Q4115189")
         self.assertEqual(cmd.prop, "P31")
         self.assertEqual(cmd.statement_api_value, {"type": "value", "content": "Q6"})
 
@@ -849,7 +849,7 @@ Q4115189,"Cool article"
         batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_SITELINK)
-        self.assertEqual(cmd.entity_id(), "Q4115189")
+        self.assertEqual(cmd.entity_id, "Q4115189")
         self.assertEqual(cmd.sitelink, "ptwiki")
         self.assertEqual(cmd.value_value, "Cool article")
 
@@ -861,7 +861,7 @@ Q4115189,"x"
         batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_SITELINK)
-        self.assertEqual(cmd.entity_id(), "Q4115189")
+        self.assertEqual(cmd.entity_id, "Q4115189")
         self.assertEqual(cmd.sitelink, "ptwiki")
 
     def test_set_label(self):
@@ -872,7 +872,7 @@ Q4115189,"Cool label"
         batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.SET_LABEL)
-        self.assertEqual(cmd.entity_id(), "Q4115189")
+        self.assertEqual(cmd.entity_id, "Q4115189")
         self.assertEqual(cmd.language, "pt")
         self.assertEqual(cmd.value_value, "Cool label")
 
@@ -884,7 +884,7 @@ Q4115189,"x"
         batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         cmd = batch.commands()[0]
         self.assertEqual(cmd.operation, BatchCommand.Operation.REMOVE_LABEL)
-        self.assertEqual(cmd.entity_id(), "Q4115189")
+        self.assertEqual(cmd.entity_id, "Q4115189")
         self.assertEqual(cmd.language, "pt")
 
     def test_remove_sitelink_not_empty(self):
