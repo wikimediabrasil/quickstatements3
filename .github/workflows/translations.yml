@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - translate_deploy_fix
     paths:
       - 'translations/**'
       - 'src/web/templates/**'
