@@ -17,222 +17,222 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: core/models.py:477
+#: core/models.py:499
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
 msgstr "Zaustavljeno"
 
-#: core/models.py:478
+#: core/models.py:500
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
 msgstr "Blokirano"
 
-#: core/models.py:479
+#: core/models.py:501
 msgctxt "batch-py-status-preview"
 msgid "Preview"
 msgstr "Pregled"
 
-#: core/models.py:480
+#: core/models.py:502
 msgctxt "batch-py-status-initial"
 msgid "Initial"
 msgstr "Početno"
 
-#: core/models.py:481
+#: core/models.py:503
 msgctxt "batch-py-status-running"
 msgid "Running"
 msgstr "U toku"
 
-#: core/models.py:482
+#: core/models.py:504
 msgctxt "batch-py-status-done"
 msgid "Done"
 msgstr "Završeno"
 
-#: core/models.py:503
+#: core/models.py:525
 msgctxt "batch-py-batch"
 msgid "Batch"
 msgstr "Serija"
 
-#: core/models.py:504
+#: core/models.py:526
 msgctxt "batch-py-batches"
 msgid "Batches"
 msgstr "Serije"
 
-#: core/models.py:726
+#: core/models.py:748
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
 msgstr "Greška"
 
-#: core/models.py:727
+#: core/models.py:749
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
 msgstr "Početno"
 
-#: core/models.py:728
+#: core/models.py:750
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
 msgstr "U toku"
 
-#: core/models.py:729
+#: core/models.py:751
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
 msgstr "Završeno"
 
-#: core/models.py:738
+#: core/models.py:760
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
 msgstr "KREIRAJ"
 
-#: core/models.py:739
+#: core/models.py:761
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
 msgstr "DODAJ"
 
-#: core/models.py:740
+#: core/models.py:762
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
 msgstr "UKLONI"
 
-#: core/models.py:741
+#: core/models.py:763
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
 msgstr "SPOJI"
 
-#: core/models.py:773
+#: core/models.py:796
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
 msgstr "Kreiraj stavku"
 
-#: core/models.py:778
+#: core/models.py:801
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
 msgstr "Kreiraj svojstvo"
 
-#: core/models.py:784
+#: core/models.py:807
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
 msgstr "Postavi izjavu"
 
-#: core/models.py:789
+#: core/models.py:812
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
 msgstr "Kreiraj izjavu"
 
-#: core/models.py:797
+#: core/models.py:820
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
 msgstr "Ukloni izjavu po ID-u"
 
-#: core/models.py:804
+#: core/models.py:827
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
 msgstr "Ukloni izjavu po vrednosti"
 
-#: core/models.py:811
+#: core/models.py:834
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
 msgstr "Ukloni kvalifikator"
 
-#: core/models.py:817
+#: core/models.py:840
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
 msgstr "Ukloni referencu"
 
-#: core/models.py:823
+#: core/models.py:846
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
 msgstr "Postavi link ka projektu"
 
-#: core/models.py:827
+#: core/models.py:850
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
 msgstr "Postavi oznaku"
 
-#: core/models.py:832
+#: core/models.py:855
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
 msgstr "Postavi opis"
 
-#: core/models.py:839
+#: core/models.py:862
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
 msgstr "Ukloni link ka projektu"
 
-#: core/models.py:844
+#: core/models.py:867
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
 msgstr "Ukloni oznaku"
 
-#: core/models.py:849
+#: core/models.py:872
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
 msgstr "Ukloni opis"
 
-#: core/models.py:855
+#: core/models.py:878
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
 msgstr "Dodaj alternativno ime"
 
-#: core/models.py:859
+#: core/models.py:882
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
 msgstr "Ukloni alternativno ime"
 
-#: core/models.py:886
+#: core/models.py:909
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
 msgstr "Operacija nije implementirana"
 
-#: core/models.py:893
+#: core/models.py:916
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
 msgstr "Nema izjava za dato svojstvo"
 
-#: core/models.py:900
+#: core/models.py:923
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
 msgstr "Nema izjava sa datom vrednošću"
 
-#: core/models.py:906
+#: core/models.py:929
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
 msgstr "Nema kvalifikatora sa datom vrednošću"
 
-#: core/models.py:913
+#: core/models.py:936
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
 msgstr "Nema delova reference sa datom vrednošću"
 
-#: core/models.py:919
+#: core/models.py:942
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
 msgstr "ID linka na projekat je nevažeći"
 
-#: core/models.py:925
+#: core/models.py:948
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
 msgstr "Sledeća komanda nije uspela"
 
-#: core/models.py:931
+#: core/models.py:954
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
 msgstr "API je vratio korisničku grešku"
 
-#: core/models.py:937
+#: core/models.py:960
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
 msgstr "API je vratio grešku servera"
 
-#: core/models.py:944
+#: core/models.py:967
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
 msgstr "LAST nije mogao biti ocenjen."
 
-#: core/models.py:1754
+#: core/models.py:1817
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
 msgstr "Komanda serije"
 
-#: core/models.py:1756
+#: core/models.py:1819
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Komande serija"
@@ -318,54 +318,64 @@ msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "Zaustavi obradu"
 
-#: web/templates/batch_commands.html:66
+#: web/templates/batch_commands.html:69
+msgctxt "batch-commands-qualifier"
+msgid "Qualifier"
+msgstr "Qualifier"
+
+#: web/templates/batch_commands.html:88
+msgctxt "batch-commands-reference-part"
+msgid "Reference Part"
+msgstr "Reference Part"
+
+#: web/templates/batch_commands.html:112
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
 msgstr "PRIKAZUJU SE SAMO GREŠKE"
 
-#: web/templates/batch_commands.html:71
+#: web/templates/batch_commands.html:117
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
 msgstr "PRIKAŽI SVE"
 
-#: web/templates/batch_commands.html:74
+#: web/templates/batch_commands.html:120
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
 msgstr "PRIKAZUJU SE SVE"
 
-#: web/templates/batch_commands.html:79
+#: web/templates/batch_commands.html:125
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
 msgstr "PRIKAŽI SAMO GREŠKE"
 
-#: web/templates/batch_commands.html:94
+#: web/templates/batch_commands.html:138
 msgctxt "batch-commands-first"
 msgid "FIRST"
 msgstr "PRVO"
 
-#: web/templates/batch_commands.html:102
+#: web/templates/batch_commands.html:146
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
 msgstr "PRETHODNO"
 
-#: web/templates/batch_commands.html:111 web/templates/batches.html:94
+#: web/templates/batch_commands.html:154 web/templates/batches.html:94
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
 msgstr "Strana %(1)s od %(2)s"
 
-#: web/templates/batch_commands.html:122
+#: web/templates/batch_commands.html:164
 msgctxt "batch-commands-next"
 msgid "NEXT"
 msgstr "SLEDEĆE"
 
-#: web/templates/batch_commands.html:130
+#: web/templates/batch_commands.html:172
 msgctxt "batch-commands-last"
 msgid "LAST"
 msgstr "POSLEDNjE"
 
-#: web/templates/batch_commands.html:141 web/templates/batch_commands.html:145
-#: web/templates/batch_commands.html:153
+#: web/templates/batch_commands.html:181 web/templates/batch_commands.html:185
+#: web/templates/batch_commands.html:193
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
 msgstr "Veličina stranice:"
@@ -543,32 +553,32 @@ msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
 msgstr "Pogledaj serije po korisniku"
 
-#: web/templates/layout.html:72
+#: web/templates/layout.html:73
 msgctxt "layout-new-batch"
 msgid "New batch"
 msgstr "Nova serija"
 
-#: web/templates/layout.html:73
+#: web/templates/layout.html:74
 msgctxt "layout-last-batches"
 msgid "Last batches"
 msgstr "Poslednje serije"
 
-#: web/templates/layout.html:74
+#: web/templates/layout.html:75
 msgctxt "layout-statistics"
 msgid "Statistics"
 msgstr "Statistika"
 
-#: web/templates/layout.html:80
+#: web/templates/layout.html:81
 msgctxt "layout-login"
 msgid "Login"
 msgstr "Prijava"
 
-#: web/templates/layout.html:82
+#: web/templates/layout.html:83
 msgctxt "layout-user"
 msgid "User"
 msgstr "Korisnik"
 
-#: web/templates/layout.html:83
+#: web/templates/layout.html:84
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
 msgstr "Vaše poslednje serije"

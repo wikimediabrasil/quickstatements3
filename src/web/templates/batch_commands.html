@@ -66,7 +66,7 @@
         {% if command.qualifiers|length > 0 %}
         <hr style="margin: revert;">
             {% for qual in command.qualifiers %}
-            <b data-tooltip="{% translate 'Qualifier' %}">Q.</b> {{ qual.property|label_display:user }}
+            <b data-tooltip="{% translate 'Qualifier' context 'batch-commands-qualifier' %}">Q.</b> {{ qual.property|label_display:user }}
             <a href="{{ command.batch.wikibase.url }}/entity/{{ qual.property }}">
               [{{ qual.property }}]
             </a>:
@@ -85,7 +85,7 @@
           {% for reference_block in command.references %}
             <hr style="margin: revert;">
             {% for ref in reference_block %}
-              <b data-tooltip="{% translate 'Reference Part' %}">R.</b> {{ ref.property|label_display:user }}
+              <b data-tooltip="{% translate 'Reference Part' context 'batch-commands-reference-part' %}">R.</b> {{ ref.property|label_display:user }}
               <a href="{{ command.batch.wikibase.url }}/entity/{{ ref.property }}">
                 [{{ ref.property }}]
               </a>:
@@ -151,9 +151,7 @@
 
     <div style="display: inline-block; text-align: center; width: 30%;">
       <span class="pagination current-page">
-        {% blocktranslate with page=page.number total=page.paginator.num_pages %}
-          Pg. {{page}} of {{total}}
-        {% endblocktranslate %}
+        {% blocktranslate with 1=page.number 2=page.paginator.num_pages context 'batch-commands-pagination' %}Pg. {{1}} of {{2}}{% endblocktranslate %}
       </span>
     </div>
 
