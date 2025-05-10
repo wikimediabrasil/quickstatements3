@@ -169,5 +169,7 @@
     "statistics-hey-its-them": "Hey it's $1!",
     "statistics-edits": "Edits",
     "batch-py-user-not-autoconfirmed": "User is not autoconfirmed. Only autoconfirmed users can run batches.",
-    "batch-py-user-blocked": "User is blocked and can not run batches."
+    "batch-py-user-blocked": "User is blocked and can not run batches.",
+    "batch-commands-qualifier": "Qualifier",
+    "batch-commands-reference-part": "Reference Part"
 }
