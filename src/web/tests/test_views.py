@@ -293,7 +293,7 @@ class ViewsTest(TestCase):
                 data={
                     "name": "My CSV batch",
                     "type": "csv",
-                    "commands": "qid,P31,-P31",
+                    "commands": "qid,P31,-P31\nQ123,Q456,Q321",
                 },
             )
             self.assertEqual(response.status_code, 302)
@@ -310,7 +310,7 @@ class ViewsTest(TestCase):
             batch = response.context["batch"]
             self.assertEqual(batch.name, "My CSV batch")
             self.assertTrue(batch.is_initial)
-            self.assertEqual(batch.batchcommand_set.count(), 0)
+            self.assertEqual(batch.batchcommand_set.count(), 2)
 
             # Listing again. Now we have something
             response = self.client.get("/batches/")
