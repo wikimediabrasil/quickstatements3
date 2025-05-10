@@ -3,7 +3,7 @@ import csv
 import logging
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
-from typing import List, Optional
+from typing import List, Optional, Set
 from urllib.parse import urlparse
 
 import jsonpatch
@@ -13,7 +13,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.cache import cache as django_cache
 from django.db import models
-from django.utils.timezone import now
+from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 from requests.exceptions import HTTPError
 from urllib3.util.retry import Retry
@@ -282,7 +282,7 @@ class Client:
     # Action API GET/reading
     # ---
 
-    def fetch_entity_labels(self, entity_ids: List[str], language: str):
+    def fetch_entity_labels(self, entity_ids: Set[str], language: str):
         """
         Obtains multiple labels using the Action API.
 
@@ -291,33 +291,46 @@ class Client:
         Returns as an easy to use dictionary with the entity ids
         as keys and the labels as values, which can be empty strings.
         """
+
         action_api = self.action_api_url
         languages = f"{language}|en" if language != "en" else "en"
-        ids = "|".join(entity_ids)
-        params = {
-            "action": "wbgetentities",
-            "format": "json",
-            "props": "labels",
-            "languages": languages,
-            "ids": ids,
-            "languagefallback": "",
-        }
-        logger.debug(
-            f"Sending GET request at {action_api}, languages={languages}, ids={ids}"
-        )
+
+        # TODO: parallelize this
+        batch_size = 50
+        entity_id_list = list(entity_ids)
         self.token.refresh_if_needed()
-        res = requests.get(action_api, headers=self.headers(), params=params)
-        self.raise_for_status(res)
-        response_data = res.json()
-        for entity_id, entity_data in response_data["entities"].items():
-            labels = entity_data.get("labels") or {}
-            for language, localized_label in labels.items():
-                value = localized_label["value"]
-                Label.objects.update_or_create(
-                    entity_id=entity_id,
-                    language=language,
-                    defaults={"value": value},
-                )
+
+        collected_labels = list()
+
+        for i in range(0, len(entity_id_list), batch_size):
+            batch_ids = entity_id_list[i : i + batch_size]
+            ids = "|".join(batch_ids)
+            params = {
+                "action": "wbgetentities",
+                "format": "json",
+                "props": "labels",
+                "languages": languages,
+                "ids": ids,
+                "languagefallback": "",
+            }
+            logger.debug(
+                f"Sending GET request at {action_api}, languages={languages}, ids={ids}"
+            )
+            response = requests.get(action_api, headers=self.headers(), params=params)
+            self.raise_for_status(response)
+            response_data = response.json()
+            for entity_id, entity_data in response_data["entities"].items():
+                labels = entity_data.get("labels") or {}
+                for language, localized_label in labels.items():
+                    value = localized_label["value"]
+                    collected_labels.append(
+                        dict(entity_id=entity_id, language=language, value=value)
+                    )
+
+        labels_to_update = [Label(**label_data) for label_data in collected_labels]
+        Label.objects.bulk_create(
+            labels_to_update, update_conflicts=True, update_fields=["value"]
+        )
 
     @staticmethod
     def wikibase_entity_endpoint(entity_id, entity_endpoint=""):
@@ -364,9 +377,15 @@ class TokenManager(models.Manager):
 
 
 class Label(models.Model):
+    MAX_AGE = timedelta(days=5)
+
     entity_id = models.CharField(max_length=20, db_index=True)
     language = models.CharField(max_length=5, db_index=True)
     value = models.CharField(max_length=300)
+    fetched_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.entity_id}: {self.value} ({self.language})"
 
     class Meta:
         constraints = [
@@ -450,7 +469,7 @@ class Token(models.Model):
         """
         if not self.expires_at:
             return False
-        soon = now() + timedelta(minutes=buffer_minutes)
+        soon = timezone.now() + timedelta(minutes=buffer_minutes)
         return self.expires_at <= soon
 
     def refresh_if_needed(self):
@@ -1740,6 +1759,20 @@ class BatchCommand(models.Model):
         of 50 entities per API request.
         """
 
+        cutoff = timezone.now() - Label.MAX_AGE
+        # The Label table are only a cache, let's delete all entries that are likely stale.
+
+        command_ids = [c.id for c in commands]
+        Label.objects.filter(
+            batchcommand__id__in=command_ids, fetched_on__lt=cutoff
+        ).delete()
+
+        known_entity_ids = (
+            Label.objects.filter(batchcommand__id__in=command_ids)
+            .values_list("entity_id", flat=True)
+            .distinct()
+        )
+
         related_ids = set()
         # Collects the IDs from the commands main entity, its property and value (when applicable),
         # its qualifiers and references; stores them in a per command map
@@ -1748,13 +1781,12 @@ class BatchCommand(models.Model):
         for label_id_set in command_label_map.values():
             related_ids.update(label_id_set)
 
-        ids = list(related_ids)
+        ids_to_fetch = related_ids.difference(set(known_entity_ids))
 
-        # TODO: parallelize this
-        batch_size = 50
-        for i in range(0, len(ids), batch_size):
-            batch_ids = ids[i : i + batch_size]
-            client.fetch_entity_labels(batch_ids, language)
+        logger.debug(f"Need to fetch labels for {len(ids_to_fetch)} entities")
+
+        if len(ids_to_fetch) > 0:
+            client.fetch_entity_labels(ids_to_fetch, language)
 
         for command in commands:
             command.labels.set(
