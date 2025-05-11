@@ -306,27 +306,41 @@ class BaseParser(object):
 
     def parse_value_location(self, v):
         """
-        Returns geolocation data if v matches @LAT/LON
+        Parses a geolocation value string, optionally with a custom globe.
 
-        @43.26193/10.92708
+        Examples:
+            @43.26193/10.92708              - Default globe (Earth, Q2)
+            @43.26193/10.92708/GQ123456     - Custom globe (Q123456)
 
-        Returns None otherwise
+        Returns a structured globecoordinate value or None.
         """
-        gps_match = re.match(r"^\@\s*([+-]{0,1}[0-9.]+)\s*\/\s*([+-]{0,1}[0-9.]+)$", v)
+
+        # Regex with optional custom globe
+        gps_match = re.match(
+            r"^\@\s*([+-]?[0-9.]+)\s*/\s*([+-]?[0-9.]+)(?:/G(Q\d+))?$", v
+        )
+
         if gps_match:
+            latitude = float(gps_match.group(1))
+            longitude = float(gps_match.group(2))
+            custom_globe_qid = gps_match.group(3)
+
+            globe_iri = (
+                f"http://www.wikidata.org/entity/{custom_globe_qid}"
+                if custom_globe_qid
+                else "http://www.wikidata.org/entity/Q2"  # Default: Earth
+            )
+
             return {
                 "type": "globecoordinate",
                 "value": {
-                    "latitude": float(gps_match.group(1)),
-                    "longitude": float(gps_match.group(2)),
-                    # original quickstatements precision
-                    # is always fixed as well
+                    "latitude": latitude,
+                    "longitude": longitude,
                     "precision": 0.000001,
-                    # Even in test.wikidata.org the globe used
-                    # is wikidata's Q2, so we can keep it fixed
-                    "globe": "http://www.wikidata.org/entity/Q2",
+                    "globe": globe_iri,
                 },
             }
+
         return None
 
     def parse_value_quantity(self, v):
