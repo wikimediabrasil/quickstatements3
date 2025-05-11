@@ -161,18 +161,13 @@ def batch_commands(request, pk):
     paginator = Paginator(qs.order_by("index"), page_size)
     page = paginator.page(page)
 
-    if request.user.is_authenticated:
-        try:
-            token = Token.objects.get(user=request.user)
-            language = Preferences.objects.get_language(request.user, "en")
-            client = Client(token=token, wikibase=batch.wikibase)
-            BatchCommand.load_labels(client, page.object_list, language)
-        except UnauthorizedToken:
-            # logout but do not return 302, since this
-            # is called through HMTX
-            logout_per_token_expired(request)
-        except (ServerError, Token.DoesNotExist):
-            pass
+    try:
+        token = Token.objects.get(user__username=batch.user)
+        language = Preferences.objects.get_language(request.user, "en")
+        client = Client(token=token, wikibase=batch.wikibase)
+        BatchCommand.load_labels(client, page.object_list, "en")
+    except (UnauthorizedToken, ServerError, Token.DoesNotExist):
+        pass
 
     base_url = reverse("batch_commands", args=[pk])
     return render(
