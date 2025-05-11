@@ -1,6 +1,10 @@
+import logging
 import re
 
 from decimal import Decimal
+
+
+logger = logging.getLogger(__name__)
 
 
 class ParserException(Exception):
@@ -273,36 +277,60 @@ class BaseParser(object):
 
     def parse_value_time(self, v):
         """
-        Returns quantity data if v matches a time value
+        Parses a Wikidata-style time value string with optional precision and calendar model.
 
-        +1967-01-17T00:00:00Z/11
-
-        Returns None otherwise
+        Examples:
+        +1967-01-17T00:00:00Z/11           → Gregorian
+        +1967-01-17T00:00:00Z/11/J         → Julian (Q1985786)
+        +2968-09-22T00:00:00Z/11/CQ999999  → Custom calendar (Q999999)
         """
-        time_match = re.match(
-            r"^([+-]{0,1})(\d+)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)Z\/{0,1}(\d*)(\/J){0,1}$",
-            v,
+
+        logger.debug(f"Checking if {v} is a value of time")
+
+        pattern = re.compile(
+            r"""^
+            (?P<sign>[+-]?)                          # Optional sign
+            (?P<year>\d+)-(?P<month>\d{2})-(?P<day>\d{2})
+            T(?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2})Z
+            (?:/(?P<precision>\d+))?                 # Optional precision
+            (?:
+            /(?P<calendar>
+            J |                             # Julian
+            C(?P<custom_qid>Q\d+)           # Custom calendar
+            )
+            )?$
+            """,
+            re.VERBOSE,
         )
-        if time_match:
-            prec = 9
-            if time_match.group(8):
-                prec = int(time_match.group(8))
-            is_julian = time_match.group(9) is not None
-            if is_julian:
-                v = re.sub(r"/J$", "", v)
-            return {
-                "type": "time",
-                "value": {
-                    "time": re.sub(r"/\d+$", "", v),
-                    "precision": prec,
-                    "calendarmodel": (
-                        "http://www.wikidata.org/entity/Q1985786"
-                        if is_julian
-                        else "http://www.wikidata.org/entity/Q1985727"
-                    ),
-                },
-            }
-        return None
+
+        match = pattern.match(v)
+        if not match:
+            return None
+
+        precision = int(match.group("precision")) if match.group("precision") else 9
+        calendar_code = match.group("calendar")
+        custom_qid = match.group("custom_qid")
+
+        if calendar_code == "J":
+            calendar_model = "http://www.wikidata.org/entity/Q1985786"  # Julian
+            v = v.replace("/J", "")
+        elif calendar_code and custom_qid:
+            calendar_model = f"http://www.wikidata.org/entity/{custom_qid}"  # Custom
+            v = v.replace(f"/C{custom_qid}", "")
+        else:
+            calendar_model = "http://www.wikidata.org/entity/Q1985727"  # Gregorian
+
+        # Remove trailing precision if present (e.g. /11)
+        v_clean = re.sub(r"/\d+$", "", v)
+
+        return {
+            "type": "time",
+            "value": {
+                "time": v_clean,
+                "precision": precision,
+                "calendarmodel": calendar_model,
+            },
+        }
 
     def parse_value_location(self, v):
         """
