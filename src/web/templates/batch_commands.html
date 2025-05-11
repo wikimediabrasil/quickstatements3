@@ -111,7 +111,7 @@
     {% if only_errors %}
     {% translate 'SHOWING ONLY ERRORS' context 'batch-commands-showing-only-errors' %} -
     <a  style="cursor: pointer;"
-        hx-get="{{base_url}}"
+        hx-get="{{base_url}}?page=1&page_size={{page_size}}"
         hx-target="#batchCommandsDiv"
         hx-swap="innerHTML">
         {% translate 'SHOW ALL' context 'batch-commands-show-all' %}
@@ -119,7 +119,7 @@
     {% else %}
     {% translate 'SHOWING ALL' context 'batch-commands-showing-all' %} -
     <a  style="cursor: pointer;"
-        hx-get="{{base_url}}?show_errors=1"
+        hx-get="{{base_url}}?page=1&page_size={{page_size}}&show_errors=1"
         hx-target="#batchCommandsDiv"
         hx-swap="innerHTML">
         {% translate 'SHOW ONLY ERRORS' context 'batch-commands-show-only-errors' %}
@@ -179,12 +179,12 @@
 
 <div style="float: right; font-size: medium;">
   <label for="page_size">{% translate 'Page size:' context 'batch-commands-page-size' %}</label>
-  <select id="page_size"
+  <select class="page_size" id="page_size"
           style="font-size: medium;"
           name="page_size"
           aria-label="{% translate 'Page size:' context 'batch-commands-page-size' %}"
           required
-          hx-get="{{ base_url }}?page=1&page_size="
+          hx-get="{{ base_url }}?{% if only_errors %}show_errors=1{% endif %}&page=1&page_size="
           hx-target="#batchCommandsDiv"
           hx-swap="innerHTML"
           hx-trigger="change"
