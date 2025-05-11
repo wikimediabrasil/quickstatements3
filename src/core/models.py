@@ -318,7 +318,10 @@ class Client:
             )
             response = requests.get(action_api, headers=self.headers(), params=params)
             self.raise_for_status(response)
-            response_data = response.json()
+            try:
+                response_data = response.json()
+            except requests.exceptions.JSONDecodeError:
+                continue
             for entity_id, entity_data in response_data["entities"].items():
                 labels = entity_data.get("labels") or {}
                 for language, localized_label in labels.items():
