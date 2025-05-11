@@ -318,7 +318,7 @@ class TestBaseParser(TestCase):
         }
         self.assertEqual(parser.parse_value("+1967-00-00T00:00:00Z/9"), ret)
 
-    def test_parse_value_location(self):
+    def test_parse_value_location_earth(self):
         parser = BaseParser()
         ret = {
             "type": "globecoordinate",
@@ -330,6 +330,20 @@ class TestBaseParser(TestCase):
             },
         }
         self.assertEqual(parser.parse_value("@43.26193/10.92708"), ret)
+        self.assertIsNone(parser.parse_value("@43.26193"))
+
+    def test_parse_value_location_custom_globe(self):
+        parser = BaseParser()
+        ret = {
+            "type": "globecoordinate",
+            "value": {
+                "latitude": 43.26193,
+                "longitude": 10.92708,
+                "precision": 0.000001,
+                "globe": "http://www.wikidata.org/entity/Q999999",
+            },
+        }
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/GQ999999"), ret)
         self.assertIsNone(parser.parse_value("@43.26193"))
 
     def test_parse_value_quantity(self):
