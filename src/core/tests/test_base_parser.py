@@ -288,7 +288,7 @@ class TestBaseParser(TestCase):
             },
         )
 
-    def test_parse_value_time(self):
+    def test_parse_value_time_gregorian(self):
         parser = BaseParser()
         ret = {
             "type": "time",
@@ -317,6 +317,66 @@ class TestBaseParser(TestCase):
             },
         }
         self.assertEqual(parser.parse_value("+1967-00-00T00:00:00Z/9"), ret)
+
+    def test_parse_value_time_julian(self):
+        parser = BaseParser()
+        ret = {
+            "type": "time",
+            "value": {
+                "time": "+1967-01-17T00:00:00Z",
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985786",
+            },
+        }
+        self.assertEqual(parser.parse_value("+1967-01-17T00:00:00Z/11/J"), ret)
+        ret = {
+            "type": "time",
+            "value": {
+                "time": "+1967-01-00T00:00:00Z",
+                "precision": 10,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985786",
+            },
+        }
+        self.assertEqual(parser.parse_value("+1967-01-00T00:00:00Z/10/J"), ret)
+        ret = {
+            "type": "time",
+            "value": {
+                "time": "+1967-00-00T00:00:00Z",
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985786",
+            },
+        }
+        self.assertEqual(parser.parse_value("+1967-00-00T00:00:00Z/9/J"), ret)
+
+    def test_parse_value_time_custom_calendar(self):
+        parser = BaseParser()
+        ret = {
+            "type": "time",
+            "value": {
+                "time": "+1967-01-17T00:00:00Z",
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q999999",
+            },
+        }
+        self.assertEqual(parser.parse_value("+1967-01-17T00:00:00Z/11/CQ999999"), ret)
+        ret = {
+            "type": "time",
+            "value": {
+                "time": "+1967-01-00T00:00:00Z",
+                "precision": 10,
+                "calendarmodel": "http://www.wikidata.org/entity/Q999999",
+            },
+        }
+        self.assertEqual(parser.parse_value("+1967-01-00T00:00:00Z/10/CQ999999"), ret)
+        ret = {
+            "type": "time",
+            "value": {
+                "time": "+1967-00-00T00:00:00Z",
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q999999",
+            },
+        }
+        self.assertEqual(parser.parse_value("+1967-00-00T00:00:00Z/9/CQ999999"), ret)
 
     def test_parse_value_location_earth(self):
         parser = BaseParser()

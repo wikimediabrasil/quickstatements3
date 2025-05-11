@@ -1,9 +1,13 @@
 import re
 from typing import Iterator
+import logging
 
 from .base import BaseParser
 from .base import ParserException
 from core.models import BatchCommand
+
+
+logger = logging.getLogger(__name__)
 
 
 class V1CommandParser(BaseParser):
@@ -139,7 +143,7 @@ class V1CommandParser(BaseParser):
             entity = first_command
 
         entity_type = self.get_entity_type(entity)
-
+        logger.debug(f"{entity} is of type {entity_type}")
         if entity_type is None:
             raise ParserException(f"Invalid entity {entity}")
 
@@ -271,18 +275,25 @@ class V1CommandParser(BaseParser):
         first_command = elements[0].upper().strip()
 
         if first_command == "CREATE":
+            logger.debug(f"parsing create: {elements}")
             data = self.parse_create(elements)
         elif first_command == "CREATE_PROPERTY":
+            logger.debug(f"parsing create property: {elements}")
             data = self.parse_create_property(elements)
         elif first_command == "MERGE":
+            logger.debug(f"parsing merge: {elements}")
             data = self.parse_merge(elements)
         elif first_command == "-STATEMENT":
+            logger.debug(f"parsing statement by id: {elements}")
             data = self.parse_statement_by_id(elements)
         elif first_command == "REMOVE_QUAL":
+            logger.debug(f"parsing remove qualifier: {elements}")
             data = self.parse_remove_qualifier(elements)
         elif first_command == "REMOVE_REF":
+            logger.debug(f"parsing remove reference: {elements}")
             data = self.parse_remove_reference(elements)
         else:
+            logger.debug(f"parsing statement: {elements}/{first_command}")
             data = self.parse_statement(elements, first_command)
 
         if comment:
