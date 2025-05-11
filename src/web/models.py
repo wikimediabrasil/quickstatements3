@@ -76,10 +76,12 @@ class Token(models.Model):
 
 class PreferencesManager(models.Manager):
     def get_language(self, user, default):
+        if user is None or not user.is_authenticated:
+            return default
         try:
-            prefs = self.get_queryset().get(user=user)
-            return prefs.language if prefs.language else default
-        except Preferences.DoesNotExist:
+            prefs = self.get_queryset().only('language').get(user=user)
+            return prefs.language or default
+        except self.model.DoesNotExist:
             return default
 
 

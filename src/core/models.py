@@ -298,7 +298,11 @@ class Client:
         # TODO: parallelize this
         batch_size = 50
         entity_id_list = list(entity_ids)
-        self.token.refresh_if_needed()
+        try:
+            self.token.refresh_if_needed()
+            headers=self.headers()
+        except UnauthorizedToken:
+            headers = None
 
         collected_labels = list()
 
@@ -316,7 +320,7 @@ class Client:
             logger.debug(
                 f"Sending GET request at {action_api}, languages={languages}, ids={ids}"
             )
-            response = requests.get(action_api, headers=self.headers(), params=params)
+            response = requests.get(action_api, headers=headers, params=params)
             self.raise_for_status(response)
             response_data = response.json()
             for entity_id, entity_data in response_data["entities"].items():
