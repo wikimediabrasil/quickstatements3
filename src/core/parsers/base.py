@@ -296,7 +296,7 @@ class BaseParser(object):
             (?:
             /(?P<calendar>
             J |                             # Julian
-            C(?P<custom_qid>Q\d+)           # Custom calendar
+            C(?P<custom_qid>\d+)           # Custom calendar
             )
             )?$
             """,
@@ -315,7 +315,7 @@ class BaseParser(object):
             calendar_model = "http://www.wikidata.org/entity/Q1985786"  # Julian
             v = v.replace("/J", "")
         elif calendar_code and custom_qid:
-            calendar_model = f"http://www.wikidata.org/entity/{custom_qid}"  # Custom
+            calendar_model = f"http://www.wikidata.org/entity/Q{custom_qid}"  # Custom
             v = v.replace(f"/C{custom_qid}", "")
         else:
             calendar_model = "http://www.wikidata.org/entity/Q1985727"  # Gregorian
@@ -345,7 +345,7 @@ class BaseParser(object):
 
         # Regex with optional custom globe
         gps_match = re.match(
-            r"^\@\s*([+-]?[0-9.]+)\s*/\s*([+-]?[0-9.]+)(?:/G(Q\d+))?$", v
+            r"^\@\s*([+-]?[0-9.]+)\s*/\s*([+-]?[0-9.]+)(?:/G(\d+))?$", v
         )
 
         if gps_match:
@@ -354,7 +354,7 @@ class BaseParser(object):
             custom_globe_qid = gps_match.group(3)
 
             globe_iri = (
-                f"http://www.wikidata.org/entity/{custom_globe_qid}"
+                f"http://www.wikidata.org/entity/Q{custom_globe_qid}"
                 if custom_globe_qid
                 else "http://www.wikidata.org/entity/Q2"  # Default: Earth
             )
