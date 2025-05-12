@@ -19,7 +19,7 @@
 
 {% endif %}
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <fieldset>
     {% if multiple_wikis %}
@@ -57,7 +57,7 @@
       <em data-tooltip="{% translate 'Commands targeting the same entity will not be combined into one edit.' context 'new-batch-commands-targeting' %}">(i)</em>
     </label>
 
-    <input type="file" name="file" formenctype="multipart/form-data" />
+    <input type="file" name="file" />
     <input type="submit" value="Upload" />
 
     <textarea name="commands" aria-label="commands" placeholder="{% translate 'Enter your commands here...' context 'new-batch-enter-your-commands-here' %}"
