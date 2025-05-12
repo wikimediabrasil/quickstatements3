@@ -358,7 +358,7 @@ class TestBaseParser(TestCase):
                 "calendarmodel": "http://www.wikidata.org/entity/Q999999",
             },
         }
-        self.assertEqual(parser.parse_value("+1967-01-17T00:00:00Z/11/CQ999999"), ret)
+        self.assertEqual(parser.parse_value("+1967-01-17T00:00:00Z/11/C999999"), ret)
         ret = {
             "type": "time",
             "value": {
@@ -367,7 +367,7 @@ class TestBaseParser(TestCase):
                 "calendarmodel": "http://www.wikidata.org/entity/Q999999",
             },
         }
-        self.assertEqual(parser.parse_value("+1967-01-00T00:00:00Z/10/CQ999999"), ret)
+        self.assertEqual(parser.parse_value("+1967-01-00T00:00:00Z/10/C999999"), ret)
         ret = {
             "type": "time",
             "value": {
@@ -376,7 +376,7 @@ class TestBaseParser(TestCase):
                 "calendarmodel": "http://www.wikidata.org/entity/Q999999",
             },
         }
-        self.assertEqual(parser.parse_value("+1967-00-00T00:00:00Z/9/CQ999999"), ret)
+        self.assertEqual(parser.parse_value("+1967-00-00T00:00:00Z/9/C999999"), ret)
 
     def test_parse_value_location_earth(self):
         parser = BaseParser()
@@ -403,7 +403,7 @@ class TestBaseParser(TestCase):
                 "globe": "http://www.wikidata.org/entity/Q999999",
             },
         }
-        self.assertEqual(parser.parse_value("@43.26193/10.92708/GQ999999"), ret)
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/G999999"), ret)
         self.assertIsNone(parser.parse_value("@43.26193"))
 
     def test_parse_value_quantity(self):
