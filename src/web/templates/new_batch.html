@@ -47,15 +47,18 @@
 
     <label>
       <input type="checkbox" name="block_on_errors" role="switch" >
-      {% translate 'Block batch if a command fails' context 'new-batch-block-batch-if-a-command-fails' %}
+        {% translate 'Block batch if a command fails' context 'new-batch-block-batch-if-a-command-fails' %}
       <em data-tooltip="{% translate 'The batch will stop processing if a command gives an error.' context 'new-batch-the-batch-will-stop' %}">(i)</em>
     </label>
 
     <label>
       <input type="checkbox" name="do_not_combine_commands" role="switch" >
-      {% translate 'Do not combine commands' context 'new-batch-do-not-combine-commands' %}
+        {% translate 'Do not combine commands' context 'new-batch-do-not-combine-commands' %}
       <em data-tooltip="{% translate 'Commands targeting the same entity will not be combined into one edit.' context 'new-batch-commands-targeting' %}">(i)</em>
     </label>
+
+    <input type="file" name="file" formenctype="multipart/form-data" />
+    <input type="submit" value="Upload" />
 
     <textarea name="commands" aria-label="commands" placeholder="{% translate 'Enter your commands here...' context 'new-batch-enter-your-commands-here' %}"
       style="height: 400px">{% if commands %}{{commands}}{% endif %}</textarea>
