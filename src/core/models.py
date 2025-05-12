@@ -1161,10 +1161,24 @@ class BatchCommand(models.Model):
             self.references_for_api(),
             self.statement_rank(),
         )
+
+        duplicate_statement = True
+        if refs:
+            for ref in refs:
+                for ref_part in ref["parts"]:
+                    if not self.is_part_in_references(ref_part):
+                        duplicate_statement = False
+                        break
+            if quals and duplicate_statement:
+                for q in quals:
+                    if not self.is_in_qualifiers(q):
+                        duplicate_statement = False
+                        break
+
         if quals:
             st.setdefault("qualifiers", [])
             st["qualifiers"].extend(quals)
-        if refs:
+        if refs and not duplicate_statement:
             st.setdefault("references", [])
             st["references"].extend(refs)
         if rank:
