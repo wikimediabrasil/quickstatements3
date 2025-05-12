@@ -56,8 +56,12 @@
         {% translate 'Do not combine commands' context 'new-batch-do-not-combine-commands' %}
       <em data-tooltip="{% translate 'Commands targeting the same entity will not be combined into one edit.' context 'new-batch-commands-targeting' %}">(i)</em>
     </label>
-
-    <input type="file" name="file" />
+    <div class="grid" style="grid-template-columns: 10fr 1fr;">
+      <input type="file" name="file" id="fileInput" />
+      <button type="button" onclick="document.getElementById('fileInput').value = '';">
+        Clear
+      </button>
+    </div>
     <input type="submit" value="Upload" />
 
     <textarea name="commands" aria-label="commands" placeholder="{% translate 'Enter your commands here...' context 'new-batch-enter-your-commands-here' %}"
