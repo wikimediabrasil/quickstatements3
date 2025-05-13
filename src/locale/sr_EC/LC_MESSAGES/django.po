@@ -847,20 +847,21 @@ msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
 msgstr "QuickStatements 3.0 - Статистика"
 
-#: web/templates/statistics.html:40
-msgctxt "statistics-number-of-batches"
-msgid "Number of batches"
-msgstr "Број серија"
+#: web/templates/statistics.html:16
+#, python-format
+msgctxt "statistics-title-username"
+msgid " Statistics of %(1)s "
+msgstr " Statistics of %(1)s "
 
-#: web/templates/statistics.html:61
-msgctxt "statistics-done-status"
-msgid "Done status"
-msgstr "Статус завршено"
+#: web/templates/statistics.html:18
+msgctxt "statistics-title"
+msgid "Statistics"
+msgstr "Statistics"
 
-#: web/templates/statistics.html:66
-msgctxt "statistics-error-status"
-msgid "Error status"
-msgstr "Статус грешке"
+#: web/templates/statistics.html:23
+msgctxt "statistics-all-time-numbers"
+msgid "All-time numbers"
+msgstr "All-time numbers"
 
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
@@ -902,6 +903,48 @@ msgstr "Хеј, то је %(1)s!"
 msgctxt "statistics-edits"
 msgid "Edits"
 msgstr "Измене"
+
+#: web/templates/statistics_plots.html:3
+msgctxt "statistics-cumulative-batches"
+msgid "Cumulative number of batches"
+msgstr "Cumulative number of batches"
+
+#: web/templates/statistics_plots.html:13
+msgctxt "statistics-edits-and-editors"
+msgid "Cumulative number of edits and new editors"
+msgstr "Cumulative number of edits and new editors"
+
+#: web/templates/statistics_plots.html:23
+msgctxt "statistics-done-and-error-commands"
+msgid "Done and error commands per day"
+msgstr "Done and error commands per day"
+
+#: web/templates/statistics_plots.html:47
+msgctxt "statistics-number-of-batches"
+msgid "Number of batches"
+msgstr "Број серија"
+
+#: web/templates/statistics_plots.html:91
+#: web/templates/statistics_plots.html:116
+msgctxt "statistics-number-of-editors"
+msgid "Number of editors"
+msgstr "Number of editors"
+
+#: web/templates/statistics_plots.html:100
+#: web/templates/statistics_plots.html:128
+msgctxt "statistics-number-of-edits"
+msgid "Number of edits"
+msgstr "Number of edits"
+
+#: web/templates/statistics_plots.html:167
+msgctxt "statistics-done-status"
+msgid "Done status"
+msgstr "Статус завршено"
+
+#: web/templates/statistics_plots.html:174
+msgctxt "statistics-error-status"
+msgid "Error status"
+msgstr "Статус грешке"
 
 #: web/views/new_batch.py:243
 msgctxt "batch-py-user-not-autoconfirmed"
