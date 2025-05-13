@@ -107,13 +107,6 @@ def preview_batch_commands(request):
         paginator = Paginator(batch_commands, page_size)
         page = paginator.page(page)
 
-        if request.user.is_authenticated:
-            token = Token.objects.filter(user=request.user).first()
-            if token is not None:
-                client = Client(token=token, wikibase=batch.wikibase)
-                language = Preferences.objects.get_language(request.user, "en")
-                BatchCommand.load_labels(client, page.object_list, language)
-
     base_url = reverse("preview_batch_commands")
     return render(
         request,
