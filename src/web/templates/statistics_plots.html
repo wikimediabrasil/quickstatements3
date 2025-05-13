@@ -51,6 +51,25 @@
         pointStyle: false,
         borderWidth: 1
       }]
+    },
+    options: {
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true
+          },
+          zoom: {
+            wheel: {
+              enabled: true
+            },
+            mode: 'xy',
+            scaleMode: 'xy'
+          },
+          limits: {
+            y: {min: 'original', max: 'original'}
+          }
+        }
+      }
     }
   });
   // ------------------------------------------------------
@@ -109,7 +128,24 @@
                   text: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}"
                 }
             }
+        },
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true
+          },
+          zoom: {
+            wheel: {
+              enabled: true
+            },
+            mode: 'xy',
+            scaleMode: 'xy'
+          },
+          limits: {
+            y: {min: 'original', max: 'original'},
+          }
         }
+      }
     }
   });
   // ------------------------------------------------------
@@ -151,6 +187,23 @@
             y: {
                 stacked: true
             }
+        },
+        plugins: {
+          zoom: {
+            pan: {
+              enabled: true
+            },
+            zoom: {
+              wheel: {
+                enabled: true
+              },
+              mode: 'xy',
+              scaleMode: 'xy'
+            },
+            limits: {
+              y: {min: 'original', max: 'original'}
+            }
+          }
         }
     }
   });
