@@ -319,64 +319,69 @@ msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "Stop processing"
 
-#: web/templates/batch_commands.html:69
+#: web/templates/batch_commands.html:38
+msgctxt "batch-commands-statement"
+msgid "Statement"
+msgstr "Statement"
+
+#: web/templates/batch_commands.html:53
 msgctxt "batch-commands-qualifier"
-msgid "Qualifier"
+msgid "Qualifiers"
 msgstr "Qualifier"
 
-#: web/templates/batch_commands.html:88
-msgctxt "batch-commands-reference-part"
-msgid "Reference Part"
-msgstr "Reference Part"
+#: web/templates/batch_commands.html:62
+msgctxt "batch-commands-references"
+msgid "References"
+msgstr "References"
 
-#: web/templates/batch_commands.html:112
+#: web/templates/batch_commands.html:82
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
 msgstr "SHOWING ONLY ERRORS"
 
-#: web/templates/batch_commands.html:117
+#: web/templates/batch_commands.html:87
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
 msgstr "SHOW ALL"
 
-#: web/templates/batch_commands.html:120
+#: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
 msgstr "SHOWING ALL"
 
-#: web/templates/batch_commands.html:125
+#: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
 msgstr "SHOW ONLY ERRORS"
 
-#: web/templates/batch_commands.html:138
+#: web/templates/batch_commands.html:108
 msgctxt "batch-commands-first"
 msgid "FIRST"
 msgstr "FIRST"
 
-#: web/templates/batch_commands.html:146
+#: web/templates/batch_commands.html:116
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
 msgstr "PREVIOUS"
 
-#: web/templates/batch_commands.html:154 web/templates/batches.html:94
+#: web/templates/batch_commands.html:124 web/templates/batches.html:94
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
 msgstr "Pg. %(1)s of %(2)s"
 
-#: web/templates/batch_commands.html:164
+#: web/templates/batch_commands.html:134
 msgctxt "batch-commands-next"
 msgid "NEXT"
 msgstr "NEXT"
 
-#: web/templates/batch_commands.html:172
+#: web/templates/batch_commands.html:142
 msgctxt "batch-commands-last"
 msgid "LAST"
 msgstr "LAST"
 
-#: web/templates/batch_commands.html:181 web/templates/batch_commands.html:185
-#: web/templates/batch_commands.html:193
+#: web/templates/batch_commands.html:151 web/templates/batch_commands.html:155
+#: web/templates/batch_commands.html:163
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
 msgstr "Page size:"

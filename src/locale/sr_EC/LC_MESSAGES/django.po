@@ -318,64 +318,69 @@ msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "Заустави обраду"
 
-#: web/templates/batch_commands.html:69
+#: web/templates/batch_commands.html:38
+msgctxt "batch-commands-statement"
+msgid "Statement"
+msgstr "Statement"
+
+#: web/templates/batch_commands.html:53
 msgctxt "batch-commands-qualifier"
-msgid "Qualifier"
-msgstr "Qualifier"
+msgid "Qualifiers"
+msgstr "Qualifiers"
 
-#: web/templates/batch_commands.html:88
-msgctxt "batch-commands-reference-part"
-msgid "Reference Part"
-msgstr "Reference Part"
+#: web/templates/batch_commands.html:62
+msgctxt "batch-commands-references"
+msgid "References"
+msgstr "References"
 
-#: web/templates/batch_commands.html:112
+#: web/templates/batch_commands.html:82
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
 msgstr "ПРИКАЗУЈУ СЕ САМО ГРЕШКЕ"
 
-#: web/templates/batch_commands.html:117
+#: web/templates/batch_commands.html:87
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
 msgstr "ПРИКАЖИ СВЕ"
 
-#: web/templates/batch_commands.html:120
+#: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
 msgstr "ПРИКАЗУЈУ СЕ СВЕ"
 
-#: web/templates/batch_commands.html:125
+#: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
 msgstr "ПРИКАЖИ САМО ГРЕШКЕ"
 
-#: web/templates/batch_commands.html:138
+#: web/templates/batch_commands.html:108
 msgctxt "batch-commands-first"
 msgid "FIRST"
 msgstr "ПРВО"
 
-#: web/templates/batch_commands.html:146
+#: web/templates/batch_commands.html:116
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
 msgstr "ПРЕТХОДНО"
 
-#: web/templates/batch_commands.html:154 web/templates/batches.html:94
+#: web/templates/batch_commands.html:124 web/templates/batches.html:94
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
 msgstr "Страна %(1)s од %(2)s"
 
-#: web/templates/batch_commands.html:164
+#: web/templates/batch_commands.html:134
 msgctxt "batch-commands-next"
 msgid "NEXT"
 msgstr "СЛЕДЕЋЕ"
 
-#: web/templates/batch_commands.html:172
+#: web/templates/batch_commands.html:142
 msgctxt "batch-commands-last"
 msgid "LAST"
 msgstr "ПОСЛЕДЊЕ"
 
-#: web/templates/batch_commands.html:181 web/templates/batch_commands.html:185
-#: web/templates/batch_commands.html:193
+#: web/templates/batch_commands.html:151 web/templates/batch_commands.html:155
+#: web/templates/batch_commands.html:163
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
 msgstr "Величина странице:"

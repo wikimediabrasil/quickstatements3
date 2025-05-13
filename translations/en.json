@@ -171,5 +171,6 @@
     "batch-py-user-not-autoconfirmed": "User is not autoconfirmed. Only autoconfirmed users can run batches.",
     "batch-py-user-blocked": "User is blocked and can not run batches.",
     "batch-commands-qualifier": "Qualifier",
-    "batch-commands-reference-part": "Reference Part"
+    "batch-commands-statement": "Statement",
+    "batch-commands-references": "References"
 }
