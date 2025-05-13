@@ -4,6 +4,19 @@
 {% block css %}
 {% include '_batch_css.html' %}
 {% endblock %}
+
+{% block scripts %}
+{% include '_batch_load_command_labels.html' %}
+<script language="javascript">
+  document.addEventListener('htmx:afterSwap', async (event) => {
+  if (event.target.id != 'batchCommandsDiv') {
+    return
+  }
+  await loadLabels(event.target)
+  })
+</script>
+{% endblock %}
+
 {% block content %}
 <div style="float: left;">
     <hgroup>

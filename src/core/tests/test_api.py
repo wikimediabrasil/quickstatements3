@@ -449,30 +449,6 @@ class ClientTests(TestCase):
             self.api_client().get_property_value_type("P1")
 
     @requests_mock.Mocker()
-    def test_get_labels(self, mocker):
-        labels = {
-            "Q123": {
-                "en": "English label",
-                "pt": "Portuguese label",
-            }
-        }
-        client = self.api_client()
-        Label.objects.all().delete()
-        self.api_mocker.labels(mocker, client, labels)
-        client.fetch_entity_labels(["Q123"], "pt")
-        self.assertEqual(Label.objects.count(), 2)
-        self.assertTrue(
-            Label.objects.filter(
-                entity_id="Q123", language="en", value="English label"
-            ).exists()
-        )
-        self.assertTrue(
-            Label.objects.filter(
-                entity_id="Q123", language="pt", value="Portuguese label"
-            ).exists()
-        )
-
-    @requests_mock.Mocker()
     def test_verify_value_type(self, mocker):
         self.api_mocker.wikidata_property_data_types(mocker)
         self.api_mocker.property_data_type(mocker, "P1", "commonsMedia")

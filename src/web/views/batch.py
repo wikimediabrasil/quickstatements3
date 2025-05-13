@@ -90,7 +90,6 @@ def batch_restart(request, pk):
         return HttpResponse("403 Forbidden", status=403)
 
 
-
 @require_http_methods(
     [
         "POST",
@@ -102,9 +101,8 @@ def batch_rerun(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = (
-            request.user.is_authenticated and
-            (request.user.username == batch.user or request.user.is_superuser)
+        user_is_authorized = request.user.is_authenticated and (
+            request.user.username == batch.user or request.user.is_superuser
         )
         assert user_is_authorized
         batch.rerun()
@@ -160,15 +158,6 @@ def batch_commands(request, pk):
 
     paginator = Paginator(qs.order_by("index"), page_size)
     page = paginator.page(page)
-
-    try:
-        token = Token.objects.get(user__username=batch.user)
-        language = Preferences.objects.get_language(request.user, "en")
-        client = Client(token=token, wikibase=batch.wikibase)
-        BatchCommand.load_labels(client, page.object_list, "en")
-    except (UnauthorizedToken, ServerError, Token.DoesNotExist):
-        pass
-
     base_url = reverse("batch_commands", args=[pk])
     return render(
         request,

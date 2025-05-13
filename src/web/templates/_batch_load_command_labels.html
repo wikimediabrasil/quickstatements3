@@ -1,0 +1,35 @@
+{% load quickstatements %}
+
+<script language="javascript">
+ async function loadLabels(container) {
+   const spans = container.querySelectorAll("span.wikibase-label[data-entity-id]")
+   if (spans.length === 0) return
+
+   const entityIds = Array.from(spans).map(span => span.getAttribute("data-entity-id"))
+
+   const userLanguage = "{{ user|language_preference }}"
+
+   const languages = userLanguage === "en" ? "en" : `${userLanguage}|en`
+
+   const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entityIds.join('|')}&format=json&languages=${languages}&props=labels&origin=*`
+
+   try {
+     const res = await fetch(url)
+     const data = await res.json()
+
+     spans.forEach(span => {
+       const id = span.getAttribute("data-entity-id")
+       const localizedLabel = data.entities?.[id]?.labels?.[userLanguage]?.value
+       const englishLabel = data.entities?.[id]?.labels?.en?.value
+
+       const label = localizedLabel || englishLabel
+
+       if (label) {
+         span.textContent = label
+       }
+     })
+   } catch (err) {
+     console.error("Error fetching localized labels from Wikidata:", err)
+   }
+ }
+</script>

@@ -536,38 +536,6 @@ class ProcessingTests(TestCase):
             self.assertEqual(command.status, BatchCommand.STATUS_ERROR)
 
     @requests_mock.Mocker()
-    def test_get_label(self, mocker):
-        self.api_mocker.wikidata_property_data_types(mocker)
-        self.api_mocker.is_autoconfirmed(mocker)
-        self.api_mocker.create_item(mocker, "Q1")
-        self.api_mocker.item_empty(mocker, "Q1")
-        self.api_mocker.item_empty(mocker, "Q2")
-        self.api_mocker.property_data_type(mocker, "P1", "quantity")
-        self.api_mocker.patch_item_successful(mocker, "Q1", {})
-        self.api_mocker.patch_item_successful(mocker, "Q2", {})
-        batch = self.parse(
-            """
-        CREATE
-        LAST|P1|12
-        Q2|P1|15
-        """
-        )
-        batch.combine_commands = True
-        commands = batch.commands()
-        labels = {
-            "Q1": {"pt": "pt1", "en": "en1"},
-            "Q2": {"pt": "pt2", "en": "en2"},
-            "P1": {"pt": "prop_pt", "en": "prop_en"},
-        }
-        self.api_mocker.labels(mocker, self.api_client, labels)
-        BatchCommand.load_labels(self.api_client, commands, "pt")
-        self.assertEqual(commands[0].labels.count(), 0)
-        self.assertEqual(
-            commands[1].labels.filter(entity_id="P1", language="pt").count(), 1
-        )
-        self.assertEqual(commands[2].labels.filter(entity_id="Q2").count(), 2)
-
-    @requests_mock.Mocker()
     def test_remove_qual_or_ref_errors(self, mocker):
         self.api_mocker.item(
             mocker,

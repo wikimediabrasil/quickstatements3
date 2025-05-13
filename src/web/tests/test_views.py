@@ -12,7 +12,6 @@ from core.models import Client as ApiClient
 from core.models import Token
 from core.parsers.v1 import V1CommandParser
 from core.tests.test_api import ApiMocker
-from web.models import Preferences
 
 
 class ViewsTest(TestCase):
@@ -335,48 +334,6 @@ class ViewsTest(TestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.headers["Location"], "/auth/login/?next=/batch/new/")
-
-    @requests_mock.Mocker()
-    def test_command_labels(self, mocker):
-        user, api_client = self.login_user_and_get_token("wikiuser")
-
-        parser = V1CommandParser()
-        batch = BatchFactory.load_from_parser(
-            parser,
-            "Batch",
-            "wikiuser",
-            "Q1234\tP2\tQ1",
-            wikibase=self.api_mocker.wikibase,
-        )
-
-        labels = {
-            "Q1234": {
-                "en": "English label",
-                "pt": "Portuguese label",
-            }
-        }
-        self.api_mocker.labels(mocker, api_client, labels)
-
-        response = self.client.get(f"/batch/{batch.pk}/commands/")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("batch_commands.html")
-        self.assertInRes("English label", response)
-
-        # Portuguse uses its label
-        prefs = Preferences.objects.create(
-            user=user,
-            language="pt",
-        )
-        response = self.client.get(f"/batch/{batch.pk}/commands/")
-        self.assertEqual(response.status_code, 200)
-        self.assertInRes("Portuguese label", response)
-
-        # Spanish will use the english label
-        prefs.language = "es"
-        prefs.save()
-        response = self.client.get(f"/batch/{batch.pk}/commands/")
-        self.assertEqual(response.status_code, 200)
-        self.assertInRes("English label", response)
 
     @requests_mock.Mocker()
     def test_profile_is_autoconfirmed(self, mocker):

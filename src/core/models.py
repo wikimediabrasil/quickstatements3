@@ -278,67 +278,6 @@ class Client:
         url = self.wikibase_entity_url(entity_id, "")
         return self.get(url).json()
 
-    # ---
-    # Action API GET/reading
-    # ---
-
-    def fetch_entity_labels(self, entity_ids: Set[str], language: str):
-        """
-        Obtains multiple labels using the Action API.
-
-        When the REST API allows this, we can swicth to it.
-
-        Returns as an easy to use dictionary with the entity ids
-        as keys and the labels as values, which can be empty strings.
-        """
-
-        action_api = self.action_api_url
-        languages = f"{language}|en" if language != "en" else "en"
-
-        # TODO: parallelize this
-        batch_size = 50
-        entity_id_list = list(entity_ids)
-        try:
-            self.token.refresh_if_needed()
-            headers=self.headers()
-        except UnauthorizedToken:
-            headers = None
-
-        collected_labels = list()
-
-        for i in range(0, len(entity_id_list), batch_size):
-            batch_ids = entity_id_list[i : i + batch_size]
-            ids = "|".join(batch_ids)
-            params = {
-                "action": "wbgetentities",
-                "format": "json",
-                "props": "labels",
-                "languages": languages,
-                "ids": ids,
-                "languagefallback": "",
-            }
-            logger.debug(
-                f"Sending GET request at {action_api}, languages={languages}, ids={ids}"
-            )
-            response = requests.get(action_api, headers=headers, params=params)
-            self.raise_for_status(response)
-            try:
-                response_data = response.json()
-            except requests.exceptions.JSONDecodeError:
-                continue
-            for entity_id, entity_data in response_data["entities"].items():
-                labels = entity_data.get("labels") or {}
-                for language, localized_label in labels.items():
-                    value = localized_label["value"]
-                    collected_labels.append(
-                        dict(entity_id=entity_id, language=language, value=value)
-                    )
-
-        labels_to_update = [Label(**label_data) for label_data in collected_labels]
-        Label.objects.bulk_create(
-            labels_to_update, update_conflicts=True, update_fields=["value"]
-        )
-
     @staticmethod
     def wikibase_entity_endpoint(entity_id, entity_endpoint=""):
         if entity_id.startswith("Q"):
@@ -1758,53 +1697,6 @@ class BatchCommand(models.Model):
             case self.Operation.REMOVE_STATEMENT_BY_ID:
                 statement_id = self.json["id"]
                 return ("DELETE", f"/statements/{statement_id}")
-
-    # -----------------
-    # Visualization/label methods
-    # -----------------
-
-    @staticmethod
-    def load_labels(client: Client, commands: List["BatchCommand"], language="en"):
-        """
-        Get labels from all wikibase entities related to the set of commands provided
-
-        It loops twice through the commands list and runs in batches
-        of 50 entities per API request.
-        """
-
-        cutoff = timezone.now() - Label.MAX_AGE
-        # The Label table are only a cache, let's delete all entries that are likely stale.
-
-        command_ids = [c.id for c in commands]
-        Label.objects.filter(
-            batchcommand__id__in=command_ids, fetched_on__lt=cutoff
-        ).delete()
-
-        known_entity_ids = (
-            Label.objects.filter(batchcommand__id__in=command_ids)
-            .values_list("entity_id", flat=True)
-            .distinct()
-        )
-
-        related_ids = set()
-        # Collects the IDs from the commands main entity, its property and value (when applicable),
-        # its qualifiers and references; stores them in a per command map
-        command_label_map = {c.id: c.related_identifiers_set for c in commands}
-
-        for label_id_set in command_label_map.values():
-            related_ids.update(label_id_set)
-
-        ids_to_fetch = related_ids.difference(set(known_entity_ids))
-
-        logger.debug(f"Need to fetch labels for {len(ids_to_fetch)} entities")
-
-        if len(ids_to_fetch) > 0:
-            client.fetch_entity_labels(ids_to_fetch, language)
-
-        for command in commands:
-            command.labels.set(
-                Label.objects.filter(entity_id__in=command_label_map[command.id])
-            )
 
     # -----------------
     # Value type verification
