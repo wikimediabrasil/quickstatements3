@@ -16,7 +16,7 @@
 <div style="align-content: center; height: 300px;" aria-busy="true"></div>
 {% else %}
 <div>
-  <canvas id="editsAndNewEditorsCumulativeChart"></canvas>
+  <canvas id="editorsAndEditsCumulativeChart"></canvas>
 </div>
 {% endif %}
 
@@ -50,24 +50,64 @@
       }]
     }
   });
-  const ctx_edits_editors = document.getElementById('editsAndNewEditorsCumulativeChart');
+  // ------------------------------------------------------
+  const ctx_editors_edits = document.getElementById('editorsAndEditsCumulativeChart');
   var labels = [];
-  var data = [];
-  {% for date, count in new_editors_per_day.items %}
+  var data_editors = [];
+  var data_edits = [];
+  {% for date, counts in editors_and_edits_per_day.items %}
   labels.push('{{ date }}');
-  data.push({{count}});
+  data_editors.push({{counts.0}});
+  data_edits.push({{counts.1}});
   {% endfor %}
-  new Chart(ctx_edits_editors, {
+  new Chart(ctx_editors_edits, {
     type: 'line',
     data: {
       labels: labels,
-      datasets: [{
-        label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
-        data: data,
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
+          data: data_editors,
+          borderColor: "rgb(255, 159, 64)",
+          backgroundColor: "rgba(255, 159, 64, 0.5)",
+          yAxisID: 'y',
+          borderWidth: 1
+        },
+        {
+          label: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}",
+          data: data_edits,
+          borderColor: "rgb(153, 102, 255)",
+          backgroundColor: "rgba(153, 102, 255, 0.5)",
+          yAxisID: 'y1',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+        scales: {
+            y: {
+                position: 'left',
+                title: {
+                  display: true,
+                  text: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}"
+                }
+            },
+            y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                grid: {
+                  drawOnChartArea: false,
+                },
+                title: {
+                  display: true,
+                  text: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}"
+                }
+            }
+        }
     }
   });
+  // ------------------------------------------------------
   const ctx2 = document.getElementById('commandCountChart');
   var labels = [];
   var data_done = [];
@@ -85,11 +125,15 @@
         {
           label: "{% translate 'Done status' context 'statistics-done-status' %}",
           data: data_done,
+          borderColor: "rgb(75, 192, 192)",
+          backgroundColor: "rgba(75, 192, 192, 0.5)",
           borderWidth: 1
         },
         {
           label: "{% translate 'Error status' context 'statistics-error-status' %}",
           data: data_error,
+          borderColor: "rgb(255, 99, 132)",
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
           borderWidth: 1
         }
       ]

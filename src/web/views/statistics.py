@@ -56,7 +56,6 @@ def plots_data(request, username):
     query_users_and_first_batches = (
         all_batches.annotate(date=TruncDay("created"))
         .values("user")
-        .order_by("user")
         .annotate(first_batch=Min("date"))
         .order_by("first_batch")
     )
@@ -66,17 +65,29 @@ def plots_data(request, username):
         date = q["first_batch"].date()
         dates_and_new_users_count.setdefault(date, 0)
         dates_and_new_users_count[date] += 1
-    current_count = 0
-    new_editors_per_day = {basedate: 0}
+    query_edits_per_day = {
+        q["date"].date(): q["count"]
+        for q in all_commands.filter(status=BatchCommand.STATUS_DONE)
+        .exclude(response_id__isnull=True)
+        .exclude(response_id="")
+        .annotate(date=TruncDay("created"))
+        .values("date")
+        .annotate(count=Count("pk"))
+        .order_by("date")
+    }
+    current_edit_count = 0
+    current_editors_count = 0
+    editors_and_edits_per_day = {basedate: (0, 0)}
     for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
-        current_count += dates_and_new_users_count.get(date, 0)
-        new_editors_per_day[date] = current_count
+        current_editors_count += dates_and_new_users_count.get(date, 0)
+        current_edit_count += query_edits_per_day.get(date, 0)
+        editors_and_edits_per_day[date] = (current_editors_count, current_edit_count)
     # ---
     data = {
         "username": username,
         "batches_per_day": batches_per_day,
         "commands_per_day": commands_per_day,
-        "new_editors_per_day": new_editors_per_day,
+        "editors_and_edits_per_day": editors_and_edits_per_day,
     }
     return data
 
