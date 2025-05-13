@@ -47,13 +47,44 @@ def render_time_datavalue(command, value):
     minute = int(m.group("minute"))
     second = int(m.group("second"))
 
-    return {
+    decade = pgettext("batch-command-time-decade", "decade")
+    century = pgettext("batch-command-time-century", "century")
+    millennium = pgettext("batch-command-time-millennium", "millennium")
+    hundred_thousand = pgettext(
+        "batch-command-time-hundred-thousand", "hundred thousand years"
+    )
+    million = pgettext("batch-command-time-million-years", "million years")
+    billion = pgettext("batch-command-time-billion-years", "billion years")
+
+    formatted = {
         14: f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}:{second:02d}",
         13: f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}",
         12: f"{year:04d}-{month:02d}-{day:02d} {hour:02d}",
         11: f"{year:04d}-{month:02d}-{day:02d}",
         10: f"{year}-{month:02d}",
-    }.get(precision, f"{year}")
+        9: str(year),
+        8: f"{year} ({decade})",
+        7: f"{year} ({century})",
+        6: f"{year} ({millennium})",
+        4: f"{year} ({hundred_thousand})",
+        3: f"{year} ({million})",
+        0: f"{year} ({billion})",
+    }.get(precision, timestamp)
+
+    calendar_model = value.get(
+        "calendarmodel", "http://www.wikidata.org/entity/Q1985727"
+    )
+
+    calendar_qid = calendar_model.rsplit("/", 1)[-1]
+
+    julian_calendar_label = f"({pgettext('calendar-type-julian', 'Julian Calendar')})"
+    custom_calendar_label = f'<a href="{calendar_model}">[{calendar_qid}]</a>'
+    calendar = {
+        "http://www.wikidata.org/entity/Q1985786": julian_calendar_label,
+        "http://www.wikidata.org/entity/Q1985727": "",
+    }.get(calendar_model, custom_calendar_label)
+
+    return f"{formatted} {calendar}".strip()
 
 
 def render_quantity_datavalue(command, value):
