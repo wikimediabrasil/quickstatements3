@@ -10,6 +10,16 @@
 </div>
 {% endif %}
 
+<h2> Cumulative number of edits and new editors </h2>
+
+{% if loading %}
+<div style="align-content: center; height: 300px;" aria-busy="true"></div>
+{% else %}
+<div>
+  <canvas id="editsAndNewEditorsCumulativeChart"></canvas>
+</div>
+{% endif %}
+
 <h2> Done and error commands per day </h2>
 
 {% if loading %}
@@ -35,6 +45,24 @@
       labels: labels,
       datasets: [{
         label: "{% translate 'Number of batches' context 'statistics-number-of-batches' %}",
+        data: data,
+        borderWidth: 1
+      }]
+    }
+  });
+  const ctx_edits_editors = document.getElementById('editsAndNewEditorsCumulativeChart');
+  var labels = [];
+  var data = [];
+  {% for date, count in new_editors_per_day.items %}
+  labels.push('{{ date }}');
+  data.push({{count}});
+  {% endfor %}
+  new Chart(ctx_edits_editors, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
         data: data,
         borderWidth: 1
       }]

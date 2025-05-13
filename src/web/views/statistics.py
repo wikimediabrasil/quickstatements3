@@ -3,6 +3,7 @@ import logging
 
 from django.shortcuts import render
 from django.db.models import Count
+from django.db.models import Min
 from django.db.models import Q
 from django.utils.timezone import now
 from django.views.decorators.cache import cache_page
@@ -52,10 +53,30 @@ def plots_data(request, username):
     for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
         commands_per_day[date] = query_commands_per_day.get(date, (0, 0))
     # ---
+    query_users_and_first_batches = (
+        all_batches.annotate(date=TruncDay("created"))
+        .values("user")
+        .order_by("user")
+        .annotate(first_batch=Min("date"))
+        .order_by("first_batch")
+    )
+    dates_and_new_users_count = {}
+    for q in query_users_and_first_batches:
+        # TODO: can we move this to the query? couldn't do it
+        date = q["first_batch"].date()
+        dates_and_new_users_count.setdefault(date, 0)
+        dates_and_new_users_count[date] += 1
+    current_count = 0
+    new_editors_per_day = {basedate: 0}
+    for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
+        current_count += dates_and_new_users_count.get(date, 0)
+        new_editors_per_day[date] = current_count
+    # ---
     data = {
         "username": username,
         "batches_per_day": batches_per_day,
         "commands_per_day": commands_per_day,
+        "new_editors_per_day": new_editors_per_day,
     }
     return data
 
