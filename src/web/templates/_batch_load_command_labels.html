@@ -2,7 +2,7 @@
 
 <script language="javascript">
  const MAX_ENTITIES_PER_REQUEST = 50
- async function loadLabels(container) {
+ async function loadLabels(container, wikibaseUrl) {
    const spans = container.querySelectorAll("span.wikibase-label[data-entity-id]")
 
    if (spans.length === 0) return
@@ -15,7 +15,7 @@
 
    while (start < spans.length) {
      const entityIds = AllEntityIds.slice(start, start+MAX_ENTITIES_PER_REQUEST)
-     const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entityIds.join('|')}&format=json&languages=${languages}&props=labels&origin=*&languagefallback`
+     const url = `${wikibaseUrl}/w/api.php?action=wbgetentities&ids=${entityIds.join('|')}&format=json&languages=${languages}&props=labels&origin=*&languagefallback`
 
      try {
        const res = await fetch(url)

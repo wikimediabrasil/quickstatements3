@@ -114,7 +114,7 @@
    if (event.target.id != 'batchCommandsDiv') {
      return
    }
-   await loadLabels(event.target)
+   await loadLabels(event.target, "{{ batch.wikibase.url }}")
  })
 </script>
 {% endblock scripts %}
