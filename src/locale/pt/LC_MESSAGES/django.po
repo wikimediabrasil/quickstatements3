@@ -862,7 +862,7 @@ msgctxt "statistics-title"
 msgid "Statistics"
 msgstr "Statistics"
 
-#: web/templates/statistics.html:23
+#: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
 msgid "All-time numbers"
 msgstr "All-time numbers"
