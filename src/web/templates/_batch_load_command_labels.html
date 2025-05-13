@@ -9,7 +9,7 @@
 
    const AllEntityIds = Array.from(spans).map(span => span.getAttribute("data-entity-id"))
    const userLanguage = "{{ user|language_preference }}"
-   const languages = userLanguage === "en" ? "en" : `${userLanguage}|en`
+   const languages = userLanguage === "en" ? "en|mul" : `${userLanguage}|en|mul`
 
    let start = 0
 
@@ -25,8 +25,9 @@
          const id = span.getAttribute("data-entity-id")
          const localizedLabel = data.entities?.[id]?.labels?.[userLanguage]?.value
          const englishLabel = data.entities?.[id]?.labels?.en?.value
+         const mulLabel = data.entities?.[id]?.labels?.mul?.value
 
-         const label = localizedLabel || englishLabel
+         const label = localizedLabel || englishLabel || mulLabel
 
          if (label) {
            span.textContent = label
