@@ -9,13 +9,13 @@
 
    const AllEntityIds = Array.from(spans).map(span => span.getAttribute("data-entity-id"))
    const userLanguage = "{{ user|language_preference }}"
-   const languages = userLanguage === "en" ? "en|mul" : `${userLanguage}|en|mul`
+   const languages = userLanguage === "en" ? "en" : `${userLanguage}|en`
 
    let start = 0
 
    while (start < spans.length) {
      const entityIds = AllEntityIds.slice(start, start+MAX_ENTITIES_PER_REQUEST)
-     const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entityIds.join('|')}&format=json&languages=${languages}&props=labels&origin=*`
+     const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entityIds.join('|')}&format=json&languages=${languages}&props=labels&origin=*&languagefallback`
 
      try {
        const res = await fetch(url)
@@ -25,9 +25,8 @@
          const id = span.getAttribute("data-entity-id")
          const localizedLabel = data.entities?.[id]?.labels?.[userLanguage]?.value
          const englishLabel = data.entities?.[id]?.labels?.en?.value
-         const mulLabel = data.entities?.[id]?.labels?.mul?.value
 
-         const label = localizedLabel || englishLabel || mulLabel
+         const label = localizedLabel || englishLabel
 
          if (label) {
            span.textContent = label
