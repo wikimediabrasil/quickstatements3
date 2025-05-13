@@ -151,20 +151,29 @@ def new_batch(request):
 
             batch_commands = batch_commands.strip()
             if not batch_commands:
-                raise ParserException("Command string cannot be empty")
+                raise ParserException(pgettext_lazy(
+                    "batch-py-empty-command-input",
+                    "Command input cannot be empty. Please provide valid commands."
+                ))
 
             if batch_type == "v1":
                 parser = V1CommandParser()
             else:
                 if "\n" not in batch_commands:
-                    raise ParserException("Only the header has been provided for the CSV parser")
+                    raise ParserException(pgettext_lazy(
+                        "batch-py-csv-only-header",
+                        "CSV input must include more than just the header row"
+                    ))
                 parser = CSVCommandParser()
 
             # Take a sentinel value to make sure that the batch_commands won't be empty
             parsed_commands = parser.parse(batch_commands)
             first_command = next(parsed_commands, None)
             if not first_command:
-                raise ParserException("No commands found in your input")
+                raise ParserException(pgettext_lazy(
+                    "batch-py-valid-command-not-found",
+                    "No valid commands found in the provided input."
+                ))
 
             wikibase_url = request.POST.get("wikibase")
             wikibase = (
@@ -263,7 +272,7 @@ def batch_allow_start(request):
     if not can_start:
         not_confirmed = pgettext_lazy(
             "batch-py-user-not-autoconfirmed",
-            "User is not autoconfirmed. Only autoconfirmed users can run batches.",
+            "User is not autoconfirmed. Only autoconfirmed users can run batches."
         )
         blocked = pgettext_lazy(
             "batch-py-user-blocked", "User is blocked and can not run batches."
