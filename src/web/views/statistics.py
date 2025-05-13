@@ -15,7 +15,7 @@ from core.models import BatchCommand
 logger = logging.getLogger("qsts3")
 
 
-def statistics_data(request, username):
+def plots_data(request, username):
     all_batches = Batch.objects.exclude(status=Batch.STATUS_PREVIEW)
     all_commands = BatchCommand.objects.exclude(batch__status=Batch.STATUS_PREVIEW)
     if username:
@@ -96,16 +96,24 @@ def all_time_counters_data(request, username):
     return data
 
 
-@cache_page(60)
 def statistics(request):
-    data = statistics_data(request, None)
-    return render(request, "statistics.html", data)
+    return render(request, "statistics.html", {})
+
+
+def statistics_user(request, username):
+    return render(request, "statistics.html", {"username": username})
 
 
 @cache_page(60)
-def statistics_user(request, username):
-    data = statistics_data(request, username)
-    return render(request, "statistics.html", data)
+def plots(request):
+    data = plots_data(request, None)
+    return render(request, "statistics_plots.html", data)
+
+
+@cache_page(60)
+def plots_user(request):
+    data = plots_data(request, None)
+    return render(request, "statistics_plots.html", data)
 
 
 @cache_page(60)
