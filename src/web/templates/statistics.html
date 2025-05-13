@@ -7,82 +7,20 @@
 
 {% block content %}
 
-<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/Chart.js/4.4.1/chart.umd.min.js
-"></script>
+<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/chartjs-plugin-zoom/2.2.0/chartjs-plugin-zoom.min.js"></script>
 
-<h1> Statistics {% if username %} of {{ username }} {% endif %}</h1>
+<h1>
+  {% if username %}
+    {% blocktranslate with 1=username context 'statistics-title-username' %} Statistics of {{1}} {% endblocktranslate %}
+  {% else %}
+    {% translate 'Statistics' context 'statistics-title' %}
+  {% endif %}
+  {% blocktranslate with}
+</h1>
 
-<h2> Cumulative number of batches </h2>
-
-<div>
-  <canvas id="batchCumulativeCountChart"></canvas>
-</div>
-
-<h2> Done and error commands per day </h2>
-
-<div>
-  <canvas id="commandCountChart"></canvas>
-</div>
-
-<script>
-  const ctx1 = document.getElementById('batchCumulativeCountChart');
-  var labels = [];
-  var data = [];
-  {% for date, count in batches_per_day.items %}
-  labels.push('{{ date }}');
-  data.push({{count}});
-  {% endfor %}
-  new Chart(ctx1, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "{% translate 'Number of batches' context 'statistics-number-of-batches' %}",
-        data: data,
-        borderWidth: 1
-      }]
-    }
-  });
-  const ctx2 = document.getElementById('commandCountChart');
-  var labels = [];
-  var data_done = [];
-  var data_error = [];
-  {% for date, counts in commands_per_day.items %}
-  labels.push('{{ date }}');
-  data_done.push({{counts.0}});
-  data_error.push({{counts.1}});
-  {% endfor %}
-  new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "{% translate 'Done status' context 'statistics-done-status' %}",
-          data: data_done,
-          borderWidth: 1
-        },
-        {
-          label: "{% translate 'Error status' context 'statistics-error-status' %}",
-          data: data_error,
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-        scales: {
-            x: {
-                stacked: true
-            },
-            y: {
-                stacked: true
-            }
-        }
-    }
-  });
-</script>
-
-<h2> All-time numbers </h2>
+<h2> {% translate 'All-time numbers' context 'statistics-all-time-numbers' %} </h2>
 
 <div
   {% if username %}
@@ -93,6 +31,17 @@
   hx-trigger="load delay:300ms"
 >
   {% include 'statistics_all_time_counters.html' with loading=True %}
+</div>
+
+<div
+  {% if username %}
+  hx-get="{% url 'statistics_plots_user' username=username %}"
+  {% else %}
+  hx-get="{% url 'statistics_plots' %}"
+  {% endif %}
+  hx-trigger="load delay:300ms"
+>
+  {% include 'statistics_plots.html' with loading=True %}
 </div>
 
 {% endblock content %}

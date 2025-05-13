@@ -1,6 +1,6 @@
 import requests_mock
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TransactionTestCase
 from django.core.cache import cache
 
 from core.factories import TokenFactory, UserFactory, BatchFactory
@@ -9,7 +9,8 @@ from core.parsers.v1 import V1CommandParser
 from core.tests.test_api import ApiMocker
 
 
-class ProfileTest(TestCase):
+class ProfileTest(TransactionTestCase):
+    # using TransactionTestCase due to statistics using ThreadPoolExecutor
     def assertInRes(self, substring, response):
         """Checks if a substring is contained in response content"""
         self.assertIn(substring.lower(), str(response.content).lower().strip())

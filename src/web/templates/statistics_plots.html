@@ -1,0 +1,211 @@
+{% load i18n %}
+
+<h2> {% translate 'Cumulative number of batches' context 'statistics-cumulative-batches' %} </h2>
+
+{% if loading %}
+<div style="align-content: center; height: 300px;" aria-busy="true"></div>
+{% else %}
+<div>
+  <canvas id="batchCumulativeCountChart"></canvas>
+</div>
+{% endif %}
+
+<h2> {% translate 'Cumulative number of edits and new editors' context 'statistics-edits-and-editors' %} </h2>
+
+{% if loading %}
+<div style="align-content: center; height: 300px;" aria-busy="true"></div>
+{% else %}
+<div>
+  <canvas id="editorsAndEditsCumulativeChart"></canvas>
+</div>
+{% endif %}
+
+<h2> {% translate 'Done and error commands per day' context 'statistics-done-and-error-commands' %}  </h2>
+
+{% if loading %}
+<div style="align-content: center; height: 300px;" aria-busy="true"></div>
+{% else %}
+<div>
+  <canvas id="commandCountChart"></canvas>
+</div>
+{% endif %}
+
+{% if not loading %}
+<script>
+  const ctx1 = document.getElementById('batchCumulativeCountChart');
+  var labels = [];
+  var data = [];
+  {% for date, count in batches_per_day.items %}
+  labels.push('{{ date }}');
+  data.push({{count}});
+  {% endfor %}
+  new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "{% translate 'Number of batches' context 'statistics-number-of-batches' %}",
+        data: data,
+        borderColor: "#008836",
+        backgroundColor: "#0088367F",
+        pointStyle: false,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true
+          },
+          zoom: {
+            wheel: {
+              enabled: true
+            },
+            mode: 'xy',
+            scaleMode: 'xy'
+          },
+          limits: {
+            y: {min: 'original', max: 'original'}
+          }
+        }
+      }
+    }
+  });
+  // ------------------------------------------------------
+  const ctx_editors_edits = document.getElementById('editorsAndEditsCumulativeChart');
+  var labels = [];
+  var data_editors = [];
+  var data_edits = [];
+  {% for date, counts in editors_and_edits_per_day.items %}
+  labels.push('{{ date }}');
+  data_editors.push({{counts.0}});
+  data_edits.push({{counts.1}});
+  {% endfor %}
+  new Chart(ctx_editors_edits, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
+          data: data_editors,
+          borderColor: "#353744",
+          backgroundColor: "#3537447F",
+          pointStyle: false,
+          yAxisID: 'y',
+          borderWidth: 2
+        },
+        {
+          label: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}",
+          data: data_edits,
+          borderColor: "#008836",
+          backgroundColor: "#0088367F",
+          pointStyle: false,
+          yAxisID: 'y1',
+          borderWidth: 2
+        }
+      ]
+    },
+    options: {
+        scales: {
+            y: {
+                position: 'left',
+                title: {
+                  display: true,
+                  text: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}"
+                }
+            },
+            y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                grid: {
+                  drawOnChartArea: false,
+                },
+                title: {
+                  display: true,
+                  text: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}"
+                }
+            }
+        },
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true
+          },
+          zoom: {
+            wheel: {
+              enabled: true
+            },
+            mode: 'xy',
+            scaleMode: 'xy'
+          },
+          limits: {
+            y: {min: 'original', max: 'original'},
+          }
+        }
+      }
+    }
+  });
+  // ------------------------------------------------------
+  const ctx2 = document.getElementById('commandCountChart');
+  var labels = [];
+  var data_done = [];
+  var data_error = [];
+  {% for date, counts in commands_per_day.items %}
+  labels.push('{{ date }}');
+  data_done.push({{counts.0}});
+  data_error.push({{counts.1}});
+  {% endfor %}
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "{% translate 'Done status' context 'statistics-done-status' %}",
+          data: data_done,
+          borderColor: "#008836",
+          backgroundColor: "#0088367F",
+          borderWidth: 1
+        },
+        {
+          label: "{% translate 'Error status' context 'statistics-error-status' %}",
+          data: data_error,
+          borderColor: "#A52A2A",
+          backgroundColor: "#A52A2A7F",
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+        scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                stacked: true
+            }
+        },
+        plugins: {
+          zoom: {
+            pan: {
+              enabled: true
+            },
+            zoom: {
+              wheel: {
+                enabled: true
+              },
+              mode: 'xy',
+              scaleMode: 'xy'
+            },
+            limits: {
+              y: {min: 'original', max: 'original'}
+            }
+          }
+        }
+    }
+  });
+</script>
+{% endif %}

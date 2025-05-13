@@ -1,8 +1,10 @@
 from datetime import timedelta
+from concurrent.futures import ThreadPoolExecutor
 import logging
 
 from django.shortcuts import render
 from django.db.models import Count
+from django.db.models import Min
 from django.db.models import Q
 from django.utils.timezone import now
 from django.views.decorators.cache import cache_page
@@ -15,18 +17,7 @@ from core.models import BatchCommand
 logger = logging.getLogger("qsts3")
 
 
-def statistics_data(request, username):
-    all_batches = Batch.objects.exclude(status=Batch.STATUS_PREVIEW)
-    all_commands = BatchCommand.objects.exclude(batch__status=Batch.STATUS_PREVIEW)
-    if username:
-        all_batches = all_batches.filter(user=username)
-        all_commands = all_commands.filter(batch__user=username)
-    # ----
-    today = now().date()
-    first_batch = all_batches.order_by("created").first()
-    basedate = first_batch.created.date() - timedelta(days=1) if first_batch else today
-    delta = (today - basedate).days
-    # ---
+def plot_cumulative_batches(all_batches, basedate, delta):
     created_batches_per_day = {
         q["date"].date(): q["count"]
         for q in all_batches.annotate(date=TruncDay("created"))
@@ -39,7 +30,10 @@ def statistics_data(request, username):
     for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
         current_count += created_batches_per_day.get(date, 0)
         batches_per_day[date] = current_count
-    # ---
+    return batches_per_day
+
+
+def plot_number_of_commands(all_commands, basedate, delta):
     query_commands_per_day = {
         q["date"].date(): (q["done_count"], q["error_count"])
         for q in all_commands.annotate(date=TruncDay("created"))
@@ -51,11 +45,90 @@ def statistics_data(request, username):
     commands_per_day = {basedate: (0, 0)}
     for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
         commands_per_day[date] = query_commands_per_day.get(date, (0, 0))
+    return commands_per_day
+
+
+def plot_cumulative_editors_and_edits(all_batches, all_commands, basedate, delta):
+    query_users_and_first_batches = (
+        all_batches.annotate(date=TruncDay("created"))
+        .values("user")
+        .annotate(first_batch=Min("date"))
+        .order_by("first_batch")
+    )
+    dates_and_new_users_count = {}
+    for q in query_users_and_first_batches:
+        # TODO: can we move this to the query? I couldn't do it
+        date = q["first_batch"].date()
+        dates_and_new_users_count.setdefault(date, 0)
+        dates_and_new_users_count[date] += 1
+    query_edits_per_day = {
+        q["date"].date(): q["count"]
+        for q in all_commands.filter(status=BatchCommand.STATUS_DONE)
+        .exclude(response_id__isnull=True)
+        .exclude(response_id="")
+        .annotate(date=TruncDay("created"))
+        .values("date")
+        .annotate(count=Count("pk"))
+        .order_by("date")
+    }
+    current_edit_count = 0
+    current_editors_count = 0
+    editors_and_edits_per_day = {basedate: (0, 0)}
+    for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
+        current_editors_count += dates_and_new_users_count.get(date, 0)
+        current_edit_count += query_edits_per_day.get(date, 0)
+        editors_and_edits_per_day[date] = (current_editors_count, current_edit_count)
+    return editors_and_edits_per_day
+
+
+def count_items_created(all_commands):
+    # TODO: we can refactor a lot of this into a BatchCommand model manager
+    return all_commands.filter(
+        operation=BatchCommand.Operation.CREATE_ITEM,
+        status=BatchCommand.STATUS_DONE,
+    ).count()
+
+
+def count_edits(all_commands):
+    return (
+        all_commands.filter(status=BatchCommand.STATUS_DONE)
+        .exclude(response_id__isnull=True)
+        .exclude(response_id="")
+        .count()
+    )
+
+
+def plots_data(request, username):
+    all_batches = Batch.objects.exclude(status=Batch.STATUS_PREVIEW)
+    all_commands = BatchCommand.objects.exclude(batch__status=Batch.STATUS_PREVIEW)
+    if username:
+        all_batches = all_batches.filter(user=username)
+        all_commands = all_commands.filter(batch__user=username)
+    # ----
+    today = now().date()
+    first_batch = all_batches.order_by("created").first()
+    basedate = first_batch.created.date() - timedelta(days=1) if first_batch else today
+    delta = (today - basedate).days
+    # ---
+    with ThreadPoolExecutor() as executor:
+        t1 = executor.submit(plot_cumulative_batches, all_batches, basedate, delta)
+        t2 = executor.submit(plot_number_of_commands, all_commands, basedate, delta)
+        t3 = executor.submit(
+            plot_cumulative_editors_and_edits,
+            all_batches,
+            all_commands,
+            basedate,
+            delta,
+        )
+        batches_per_day = t1.result()
+        commands_per_day = t2.result()
+        editors_and_edits_per_day = t3.result()
     # ---
     data = {
         "username": username,
         "batches_per_day": batches_per_day,
         "commands_per_day": commands_per_day,
+        "editors_and_edits_per_day": editors_and_edits_per_day,
     }
     return data
 
@@ -73,17 +146,13 @@ def all_time_counters_data(request, username):
     average_commands_per_batch = (
         round(commands_count / batches_count) if batches_count > 0 else 0
     )
-    # TODO: we can refactor a lot of this into a BatchCommand model manager
-    items_created = all_commands.filter(
-        operation=BatchCommand.Operation.CREATE_ITEM,
-        status=BatchCommand.STATUS_DONE,
-    ).count()
-    edits = (
-        all_commands.filter(status=BatchCommand.STATUS_DONE)
-        .exclude(response_id__isnull=True)
-        .exclude(response_id="")
-        .count()
-    )
+    # only these ones multi-threaded because they are the slowest
+    # the above ones are quite fast
+    with ThreadPoolExecutor() as executor:
+        t1 = executor.submit(count_items_created, all_commands)
+        t2 = executor.submit(count_edits, all_commands)
+        items_created = t1.result()
+        edits = t2.result()
     data = {
         "username": username,
         "batches_count": batches_count,
@@ -96,16 +165,24 @@ def all_time_counters_data(request, username):
     return data
 
 
-@cache_page(60)
 def statistics(request):
-    data = statistics_data(request, None)
-    return render(request, "statistics.html", data)
+    return render(request, "statistics.html", {})
+
+
+def statistics_user(request, username):
+    return render(request, "statistics.html", {"username": username})
 
 
 @cache_page(60)
-def statistics_user(request, username):
-    data = statistics_data(request, username)
-    return render(request, "statistics.html", data)
+def plots(request):
+    data = plots_data(request, None)
+    return render(request, "statistics_plots.html", data)
+
+
+@cache_page(60)
+def plots_user(request):
+    data = plots_data(request, None)
+    return render(request, "statistics_plots.html", data)
 
 
 @cache_page(60)
