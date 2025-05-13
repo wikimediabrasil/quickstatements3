@@ -64,14 +64,29 @@ padding: 0 10px;
 }
 
 .preview_notice {
-    float: left; 
-    width: 100%; 
-    margin: 0;
+float: left;
+width: 100%;
+margin: 0;
 }
 
 .preview_notice p {
-    color: var(--pico-color-red-600); 
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
+color: var(--pico-color-red-600);
+font-size: 16px;
+font-weight: bold;
+text-align: center;
+}
+
+table td.statement-details {
+display: grid;
+grid-template-columns: 10em auto;
+grid-row-gap: 1vh;
+}
+
+table td.statement-details > div {
+display: grid;
+grid-template-columns: 1fr 1fr;
+}
+
+table td.statement-details > div > span {
+justify-content: center;
 }
