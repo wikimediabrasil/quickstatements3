@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<h2> Cumulative number of batches </h2>
+<h2> {% translate 'Cumulative number of batches' context 'statistics-cumulative-batches' %} </h2>
 
 {% if loading %}
 <div style="align-content: center; height: 300px;" aria-busy="true"></div>
@@ -10,7 +10,7 @@
 </div>
 {% endif %}
 
-<h2> Cumulative number of edits and new editors </h2>
+<h2> {% translate 'Cumulative number of edits and new editors' context 'statistics-edits-and-editors' %} </h2>
 
 {% if loading %}
 <div style="align-content: center; height: 300px;" aria-busy="true"></div>
@@ -20,7 +20,7 @@
 </div>
 {% endif %}
 
-<h2> Done and error commands per day </h2>
+<h2> {% translate 'Done and error commands per day' context 'statistics-done-and-error-commands' %}  </h2>
 
 {% if loading %}
 <div style="align-content: center; height: 300px;" aria-busy="true"></div>

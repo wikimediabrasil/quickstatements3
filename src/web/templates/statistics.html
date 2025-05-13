@@ -11,9 +11,16 @@
 <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/chartjs-plugin-zoom/2.2.0/chartjs-plugin-zoom.min.js"></script>
 
-<h1> Statistics {% if username %} of {{ username }} {% endif %}</h1>
+<h1>
+  {% if username %}
+    {% blocktranslate with 1=username context 'statistics-title-username' %} Statistics of {{1}} {% endblocktranslate %}
+  {% else %}
+    {% translate 'Statistics' context 'statistics-title' %}
+  {% endif %}
+  {% blocktranslate with}
+</h1>
 
-<h2> All-time numbers </h2>
+<h2> {% translate 'All-time numbers' context 'statistics-all-time-numbers' %} </h2>
 
 <div
   {% if username %}
