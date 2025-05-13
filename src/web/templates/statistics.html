@@ -12,6 +12,20 @@
 
 <h1> Statistics {% if username %} of {{ username }} {% endif %}</h1>
 
+<h2> All-time numbers </h2>
+
+<div
+  {% if username %}
+  hx-get="{% url 'statistics_all_time_counters_user' username=username %}"
+  {% else %}
+  hx-get="{% url 'statistics_all_time_counters' %}"
+  {% endif %}
+  hx-trigger="load delay:300ms"
+>
+  {% include 'statistics_all_time_counters.html' with loading=True %}
+</div>
+
+
 <h2> Cumulative number of batches </h2>
 
 <div>
@@ -81,18 +95,5 @@
     }
   });
 </script>
-
-<h2> All-time numbers </h2>
-
-<div
-  {% if username %}
-  hx-get="{% url 'statistics_all_time_counters_user' username=username %}"
-  {% else %}
-  hx-get="{% url 'statistics_all_time_counters' %}"
-  {% endif %}
-  hx-trigger="load delay:300ms"
->
-  {% include 'statistics_all_time_counters.html' with loading=True %}
-</div>
 
 {% endblock content %}
