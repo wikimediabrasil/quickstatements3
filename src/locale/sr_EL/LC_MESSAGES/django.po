@@ -17,222 +17,222 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: core/models.py:525
+#: core/models.py:464
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
 msgstr "Zaustavljeno"
 
-#: core/models.py:526
+#: core/models.py:465
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
 msgstr "Blokirano"
 
-#: core/models.py:527
+#: core/models.py:466
 msgctxt "batch-py-status-preview"
 msgid "Preview"
 msgstr "Pregled"
 
-#: core/models.py:528
+#: core/models.py:467
 msgctxt "batch-py-status-initial"
 msgid "Initial"
 msgstr "Početno"
 
-#: core/models.py:529
+#: core/models.py:468
 msgctxt "batch-py-status-running"
 msgid "Running"
 msgstr "U toku"
 
-#: core/models.py:530
+#: core/models.py:469
 msgctxt "batch-py-status-done"
 msgid "Done"
 msgstr "Završeno"
 
-#: core/models.py:551
+#: core/models.py:490
 msgctxt "batch-py-batch"
 msgid "Batch"
 msgstr "Serija"
 
-#: core/models.py:552
+#: core/models.py:491
 msgctxt "batch-py-batches"
 msgid "Batches"
 msgstr "Serije"
 
-#: core/models.py:774
+#: core/models.py:713
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
 msgstr "Greška"
 
-#: core/models.py:775
+#: core/models.py:714
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
 msgstr "Početno"
 
-#: core/models.py:776
+#: core/models.py:715
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
 msgstr "U toku"
 
-#: core/models.py:777
+#: core/models.py:716
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
 msgstr "Završeno"
 
-#: core/models.py:786
+#: core/models.py:725
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
 msgstr "KREIRAJ"
 
-#: core/models.py:787
+#: core/models.py:726
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
 msgstr "DODAJ"
 
-#: core/models.py:788
+#: core/models.py:727
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
 msgstr "UKLONI"
 
-#: core/models.py:789
+#: core/models.py:728
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
 msgstr "SPOJI"
 
-#: core/models.py:822
+#: core/models.py:761
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
 msgstr "Kreiraj stavku"
 
-#: core/models.py:827
+#: core/models.py:766
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
 msgstr "Kreiraj svojstvo"
 
-#: core/models.py:833
+#: core/models.py:772
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
 msgstr "Postavi izjavu"
 
-#: core/models.py:838
+#: core/models.py:777
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
 msgstr "Kreiraj izjavu"
 
-#: core/models.py:846
+#: core/models.py:785
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
 msgstr "Ukloni izjavu po ID-u"
 
-#: core/models.py:853
+#: core/models.py:792
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
 msgstr "Ukloni izjavu po vrednosti"
 
-#: core/models.py:860
+#: core/models.py:799
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
 msgstr "Ukloni kvalifikator"
 
-#: core/models.py:866
+#: core/models.py:805
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
 msgstr "Ukloni referencu"
 
-#: core/models.py:872
+#: core/models.py:811
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
 msgstr "Postavi link ka projektu"
 
-#: core/models.py:876
+#: core/models.py:815
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
 msgstr "Postavi oznaku"
 
-#: core/models.py:881
+#: core/models.py:820
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
 msgstr "Postavi opis"
 
-#: core/models.py:888
+#: core/models.py:827
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
 msgstr "Ukloni link ka projektu"
 
-#: core/models.py:893
+#: core/models.py:832
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
 msgstr "Ukloni oznaku"
 
-#: core/models.py:898
+#: core/models.py:837
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
 msgstr "Ukloni opis"
 
-#: core/models.py:904
+#: core/models.py:843
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
 msgstr "Dodaj alternativno ime"
 
-#: core/models.py:908
+#: core/models.py:847
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
 msgstr "Ukloni alternativno ime"
 
-#: core/models.py:935
+#: core/models.py:874
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
 msgstr "Operacija nije implementirana"
 
-#: core/models.py:942
+#: core/models.py:881
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
 msgstr "Nema izjava za dato svojstvo"
 
-#: core/models.py:949
+#: core/models.py:888
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
 msgstr "Nema izjava sa datom vrednošću"
 
-#: core/models.py:955
+#: core/models.py:894
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
 msgstr "Nema kvalifikatora sa datom vrednošću"
 
-#: core/models.py:962
+#: core/models.py:901
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
 msgstr "Nema delova reference sa datom vrednošću"
 
-#: core/models.py:968
+#: core/models.py:907
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
 msgstr "ID linka na projekat je nevažeći"
 
-#: core/models.py:974
+#: core/models.py:913
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
 msgstr "Sledeća komanda nije uspela"
 
-#: core/models.py:980
+#: core/models.py:919
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
 msgstr "API je vratio korisničku grešku"
 
-#: core/models.py:986
+#: core/models.py:925
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
 msgstr "API je vratio grešku servera"
 
-#: core/models.py:993
+#: core/models.py:932
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
 msgstr "LAST nije mogao biti ocenjen."
 
-#: core/models.py:1862
+#: core/models.py:1754
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
 msgstr "Komanda serije"
 
-#: core/models.py:1864
+#: core/models.py:1756
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Komande serija"
@@ -698,27 +698,27 @@ msgctxt "preview-batch-batch"
 msgid "Batch"
 msgstr "Serija"
 
-#: web/templates/preview_batch.html:10
+#: web/templates/preview_batch.html:23
 msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
 msgstr "Pregled serije"
 
-#: web/templates/preview_batch.html:21 web/templates/preview_batch.html:23
+#: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
 msgstr "Sačuvaj i pokreni seriju"
 
-#: web/templates/preview_batch.html:26
+#: web/templates/preview_batch.html:39
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "Vaš nalog je blokiran i nećete moći da pokrenete serije."
 
-#: web/templates/preview_batch.html:28
+#: web/templates/preview_batch.html:41
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "Napomena: samo automatski potvrđeni korisnici mogu pokrenuti serije."
 
-#: web/templates/preview_batch.html:36
+#: web/templates/preview_batch.html:49
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
 msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
@@ -727,12 +727,12 @@ msgstr ""
 "OVA SERIJA JE U REŽIMU PREGLEDA I BIĆE SAČUVANA I OBRAĐENA NAKON KLIKA NA "
 "'Sačuvaj i pokreni seriju'."
 
-#: web/templates/preview_batch.html:42
+#: web/templates/preview_batch.html:55
 msgctxt "preview-batch-commands"
 msgid "Commands"
 msgstr "Komande"
 
-#: web/templates/preview_batch.html:44
+#: web/templates/preview_batch.html:57
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
 msgstr "Učitavanje komandi..."
@@ -888,14 +888,14 @@ msgctxt "statistics-edits"
 msgid "Edits"
 msgstr "Izmene"
 
-#: web/views/new_batch.py:250
+#: web/views/new_batch.py:243
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr ""
 "Korisnik nije automatski potvrđen. Samo automatski potvrđeni korisnici mogu "
 "pokrenuti serije."
 
-#: web/views/new_batch.py:253
+#: web/views/new_batch.py:246
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "Korisnik je blokiran i ne može pokretati serije."
