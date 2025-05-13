@@ -46,6 +46,9 @@
       datasets: [{
         label: "{% translate 'Number of batches' context 'statistics-number-of-batches' %}",
         data: data,
+        borderColor: "#008836",
+        backgroundColor: "#0088367F",
+        pointStyle: false,
         borderWidth: 1
       }]
     }
@@ -68,16 +71,18 @@
         {
           label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
           data: data_editors,
-          borderColor: "rgb(255, 159, 64)",
-          backgroundColor: "rgba(255, 159, 64, 0.5)",
+          borderColor: "#353744",
+          backgroundColor: "#3537447F",
+          pointStyle: false,
           yAxisID: 'y',
           borderWidth: 1
         },
         {
           label: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}",
           data: data_edits,
-          borderColor: "rgb(153, 102, 255)",
-          backgroundColor: "rgba(153, 102, 255, 0.5)",
+          borderColor: "#008836",
+          backgroundColor: "#0088367F",
+          pointStyle: false,
           yAxisID: 'y1',
           borderWidth: 1
         }
@@ -125,15 +130,15 @@
         {
           label: "{% translate 'Done status' context 'statistics-done-status' %}",
           data: data_done,
-          borderColor: "rgb(75, 192, 192)",
-          backgroundColor: "rgba(75, 192, 192, 0.5)",
+          borderColor: "#008836",
+          backgroundColor: "#0088367F",
           borderWidth: 1
         },
         {
           label: "{% translate 'Error status' context 'statistics-error-status' %}",
           data: data_error,
-          borderColor: "rgb(255, 99, 132)",
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          borderColor: "#A52A2A",
+          backgroundColor: "#A52A2A7F",
           borderWidth: 1
         }
       ]
