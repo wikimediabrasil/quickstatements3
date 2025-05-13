@@ -173,6 +173,6 @@
     "batch-commands-qualifier": "Qualifiers",
     "batch-commands-statement": "Statement",
     "batch-commands-references": "References",
-    "batch-command-somevalue": "(Unknown Value)",
-    "batch-command-novalue": "(No Value)"
+    "batch-command-somevalue": "(Valor Desconhecido)",
+    "batch-command-novalue": "(Nenhum Valor)"
 }

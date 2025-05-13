@@ -238,6 +238,16 @@ msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Batch Commands"
 
+#: core/templatetags/quickstatements.py:106
+msgctxt "batch-command-somevalue"
+msgid "(Unknown Value)"
+msgstr "(Unknown Value)"
+
+#: core/templatetags/quickstatements.py:110
+msgctxt "batch-command-novalue"
+msgid "(No Value)"
+msgstr "(No Value)"
+
 #: web/models.py:52
 msgctxt "web-models-token"
 msgid "Token"
@@ -327,7 +337,7 @@ msgstr "Statement"
 #: web/templates/batch_commands.html:53
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
-msgstr "Qualifier"
+msgstr "Qualifiers"
 
 #: web/templates/batch_commands.html:62
 msgctxt "batch-commands-references"
