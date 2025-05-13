@@ -237,6 +237,16 @@ msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Команде серија"
 
+#: core/templatetags/quickstatements.py:106
+msgctxt "batch-command-somevalue"
+msgid "(Unknown Value)"
+msgstr "(Unknown Value)"
+
+#: core/templatetags/quickstatements.py:110
+msgctxt "batch-command-novalue"
+msgid "(No Value)"
+msgstr "(No Value)"
+
 #: web/models.py:52
 msgctxt "web-models-token"
 msgid "Token"

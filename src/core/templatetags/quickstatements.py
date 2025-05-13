@@ -5,6 +5,7 @@ import re
 
 from django import template
 from django.utils.safestring import mark_safe
+from django.utils.translation import pgettext
 
 from core.models import Wikibase
 
@@ -102,13 +103,11 @@ def render_globe_datavalue(command, value):
 
 
 def render_somevalue_datavalue(command, value):
-    # TODO: return translatable string for 'somevalue'
-    return value
+    return pgettext("batch-command-somevalue", "(Unknown Value)")
 
 
 def render_novalue_datavalue(command, value):
-    # TODO: return translatable string for 'novalue'
-    return value
+    return pgettext("batch-command-novalue", "(No Value)")
 
 
 def render_default_datavalue(command, value):
