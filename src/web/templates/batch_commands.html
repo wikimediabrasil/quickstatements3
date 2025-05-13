@@ -30,78 +30,48 @@
         </td>
 
       {% else %}
-        <td >
-          <span class="action action_{{ command.get_action_display.lower }}">
-            {% if command.operation %}
-              {{ command.get_operation_display|upper }}
-            {% else %}
-              {{ command.get_action_display }}
-            {% endif %}
-          </span>
+        <td>
+          {% command_operation_display command %}
         </td>
 
-        <td>
-          {% if command.is_label_alias_description_command %}
+        <td class="statement-details">
+          <span class="header">{% translate 'Statement' context 'batch-commands-statement' %}</span>
+          <div>
+            {% if command.is_label_alias_description_command %}
             <i>{{ command.language }}</i>:
-          {% elif command.is_merge_command %}
+            {% elif command.is_merge_command %}
             {{ command.json.item1 }} - {{ command.json.item2 }}
-          {% elif command.is_sitelink_command %}
+            {% elif command.is_sitelink_command %}
             <i>{{ command.sitelink }}</i>:
             {% elif command.prop != "" %}
-            {% label_display command.prop %}
-            <a href="{{ command.batch.wikibase.url }}/entity/{{ command.prop }}">
-              [{{ command.prop }}]
-            </a>:
+            <span class="property"> {% entity_display command command.prop %}</span>
+            <span class="value">{% datavalue_display command command.json.value %}</span>
             {% endif %}
+          </div>
 
-            {% if command.value_type == "wikibase-entityid" %}
-            {% label_display command.value_value %}
-            <a href="{{ command.batch.wikibase.url }}/entity/{{ command.value_value }}">
-              [{{ command.value_value }}]<br>
-            </a>
-          {% else %}
-            {{ command.value_value }}<br>
-          {% endif %}
-
-        {% if command.qualifiers|length > 0 %}
-        <hr style="margin: revert;">
+          {% if command.qualifiers|length > 0 %}
+          <span class="header">{% translate 'Qualifiers' context 'batch-commands-qualifier' %}</span>
+          <div>
             {% for qual in command.qualifiers %}
-        <b data-tooltip="{% translate 'Qualifier' context 'batch-commands-qualifier' %}">Q.</b> {% label_display qual.property %}
-        <a href="{{ command.batch.wikibase.url }}/entity/{{ qual.property }}">
-          [{{ qual.property }}]
-        </a>:
-        {% if qual.value.type == "wikibase-entityid" %}
-        {% label_display qual.value.value %}
-              <a href="{{ command.batch.wikibase.url }}/entity/{{ qual.value.value }}">
-                [{{ qual.value.value }}]
-              </a><br>
-              {% else %}
-                {{ qual.value.value }}<br>
-              {% endif %}
+            <span class="property">{% entity_display command qual.property %}</span>
+            <span class="value">{% datavalue_display command qual.value %}</span>
             {% endfor %}
-        {% endif %}
-
-        {% if command.reference_parts|length > 0 %}
-          {% for reference_block in command.references %}
-            <hr style="margin: revert;">
+          </div>
+          {% endif %}
+          {% if command.references|length > 0 %}
+          <span class="header">{% translate 'References' context 'batch-commands-references' %}</span>
+          <div>
+            {% for reference_block in command.references %}
             {% for ref in reference_block %}
-            <b data-tooltip="{% translate 'Reference Part' context 'batch-commands-reference-part' %}">R.</b> {% label_display ref.property %}
-            <a href="{{ command.batch.wikibase.url }}/entity/{{ ref.property }}">
-              [{{ ref.property }}]
-            </a>:
-            {% if ref.value.type == "wikibase-entityid" %}
-            {% label_display ref.value.value %}
-                <a href="{{ command.batch.wikibase.url }}/entity/{{ ref.value.value }}">
-                  [{{ ref.value.value }}]
-                </a><br>
-              {% else %}
-                {{ ref.value.value }}<br>
-              {% endif %}
+            <span class="property">{% entity_display command ref.property %}</span>
+            <span class="value">{% datavalue_display command ref.value %}</span>
             {% endfor %}
-          {% endfor %}
-          </td>
-        {% endif %}
-      {% endif %}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </td>
+    </tr>
+    {% endif %}
     </tr>
     {% endfor %}
   </tbody>

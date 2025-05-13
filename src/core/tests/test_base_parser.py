@@ -308,6 +308,7 @@ class TestBaseParser(TestCase):
             },
         }
         self.assertEqual(parser.parse_value("+1967-01-00T00:00:00Z/10"), ret)
+
         ret = {
             "type": "time",
             "value": {
@@ -317,6 +318,16 @@ class TestBaseParser(TestCase):
             },
         }
         self.assertEqual(parser.parse_value("+1967-00-00T00:00:00Z/9"), ret)
+
+        ret = {
+            "type": "time",
+            "value": {
+                "time": "+1952-03-11T01:02:03Z",
+                "precision": 14,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+            },
+        }
+        self.assertEqual(parser.parse_value("+1952-03-11T01:02:03Z/14"), ret)
 
     def test_parse_value_time_julian(self):
         parser = BaseParser()
