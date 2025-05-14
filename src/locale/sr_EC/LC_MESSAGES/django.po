@@ -237,12 +237,42 @@ msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Команде серија"
 
-#: core/templatetags/quickstatements.py:106
+#: core/templatetags/quickstatements.py:50
+msgctxt "batch-command-time-decade"
+msgid "decade"
+msgstr "decade"
+
+#: core/templatetags/quickstatements.py:51
+msgctxt "batch-command-time-century"
+msgid "century"
+msgstr "century"
+
+#: core/templatetags/quickstatements.py:52
+msgctxt "batch-command-time-millennium"
+msgid "millennium"
+msgstr "millennium"
+
+#: core/templatetags/quickstatements.py:54
+msgctxt "batch-command-time-hundred-thousand"
+msgid "hundred thousand years"
+msgstr "hundred thousand years"
+
+#: core/templatetags/quickstatements.py:56
+msgctxt "batch-command-time-million-years"
+msgid "million years"
+msgstr "million years"
+
+#: core/templatetags/quickstatements.py:57
+msgctxt "batch-command-time-billion-years"
+msgid "billion years"
+msgstr "billion years"
+
+#: core/templatetags/quickstatements.py:137
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
 msgstr "(Unknown Value)"
 
-#: core/templatetags/quickstatements.py:110
+#: core/templatetags/quickstatements.py:141
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
 msgstr "(No Value)"
@@ -333,64 +363,64 @@ msgctxt "batch-commands-statement"
 msgid "Statement"
 msgstr "Statement"
 
-#: web/templates/batch_commands.html:53
+#: web/templates/batch_commands.html:55
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
 msgstr "Qualifiers"
 
-#: web/templates/batch_commands.html:62
+#: web/templates/batch_commands.html:64
 msgctxt "batch-commands-references"
 msgid "References"
 msgstr "References"
 
-#: web/templates/batch_commands.html:82
+#: web/templates/batch_commands.html:84
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
 msgstr "ПРИКАЗУЈУ СЕ САМО ГРЕШКЕ"
 
-#: web/templates/batch_commands.html:87
+#: web/templates/batch_commands.html:89
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
 msgstr "ПРИКАЖИ СВЕ"
 
-#: web/templates/batch_commands.html:90
+#: web/templates/batch_commands.html:92
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
 msgstr "ПРИКАЗУЈУ СЕ СВЕ"
 
-#: web/templates/batch_commands.html:95
+#: web/templates/batch_commands.html:97
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
 msgstr "ПРИКАЖИ САМО ГРЕШКЕ"
 
-#: web/templates/batch_commands.html:108
+#: web/templates/batch_commands.html:110
 msgctxt "batch-commands-first"
 msgid "FIRST"
 msgstr "ПРВО"
 
-#: web/templates/batch_commands.html:116
+#: web/templates/batch_commands.html:118
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
 msgstr "ПРЕТХОДНО"
 
-#: web/templates/batch_commands.html:124 web/templates/batches.html:94
+#: web/templates/batch_commands.html:126 web/templates/batches.html:94
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
 msgstr "Страна %(1)s од %(2)s"
 
-#: web/templates/batch_commands.html:134
+#: web/templates/batch_commands.html:136
 msgctxt "batch-commands-next"
 msgid "NEXT"
 msgstr "СЛЕДЕЋЕ"
 
-#: web/templates/batch_commands.html:142
+#: web/templates/batch_commands.html:144
 msgctxt "batch-commands-last"
 msgid "LAST"
 msgstr "ПОСЛЕДЊЕ"
 
-#: web/templates/batch_commands.html:151 web/templates/batch_commands.html:155
-#: web/templates/batch_commands.html:163
+#: web/templates/batch_commands.html:153 web/templates/batch_commands.html:157
+#: web/templates/batch_commands.html:165
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
 msgstr "Величина странице:"

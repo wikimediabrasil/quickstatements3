@@ -182,5 +182,11 @@
     "statistics-edits-and-editors": "Cumulative number of edits and new editors",
     "statistics-done-and-error-commands": "Done and error commands per day",
     "statistics-number-of-editors": "Number of editors",
-    "statistics-number-of-edits": "Number of edits"
+    "statistics-number-of-edits": "Number of edits",
+    "batch-command-time-decade": "decade",
+    "batch-command-time-century": "century",
+    "batch-command-time-millennium": "millennium",
+    "batch-command-time-hundred-thousand": "hundred thousand years",
+    "batch-command-time-million-years": "million years",
+    "batch-command-time-billion-years": "billion years"
 }
