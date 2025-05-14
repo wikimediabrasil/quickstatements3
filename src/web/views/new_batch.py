@@ -212,6 +212,7 @@ def new_batch(request):
                 "is_autoconfirmed": is_autoconfirmed,
                 "is_blocked": is_blocked,
                 "wikibases": Wikibase.objects.all(),
+                "commands": request.GET.get("v1"),
             },
         )
 
