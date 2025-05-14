@@ -11,6 +11,17 @@
    const userLanguage = "{{ user|language_preference }}"
    const languages = userLanguage === "en" ? "en" : `${userLanguage}|en`
 
+   function lexemeLabel(id, prop){
+     if (userLanguage in prop) {
+       return `<i>${userLanguage}:</i> ${prop?.[userLanguage]?.value}`
+     } else if("en" in prop) {
+       return `<i>en:</i> ${prop?.en?.value}`
+     } else {
+       const lang = Object.keys(prop)[0]
+       return `<i>${lang}:</i> ${prop?.[lang]?.value}`
+     }
+   }
+
    let start = 0
 
    while (start < spans.length) {
@@ -26,10 +37,20 @@
          const localizedLabel = data.entities?.[id]?.labels?.[userLanguage]?.value
          const englishLabel = data.entities?.[id]?.labels?.en?.value
 
-         const label = localizedLabel || englishLabel
+         let label = localizedLabel || englishLabel
+
+         if (!label) {
+           const lexemeProperties = ["lemmas", "representations", "glosses"];
+           for (const prop of lexemeProperties) {
+             if (data.entities?.[id]?.[prop]) {
+               label = lexemeLabel(id, data.entities?.[id]?.[prop]);
+               break;
+             }
+           }
+         }
 
          if (label) {
-           span.textContent = label
+           span.innerHTML = label
          }
        })
      } catch (err) {
