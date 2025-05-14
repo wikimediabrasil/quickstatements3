@@ -141,6 +141,14 @@ def render_novalue_datavalue(command, value):
     return pgettext("batch-command-novalue", "(No Value)")
 
 
+def render_aliases_datavalue(command, value):
+    return value[0]
+
+
+def render_monolingualtext_datavalue(command, value):
+    return f'<i>{value.get("language","")}</i>: {value.get("text","")}'
+
+
 def render_default_datavalue(command, value):
     return str(value)
 
@@ -186,6 +194,8 @@ def datavalue_display(command, datavalue):
         "globe-coordinate": render_globe_datavalue,
         "somevalue": render_somevalue_datavalue,
         "novalue": render_novalue_datavalue,
+        "aliases": render_aliases_datavalue,
+        "monolingualtext": render_monolingualtext_datavalue,
     }.get(datavalue["type"], render_default_datavalue)
 
     return mark_safe(render_action(command, datavalue["value"]))
