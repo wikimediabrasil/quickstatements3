@@ -10,7 +10,13 @@
 </div>
 {% endif %}
 
-<h2> {% translate 'Cumulative number of edits and new editors' context 'statistics-edits-and-editors' %} </h2>
+<h2>
+  {% if username %}
+  {% translate 'Cumulative number of edits' context 'statistics-edits-only' %}
+  {% else %}
+  {% translate 'Cumulative number of edits and new editors' context 'statistics-edits-and-editors' %}
+  {% endif %}
+</h2>
 
 {% if loading %}
 <div style="align-content: center; height: 300px;" aria-busy="true"></div>
@@ -77,46 +83,53 @@
   var labels = [];
   var data_editors = [];
   var data_edits = [];
+  var editorsBorderColor = "#353744";
+  var editorsBackgroundColor = "#3537447F";
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    editorsBorderColor = "#F1F1F1";
+    editorsBackgroundColor = "#F1F1F17F";
+  }
+  {% if username %}
+  var hideEditorsPlot = true;
+  {% else %}
+  var hideEditorsPlot = false;
+  {% endif %}
   {% for date, counts in editors_and_edits_per_day.items %}
   labels.push('{{ date }}');
   data_editors.push({{counts.0}});
   data_edits.push({{counts.1}});
   {% endfor %}
+  var editorsAndEditsDatasets = [
+    {
+      label: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}",
+      data: data_edits,
+      borderColor: "#008836",
+      backgroundColor: "#0088367F",
+      pointStyle: false,
+      yAxisID: 'y1',
+      borderWidth: 2
+    }
+  ];
+  if (!hideEditorsPlot) {
+    editorsAndEditsDatasets.push({
+      label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
+      data: data_editors,
+      borderColor: editorsBorderColor,
+      backgroundColor: editorsBackgroundColor,
+      pointStyle: false,
+      yAxisID: 'y',
+      borderWidth: 2
+    });
+  }
   new Chart(ctx_editors_edits, {
     type: 'line',
     data: {
       labels: labels,
-      datasets: [
-        {
-          label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
-          data: data_editors,
-          borderColor: "#353744",
-          backgroundColor: "#3537447F",
-          pointStyle: false,
-          yAxisID: 'y',
-          borderWidth: 2
-        },
-        {
-          label: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}",
-          data: data_edits,
-          borderColor: "#008836",
-          backgroundColor: "#0088367F",
-          pointStyle: false,
-          yAxisID: 'y1',
-          borderWidth: 2
-        }
-      ]
+      datasets: editorsAndEditsDatasets,
     },
     options: {
         scales: {
             y: {
-                position: 'left',
-                title: {
-                  display: true,
-                  text: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}"
-                }
-            },
-            y1: {
                 type: 'linear',
                 display: true,
                 position: 'right',
@@ -126,6 +139,13 @@
                 title: {
                   display: true,
                   text: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}"
+                }
+            },
+            y1: {
+                position: 'left',
+                title: {
+                  display: !hideEditorsPlot,
+                  text: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}"
                 }
             }
         },

@@ -180,8 +180,8 @@ def plots(request):
 
 
 @cache_page(60)
-def plots_user(request):
-    data = plots_data(request, None)
+def plots_user(request, username):
+    data = plots_data(request, username)
     return render(request, "statistics_plots.html", data)
 
 
