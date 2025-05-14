@@ -77,6 +77,12 @@
   var labels = [];
   var data_editors = [];
   var data_edits = [];
+  var editorsBorderColor = "#353744";
+  var editorsBackgroundColor = "#3537447F";
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    editorsBorderColor = "#F1F1F1";
+    editorsBackgroundColor = "#F1F1F17F";
+  }
   {% for date, counts in editors_and_edits_per_day.items %}
   labels.push('{{ date }}');
   data_editors.push({{counts.0}});
@@ -90,8 +96,8 @@
         {
           label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
           data: data_editors,
-          borderColor: "#353744",
-          backgroundColor: "#3537447F",
+          borderColor: editorsBorderColor,
+          backgroundColor: editorsBackgroundColor,
           pointStyle: false,
           yAxisID: 'y',
           borderWidth: 2
