@@ -146,7 +146,7 @@ def render_aliases_datavalue(command, value):
 
 
 def render_monolingualtext_datavalue(command, value):
-    return f'<i>{value.get("language","")}</i>: {value.get("text","")}'
+    return f'<span class="language-id">{value.get("language","")}:</span> {value.get("text","")}'
 
 
 def render_default_datavalue(command, value):

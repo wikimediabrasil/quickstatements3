@@ -41,9 +41,9 @@
             {{ command.json.item1 }} - {{ command.json.item2 }}
             {% else %}
               {% if command.is_label_alias_description_command %}
-              <span class="alias"> <i>{{ command.language }}</i>: </span>
+              <span class="alias"> <span class="language-id">{{ command.language }}:</span> </span>
               {% elif command.is_sitelink_command %}
-              <span class="sitelink"> <i>{{ command.sitelink }}</i>: </span>
+              <span class="sitelink"> {{ command.sitelink }}: </span>
               {% elif command.prop != "" %}
               <span class="property"> {% entity_display command command.prop %}</span>
               {% endif %}
