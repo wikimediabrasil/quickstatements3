@@ -37,15 +37,17 @@
         <td class="statement-details">
           <span class="header">{% translate 'Statement' context 'batch-commands-statement' %}</span>
           <div>
-            {% if command.is_label_alias_description_command %}
-            <i>{{ command.language }}</i>:
-            {% elif command.is_merge_command %}
+            {% if command.is_merge_command %}
             {{ command.json.item1 }} - {{ command.json.item2 }}
-            {% elif command.is_sitelink_command %}
-            <i>{{ command.sitelink }}</i>:
-            {% elif command.prop != "" %}
-            <span class="property"> {% entity_display command command.prop %}</span>
-            <span class="value">{% datavalue_display command command.json.value %}</span>
+            {% else %}
+              {% if command.is_label_alias_description_command %}
+              <span class="alias"> <i>{{ command.language }}</i>: </span>
+              {% elif command.is_sitelink_command %}
+              <span class="sitelink"> <i>{{ command.sitelink }}</i>: </span>
+              {% elif command.prop != "" %}
+              <span class="property"> {% entity_display command command.prop %}</span>
+              {% endif %}
+              <span class="value">{% datavalue_display command command.json.value %}</span>
             {% endif %}
           </div>
 
