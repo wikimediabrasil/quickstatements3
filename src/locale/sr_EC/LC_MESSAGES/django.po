@@ -939,51 +939,56 @@ msgctxt "statistics-cumulative-batches"
 msgid "Cumulative number of batches"
 msgstr "Cumulative number of batches"
 
-#: web/templates/statistics_plots.html:13
+#: web/templates/statistics_plots.html:15
+msgctxt "statistics-edits-only"
+msgid "Cumulative number of edits"
+msgstr "Cumulative number of edits"
+
+#: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
 msgid "Cumulative number of edits and new editors"
 msgstr "Cumulative number of edits and new editors"
 
-#: web/templates/statistics_plots.html:23
+#: web/templates/statistics_plots.html:29
 msgctxt "statistics-done-and-error-commands"
 msgid "Done and error commands per day"
 msgstr "Done and error commands per day"
 
-#: web/templates/statistics_plots.html:47
+#: web/templates/statistics_plots.html:53
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
 msgstr "Број серија"
 
-#: web/templates/statistics_plots.html:91
-#: web/templates/statistics_plots.html:116
-msgctxt "statistics-number-of-editors"
-msgid "Number of editors"
-msgstr "Number of editors"
-
-#: web/templates/statistics_plots.html:100
-#: web/templates/statistics_plots.html:128
+#: web/templates/statistics_plots.html:104
+#: web/templates/statistics_plots.html:141
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
 msgstr "Number of edits"
 
-#: web/templates/statistics_plots.html:167
+#: web/templates/statistics_plots.html:115
+#: web/templates/statistics_plots.html:148
+msgctxt "statistics-number-of-editors"
+msgid "Number of editors"
+msgstr "Number of editors"
+
+#: web/templates/statistics_plots.html:187
 msgctxt "statistics-done-status"
 msgid "Done status"
 msgstr "Статус завршено"
 
-#: web/templates/statistics_plots.html:174
+#: web/templates/statistics_plots.html:194
 msgctxt "statistics-error-status"
 msgid "Error status"
 msgstr "Статус грешке"
 
-#: web/views/new_batch.py:243
+#: web/views/new_batch.py:244
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr ""
 "Корисник није аутоматски потврђен. Само аутоматски потврђени корисници могу "
 "покренути серије."
 
-#: web/views/new_batch.py:246
+#: web/views/new_batch.py:247
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "Корисник је блокиран и не може покретати серије."
