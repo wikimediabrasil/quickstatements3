@@ -59,6 +59,15 @@
       background-color: var(--pico-color-red-600);
     }
 
+    #dropdown-menu {
+      display: none;
+    }
+
+    @media screen and (max-width: 1050px) {
+      #dropdown-menu { display: block; }
+      #navbar-menu { display: none; }
+    }
+
     {% block css %}
     {% endblock %}
 
@@ -67,24 +76,15 @@
 
 <body>
   <main class="container">
-    <nav>
-      <ul>
-        <li><a href="{% url 'home' %}"><strong>QuickStatements 3.0</strong></a></li>
-        <li><a href="{% url 'new_batch' %}">{% translate 'New batch' context 'layout-new-batch' %}</a></li>
-        <li><a href="{% url 'last_batches' %}">{% translate 'Last batches' context 'layout-last-batches' %}</a></li>
-        <li><a href="{% url 'statistics' %}">{% translate 'Statistics' context 'layout-statistics' %}</a></li>
-        <li><a href="https://github.com/WikiMovimentoBrasil/quickstatements3">Git</a></li>
-        <li><a href="https://meta.wikimedia.org/wiki/QuickStatements_3.0/Documentation">Docs</a></li>
-      </ul>
-      <ul>
-        {% if user.is_anonymous %}
-        <li><a href="{% url 'login' %}">{% translate 'Login' context 'layout-login' %}</a></li>
-        {% else %}
-        <li><a href="{% url 'profile' %}">{% translate 'User' context 'layout-user' %}:{{user}}</a></li>
-        <li><a href="{% url 'last_batches_by_user' user=user %}">{% translate 'Your last batches' context 'layout-your-last-batches' %}</a></li>
-        {% endif %}
-      </ul>
-    </nav>
+    <details name="dropdown-menu" id="dropdown-menu">
+      <summary style="font-weight: bold; color: var(--pico-primary);">QuickStatements 3.0</summary>
+      <aside>
+        {% include 'navbar.html' with dropdown_version=True %}
+      </aside>
+    </details>
+    <div id="navbar-menu">
+      {% include 'navbar.html' %}
+    </div>
     {% block content %}
     {% endblock content %}
   </main>
