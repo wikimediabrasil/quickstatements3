@@ -9,26 +9,26 @@
       {% endif %}
       style="margin: 20px 0; font-size: 14px;">
 
-<div class="progress" id="batchprogress">
-  <div class="progress-status">{% translate 'BATCH STATUS' context 'batch-summary-batch-status' %}
-    <b class="status status_{{ status | lower }}">{{status | upper}}</b>
-  </div>
-  <div class="progress-meter">
-    <div id="progress-done-meter"
-      class="progress-done-meter"
-      style="width: {{finish_percentage|floatformat:'0'}}%;
-      background: linear-gradient(to right, green {{done_to_finish_percentage|floatformat:'0'}}%, #C52F21 0);"
-      aria-valuenow="{{finish_percentage}}"
-      role="progressbar"
-      aria-valuemin="0"
-      aria-valuemax="100"
-    >
+  <div class="progress" id="batchprogress">
+    <div class="progress-status">{% translate 'BATCH STATUS' context 'batch-summary-batch-status' %}
+      <b class="status status_{{ status | lower }}">{{status | upper}}</b>
     </div>
+    <div class="progress-meter">
+      <div id="progress-done-meter"
+          class="progress-done-meter"
+          style="width: {{finish_percentage|floatformat:'0'}}%;
+               background: linear-gradient(to right, green {{done_to_finish_percentage|floatformat:'0'}}%, #C52F21 0);"
+          aria-valuenow="{{finish_percentage}}"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+      >
+      </div>
+    </div>
+    <div class="progress-summary">{{finish_percentage}}% ({% blocktranslate with 1=done_count 2=total_count context 'batch-summary-done-count' %}{{1}} of {{2}} done{% endblocktranslate %})</div>
   </div>
-  <div class="progress-summary">{{finish_percentage}}% ({% blocktranslate with 1=done_count 2=total_count context 'batch-summary-done-count' %}{{1}} of {{2}} done{% endblocktranslate %})</div>
-</div>
 
-<div>
+  <div>
     {% translate 'COMMANDS SUMMARY' context 'batch-summary-commands-summary' %}
     <b class="status status_total">{% translate 'TOTAL' context 'batch-summary-total' %}: {{total_count}}</b>
     {% if initial_count %}<b class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{initial_count}}</b>{% endif %}
@@ -40,6 +40,10 @@
       {% translate 'This batch will be blocked if a command fails.' context 'batch-summary-this-batch' %}
     </small>
     {% endif %}
-</div>
-
+  </div>
+  <div>
+    <span>
+      {% translate 'ETA' context 'batch-summary-commands-eta' %}: {{ batch.eta |timeuntil|default_if_none:"N/A" }}
+    </span>
+  </div>
 </div>
