@@ -41,7 +41,7 @@
     <tbody id="lastBatchesTBody" hx-get="/batches/{% if username is not None %}{{ username }}/{% endif %}?page={{page.number}}&page_size={{page_size}}"
       hx-trigger="load delay:5s" hx-select="#lastBatchesTBody" hx-swap="outerHTML"
       hx-indicator="#spinner">
-      {% for batch in page_queryset %}
+      {% for batch in page.object_list %}
       <tr>
         <th scope="row"><a href="{% url 'batch' pk=batch.pk %}">#{{ batch.pk }}</a></th>
         {% if username is None %}
@@ -60,10 +60,10 @@
             <b>{{ batch.get_status_display | upper }}</b>
           </div>
           <div>
-            {% if batch.initial_commands %}<span class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{batch.initial_commands}}</span>{% endif %}
-            {% if batch.running_commands %}<span class="status status_running">{% translate 'RUNNING' context 'batch-summary-running' %}: {{batch.running_commands}}</span>{% endif %}
-            {% if batch.done_commands %}<span class="status status_done">{% translate 'DONE' context 'batch-summary-done' %}: {{batch.done_commands}}</span>{% endif %}
-            {% if batch.error_commands %}<span class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{batch.error_commands}}</span>{% endif %}
+            {% if batch.total_initial %}<span class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{batch.total_initial}}</span>{% endif %}
+            {% if batch.total_running %}<span class="status status_running">{% translate 'RUNNING' context 'batch-summary-running' %}: {{batch.total_running}}</span>{% endif %}
+            {% if batch.total_done %}<span class="status status_done">{% translate 'DONE' context 'batch-summary-done' %}: {{batch.total_done}}</span>{% endif %}
+            {% if batch.total_error %}<span class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{batch.total_error}}</span>{% endif %}
           </div>
         </td>
         <td>{{ batch.modified }}</td>

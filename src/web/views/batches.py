@@ -2,9 +2,9 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse
+from django.db.models import Count, Case, When, IntegerField
 
-from core.models import Batch
-
+from core.models import Batch, BatchCommand
 
 PAGE_SIZE = 25
 
@@ -29,10 +29,38 @@ def last_batches(request):
         page = 1
         page_size = PAGE_SIZE
 
-    paginator = Paginator(
-        Batch.objects.exclude(status=Batch.STATUS_PREVIEW).order_by("-modified"),
-        page_size,
+    qs = (
+        Batch.objects.exclude(status=Batch.STATUS_PREVIEW)
+        .order_by("-modified")
+        .annotate(
+            total_error=Count(
+                Case(
+                    When(batchcommand__status=BatchCommand.STATUS_ERROR, then=1),
+                    output_field=IntegerField(),
+                )
+            ),
+            total_running=Count(
+                Case(
+                    When(batchcommand__status=BatchCommand.STATUS_RUNNING, then=1),
+                    output_field=IntegerField(),
+                )
+            ),
+            total_initial=Count(
+                Case(
+                    When(batchcommand__status=BatchCommand.STATUS_INITIAL, then=1),
+                    output_field=IntegerField(),
+                )
+            ),
+            total_done=Count(
+                Case(
+                    When(batchcommand__status=BatchCommand.STATUS_DONE, then=1),
+                    output_field=IntegerField(),
+                )
+            ),
+        )
     )
+
+    paginator = Paginator(qs, page_size)
     base_url = reverse("last_batches")
     return render(
         request,
