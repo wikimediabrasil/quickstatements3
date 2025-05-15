@@ -2,11 +2,10 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse
-from django.db.models.expressions import RawSQL
+from django.db.models.functions import JSONObject
+from django.db.models import OuterRef, Subquery, Count, Q
 
 from core.models import Batch, BatchCommand
-
-
 PAGE_SIZE = 25
 
 
@@ -39,35 +38,24 @@ def last_batches(request):
         page = 1
         page_size = PAGE_SIZE
 
-    error_commands = RawSQL(
-        "SELECT COUNT(*) FROM core_batchcommand " \
-        "WHERE core_batchcommand.batch_id = core_batch.id AND core_batchcommand.status = %s",
-        [BatchCommand.STATUS_ERROR],
-    )
-    initial_commands = RawSQL(
-        "SELECT COUNT(*) FROM core_batchcommand " \
-        "WHERE core_batchcommand.batch_id = core_batch.id AND core_batchcommand.status = %s",
-        [BatchCommand.STATUS_INITIAL],
-    )
-    running_commands = RawSQL(
-        "SELECT COUNT(*) FROM core_batchcommand " \
-        "WHERE core_batchcommand.batch_id = core_batch.id AND core_batchcommand.status = %s",
-        [BatchCommand.STATUS_RUNNING],
-    )
-    done_commands = RawSQL(
-        "SELECT COUNT(*) FROM core_batchcommand " \
-        "WHERE core_batchcommand.batch_id = core_batch.id AND core_batchcommand.status = %s",
-        [BatchCommand.STATUS_DONE],
+    commands_status = Subquery(
+        BatchCommand.objects.filter(batch=OuterRef("id"))
+        .values("batch")
+        .annotate(
+            json=JSONObject(
+                error=Count("id", filter=Q(status=BatchCommand.STATUS_ERROR)),
+                running=Count("id", filter=Q(status=BatchCommand.STATUS_RUNNING)),
+                initial=Count("id", filter=Q(status=BatchCommand.STATUS_INITIAL)),
+                done=Count("id", filter=Q(status=BatchCommand.STATUS_DONE))
+        ))
+        .values("json")
     )
 
     paginator = Paginator(Batch.objects.all().order_by("-modified"), page_size)
     current_page = paginator.page(page)
 
     page_queryset = current_page.object_list.annotate(
-        error_commands=error_commands,
-        initial_commands=initial_commands,
-        running_commands=running_commands,
-        done_commands=done_commands,
+        commands_status=commands_status,
     )
 
     base_url = reverse("last_batches")

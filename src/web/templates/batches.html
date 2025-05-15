@@ -59,12 +59,14 @@
           <div style="margin-bottom: 10px;">
             <b>{{ batch.get_status_display | upper }}</b>
           </div>
+          {% if batch.commands_status %}
           <div>
-            {% if batch.initial_commands %}<span class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{batch.initial_commands}}</span>{% endif %}
-            {% if batch.running_commands %}<span class="status status_running">{% translate 'RUNNING' context 'batch-summary-running' %}: {{batch.running_commands}}</span>{% endif %}
-            {% if batch.done_commands %}<span class="status status_done">{% translate 'DONE' context 'batch-summary-done' %}: {{batch.done_commands}}</span>{% endif %}
-            {% if batch.error_commands %}<span class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{batch.error_commands}}</span>{% endif %}
+            {% if batch.commands_status.initial %}<span class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{batch.commands_status.initial}}</span>{% endif %}
+            {% if batch.commands_status.running %}<span class="status status_running">{% translate 'RUNNING' context 'batch-summary-running' %}: {{batch.commands_status.running}}</span>{% endif %}
+            {% if batch.commands_status.done %}<span class="status status_done">{% translate 'DONE' context 'batch-summary-done' %}: {{batch.commands_status.done}}</span>{% endif %}
+            {% if batch.commands_status.error %}<span class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{batch.commands_status.error}}</span>{% endif %}
           </div>
+          {% endif %}
         </td>
         <td>{{ batch.modified }}</td>
         <td>
