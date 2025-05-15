@@ -1,9 +1,10 @@
 import copy
 import csv
 import logging
+import math
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
-from typing import List, Optional, Set
+from typing import List, Optional
 from urllib.parse import urlparse
 
 import jsonpatch
@@ -662,6 +663,37 @@ class Batch(models.Model):
     @property
     def is_done_and_has_pending(self):
         return self.is_done and self.has_pending_commands
+
+    @property
+    def eta(self):
+        if self.estimated_runtime is None:
+            return None
+
+        concurrent = Batch.objects.filter(status=Batch.STATUS_RUNNING).exclude(
+            id=self.id
+        )
+
+        concurrent_runtime = sum([b.estimated_runtime or 0 for b in concurrent])
+        total_estimated_time = self.estimated_runtime + concurrent_runtime
+
+        return timedelta(seconds=total_estimated_time) + timezone.now()
+
+    @property
+    def estimated_runtime(self):
+        if self.status in [Batch.STATUS_STOPPED, Batch.STATUS_BLOCKED]:
+            return None
+
+        # We will calculate the ETA by averaging how many requests we
+        # can make per second, divided by the total number of commands
+        # this user has on the queue.
+        RATE_LIMIT_PER_MINUTE = 90
+        MAX_REQUESTS_PER_SECOND = RATE_LIMIT_PER_MINUTE / 60
+
+        total_pending = self.batchcommand_set.filter(
+            status=BatchCommand.STATUS_INITIAL
+        ).count()
+
+        return math.ceil(total_pending / MAX_REQUESTS_PER_SECOND)
 
     # ------
     # REPORT
