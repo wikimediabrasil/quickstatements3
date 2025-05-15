@@ -604,36 +604,6 @@ msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
 msgstr "See batches by user"
 
-#: web/templates/layout.html:73
-msgctxt "layout-new-batch"
-msgid "New batch"
-msgstr "New batch"
-
-#: web/templates/layout.html:74
-msgctxt "layout-last-batches"
-msgid "Last batches"
-msgstr "Last batches"
-
-#: web/templates/layout.html:75
-msgctxt "layout-statistics"
-msgid "Statistics"
-msgstr "Statistics"
-
-#: web/templates/layout.html:81
-msgctxt "layout-login"
-msgid "Login"
-msgstr "Login"
-
-#: web/templates/layout.html:83
-msgctxt "layout-user"
-msgid "User"
-msgstr "User"
-
-#: web/templates/layout.html:84
-msgctxt "layout-your-last-batches"
-msgid "Your last batches"
-msgstr "Your last batches"
-
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
@@ -683,6 +653,36 @@ msgstr "Log in"
 msgctxt "login-dev-your-access-token-is-not-valid"
 msgid "Your access token is not valid:"
 msgstr "Your access token is not valid:"
+
+#: web/templates/navbar.html:8
+msgctxt "layout-new-batch"
+msgid "New batch"
+msgstr "New batch"
+
+#: web/templates/navbar.html:9
+msgctxt "layout-last-batches"
+msgid "Last batches"
+msgstr "Last batches"
+
+#: web/templates/navbar.html:10
+msgctxt "layout-statistics"
+msgid "Statistics"
+msgstr "Statistics"
+
+#: web/templates/navbar.html:20
+msgctxt "layout-login"
+msgid "Login"
+msgstr "Login"
+
+#: web/templates/navbar.html:22
+msgctxt "layout-user"
+msgid "User"
+msgstr "User"
+
+#: web/templates/navbar.html:23
+msgctxt "layout-your-last-batches"
+msgid "Your last batches"
+msgstr "Your last batches"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
@@ -990,12 +990,12 @@ msgctxt "statistics-error-status"
 msgid "Error status"
 msgstr "Error status"
 
-#: web/views/new_batch.py:244
+#: web/views/new_batch.py:241
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
 
-#: web/views/new_batch.py:247
+#: web/views/new_batch.py:244
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "User is blocked and can not run batches."

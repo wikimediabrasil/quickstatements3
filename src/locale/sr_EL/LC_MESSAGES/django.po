@@ -603,36 +603,6 @@ msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
 msgstr "Pogledaj serije po korisniku"
 
-#: web/templates/layout.html:73
-msgctxt "layout-new-batch"
-msgid "New batch"
-msgstr "Nova serija"
-
-#: web/templates/layout.html:74
-msgctxt "layout-last-batches"
-msgid "Last batches"
-msgstr "Poslednje serije"
-
-#: web/templates/layout.html:75
-msgctxt "layout-statistics"
-msgid "Statistics"
-msgstr "Statistika"
-
-#: web/templates/layout.html:81
-msgctxt "layout-login"
-msgid "Login"
-msgstr "Prijava"
-
-#: web/templates/layout.html:83
-msgctxt "layout-user"
-msgid "User"
-msgstr "Korisnik"
-
-#: web/templates/layout.html:84
-msgctxt "layout-your-last-batches"
-msgid "Your last batches"
-msgstr "Vaše poslednje serije"
-
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
@@ -682,6 +652,36 @@ msgstr "Prijavite se"
 msgctxt "login-dev-your-access-token-is-not-valid"
 msgid "Your access token is not valid:"
 msgstr "Vaš token nije važeći:"
+
+#: web/templates/navbar.html:8
+msgctxt "layout-new-batch"
+msgid "New batch"
+msgstr "Nova serija"
+
+#: web/templates/navbar.html:9
+msgctxt "layout-last-batches"
+msgid "Last batches"
+msgstr "Poslednje serije"
+
+#: web/templates/navbar.html:10
+msgctxt "layout-statistics"
+msgid "Statistics"
+msgstr "Statistika"
+
+#: web/templates/navbar.html:20
+msgctxt "layout-login"
+msgid "Login"
+msgstr "Prijava"
+
+#: web/templates/navbar.html:22
+msgctxt "layout-user"
+msgid "User"
+msgstr "Korisnik"
+
+#: web/templates/navbar.html:23
+msgctxt "layout-your-last-batches"
+msgid "Your last batches"
+msgstr "Vaše poslednje serije"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
@@ -986,14 +986,14 @@ msgctxt "statistics-error-status"
 msgid "Error status"
 msgstr "Status greške"
 
-#: web/views/new_batch.py:244
+#: web/views/new_batch.py:241
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr ""
 "Korisnik nije automatski potvrđen. Samo automatski potvrđeni korisnici mogu "
 "pokrenuti serije."
 
-#: web/views/new_batch.py:247
+#: web/views/new_batch.py:244
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "Korisnik je blokiran i ne može pokretati serije."
