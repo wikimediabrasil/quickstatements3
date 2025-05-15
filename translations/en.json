@@ -189,5 +189,6 @@
     "batch-command-time-hundred-thousand": "hundred thousand years",
     "batch-command-time-million-years": "million years",
     "batch-command-time-billion-years": "billion years",
-    "statistics-edits-only": "Cumulative number of edits"
+    "statistics-edits-only": "Cumulative number of edits",
+    "batch-summary-commands-eta": "ETA"
 }
