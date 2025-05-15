@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -21,7 +20,6 @@ from core.models import (
 from core.parsers.base import ParserException
 from core.parsers.csv import CSVCommandParser
 from core.parsers.v1 import V1CommandParser
-from web.models import Preferences
 
 from .auth import logout_per_token_expired
 
@@ -128,10 +126,6 @@ def new_batch(request):
 
     if request.method == "POST":
         try:
-            # We delete any previous batches that were in preview mode
-            BatchEditingSession.objects.filter(
-                session_key=request.session.session_key
-            ).delete()
             Batch.objects.filter(
                 status=Batch.STATUS_PREVIEW, user=request.user.username
             ).delete()
