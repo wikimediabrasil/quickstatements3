@@ -2,9 +2,8 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse
-from django.db.models import Count, Q
 
-from core.models import Batch, BatchCommand
+from core.models import Batch
 
 
 PAGE_SIZE = 25
