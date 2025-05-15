@@ -128,6 +128,13 @@ def new_batch(request):
 
     if request.method == "POST":
         try:
+            # We delete any previous batches that were in preview mode
+            BatchEditingSession.objects.filter(
+                session_key=request.session.session_key
+            ).delete()
+            Batch.objects.filter(
+                status=Batch.STATUS_PREVIEW, user=request.user.username
+            ).delete()
             batch_type = request.POST.get("type", "v1")
             batch_commands = request.POST.get("commands")
             batch_name = request.POST.get(
@@ -148,6 +155,7 @@ def new_batch(request):
             wikibase = (
                 wikibase_url and Wikibase.objects.filter(url=wikibase_url).first()
             )
+
             batch = Batch.objects.create(
                 name=batch_name,
                 user=request.user.username,
@@ -161,12 +169,7 @@ def new_batch(request):
                 batch_command.save()
 
             request.session["preferred_batch_type"] = batch_type
-            # We delete any previous batch from the editing session.
-            BatchEditingSession.objects.filter(
-                session_key=request.session.session_key
-            ).delete()
-
-            # So that we can create the new one...
+            # Set up editing session for the newly created batch.
             BatchEditingSession.objects.create(
                 batch=batch, session_key=request.session.session_key
             )
