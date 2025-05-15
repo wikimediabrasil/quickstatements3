@@ -2,9 +2,8 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse
-from django.db.models import Count, Case, When, IntegerField
 
-from core.models import Batch, BatchCommand
+from core.models import Batch
 
 PAGE_SIZE = 25
 
@@ -31,33 +30,8 @@ def last_batches(request):
 
     qs = (
         Batch.objects.exclude(status=Batch.STATUS_PREVIEW)
+        .with_command_status_counts()
         .order_by("-modified")
-        .annotate(
-            total_error=Count(
-                Case(
-                    When(batchcommand__status=BatchCommand.STATUS_ERROR, then=1),
-                    output_field=IntegerField(),
-                )
-            ),
-            total_running=Count(
-                Case(
-                    When(batchcommand__status=BatchCommand.STATUS_RUNNING, then=1),
-                    output_field=IntegerField(),
-                )
-            ),
-            total_initial=Count(
-                Case(
-                    When(batchcommand__status=BatchCommand.STATUS_INITIAL, then=1),
-                    output_field=IntegerField(),
-                )
-            ),
-            total_done=Count(
-                Case(
-                    When(batchcommand__status=BatchCommand.STATUS_DONE, then=1),
-                    output_field=IntegerField(),
-                )
-            ),
-        )
     )
 
     paginator = Paginator(qs, page_size)
@@ -81,7 +55,11 @@ def last_batches_by_user(request, user):
         page = 1
         page_size = PAGE_SIZE
 
-    batches = Batch.objects.filter(user=user).exclude(status=Batch.STATUS_PREVIEW)
+    batches = (
+        Batch.objects.filter(user=user)
+        .exclude(status=Batch.STATUS_PREVIEW)
+        .with_command_status_counts()
+    )
     paginator = Paginator(batches.order_by("-modified"), page_size)
     base_url = reverse("last_batches_by_user", args=[user])
     # we need to use `username` since `user` is always supplied by django templates

@@ -323,6 +323,25 @@ class TokenManager(models.Manager):
         )
 
 
+class BatchQuerySet(models.QuerySet):
+    def with_command_status_counts(self):
+        def get_status_subquery(status):
+            return models.Subquery(
+                BatchCommand.objects.filter(batch=models.OuterRef("pk"), status=status)
+                .values("batch")
+                .annotate(count=models.Count("id"))
+                .values("count"),
+                output_field=models.IntegerField(),
+            )
+
+        return self.annotate(
+            total_error=get_status_subquery(BatchCommand.STATUS_ERROR),
+            total_running=get_status_subquery(BatchCommand.STATUS_RUNNING),
+            total_initial=get_status_subquery(BatchCommand.STATUS_INITIAL),
+            total_done=get_status_subquery(BatchCommand.STATUS_DONE),
+        )
+
+
 class Label(models.Model):
     MAX_AGE = timedelta(days=5)
 
@@ -483,6 +502,8 @@ class Batch(models.Model):
     wikibase = models.ForeignKey(
         Wikibase, default=get_default_wikibase, on_delete=models.CASCADE
     )
+
+    objects = BatchQuerySet.as_manager()
 
     def __str__(self):
         return f"Batch #{self.pk}"
