@@ -33,9 +33,14 @@ def preview_batch(request):
     Used for ajax calls
     """
 
-    batch = Batch.objects.filter(
-        editing_session__session_key=request.session.session_key
-    ).first()
+    batch = (
+        Batch.objects.filter(
+            editing_session__session_key=request.session.session_key,
+            status=Batch.STATUS_PREVIEW,
+        )
+        .order_by("-created")
+        .first()
+    )
     if batch:
         total_count = 0
         initial_count = 0
@@ -84,9 +89,14 @@ def preview_batch_commands(request):
     Used for ajax calls
     """
 
-    batch = Batch.objects.filter(
-        editing_session__session_key=request.session.session_key
-    ).first()
+    batch = (
+        Batch.objects.filter(
+            editing_session__session_key=request.session.session_key,
+            status=Batch.STATUS_PREVIEW,
+        )
+        .order_by("-created")
+        .first()
+    )
     if batch:
         batch_commands = batch.batchcommand_set.all()
         try:
@@ -126,6 +136,9 @@ def new_batch(request):
 
     if request.method == "POST":
         try:
+            BatchEditingSession.objects.filter(
+                session_key=request.session.session_key
+            ).delete()
             Batch.objects.filter(
                 status=Batch.STATUS_PREVIEW, user=request.user.username
             ).delete()
@@ -187,7 +200,8 @@ def new_batch(request):
 
     else:
         batch = Batch.objects.filter(
-            editing_session__session_key=request.session.session_key
+            editing_session__session_key=request.session.session_key,
+            status=Batch.STATUS_PREVIEW,
         ).first()
         try:
             token = Token.objects.get(user=request.user)
@@ -218,7 +232,8 @@ def new_batch(request):
 @login_required()
 def batch_allow_start(request):
     batch = Batch.objects.filter(
-        editing_session__session_key=request.session.session_key
+        editing_session__session_key=request.session.session_key,
+        status=Batch.STATUS_PREVIEW,
     ).first()
     if not batch:
         return render(request, "batch_not_found.html", status=404)
