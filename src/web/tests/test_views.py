@@ -12,6 +12,7 @@ from core.models import Client as ApiClient
 from core.models import Token
 from core.parsers.v1 import V1CommandParser
 from core.tests.test_api import ApiMocker
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 class ViewsTest(TestCase):
@@ -330,6 +331,123 @@ class ViewsTest(TestCase):
                 "name": "My v1 batch",
                 "type": "v1",
                 "commands": "CREATE||-Q1234|P1|12||Q222|P4|9~0.1",
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers["Location"], "/auth/login/?next=/batch/new/")
+
+    @requests_mock.Mocker()
+    def test_create_csv_batch_with_file(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            user, api_client = self.login_user_and_get_token("user")
+
+            # Black box testing. We don't have any batch listed
+            response = self.client.get("/batches/")
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("batches.html")
+            self.assertEqual(list(response.context["page"].object_list), [])
+
+            # Creating our new batch
+            response = self.client.get("/batch/new/")
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("new_batch.html")
+
+            # Creating our new batch with a file upload
+            mock_file = SimpleUploadedFile(
+                "commands.csv", b"qid,P31,-P31", content_type="text/csv"
+            )
+            response = self.client.post(
+                "/batch/new/",
+                data={
+                    "name": "My CSV batch with file",
+                    "type": "csv",
+                    "file": mock_file,
+                },
+            )
+            self.assertEqual(response.status_code, 302)
+
+            # Let's view the new batch
+            response = self.client.get(response.url)
+            self.assertEqual(response.status_code, 200)
+
+            response = self.client.post("/batch/new/preview/allow_start/")
+            self.assertEqual(response.status_code, 302)
+
+            response = self.client.get(response.url)
+            self.assertTemplateUsed("batch.html")
+            batch = response.context["batch"]
+            self.assertEqual(batch.name, "My CSV batch with file")
+            self.assertTrue(batch.is_initial)
+            self.assertEqual(batch.batchcommand_set.count(), 0)
+
+            # Listing again. Now we have something
+            response = self.client.get("/batches/")
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("batches.html")
+            self.assertEqual(list(response.context["page"].object_list), [batch])
+            self.assertTrue(batch.is_initial)
+
+    @requests_mock.Mocker()
+    def test_create_v1_batch_with_file(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            user, api_client = self.login_user_and_get_token("user")
+
+            # Black box testing. We don't have any batch listed
+            response = self.client.get("/batches/")
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("batches.html")
+            self.assertEqual(list(response.context["page"].object_list), [])
+
+            # Creating our new batch with a file upload
+            mock_file = SimpleUploadedFile(
+                "commands.v1", b"CREATE||-Q1234|P1|12||Q222|P4|9~0.1", content_type="text/plain"
+            )
+            response = self.client.post(
+                "/batch/new/",
+                data={
+                    "name": "My V1 batch with file",
+                    "type": "v1",
+                    "file": mock_file,
+                },
+            )
+
+            self.assertEqual(response.status_code, 302)
+
+            # Let's view the new batch
+            response = self.client.get(response.url)
+            self.assertEqual(response.status_code, 200)
+
+            response = self.client.post("/batch/new/preview/allow_start/")
+            self.assertEqual(response.status_code, 302)
+
+            response = self.client.get(response.url)
+            self.assertTemplateUsed("batch.html")
+            batch = response.context["batch"]
+            self.assertEqual(batch.name, "My V1 batch with file")
+            self.assertTrue(batch.is_initial)
+            self.assertEqual(batch.batchcommand_set.count(), 3)
+
+            # Listing again. Now we have something
+            response = self.client.get("/batches/")
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("batches.html")
+            self.assertEqual(list(response.context["page"].object_list), [batch])
+            self.assertTrue(batch.is_initial)
+
+    def test_create_batch_anonymous_user_with_file(self):
+        mock_file = SimpleUploadedFile(
+            "commands.csv", b"qid,P31,-P31", content_type="text/csv"
+        )
+        response = self.client.post(
+            "/batch/new/",
+            data={
+                "name": "Anonymous batch",
+                "type": "csv",
+                "file": mock_file,
             },
         )
         self.assertEqual(response.status_code, 302)

@@ -144,6 +144,11 @@ def new_batch(request):
             ).delete()
             batch_type = request.POST.get("type", "v1")
             batch_commands = request.POST.get("commands")
+
+            uploaded_file = request.FILES.get("file")
+            if uploaded_file:
+                batch_commands = uploaded_file.read().decode("utf-8")
+                
             batch_name = request.POST.get(
                 "name",
                 f"Batch user:{request.user.username} {datetime.now().isoformat()}",
