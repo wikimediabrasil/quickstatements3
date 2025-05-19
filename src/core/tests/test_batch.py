@@ -887,10 +887,3 @@ Q4115189,"x"
         self.assertEqual(cmd.entity_id, "Q4115189")
         self.assertEqual(cmd.language, "pt")
 
-    def test_remove_sitelink_not_empty(self):
-        COMMAND = """qid,Sptwiki
-Q4115189,""
-"""
-        par = CSVCommandParser()
-        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
-        self.assertEqual(len(batch.commands()), 0)

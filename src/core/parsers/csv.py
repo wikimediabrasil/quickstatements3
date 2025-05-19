@@ -3,12 +3,12 @@ import csv
 import io
 from typing import Iterator
 import logging
+from django.utils.translation import pgettext_lazy
 
 from .base import BaseParser
 from .base import ParserException
 
 from core.models import BatchCommand
-
 
 logger = logging.getLogger(__name__)
 
@@ -158,7 +158,10 @@ class CSVCommandParser(BaseParser):
         for index, cell in enumerate(header):
             if index == 0:
                 if cell != "qid":
-                    raise ParserException("CSV header first element must be qid")
+                    raise ParserException(pgettext_lazy(
+                        "csv-parser-header-qid-missing",
+                        "CSV header first element must be qid"
+                    ))
                 continue
 
             # Is it a PROPERTY?
@@ -171,60 +174,72 @@ class CSVCommandParser(BaseParser):
             # Not a property...lets check if we already have one
             if not has_property_alias_description_label_sitelink:
                 if clean_cell == "#":
-                    raise ParserException("A valid property must precede a comment")
+                    raise ParserException(pgettext_lazy(
+                        "csv-parser-header-comment-after-no-property",
+                        "A valid property must precede a comment"
+                    ))
                 elif clean_cell.startswith("qal"):
-                    raise ParserException("A valid property must precede a qualifier")
+                    raise ParserException(pgettext_lazy(
+                        "csv-parser-header-qualifier-after-no-property",
+                        "A valid property must precede a qualifier"
+                    ))
                 elif (clean_cell[0] == "s" or clean_cell[0] == "S") and re.match(
                     "^[Ss]\\d+$", clean_cell
                 ):
-                    raise ParserException("A valid property must precede a source")
+                    raise ParserException(pgettext_lazy(
+                        "csv-parser-header-source-after-no-property",
+                        "A valid property must precede a source"
+                    ))
         return True
 
     def parse(self, raw_csv) -> Iterator[BatchCommand]:
         memory_file = io.StringIO(raw_csv, newline="")
 
-        first_line = True
         reader = csv.reader(memory_file, delimiter=",")
         index = 0
+        header = None
+
+        try:
+            header = next(reader)
+        except StopIteration:
+            raise ParserException(ParserException.EMPTY_INPUT_ERROR)
 
         for row in reader:
-            if first_line:
-                self.check_header(row)
-                header = row
-                first_line = False
-            else:
-                commands = self.parse_line(row, header)
-                for command in commands:
+            commands = self.parse_line(row, header)
+            for command in commands:
+                action = BatchCommand.ACTION_CREATE
+                operation = None
+                if command["action"] == "add":
+                    action = BatchCommand.ACTION_ADD
+                    what = command.get("what")
+                    operation = self.ADD_WHAT_OP[what]
+                elif command["action"] == "remove":
+                    action = BatchCommand.ACTION_REMOVE
+                    what = command.get("what")
+                    operation = self.REMOVE_WHAT_OP[what]
+                elif command["action"] == "create":
                     action = BatchCommand.ACTION_CREATE
-                    operation = None
-                    if command["action"] == "add":
-                        action = BatchCommand.ACTION_ADD
-                        what = command.get("what")
-                        operation = self.ADD_WHAT_OP[what]
-                    elif command["action"] == "remove":
-                        action = BatchCommand.ACTION_REMOVE
-                        what = command.get("what")
-                        operation = self.REMOVE_WHAT_OP[what]
-                    elif command["action"] == "create":
-                        action = BatchCommand.ACTION_CREATE
-                        if command["type"] == "item":
-                            operation = BatchCommand.Operation.CREATE_ITEM
-                        elif command["type"] == "property":
-                            operation = BatchCommand.Operation.CREATE_PROPERTY
-                    else:
-                        action = BatchCommand.ACTION_MERGE
+                    if command["type"] == "item":
+                        operation = BatchCommand.Operation.CREATE_ITEM
+                    elif command["type"] == "property":
+                        operation = BatchCommand.Operation.CREATE_PROPERTY
+                else:
+                    action = BatchCommand.ACTION_MERGE
 
-                    user_summary = command.pop("summary", None)
+                user_summary = command.pop("summary", None)
 
-                    logger.debug(f"Parsed line {row}")
+                logger.debug(f"Parsed line {row}")
 
-                    yield BatchCommand(
-                        index=index,
-                        json=command,
-                        raw=row,
-                        action=action,
-                        operation=operation,
-                        status=BatchCommand.STATUS_INITIAL,
-                        user_summary=user_summary,
-                    )
-                    index += 1
+                yield BatchCommand(
+                    index=index,
+                    json=command,
+                    raw=row,
+                    action=action,
+                    operation=operation,
+                    status=BatchCommand.STATUS_INITIAL,
+                    user_summary=user_summary,
+                )
+                index += 1
+
+        if index == 0:
+            raise ParserException(ParserException.NO_COMMANDS_ERROR)

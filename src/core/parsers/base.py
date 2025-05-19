@@ -1,16 +1,23 @@
-import logging
 import re
 
 from decimal import Decimal
-
-
-logger = logging.getLogger(__name__)
+from django.utils.translation import pgettext_lazy
 
 
 class ParserException(Exception):
     def __init__(self, message):
         super(ParserException, self).__init__(message)
         self.message = message
+
+    NO_COMMANDS_ERROR = pgettext_lazy(
+        "parser-no-commands",
+        "No valid commands found in the provided input."
+    )
+
+    EMPTY_INPUT_ERROR = pgettext_lazy(
+        "parser-empty-file",
+        "Command input cannot be empty. Please provide valid commands."
+    )
 
 
 class BaseParser(object):
@@ -282,10 +289,8 @@ class BaseParser(object):
         Examples:
         +1967-01-17T00:00:00Z/11           → Gregorian
         +1967-01-17T00:00:00Z/11/J         → Julian (Q1985786)
-        +2968-09-22T00:00:00Z/11/CQ999999  → Custom calendar (Q999999)
+        +2968-09-22T00:00:00Z/11/C999999  → Custom calendar (Q999999)
         """
-
-        logger.debug(f"Checking if {v} is a value of time")
 
         pattern = re.compile(
             r"""^
@@ -338,7 +343,7 @@ class BaseParser(object):
 
         Examples:
             @43.26193/10.92708              - Default globe (Earth, Q2)
-            @43.26193/10.92708/GQ123456     - Custom globe (Q123456)
+            @43.26193/10.92708/G123456     - Custom globe (Q123456)
 
         Returns a structured globecoordinate value or None.
         """
