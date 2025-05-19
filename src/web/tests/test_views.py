@@ -301,7 +301,7 @@ class ViewsTest(TestCase):
 
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed("new_batch.html")
-            self.assertInRes("No valid commands found in the provided input.", response)
+            self.assertInRes("CSV input must include more than just the header row", response)
 
     @requests_mock.Mocker()
     def test_create_invalid_command_input(self, mocker):
