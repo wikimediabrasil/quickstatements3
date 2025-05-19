@@ -190,5 +190,7 @@
     "batch-command-time-million-years": "million years",
     "batch-command-time-billion-years": "billion years",
     "statistics-edits-only": "Cumulative number of edits",
-    "batch-summary-commands-eta": "ETA"
+    "batch-summary-commands-eta": "ETA",
+    "new-batch-file-upload": "File upload",
+    "new-batch-file-upload-targeting": "Option for when the user prefers to upload a file, intead of writing the commands in the form"
 }

@@ -688,57 +688,71 @@ msgctxt "new-batch-quickstatements-new-batch"
 msgid "QuickStatements 3.0 - New batch"
 msgstr "QuickStatements 3.0 - Нова серија"
 
-#: web/templates/new_batch.html:8
+#: web/templates/new_batch.html:12
 msgctxt "new-batch-new-batch"
 msgid "New batch"
 msgstr "Нова серија"
 
-#: web/templates/new_batch.html:17
+#: web/templates/new_batch.html:21
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "Ваш налог је блокиран и нећете моћи да покренете серије."
 
-#: web/templates/new_batch.html:26
+#: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
 msgstr "Википодаци"
 
-#: web/templates/new_batch.html:37
+#: web/templates/new_batch.html:41
 msgctxt "new-batch-command-format"
 msgid "Command format"
 msgstr "Формат команде"
 
-#: web/templates/new_batch.html:45
+#: web/templates/new_batch.html:49
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
 msgstr "Прилагођени назив серије..."
 
-#: web/templates/new_batch.html:50
+#: web/templates/new_batch.html:54
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
 msgstr "Блокирај серију ако команда не успе"
 
-#: web/templates/new_batch.html:51
+#: web/templates/new_batch.html:55
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
 msgstr "Серија ће престати са обрадом ако команда да грешку."
 
-#: web/templates/new_batch.html:56
+#: web/templates/new_batch.html:60
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
 msgstr "Не комбинуј команде"
 
-#: web/templates/new_batch.html:57
+#: web/templates/new_batch.html:61
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
 msgstr "Команде усмерене на исти ентитет неће бити спојене."
 
-#: web/templates/new_batch.html:60
+#: web/templates/new_batch.html:66
+msgctxt "new-batch-file-upload"
+msgid "File upload"
+msgstr "File upload"
+
+#: web/templates/new_batch.html:67
+msgctxt "new-batch-file-upload-targeting"
+msgid ""
+"Option for when the user prefers to upload a file, intead of writing the "
+"commands in the form"
+msgstr ""
+"Option for when the user prefers to upload a file, intead of writing the "
+"commands in the form"
+
+#: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
 msgstr "Унесите своје команде овде..."
 
-#: web/templates/new_batch.html:68
+#: web/templates/new_batch.html:85
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "Напомена: само аутоматски потврђени корисници могу покренути серије."
@@ -986,14 +1000,14 @@ msgctxt "statistics-error-status"
 msgid "Error status"
 msgstr "Статус грешке"
 
-#: web/views/new_batch.py:241
+#: web/views/new_batch.py:261
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr ""
 "Корисник није аутоматски потврђен. Само аутоматски потврђени корисници могу "
 "покренути серије."
 
-#: web/views/new_batch.py:244
+#: web/views/new_batch.py:264
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "Корисник је блокиран и не може покретати серије."
