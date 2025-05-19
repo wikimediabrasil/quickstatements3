@@ -1,0 +1,19 @@
+fieldset .file-upload{
+    display: none;
+}
+
+fieldset .commands{
+    display: block;
+}
+
+fieldset > #toggleFileUpload{
+    margin-bottom:calc(var(--pico-spacing) * .375);
+}
+
+fieldset > #toggleFileUpload:checked ~ .file-upload{
+    display: block;
+}
+
+fieldset > #toggleFileUpload:checked ~ .commands{
+    display: none;
+}
