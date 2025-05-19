@@ -166,15 +166,6 @@ def new_batch(request):
                     ))
                 parser = CSVCommandParser()
 
-            # Take a sentinel value to make sure that the batch_commands won't be empty
-            parsed_commands = parser.parse(batch_commands)
-            first_command = next(parsed_commands, None)
-            if not first_command:
-                raise ParserException(pgettext_lazy(
-                    "batch-py-valid-command-not-found",
-                    "No valid commands found in the provided input."
-                ))
-
             wikibase_url = request.POST.get("wikibase")
             wikibase = (
                 wikibase_url and Wikibase.objects.filter(url=wikibase_url).first()
@@ -188,11 +179,16 @@ def new_batch(request):
                 block_on_errors="block_on_errors" in request.POST,
                 combine_commands="do_not_combine_commands" not in request.POST,
             )
-            first_command.batch = batch
-            first_command.save()
-            for batch_command in parsed_commands:
+
+            for batch_command in parser.parse(batch_commands):
                 batch_command.batch = batch
                 batch_command.save()
+
+            if not batch.batchcommand_set.exists():
+                raise ParserException(pgettext_lazy(
+                    "batch-py-valid-command-not-found",
+                    "No valid commands found in the provided input."
+                ))
 
             request.session["preferred_batch_type"] = batch_type
             # Set up editing session for the newly created batch.

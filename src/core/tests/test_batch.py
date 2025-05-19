@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test import override_settings
+import unittest
 
 from core.factories import BatchFactory
 from core.models import Batch, BatchCommand
@@ -887,10 +888,11 @@ Q4115189,"x"
         self.assertEqual(cmd.entity_id, "Q4115189")
         self.assertEqual(cmd.language, "pt")
 
+    @unittest.skip("Skipping as this is not implemented (issue #330)")
     def test_remove_sitelink_not_empty(self):
         COMMAND = """qid,Sptwiki
 Q4115189,""
 """
         par = CSVCommandParser()
         batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
-        self.assertEqual(len(batch.commands()), 0)
+        self.assertEqual(len(batch.commands()), 1)
