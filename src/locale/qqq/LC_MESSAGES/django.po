@@ -16,409 +16,428 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: core/models.py:484
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Stopped"
+msgstr "Batch status code displayed in batch status bar"
 
 #: core/models.py:485
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Blocked"
+msgstr "Batch status code displayed in batch status bar"
 
 #: core/models.py:486
 msgctxt "batch-py-status-preview"
 msgid "Preview"
-msgstr "Preview"
+msgstr "Batch status code displayed in batch status bar"
 
 #: core/models.py:487
 msgctxt "batch-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "Batch status code displayed in batch status bar"
 
 #: core/models.py:488
 msgctxt "batch-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "Batch status code displayed in batch status bar"
 
 #: core/models.py:489
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Batch status code displayed in batch status bar"
 
 #: core/models.py:512
 msgctxt "batch-py-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Word for a batch"
 
 #: core/models.py:513
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Plural of batch"
 
 #: core/models.py:766
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
-msgstr "Error"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: core/models.py:767
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: core/models.py:768
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: core/models.py:769
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: core/models.py:778
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "Command action code"
 
 #: core/models.py:779
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
-msgstr "ADD"
+msgstr "Command action code"
 
 #: core/models.py:780
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "REMOVE"
+msgstr "Command action code"
 
 #: core/models.py:781
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "MERGE"
+msgstr "Command action code"
 
 #: core/models.py:814
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Create item"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:819
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
-msgstr "Create property"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:825
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Set statement"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:830
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Create statement"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:838
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
-msgstr "Remove statement by id"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:845
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
-msgstr "Remove statement by value"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:852
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
-msgstr "Remove qualifier"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:858
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Remove reference"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:864
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
-msgstr "Set sitelink"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:868
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Set label"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:873
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Set description"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:880
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
-msgstr "Remove sitelink"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:885
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Remove label"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:890
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Remove description"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:896
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Add alias"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:900
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Remove alias"
+msgstr "Individual command operation type displayed in command list"
 
 #: core/models.py:927
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
-msgstr "Operation not implemented"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:934
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
-msgstr "No statements for given property"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:941
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
-msgstr "No statements with given value"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:947
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
-msgstr "No qualifiers with given value"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:954
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
-msgstr "No reference parts with given value"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:960
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "The sitelink id is invalid"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:966
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
-msgstr "The next command failed"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:972
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
-msgstr "API returned a User error"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:978
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
-msgstr "API returned a server error"
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:985
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
-msgstr "LAST could not be evaluated."
+msgstr ""
+"Individual command error type displayed in command list when the error "
+"happens"
 
 #: core/models.py:1807
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
-msgstr "Batch Command"
+msgstr "Word for an individual batch command"
 
 #: core/models.py:1809
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
-msgstr "Batch Commands"
+msgstr "Plural for an individual batch command"
 
 #: core/templatetags/quickstatements.py:50
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "decade"
+msgstr "Data value of time with precision of decade"
 
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "century"
+msgstr "Data value of time with precision of century"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-millennium"
 msgid "millennium"
-msgstr "millennium"
+msgstr "Data value of time with precision of millennium"
 
 #: core/templatetags/quickstatements.py:54
 msgctxt "batch-command-time-hundred-thousand"
 msgid "hundred thousand years"
-msgstr "hundred thousand years"
+msgstr "Data value of time with precision of hundred thousand years"
 
 #: core/templatetags/quickstatements.py:56
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "million years"
+msgstr "Data value of time with precision of million years"
 
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "billion years"
+msgstr "Data value of time with precision of billion years"
 
 #: core/templatetags/quickstatements.py:137
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Valor Desconhecido)"
+msgstr "Data value of unknown value (wikibase's somevalue)"
 
 #: core/templatetags/quickstatements.py:141
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(Nenhum Valor)"
+msgstr "Data value of unknown value (wikibase's novalue)"
 
 #: web/models.py:52
 msgctxt "web-models-token"
 msgid "Token"
-msgstr "Token"
+msgstr "Word for user OAuth token"
 
 #: web/models.py:53
 msgctxt "web-models-tokens"
 msgid "Tokens"
-msgstr "Tokens"
+msgstr "Plural for user OAuth token"
 
 #: web/models.py:104 web/models.py:105
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Word for user preferences or settings"
 
 #: web/templates/batch.html:4 web/templates/batch.html:13
 msgctxt "batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Word for a batch"
 
 #: web/templates/batch.html:16
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
-msgstr "Submitted to"
+msgstr "String prepended to which wikibase the batch was submitted"
 
 #: web/templates/batch.html:19
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Created by"
+msgstr "String prepended to batch author"
 
 #: web/templates/batch.html:21
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Button to view batches of an user"
 
 #: web/templates/batch.html:22
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "Batch to go to a batch's EditGroups page"
 
 #: web/templates/batch.html:30
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
-msgstr "Stop execution"
+msgstr "Button to stop a batch execution"
 
 #: web/templates/batch.html:63
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
-msgstr "Loading summary..."
+msgstr "Loading summary indication"
 
 #: web/templates/batch.html:66
 msgctxt "batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Title for section containing batch commands"
 
 #: web/templates/batch.html:74
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "Loading commands indication"
 
 #: web/templates/batch.html:83
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
-msgstr "Stop batch #%(1)s processing"
+msgstr "Button to stop a batch"
 
 #: web/templates/batch.html:85
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
-msgstr "Are you sure you want to stop the current batch processing?"
+msgstr "Confirmation message of batch stopping"
 
 #: web/templates/batch.html:88
 msgctxt "batch-no-continue"
 msgid "No, continue"
-msgstr "No, continue"
+msgstr "Button to not stop a batch"
 
 #: web/templates/batch.html:89
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
-msgstr "Stop processing"
+msgstr "Button to confirm batch stopping"
 
 #: web/templates/batch_commands.html:38
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Statement"
+msgstr "Command list section type"
 
 #: web/templates/batch_commands.html:55
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
-msgstr "Qualifiers"
+msgstr "Command list section type"
 
 #: web/templates/batch_commands.html:64
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "References"
+msgstr "Command list section type"
 
 #: web/templates/batch_commands.html:84
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "SHOWING ONLY ERRORS"
+msgstr "Indication that only error commands are shown"
 
 #: web/templates/batch_commands.html:89
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "SHOW ALL"
+msgstr "Button to show all batch commands (error or non-error)"
 
 #: web/templates/batch_commands.html:92
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "SHOWING ALL"
+msgstr "Indication that all commands are shown"
 
 #: web/templates/batch_commands.html:97
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "SHOW ONLY ERRORS"
+msgstr "Button to show only error batch commands"
 
 #: web/templates/batch_commands.html:110
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "Pagination button"
 
 #: web/templates/batch_commands.html:118
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "Pagination button"
 
 #: web/templates/batch_commands.html:126 web/templates/batches.html:104
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Pg. %(1)s of %(2)s"
+msgstr "Pagination indication"
 
 #: web/templates/batch_commands.html:136
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "Pagination button"
 
 #: web/templates/batch_commands.html:144
 msgctxt "batch-commands-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "Pagination button"
 
 #: web/templates/batch_commands.html:153 web/templates/batch_commands.html:157
 #: web/templates/batch_commands.html:165
@@ -430,78 +449,78 @@ msgstr "Page size:"
 #, python-format
 msgctxt "batch-not-found-number"
 msgid "Batch <code>#%(1)s</code> not found."
-msgstr "Batch <code>#%(1)s</code> not found."
+msgstr "Error message for batch not found"
 
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "Batch ID"
+msgstr "Prepopulated input to search by batch id"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Button to see a batch details"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "BATCH STATUS"
+msgstr "Title of batch status"
 
 #: web/templates/batch_summary.html:28
 #, python-format
 msgctxt "batch-summary-done-count"
 msgid "%(1)s of %(2)s done"
-msgstr "%(1)s of %(2)s done"
+msgstr "(Amount of total) commands finished"
 
 #: web/templates/batch_summary.html:32
 msgctxt "batch-summary-commands-summary"
 msgid "COMMANDS SUMMARY"
-msgstr "COMMANDS SUMMARY"
+msgstr "Title of batch commands summary"
 
 #: web/templates/batch_summary.html:33
 msgctxt "batch-summary-total"
 msgid "TOTAL"
-msgstr "TOTAL"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: web/templates/batch_summary.html:34 web/templates/batches.html:63
 msgctxt "batch-summary-init"
 msgid "INIT"
-msgstr "INIT"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: web/templates/batch_summary.html:35 web/templates/batches.html:64
 msgctxt "batch-summary-running"
 msgid "RUNNING"
-msgstr "RUNNING"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: web/templates/batch_summary.html:36 web/templates/batches.html:65
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "DONE"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: web/templates/batch_summary.html:37 web/templates/batches.html:66
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "ERRORS"
+msgstr "Individual command status code displayed in batch status bar"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
 msgid "This batch will be blocked if a command fails."
-msgstr "This batch will be blocked if a command fails."
+msgstr "Notice about batch being able to be blocked"
 
 #: web/templates/batch_summary.html:46
 msgctxt "batch-summary-commands-eta"
 msgid "ETA"
-msgstr "ETA"
+msgstr "Batch estimated amount of time left to complete"
 
 #: web/templates/batches.html:5
 msgctxt "batches-quickstatements-last-batches"
 msgid "QuickStatements 3.0 - Last batches"
-msgstr "QuickStatements 3.0 - Last batches"
+msgstr "Page title"
 
 #: web/templates/batches.html:25
 msgctxt "batches-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Button to see last batches"
 
 #: web/templates/batches.html:25
 msgctxt "batches-from"
@@ -511,248 +530,245 @@ msgstr "from"
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "User"
+msgstr "Batch list column title"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Name"
+msgstr "Batch list column title"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
 msgid "Status"
-msgstr "Status"
+msgstr "Batch list column title"
 
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
 msgid "Modified"
-msgstr "Modified"
+msgstr "Batch list column title"
 
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Actions"
+msgstr "Batch list column title"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Button to see batches of an user"
 
 #: web/templates/batches.html:71
 msgctxt "batches-view"
 msgid "View"
-msgstr "View"
+msgstr "Action to see a batch"
 
 #: web/templates/batches.html:73
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "Batch to go to a batch's EditGroups page"
 
 #: web/templates/batches.html:89
 msgctxt "batches-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "Pagination button"
 
 #: web/templates/batches.html:95
 msgctxt "batches-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "Pagination button"
 
 #: web/templates/batches.html:113
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "Pagination button"
 
 #: web/templates/batches.html:119
 msgctxt "batches-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "Pagination button"
 
 #: web/templates/batches.html:130 web/templates/batches.html:134
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Pagination indication"
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
 msgid "Welcome to QuickStatements 3.0"
-msgstr "Welcome to QuickStatements 3.0"
+msgstr "Welcome message"
 
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "New batch button"
 
 #: web/templates/index.html:17
 msgctxt "index-batch-id"
 msgid "Batch ID..."
-msgstr "Batch ID..."
+msgstr "Batch ID... prepopulated string on input"
 
 #: web/templates/index.html:18
 msgctxt "index-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Button to see an individual batch"
 
 #: web/templates/index.html:24
 msgctxt "index-username"
 msgid "Username..."
-msgstr "Username..."
+msgstr "Username... prepopulated string on input"
 
 #: web/templates/index.html:25
 msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
-msgstr "See batches by user"
+msgstr "Button to see batches by user"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 - Login"
+msgstr "Page title"
 
 #: web/templates/login.html:8
 msgctxt "login-page-title"
 msgid "Login"
-msgstr "Login"
+msgstr "Page title"
 
 #: web/templates/login.html:34
 msgctxt "login-sign-in-with-wikimedia-account"
 msgid "Sign in with Wikimedia account"
-msgstr "Sign in with Wikimedia account"
+msgstr "Button to sign in with Wikimedia account"
 
 #: web/templates/login.html:37
 msgctxt "login-advanced-consumer-key"
 msgid "Advanced: login with a developer consumer key"
-msgstr "Advanced: login with a developer consumer key"
+msgstr "Link to advanced login with a developer consumer key"
 
 #: web/templates/login_dev.html:4
 msgctxt "login-dev-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 - Login"
+msgstr "Page title"
 
 #: web/templates/login_dev.html:9
 msgctxt "login-dev-developer-access"
 msgid "Developer access"
-msgstr "Developer access"
+msgstr "Developer login page heading"
 
 #: web/templates/login_dev.html:11
 msgctxt "login-dev-submit-your-access-token-below"
 msgid "Submit your access token below."
-msgstr "Submit your access token below."
+msgstr "Developer login help message"
 
 #: web/templates/login_dev.html:19 web/templates/login_dev.html:20
 msgctxt "login-dev-access-token"
 msgid "Access Token"
-msgstr "Access Token"
+msgstr "Prepopulated string on developer login input box"
 
 #: web/templates/login_dev.html:23
 msgctxt "login-dev-log-in"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Log in button"
 
 #: web/templates/login_dev.html:30
 msgctxt "login-dev-your-access-token-is-not-valid"
 msgid "Your access token is not valid:"
-msgstr "Your access token is not valid:"
+msgstr "Error mesage of your access token is not valid:"
 
 #: web/templates/navbar.html:8
 msgctxt "layout-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Navbar button"
 
 #: web/templates/navbar.html:9
 msgctxt "layout-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Navbar button"
 
 #: web/templates/navbar.html:10
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Navbar button"
 
 #: web/templates/navbar.html:20
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Login"
+msgstr "Navbar button"
 
 #: web/templates/navbar.html:22
 msgctxt "layout-user"
 msgid "User"
-msgstr "User"
+msgstr "Navbar button"
 
 #: web/templates/navbar.html:23
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
-msgstr "Your last batches"
+msgstr "Navbar button"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
 msgid "QuickStatements 3.0 - New batch"
-msgstr "QuickStatements 3.0 - New batch"
+msgstr "Page title"
 
 #: web/templates/new_batch.html:12
 msgctxt "new-batch-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "New batch heading"
 
 #: web/templates/new_batch.html:21
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "Error message"
 
 #: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
-msgstr "Wikibase"
+msgstr "Wikibase input title"
 
 #: web/templates/new_batch.html:41
 msgctxt "new-batch-command-format"
 msgid "Command format"
-msgstr "Command format"
+msgstr "Command format input title"
 
 #: web/templates/new_batch.html:49
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
-msgstr "Custom batch name..."
+msgstr "Custom batch name... prepopulated string on input"
 
 #: web/templates/new_batch.html:54
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
-msgstr "Block batch if a command fails"
+msgstr "Toggle button"
 
 #: web/templates/new_batch.html:55
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
-msgstr "The batch will stop processing if a command gives an error."
+msgstr "Explanation of a toggle button"
 
 #: web/templates/new_batch.html:60
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
-msgstr "Do not combine commands"
+msgstr "Toggle button"
 
 #: web/templates/new_batch.html:61
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
-msgstr ""
-"Commands targeting the same entity will not be combined into one edit."
+msgstr "Explanation of a toggle button"
 
 #: web/templates/new_batch.html:66
 msgctxt "new-batch-file-upload"
 msgid "File upload"
-msgstr "File upload"
+msgstr "Form title of file upload"
 
 #: web/templates/new_batch.html:67
 msgctxt "new-batch-file-upload-targeting"
 msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
-msgstr ""
-"Option for when the user prefers to upload a file, intead of writing the "
-"commands in the form"
+msgstr "File upload explanation"
 
 #: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
-msgstr "Enter your commands here..."
+msgstr "Enter your commands here... prepopulated string on input"
 
 #: web/templates/new_batch.html:85
 msgctxt "new-batch-note-only-autoconfirmed"
@@ -782,217 +798,212 @@ msgstr "Your account is blocked and you will not be able to run any batches."
 #: web/templates/preview_batch.html:41
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr "Note: only autoconfirmed users can run batches."
+msgstr "Warning message"
 
 #: web/templates/preview_batch.html:49
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
 msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
 "CLICKING 'Save and run batch'."
-msgstr ""
-"THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
-"CLICKING 'Save and run batch'."
+msgstr "Warning message after batch previewing"
 
 #: web/templates/preview_batch.html:55
 msgctxt "preview-batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Commands section title"
 
 #: web/templates/preview_batch.html:57
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "Loading commands indication"
 
 #: web/templates/profile.html:5
 msgctxt "profile-quickstatements-profile"
 msgid "QuickStatements 3.0 - Profile"
-msgstr "QuickStatements 3.0 - Profile"
+msgstr "Page title"
 
 #: web/templates/profile.html:23
 msgctxt "profile-autoconfirmed-status"
 msgid "Autoconfirmed status"
-msgstr "Autoconfirmed status"
+msgstr "Profile section title"
 
 #: web/templates/profile.html:25
 msgctxt "profile-only-autoconfirmed-users-can-run-batches-on-quickstatements"
 msgid "Only autoconfirmed users can run batches on Quickstatements"
-msgstr "Only autoconfirmed users can run batches on Quickstatements"
+msgstr "Profile warning"
 
 #: web/templates/profile.html:27
 msgctxt "profile-read-about-autoconfirmed-user-definition"
 msgid "Read about autoconfirmed user definition"
-msgstr "Read about autoconfirmed user definition"
+msgstr "Link title to read about autoconfirmed"
 
 #: web/templates/profile.html:33
 msgctxt ""
 "profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user"
 msgid "We have successfully verified that you are an autoconfirmed user."
-msgstr "We have successfully verified that you are an autoconfirmed user."
+msgstr "Profile notice message"
 
 #: web/templates/profile.html:40
 msgctxt "profile-we-could-not-verify-you-are-an-autoconfirmed-user"
 msgid "We could not verify you are an autoconfirmed user."
-msgstr "We could not verify you are an autoconfirmed user."
+msgstr "Profile error message"
 
 #: web/templates/profile.html:42
 msgctxt "profile-you-are-not-an-autoconfirmed-user"
 msgid "You are not an autoconfirmed user."
-msgstr "You are not an autoconfirmed user."
+msgstr "Profile warning"
 
 #: web/templates/profile.html:51
 msgctxt "profile-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Profile section title"
 
 #: web/templates/profile.html:54
 msgctxt "profile-preferred-language"
 msgid "Preferred language"
-msgstr "Preferred language"
+msgstr "Profile section title"
 
 #: web/templates/profile.html:61
 msgctxt "profile-update-preferred-language"
 msgid "Update preferred language"
-msgstr "Update preferred language"
+msgstr "Button to update preferred language"
 
 #: web/templates/profile.html:66
 msgctxt "profile-api-token"
 msgid "API Token"
-msgstr "API Token"
+msgstr "Profile section title"
 
 #: web/templates/profile.html:69
 msgctxt "profile-here-you-can-generate-a-token"
 msgid ""
 "Here, you can generate a token to use when querying batch jobs "
 "programatically."
-msgstr ""
-"Here, you can generate a token to use when querying batch jobs "
-"programatically."
+msgstr "Profile API token explanation message"
 
 #: web/templates/profile.html:71
 msgctxt "profile-you-currently-have-the-following-token"
 msgid ""
 "You currently have the following token. This token must be kept private:"
-msgstr ""
-"You currently have the following token. This token must be kept private:"
+msgstr "Profile API token explanation message"
 
 #: web/templates/profile.html:77
 msgctxt "profile-update-token"
 msgid "Update token"
-msgstr "Update token"
+msgstr "Button to update token"
 
 #: web/templates/profile.html:82
 msgctxt "profile-click-here-to-log-out"
 msgid "Click here to log out."
-msgstr "Click here to log out."
+msgstr "Log out link"
 
 #: web/templates/profile.html:87
 msgctxt "profile-youre-not-logged-in"
 msgid "You're not logged in."
-msgstr "You're not logged in."
+msgstr "Not logged in message"
 
 #: web/templates/profile.html:88
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Click here to log in."
+msgstr "Log in link"
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
-msgstr "QuickStatements 3.0 - Statistics"
+msgstr "Page title"
 
 #: web/templates/statistics.html:16
 #, python-format
 msgctxt "statistics-title-username"
 msgid " Statistics of %(1)s "
-msgstr " Statistics of %(1)s "
+msgstr "Statistics title for an user"
 
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistics title"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
 msgid "All-time numbers"
-msgstr "All-time numbers"
+msgstr "Statistics section title"
 
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Statistics counter box heading"
 
 #: web/templates/statistics_all_time_counters.html:11
 msgctxt "statistics-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Statistics counter box heading"
 
 #: web/templates/statistics_all_time_counters.html:16
 msgctxt "statistics-avg-commands"
 msgid "Average number of commands per batch"
-msgstr "Average number of commands per batch"
+msgstr "Statistics counter box heading"
 
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Items created"
+msgstr "Statistics counter box heading"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Editors"
+msgstr "Statistics counter box heading"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
 msgid "Hey, it's you!"
-msgstr "Hey, it's you!"
+msgstr "Statistics message below editor count for other users"
 
 #: web/templates/statistics_all_time_counters.html:38
 #, python-format
 msgctxt "statistics-hey-its-them"
 msgid "Hey it's %(1)s!"
-msgstr "Hey it's %(1)s!"
+msgstr "Statistics message below editor count for the user itself"
 
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Edits"
+msgstr "Statistics counter box heading"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
 msgid "Cumulative number of batches"
-msgstr "Cumulative number of batches"
+msgstr "Statistics section title"
 
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Cumulative number of edits"
+msgstr "Statistics section title"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
 msgid "Cumulative number of edits and new editors"
-msgstr "Cumulative number of edits and new editors"
+msgstr "Statistics section title"
 
 #: web/templates/statistics_plots.html:29
 msgctxt "statistics-done-and-error-commands"
 msgid "Done and error commands per day"
-msgstr "Done and error commands per day"
+msgstr "Statistics section title"
 
 #: web/templates/statistics_plots.html:53
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
-msgstr "Number of batches"
+msgstr "Statistics section title"
 
 #: web/templates/statistics_plots.html:104
 #: web/templates/statistics_plots.html:141
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
-msgstr "Number of edits"
+msgstr "Statistics plot legend"
 
 #: web/templates/statistics_plots.html:115
 #: web/templates/statistics_plots.html:148
 msgctxt "statistics-number-of-editors"
 msgid "Number of editors"
-msgstr "Number of editors"
+msgstr "Statistics plot legend"
 
 #: web/templates/statistics_plots.html:187
 msgctxt "statistics-done-status"
@@ -1007,9 +1018,9 @@ msgstr "Error status"
 #: web/views/new_batch.py:261
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
-msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
+msgstr "Error message when creating batch"
 
 #: web/views/new_batch.py:264
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
-msgstr "User is blocked and can not run batches."
+msgstr "Error message when creating batch"
