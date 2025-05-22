@@ -20,6 +20,7 @@ from .views.new_batch import new_batch
 from .views.new_batch import preview_batch
 from .views.new_batch import preview_batch_commands
 from .views.profile import profile
+from .views.profile import language_change
 from .views.statistics import statistics
 from .views.statistics import all_time_counters
 from .views.statistics import plots
@@ -60,4 +61,5 @@ urlpatterns = [
     path("statistics/<str:username>/", statistics_user, name="statistics_user"),
     path("statistics/counters/<str:username>/", all_time_counters_user, name="statistics_all_time_counters_user"),
     path("statistics/plots/<str:username>/", plots_user, name="statistics_plots_user"),
+    path("language/change/<str:code>/", language_change, name="language_change"),
 ]

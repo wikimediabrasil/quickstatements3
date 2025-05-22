@@ -552,3 +552,5 @@ LANGUAGE_CHOICES = (
     ("zh-yue", "粵語"),
     ("zu", "isiZulu"),
 )
+
+LANGUAGE_CODE_LIST = [choice[0] for choice in LANGUAGE_CHOICES]

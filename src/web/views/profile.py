@@ -1,9 +1,13 @@
 from django.shortcuts import render
+from django.utils import translation
+from django.http import HttpResponse
+from django.views.decorators.http import require_POST
 from rest_framework.authtoken.models import Token as AuthToken
 
 from core.exceptions import ServerError, UnauthorizedToken
 from core.models import Client, Token, get_default_wikibase
 from web.languages import LANGUAGE_CHOICES
+from web.languages import LANGUAGE_CODE_LIST
 from web.models import Preferences
 
 from .auth import logout_per_token_expired
@@ -40,7 +44,6 @@ def profile(request):
                 prefs, _ = Preferences.objects.get_or_create(user=user)
                 prefs.language = request.POST["language"]
                 prefs.save()
-                from django.utils import translation
 
                 translation.activate(prefs.language)
                 request.LANGUAGE_CODE = translation.get_language()
@@ -55,3 +58,17 @@ def profile(request):
         data["language_choices"] = LANGUAGE_CHOICES
 
     return render(request, "profile.html", data)
+
+@require_POST
+def language_change(request, code):
+    translation.activate(code)
+    request.LANGUAGE_CODE = translation.get_language()
+    res = HttpResponse(status=200)
+    res.headers["HX-Refresh"] = "true"
+    if request.user.is_authenticated and code in LANGUAGE_CODE_LIST:
+        prefs, _ = Preferences.objects.get_or_create(user=request.user)
+        prefs.language = code
+        prefs.save()
+    else:
+        request.session["language_code"] = code
+    return res
