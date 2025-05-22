@@ -641,7 +641,7 @@ class TestBatchCommand(TestCase):
         batch = BatchFactory.load_from_parser(parser, "b", "u", "CREATE /* hello */")
         batch_id = batch.id
         cmd = batch.commands()[0]
-        comment = f"[[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: hello"
+        comment = f"QuickStatements 3.0 [[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: hello"
         self.assertEqual(
             cmd.api_body(self.api_client),
             {

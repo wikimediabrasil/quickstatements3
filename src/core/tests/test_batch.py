@@ -272,12 +272,12 @@ class TestV1Batch(TestCase):
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(
             cmd.edit_summary(),
-            f"[[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: my comment",
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: my comment",
         )
         cmd = BatchCommand.objects.get(batch=batch, index=1)
         self.assertEqual(
             cmd.edit_summary(),
-            f"[[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]",
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]",
         )
 
     def test_set_sitelink(self):
@@ -807,12 +807,12 @@ Q4115189,Q5,
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(
             cmd.edit_summary(),
-            f"[[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: my comment",
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: my comment",
         )
         cmd = BatchCommand.objects.get(batch=batch, index=1)
         self.assertEqual(
             cmd.edit_summary(),
-            f"[[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]",
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]",
         )
 
     @override_settings(TOOLFORGE_TOOL_NAME=None)

@@ -1419,7 +1419,7 @@ class BatchCommand(models.Model):
         tool = settings.TOOLFORGE_TOOL_NAME
         if tool is not None:
             batch_id = self.batch.id
-            return f"[[:toollabs:{tool}/batch/{batch_id}|batch #{batch_id}]]"
+            return f"QuickStatements 3.0 [[:toollabs:{tool}/batch/{batch_id}|batch #{batch_id}]]"
         else:
             return ""
 
