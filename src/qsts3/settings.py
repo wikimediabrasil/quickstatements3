@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import glob
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -123,8 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -205,12 +204,16 @@ LOGIN_URL = "/auth/login/"
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
-LANGUAGES = [
-    ("pt-br", "Português Brasil"),
-    ("en", "English"),
-]
-
 LANGUAGE_CODE = "en"
+
+translations = []
+
+for path in glob.glob("../translations/*.json"):
+    code = path.split("translations/")[-1].split(".json")[0]
+    if code != "qqq":
+        translations.append(code)
+
+TRANSLATED_LANGUAGES = sorted(translations)
 
 # -----------------
 # App configuration

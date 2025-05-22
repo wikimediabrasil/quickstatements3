@@ -16,7 +16,9 @@ def language_cookie_middleware(get_response):
         else:
             language = settings.LANGUAGE_CODE
 
-        translation.activate(language)
+        if language in settings.TRANSLATED_LANGUAGES:
+            translation.activate(language)
+
         request.LANGUAGE_CODE = translation.get_language()
         return get_response(request)
 

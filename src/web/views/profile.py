@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils import translation
 from django.http import HttpResponse
+from django.conf import settings
 from django.views.decorators.http import require_POST
 from rest_framework.authtoken.models import Token as AuthToken
 
@@ -44,9 +45,9 @@ def profile(request):
                 prefs, _ = Preferences.objects.get_or_create(user=user)
                 prefs.language = request.POST["language"]
                 prefs.save()
-
-                translation.activate(prefs.language)
-                request.LANGUAGE_CODE = translation.get_language()
+                if prefs.language in settings.TRANSLATED_LANGUAGES:
+                    translation.activate(prefs.language)
+                    request.LANGUAGE_CODE = translation.get_language()
             elif action == "update_token":
                 if auth_token:
                     auth_token.delete()

@@ -24,6 +24,7 @@ x-application-service: &application-service
     - ./etc/env
   volumes:
     - ./src:/home/wmb/www/python/src
+    - ./translations:/home/wmb/www/python/translations
     - qs-static-data:/home/wmb/www/python/static
 
 x-wikibase-volumes: &wikibase-volumes
