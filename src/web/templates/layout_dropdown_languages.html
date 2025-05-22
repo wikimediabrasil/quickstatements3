@@ -1,0 +1,14 @@
+{% load quickstatements %}
+<details class="dropdown">
+  <summary>{{ request.LANGUAGE_CODE }}</summary>
+  <ul dir="rtl">
+    {% get_translated_languages as languages %}
+    {% for code in languages %}
+    <li>
+      <a href="#" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-post="{% url 'language_change' code=code %}">
+        {{ code }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</details>

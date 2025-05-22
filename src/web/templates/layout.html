@@ -59,13 +59,11 @@
       background-color: var(--pico-color-red-600);
     }
 
-    #dropdown-menu {
-      display: none;
-    }
+    li.mobile-links { display: none; }
 
-    @media screen and (max-width: 1050px) {
-      #dropdown-menu { display: block; }
-      #navbar-menu { display: none; }
+    @media screen and (max-width: 700px) {
+      #layout-dropdown-account { display: none; }
+      li.mobile-links { display: block; }
     }
 
     {% block css %}
@@ -76,15 +74,35 @@
 
 <body>
   <main class="container">
-    <details name="dropdown-menu" id="dropdown-menu">
-      <summary style="font-weight: bold; color: var(--pico-primary);">QuickStatements 3.0</summary>
-      <aside>
-        {% include 'navbar.html' with dropdown_version=True %}
-      </aside>
-    </details>
-    <div id="navbar-menu">
-      {% include 'navbar.html' %}
-    </div>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}"><strong>{% translate "QuickStatements 3.0" context "layout-quickstatements-title" %}</strong></a></li>
+      </ul>
+      <ul>
+        <li>{% include "layout_dropdown_languages.html" %}</li>
+        <li id="layout-dropdown-menu">
+          <details class="dropdown">
+            <summary>{% translate "Menu" context "layout-navbar-menu" %}</summary>
+            <ul dir="rtl">
+              <li class="mobile-links"><strong>{% translate "Main" context "layout-navbar-main" %}</strong></li>
+              {% include "layout_menu_links.html" %}
+              {% include "layout_account_links.html" with mobile=True %}
+            </ul>
+          </details>
+        </li>
+        <li id="layout-dropdown-account">
+          <details class="dropdown">
+            <summary>
+              {% if user.is_anonymous %}
+              {% translate "Account" context "layout-navbar-account" %}
+              {% else %}
+              {% translate "User" context "layout-navbar-user" %}:{{user}}
+              {% endif %}
+            </summary>
+            <ul dir="rtl">{% include "layout_account_links.html" %}</ul>
+        </li>
+      </ul>
+    </nav>
     {% block content %}
     {% endblock content %}
   </main>

@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if user.is_anonymous %}
+<li {% if mobile %}class="mobile-links"{% endif %}><a href="{% url 'login' %}">{% translate "Log in" context "layout-navbar-login" %}</a></li>
+{% else %}
+{% if mobile %}<li class="mobile-links"><strong>{% translate "User" context "layout-navbar-user" %}:{{user}}</strong></li>{% endif %}
+<li {% if mobile %}class="mobile-links"{% endif %}><a href="{% url 'profile' %}">{% translate "Profile" context "layout-navbar-profile" %}</a></li>
+<li {% if mobile %}class="mobile-links"{% endif %}><a href="{% url 'last_batches_by_user' user=user %}">{% translate "Your last batches" context "layout-navbar-your-last-batches" %}</a></li>
+<li {% if mobile %}class="mobile-links"{% endif %}><a href="{% url 'statistics_user' username=user.username %}">Your statistics</a></li>
+<li {% if mobile %}class="mobile-links"{% endif %}><a href="{% url 'logout' %}">{% translate "Log out" context "layout-navbar-logout" %}</a></li>
+{% endif %}
