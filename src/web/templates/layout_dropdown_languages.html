@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load quickstatements %}
 <details class="dropdown">
   <summary>{{ request.LANGUAGE_CODE }}</summary>
@@ -10,5 +11,6 @@
       </a>
     </li>
     {% endfor %}
+    <li><a href="https://translatewiki.net/wiki/Translating:Quickstatements3">{% translate "Help us translate" context "layout-navbar-help-us-translate" %}</a></li>
   </ul>
 </details>

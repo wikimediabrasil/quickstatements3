@@ -59,11 +59,11 @@
       background-color: var(--pico-color-red-600);
     }
 
-    li.mobile-links { display: none; }
+    .mobile-only { display: none; }
 
-    @media screen and (max-width: 700px) {
-      #layout-dropdown-account { display: none; }
-      li.mobile-links { display: block; }
+    @media screen and (max-width: 1030px) {
+      .mobile-only { display: block; }
+      .desktop-only { display: none; }
     }
 
     {% block css %}
@@ -74,35 +74,8 @@
 
 <body>
   <main class="container">
-    <nav>
-      <ul>
-        <li><a href="{% url 'home' %}"><strong>{% translate "QuickStatements 3.0" context "layout-quickstatements-title" %}</strong></a></li>
-      </ul>
-      <ul>
-        <li>{% include "layout_dropdown_languages.html" %}</li>
-        <li id="layout-dropdown-menu">
-          <details class="dropdown">
-            <summary>{% translate "Menu" context "layout-navbar-menu" %}</summary>
-            <ul dir="rtl">
-              <li class="mobile-links"><strong>{% translate "Main" context "layout-navbar-main" %}</strong></li>
-              {% include "layout_menu_links.html" %}
-              {% include "layout_account_links.html" with mobile=True %}
-            </ul>
-          </details>
-        </li>
-        <li id="layout-dropdown-account">
-          <details class="dropdown">
-            <summary>
-              {% if user.is_anonymous %}
-              {% translate "Account" context "layout-navbar-account" %}
-              {% else %}
-              {% translate "User" context "layout-navbar-user" %}:{{user}}
-              {% endif %}
-            </summary>
-            <ul dir="rtl">{% include "layout_account_links.html" %}</ul>
-        </li>
-      </ul>
-    </nav>
+    {% include "layout_mobile_menu.html" %}
+    {% include "layout_desktop_menu.html" %}
     {% block content %}
     {% endblock content %}
   </main>
