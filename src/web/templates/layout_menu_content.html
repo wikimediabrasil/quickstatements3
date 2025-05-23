@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load static %}
+<li style="padding-bottom: 0px;"><a href="{% url 'home' %}"><img width="50px" height="50px" src="{% static 'icon.svg' %}"/></a></li>
+{% if user.is_authenticated %}
+<li style="padding-top: 0px;"><span style="font-weight: bold; color: var(--pico-primary);">{{ user }}</span></li>
+{% endif %}
+<li>
+  {% if mobile %}
+    <span style="text-align: left;">{% include "layout_dropdown_languages.html" %}<span>
+  {% endif %}
+  {% if user.is_authenticated %}
+  <a {% if mobile %}role="button"{% endif %} href="{% url 'profile' %}">{% translate "Preferences" context "layout-navbar-preferences" %}</a>
+  {% else %}
+  <a {% if mobile %}role="button"{% else %}style="font-weight: bold;"{% endif %} href="{% url 'login' %}">{% translate "Log in" context "layout-navbar-login" %}</a>
+  {% endif %}
+</li>
+<li><hr/></li>
+<li><a href="{% url 'new_batch' %}">{% translate "New batch" context "layout-navbar-new-batch" %}</a></li>
+<li><a href="{% url 'last_batches' %}">{% translate "Last batches" context "layout-navbar-last-batches" %}</a></li>
+{% if user.is_authenticated %}
+<li><a href="{% url 'last_batches_by_user' user=user %}">{% translate "Your batches" context "layout-navbar-your-batches" %}</a></li>
+{% endif %}
+<li><hr/></li>
+<li><a href="https://meta.wikimedia.org/wiki/QuickStatements_3.0/Documentation">{% translate "Help/Documentation" context "layout-navbar-help-slash-documentation" %}</a></li>
+<li><a href="https://github.com/WikiMovimentoBrasil/quickstatements3">{% translate "Repository" context "layout-navbar-repository" %}</a></li>
+<li><a href="{% url 'statistics' %}">{% translate "Statistics" context "layout-navbar-statistics" %}</a></li>
+{% if user.is_authenticated %}
+<li><hr/></li>
+<li><a {% if mobile %}role="button"{% else %}style="font-weight: bold;"{% endif %} href="{% url 'logout' %}">{% translate "Log out" context "layout-navbar-logout" %}</a></li>
+{% endif %}

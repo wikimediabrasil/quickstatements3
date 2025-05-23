@@ -59,13 +59,11 @@
       background-color: var(--pico-color-red-600);
     }
 
-    #dropdown-menu {
-      display: none;
-    }
+    .mobile-only { display: none; }
 
-    @media screen and (max-width: 1050px) {
-      #dropdown-menu { display: block; }
-      #navbar-menu { display: none; }
+    @media screen and (max-width: 1030px) {
+      .mobile-only { display: block; }
+      .desktop-only { display: none; }
     }
 
     {% block css %}
@@ -76,15 +74,8 @@
 
 <body>
   <main class="container">
-    <details name="dropdown-menu" id="dropdown-menu">
-      <summary style="font-weight: bold; color: var(--pico-primary);">QuickStatements 3.0</summary>
-      <aside>
-        {% include 'navbar.html' with dropdown_version=True %}
-      </aside>
-    </details>
-    <div id="navbar-menu">
-      {% include 'navbar.html' %}
-    </div>
+    {% include "layout_mobile_menu.html" %}
+    {% include "layout_desktop_menu.html" %}
     {% block content %}
     {% endblock content %}
   </main>

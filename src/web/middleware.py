@@ -8,15 +8,18 @@ def language_cookie_middleware(get_response):
     def middleware(request):
         if request.user.is_authenticated:
             language = Preferences.objects.get_language(
-                request.user, settings.LANGUAGE_CODE
+                request.user,
+                settings.LANGUAGE_CODE,
             )
+        elif "language_code" in request.session:
+            language = request.session["language_code"]
         else:
             language = settings.LANGUAGE_CODE
 
-        translation.activate(language)
-        request.LANGUAGE_CODE = translation.get_language()
+        if language in settings.TRANSLATED_LANGUAGES:
+            translation.activate(language)
 
-        response = get_response(request)
-        return response
+        request.LANGUAGE_CODE = translation.get_language()
+        return get_response(request)
 
     return middleware

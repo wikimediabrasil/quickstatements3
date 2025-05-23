@@ -4,6 +4,7 @@ import logging
 import re
 
 from django import template
+from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import pgettext
 
@@ -206,3 +207,8 @@ def datavalue_display(command, datavalue):
 @register.simple_tag
 def entity_display(command, entity_id):
     return mark_safe(render_entity_datavalue(command, entity_id))
+
+
+@register.simple_tag
+def get_translated_languages():
+    return settings.TRANSLATED_LANGUAGES
