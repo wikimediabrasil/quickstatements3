@@ -10,3 +10,5 @@ jsonpatch==1.33
 mysqlclient==2.2.7
 factory_boy
 polib
+drf-spectacular
+drf-spectacular-sidecar
