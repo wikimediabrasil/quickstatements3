@@ -64,7 +64,15 @@
     @media screen and (max-width: 1030px) {
       .mobile-only { display: block; }
       .desktop-only { display: none; }
+      #layout-hamburguer-menu > ul { position: fixed; margin-top: 0.5em; height: 100%; }
     }
+
+    #layout-hamburguer-menu {
+      > summary::after { background-image: none; content: '☰'; }
+      > summary { padding-right: 1em; padding-left: 1em; }
+    }
+
+    #layout-hamburguer-menu[open] > summary:after { content: '✕'; }
 
     {% block css %}
     {% endblock %}
@@ -74,7 +82,6 @@
 
 <body>
   <main class="container">
-    {% include "layout_mobile_menu.html" %}
     {% include "layout_desktop_menu.html" %}
     {% block content %}
     {% endblock content %}
