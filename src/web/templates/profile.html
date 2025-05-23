@@ -15,7 +15,8 @@
     <li><h1> {{ user.username }} </h1></li>
   </ul>
   <ul>
-    <li><a href="{% url 'statistics_user' username=user.username %}">Your statistics</a></li>
+    <li><a href="{% url 'last_batches_by_user' user=user %}">{% translate "Your batches" context "layout-navbar-your-batches" %}</a></li>
+    <li><a href="{% url 'statistics_user' username=user.username %}">{% translate "Your statistics" context "layout-navbar-your-statistics" %}</a></li>
   </ul>
 </nav>
 
