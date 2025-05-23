@@ -192,5 +192,19 @@
     "statistics-edits-only": "Cumulative number of edits",
     "batch-summary-commands-eta": "ETA",
     "new-batch-file-upload": "File upload",
-    "new-batch-file-upload-targeting": "Option for when the user prefers to upload a file, intead of writing the commands in the form"
+    "new-batch-file-upload-targeting": "Option for when the user prefers to upload a file, intead of writing the commands in the form",
+    "layout-quickstatements-title": "QuickStatements 3.0",
+    "layout-navbar-new-batch": "New batch",
+    "layout-navbar-last-batches": "Last batches",
+    "layout-navbar-help": "Help",
+    "layout-navbar-menu": "Menu",
+    "layout-navbar-login": "Log in",
+    "layout-navbar-help-us-translate": "Help us translate",
+    "layout-navbar-preferences": "Preferences",
+    "layout-navbar-your-batches": "Your batches",
+    "layout-navbar-help-slash-documentation": "Help/Documentation",
+    "layout-navbar-repository": "Repository",
+    "layout-navbar-statistics": "Statistics",
+    "layout-navbar-logout": "Log out",
+    "layout-navbar-your-statistics": "Your statistics"
 }
