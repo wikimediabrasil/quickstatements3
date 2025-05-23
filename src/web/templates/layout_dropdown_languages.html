@@ -3,6 +3,7 @@
 <details class="dropdown">
   <summary>{{ request.LANGUAGE_CODE }}</summary>
   <ul dir="rtl">
+    <li><a href="https://translatewiki.net/wiki/Translating:Quickstatements3">{% translate "Help us translate" context "layout-navbar-help-us-translate" %}</a></li>
     {% get_translated_languages as languages %}
     {% for code in languages %}
     <li>
@@ -11,6 +12,5 @@
       </a>
     </li>
     {% endfor %}
-    <li><a href="https://translatewiki.net/wiki/Translating:Quickstatements3">{% translate "Help us translate" context "layout-navbar-help-us-translate" %}</a></li>
   </ul>
 </details>
