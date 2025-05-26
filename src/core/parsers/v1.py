@@ -302,8 +302,31 @@ class V1CommandParser(BaseParser):
         return data
 
     def parse(self, raw_commands) -> Iterator[BatchCommand]:
+        # Use placeholders to temporarily replace quoted content
+        placeholder = "___QSTS3_PLACEHOLDER___"
+
+        # Regex to match quoted strings and comments/summaries
+        quoted_pattern = r'("("")?)(?:\\.|[^\\])*?\1|\/\*.*?\*\/'
+        placeholders = []
+
+        def replace_with_placeholder(match):
+            placeholders.append(match.group(0))
+            return placeholder
+
+        raw_commands = re.sub(
+            quoted_pattern,
+            replace_with_placeholder,
+            raw_commands,
+            flags=re.DOTALL
+        )
+
+        def restore_placeholders(command):
+            while placeholder in command:
+                command = command.replace(placeholder, placeholders.pop(0), 1)
+            return command
+
         commands = raw_commands.replace("||", "\n").replace("|", "\t")
-        commands = [c.strip() for c in commands.split("\n") if c.strip()]
+        commands = [restore_placeholders(c.strip()) for c in commands.split("\n") if c.strip()]
 
         for index, raw_command in enumerate(commands):
             bc = BatchCommand(
