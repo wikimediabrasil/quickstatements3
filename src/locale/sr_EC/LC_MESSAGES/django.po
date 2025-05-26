@@ -240,17 +240,17 @@ msgstr "Команде серија"
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "decade"
+msgstr "деценија"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "century"
+msgstr "век"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
 msgid "millennium"
-msgstr "millennium"
+msgstr "миленијум"
 
 #: core/templatetags/quickstatements.py:55
 msgctxt "batch-command-time-hundred-thousand"
@@ -260,22 +260,22 @@ msgstr "hundred thousand years"
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "million years"
+msgstr "милион година"
 
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "billion years"
+msgstr "милијарда година"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Unknown Value)"
+msgstr "(Непозната вредност)"
 
 #: core/templatetags/quickstatements.py:142
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(No Value)"
+msgstr "(Без вредности)"
 
 #: web/models.py:52
 msgctxt "web-models-token"
@@ -361,17 +361,17 @@ msgstr "Заустави обраду"
 #: web/templates/batch_commands.html:38
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Statement"
+msgstr "Изјаве"
 
 #: web/templates/batch_commands.html:55
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
-msgstr "Qualifiers"
+msgstr "Квалификатори"
 
 #: web/templates/batch_commands.html:64
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "References"
+msgstr "Референце"
 
 #: web/templates/batch_commands.html:84
 msgctxt "batch-commands-showing-only-errors"
@@ -613,23 +613,23 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu_content.html:18
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Нова серија"
 
 #: web/templates/layout_desktop_menu.html:12
 #: web/templates/layout_menu_content.html:19
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Последње серије"
 
 #: web/templates/layout_desktop_menu.html:13
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Help"
+msgstr "Помоћ"
 
 #: web/templates/layout_desktop_menu.html:20
 msgctxt "layout-navbar-menu"
 msgid "Menu"
-msgstr "Menu"
+msgstr "Мени"
 
 #: web/templates/layout_desktop_menu.html:28
 #: web/templates/layout_menu_content.html:14
@@ -640,12 +640,12 @@ msgstr "Log in"
 #: web/templates/layout_dropdown_languages.html:14
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Help us translate"
+msgstr "Помозите у превођењу"
 
 #: web/templates/layout_menu_content.html:12
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Подешавања"
 
 #: web/templates/layout_menu_content.html:21 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
@@ -665,7 +665,7 @@ msgstr "Repository"
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Статистике"
 
 #: web/templates/layout_menu_content.html:29
 msgctxt "layout-navbar-logout"
@@ -878,7 +878,7 @@ msgstr "QuickStatements 3.0 - Профил"
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Your statistics"
+msgstr "Ваша статистика"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
@@ -979,7 +979,7 @@ msgstr " Statistics of %(1)s "
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Статистике"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
@@ -1035,7 +1035,7 @@ msgstr "Cumulative number of batches"
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Cumulative number of edits"
+msgstr "Кумулативан број измена"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
@@ -1056,13 +1056,13 @@ msgstr "Број серија"
 #: web/templates/statistics_plots.html:141
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
-msgstr "Number of edits"
+msgstr "Број измена"
 
 #: web/templates/statistics_plots.html:115
 #: web/templates/statistics_plots.html:148
 msgctxt "statistics-number-of-editors"
 msgid "Number of editors"
-msgstr "Number of editors"
+msgstr "Број уредника"
 
 #: web/templates/statistics_plots.html:187
 msgctxt "statistics-done-status"
@@ -1074,14 +1074,29 @@ msgctxt "statistics-error-status"
 msgid "Error status"
 msgstr "Статус грешке"
 
-#: web/views/new_batch.py:261
+#: web/views/new_batch.py:161
+msgctxt "batch-py-empty-command-input"
+msgid "Command input cannot be empty. Please provide valid commands."
+msgstr "Command input cannot be empty. Please provide valid commands."
+
+#: web/views/new_batch.py:170
+msgctxt "batch-py-csv-only-header"
+msgid "CSV input must include more than just the header row"
+msgstr "CSV input must include more than just the header row"
+
+#: web/views/new_batch.py:195
+msgctxt "batch-py-valid-command-not-found"
+msgid "No valid commands found in the provided input."
+msgstr "No valid commands found in the provided input."
+
+#: web/views/new_batch.py:276
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr ""
 "Корисник није аутоматски потврђен. Само аутоматски потврђени корисници могу "
 "покренути серије."
 
-#: web/views/new_batch.py:264
+#: web/views/new_batch.py:279
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "Корисник је блокиран и не може покретати серије."

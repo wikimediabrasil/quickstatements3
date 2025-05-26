@@ -1089,12 +1089,27 @@ msgctxt "statistics-error-status"
 msgid "Error status"
 msgstr "Error status"
 
-#: web/views/new_batch.py:261
+#: web/views/new_batch.py:161
+msgctxt "batch-py-empty-command-input"
+msgid "Command input cannot be empty. Please provide valid commands."
+msgstr "Command input cannot be empty. Please provide valid commands."
+
+#: web/views/new_batch.py:170
+msgctxt "batch-py-csv-only-header"
+msgid "CSV input must include more than just the header row"
+msgstr "CSV input must include more than just the header row"
+
+#: web/views/new_batch.py:195
+msgctxt "batch-py-valid-command-not-found"
+msgid "No valid commands found in the provided input."
+msgstr "No valid commands found in the provided input."
+
+#: web/views/new_batch.py:276
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr "Error message when creating batch"
 
-#: web/views/new_batch.py:264
+#: web/views/new_batch.py:279
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "Error message when creating batch"

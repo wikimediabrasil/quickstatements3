@@ -206,5 +206,8 @@
     "layout-navbar-repository": "Repository",
     "layout-navbar-statistics": "Statistics",
     "layout-navbar-logout": "Log out",
-    "layout-navbar-your-statistics": "Your statistics"
+    "layout-navbar-your-statistics": "Your statistics",
+    "batch-py-empty-command-input": "Command input cannot be empty. Please provide valid commands.",
+    "batch-py-csv-only-header": "CSV input must include more than just the header row",
+    "batch-py-valid-command-not-found": "No valid commands found in the provided input."
 }

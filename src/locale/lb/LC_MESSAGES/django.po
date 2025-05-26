@@ -26,7 +26,7 @@ msgstr "Stopped"
 #: core/models.py:485
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Blocked"
+msgstr "Gespaart"
 
 #: core/models.py:486
 msgctxt "batch-py-status-preview"
@@ -46,7 +46,7 @@ msgstr "Running"
 #: core/models.py:489
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Fäerdeg"
 
 #: core/models.py:512
 msgctxt "batch-py-batch"
@@ -56,12 +56,12 @@ msgstr "Batch"
 #: core/models.py:513
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Batchen"
 
 #: core/models.py:766
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
-msgstr "Error"
+msgstr "Feeler"
 
 #: core/models.py:767
 msgctxt "batchcommand-py-status-initial"
@@ -76,12 +76,12 @@ msgstr "Running"
 #: core/models.py:769
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Fäerdeg"
 
 #: core/models.py:778
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "ULEEËN"
 
 #: core/models.py:779
 msgctxt "batchcommand-py-action-add"
@@ -96,27 +96,27 @@ msgstr "REMOVE"
 #: core/models.py:781
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "MERGE"
+msgstr "FUSIONÉIEREN"
 
 #: core/models.py:814
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Create item"
+msgstr "Element uleeën"
 
 #: core/models.py:819
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
-msgstr "Create property"
+msgstr "Eegenschaft uleeën"
 
 #: core/models.py:825
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Set statement"
+msgstr "Ausso festleeën"
 
 #: core/models.py:830
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Create statement"
+msgstr "Ausso uleeën"
 
 #: core/models.py:838
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
@@ -136,7 +136,7 @@ msgstr "Remove qualifier"
 #: core/models.py:858
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Remove reference"
+msgstr "Referenz ewechhuelen"
 
 #: core/models.py:864
 msgctxt "batchcommand-py-operation-set-sitelink"
@@ -146,12 +146,12 @@ msgstr "Set sitelink"
 #: core/models.py:868
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Set label"
+msgstr "Etikett festleeën"
 
 #: core/models.py:873
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Set description"
+msgstr "Beschreiwung festleeën"
 
 #: core/models.py:880
 msgctxt "batchcommand-py-operation-remove-sitelink"
@@ -161,22 +161,22 @@ msgstr "Remove sitelink"
 #: core/models.py:885
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Remove label"
+msgstr "Etikett ewechhuelen"
 
 #: core/models.py:890
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Remove description"
+msgstr "Beschreiwung ewechhuelen"
 
 #: core/models.py:896
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Add alias"
+msgstr "Alias derbäisetzen"
 
 #: core/models.py:900
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Remove alias"
+msgstr "Alias ewechhuelen"
 
 #: core/models.py:927
 msgctxt "batchcommand-py-error-op-not-implemented"
@@ -241,42 +241,42 @@ msgstr "Batch Commands"
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "decade"
+msgstr "Joerzéngt"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "century"
+msgstr "Joerhonnert"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
 msgid "millennium"
-msgstr "millennium"
+msgstr "Joerdausend"
 
 #: core/templatetags/quickstatements.py:55
 msgctxt "batch-command-time-hundred-thousand"
 msgid "hundred thousand years"
-msgstr "hundred thousand years"
+msgstr "honnertdausend Joer"
 
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "million years"
+msgstr "Millioune Joer"
 
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "billion years"
+msgstr "Milliarde Joer"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Unknown Value)"
+msgstr "(Onbekannte Wäert)"
 
 #: core/templatetags/quickstatements.py:142
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(No Value)"
+msgstr "(Kee Wäert)"
 
 #: web/models.py:52
 msgctxt "web-models-token"
@@ -291,7 +291,7 @@ msgstr "Tokens"
 #: web/models.py:104 web/models.py:105
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Astellungen"
 
 #: web/templates/batch.html:4 web/templates/batch.html:13
 msgctxt "batch-batch"
@@ -311,7 +311,7 @@ msgstr "Created by"
 #: web/templates/batch.html:21
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Batche weisen"
 
 #: web/templates/batch.html:22
 msgctxt "batch-revert-discuss"
@@ -362,7 +362,7 @@ msgstr "Stop processing"
 #: web/templates/batch_commands.html:38
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Statement"
+msgstr "Ausso"
 
 #: web/templates/batch_commands.html:55
 msgctxt "batch-commands-qualifier"
@@ -372,7 +372,7 @@ msgstr "Qualifiers"
 #: web/templates/batch_commands.html:64
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "References"
+msgstr "Referenzen"
 
 #: web/templates/batch_commands.html:84
 msgctxt "batch-commands-showing-only-errors"
@@ -408,7 +408,7 @@ msgstr "PREVIOUS"
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Pg. %(1)s of %(2)s"
+msgstr "Säit %(1)s vu(n) %(2)s"
 
 #: web/templates/batch_commands.html:136
 msgctxt "batch-commands-next"
@@ -424,7 +424,7 @@ msgstr "LAST"
 #: web/templates/batch_commands.html:165
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Gréisst vun der Säit:"
 
 #: web/templates/batch_not_found.html:7
 #, python-format
@@ -435,17 +435,17 @@ msgstr "Batch <code>#%(1)s</code> not found."
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "Batch ID"
+msgstr "Batch-ID"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Detailer vum Batch weisen"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "BATCH STATUS"
+msgstr "BATCH-STATUS"
 
 #: web/templates/batch_summary.html:28
 #, python-format
@@ -476,12 +476,12 @@ msgstr "RUNNING"
 #: web/templates/batch_summary.html:36 web/templates/batches.html:65
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "DONE"
+msgstr "FÄERDEG"
 
 #: web/templates/batch_summary.html:37 web/templates/batches.html:66
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "ERRORS"
+msgstr "FEELER"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
@@ -501,7 +501,7 @@ msgstr "QuickStatements 3.0 - Last batches"
 #: web/templates/batches.html:25
 msgctxt "batches-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Rezent Batchen"
 
 #: web/templates/batches.html:25
 msgctxt "batches-from"
@@ -511,12 +511,12 @@ msgstr "from"
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "User"
+msgstr "Benotzer"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Name"
+msgstr "Numm"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
@@ -531,17 +531,17 @@ msgstr "Modified"
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Actions"
+msgstr "Aktiounen"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Batche weisen"
 
 #: web/templates/batches.html:71
 msgctxt "batches-view"
 msgid "View"
-msgstr "View"
+msgstr "Weisen"
 
 #: web/templates/batches.html:73
 msgctxt "batches-revert-discuss"
@@ -556,12 +556,12 @@ msgstr "FIRST"
 #: web/templates/batches.html:95
 msgctxt "batches-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "VIREG"
 
 #: web/templates/batches.html:113
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "NÄCHST"
 
 #: web/templates/batches.html:119
 msgctxt "batches-last"
@@ -572,7 +572,7 @@ msgstr "LAST"
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Gréisst vun der Säit:"
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
@@ -582,7 +582,7 @@ msgstr "Welcome to QuickStatements 3.0"
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Neie Batch"
 
 #: web/templates/index.html:17
 msgctxt "index-batch-id"
@@ -592,12 +592,12 @@ msgstr "Batch ID..."
 #: web/templates/index.html:18
 msgctxt "index-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Batch-Detailer weisen"
 
 #: web/templates/index.html:24
 msgctxt "index-username"
 msgid "Username..."
-msgstr "Username..."
+msgstr "Benotzernumm…"
 
 #: web/templates/index.html:25
 msgctxt "index-see-batches-by-user"
@@ -614,49 +614,49 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu_content.html:18
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Neie Batch"
 
 #: web/templates/layout_desktop_menu.html:12
 #: web/templates/layout_menu_content.html:19
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Rezent Batchen"
 
 #: web/templates/layout_desktop_menu.html:13
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Help"
+msgstr "Hëllef"
 
 #: web/templates/layout_desktop_menu.html:20
 msgctxt "layout-navbar-menu"
 msgid "Menu"
-msgstr "Menu"
+msgstr "Menü"
 
 #: web/templates/layout_desktop_menu.html:28
 #: web/templates/layout_menu_content.html:14
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Aloggen"
 
 #: web/templates/layout_dropdown_languages.html:14
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Help us translate"
+msgstr "Hëlleft eis beim Iwwersetzen"
 
 #: web/templates/layout_menu_content.html:12
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Astellungen"
 
 #: web/templates/layout_menu_content.html:21 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
 msgid "Your batches"
-msgstr "Your batches"
+msgstr "Är Batchen"
 
 #: web/templates/layout_menu_content.html:24
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
-msgstr "Help/Documentation"
+msgstr "Hëllef/Dokumentatioun"
 
 #: web/templates/layout_menu_content.html:25
 msgctxt "layout-navbar-repository"
@@ -666,12 +666,12 @@ msgstr "Repository"
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistiken"
 
 #: web/templates/layout_menu_content.html:29
 msgctxt "layout-navbar-logout"
 msgid "Log out"
-msgstr "Log out"
+msgstr "Ausloggen"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
@@ -681,7 +681,7 @@ msgstr "QuickStatements 3.0 - Login"
 #: web/templates/login.html:8
 msgctxt "login-page-title"
 msgid "Login"
-msgstr "Login"
+msgstr "Aloggen"
 
 #: web/templates/login.html:34
 msgctxt "login-sign-in-with-wikimedia-account"
@@ -716,7 +716,7 @@ msgstr "Access Token"
 #: web/templates/login_dev.html:23
 msgctxt "login-dev-log-in"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Aloggen"
 
 #: web/templates/login_dev.html:30
 msgctxt "login-dev-your-access-token-is-not-valid"
@@ -726,7 +726,7 @@ msgstr "Your access token is not valid:"
 #: web/templates/navbar.html:8
 msgctxt "layout-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Neie Batch"
 
 #: web/templates/navbar.html:9
 msgctxt "layout-last-batches"
@@ -736,22 +736,22 @@ msgstr "Last batches"
 #: web/templates/navbar.html:10
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistik"
 
 #: web/templates/navbar.html:20
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Login"
+msgstr "Aloggen"
 
 #: web/templates/navbar.html:22
 msgctxt "layout-user"
 msgid "User"
-msgstr "User"
+msgstr "Benotzer"
 
 #: web/templates/navbar.html:23
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
-msgstr "Your last batches"
+msgstr "Är rezent Batchen"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
@@ -761,12 +761,12 @@ msgstr "QuickStatements 3.0 - New batch"
 #: web/templates/new_batch.html:12
 msgctxt "new-batch-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Neie Batch"
 
 #: web/templates/new_batch.html:21
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "Äre Kont ass gespaart an Dir kënnt keng Batche lafe loossen."
 
 #: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
@@ -841,12 +841,12 @@ msgstr "Batch Preview"
 #: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
-msgstr "Save and run batch"
+msgstr "Batch späicheren a lafe loossen"
 
 #: web/templates/preview_batch.html:39
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "Äre Kont ass gespaart an Dir kënnt keng Batche lafe loossen."
 
 #: web/templates/preview_batch.html:41
 msgctxt "preview-batch-note-only-autoconfirmed"
@@ -880,7 +880,7 @@ msgstr "QuickStatements 3.0 - Profile"
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Your statistics"
+msgstr "Är Statistiken"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
@@ -916,7 +916,7 @@ msgstr "You are not an autoconfirmed user."
 #: web/templates/profile.html:52
 msgctxt "profile-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Astellungen"
 
 #: web/templates/profile.html:55
 msgctxt "profile-preferred-language"
@@ -962,12 +962,12 @@ msgstr "Click here to log out."
 #: web/templates/profile.html:88
 msgctxt "profile-youre-not-logged-in"
 msgid "You're not logged in."
-msgstr "You're not logged in."
+msgstr "Dir sidd net ageloggt."
 
 #: web/templates/profile.html:89
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Click here to log in."
+msgstr "Klickt hei fir Iech anzeloggen."
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
@@ -983,7 +983,7 @@ msgstr " Statistics of %(1)s "
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistik"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
@@ -993,7 +993,7 @@ msgstr "All-time numbers"
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Batchen"
 
 #: web/templates/statistics_all_time_counters.html:11
 msgctxt "statistics-commands"
@@ -1008,7 +1008,7 @@ msgstr "Average number of commands per batch"
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Items created"
+msgstr "Elementer ugeluecht"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
@@ -1029,7 +1029,7 @@ msgstr "Hey it's %(1)s!"
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Edits"
+msgstr "Ännerungen"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
@@ -1054,7 +1054,7 @@ msgstr "Done and error commands per day"
 #: web/templates/statistics_plots.html:53
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
-msgstr "Number of batches"
+msgstr "Zuel vu Batchen"
 
 #: web/templates/statistics_plots.html:104
 #: web/templates/statistics_plots.html:141
@@ -1076,7 +1076,7 @@ msgstr "Done status"
 #: web/templates/statistics_plots.html:194
 msgctxt "statistics-error-status"
 msgid "Error status"
-msgstr "Error status"
+msgstr "Feelerstatus"
 
 #: web/views/new_batch.py:161
 msgctxt "batch-py-empty-command-input"
