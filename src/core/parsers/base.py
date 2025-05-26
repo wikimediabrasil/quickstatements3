@@ -1,10 +1,6 @@
-import logging
 import re
 
 from decimal import Decimal
-
-
-logger = logging.getLogger(__name__)
 
 
 class ParserException(Exception):
@@ -285,8 +281,6 @@ class BaseParser(object):
         +2968-09-22T00:00:00Z/11/CQ999999  → Custom calendar (Q999999)
         """
 
-        logger.debug(f"Checking if {v} is a value of time")
-
         pattern = re.compile(
             r"""^
             (?P<sign>[+-]?)                          # Optional sign
@@ -338,20 +332,40 @@ class BaseParser(object):
 
         Examples:
             @43.26193/10.92708              - Default globe (Earth, Q2)
+            @43.26193/10.92708/0.1          - Default globe with a precision of 0.1 degree
+            @43.26193/10.92708/1arcmin      - Default globe with a precision of 1 arcminute
             @43.26193/10.92708/GQ123456     - Custom globe (Q123456)
 
         Returns a structured globecoordinate value or None.
         """
 
-        # Regex with optional custom globe
-        gps_match = re.match(
-            r"^\@\s*([+-]?[0-9.]+)\s*/\s*([+-]?[0-9.]+)(?:/G(\d+))?$", v
+        pattern = re.compile(
+            r"""^\@
+            \s*(?P<latitude>[+-]?[0-9.]+)
+            \s*/\s*(?P<longitude>[+-]?[0-9.]+)
+            (?:\s*/\s*G(?P<custom_globe_qid>\d+))?   # Optional custom globe QID
+            (?:
+            \s*/\s*(?P<precision>10?|0\.0{0,5}1)     # Optional precision
+            \s*(?P<arc>arc(sec|min))?                # Optional arcsec/min suffix (defaults degree)
+            )?$
+            """,
+            re.VERBOSE,
         )
 
-        if gps_match:
-            latitude = float(gps_match.group(1))
-            longitude = float(gps_match.group(2))
-            custom_globe_qid = gps_match.group(3)
+        match = pattern.match(v)
+
+        if match:
+            latitude = float(match.group("latitude"))
+            longitude = float(match.group("longitude"))
+            custom_globe_qid = match.group("custom_globe_qid")
+            precision = float(match.group("precision")) if match.group("precision") else 0.000001
+
+            if match.group("arc") == "arcmin":
+                precision *= 0.016666666666667
+            elif match.group("arc") == "arcsec":
+                precision *= 0.000277777777778
+
+            precision = round(precision, 15)
 
             globe_iri = (
                 f"http://www.wikidata.org/entity/Q{custom_globe_qid}"
@@ -364,7 +378,7 @@ class BaseParser(object):
                 "value": {
                     "latitude": latitude,
                     "longitude": longitude,
-                    "precision": 0.000001,
+                    "precision": precision,
                     "globe": globe_iri,
                 },
             }
