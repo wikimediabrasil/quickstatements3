@@ -413,7 +413,7 @@ class ViewsTest(TestCase):
 
             # Creating our new batch with a file upload
             mock_file = SimpleUploadedFile(
-                "commands.csv", b"qid,P31,-P31", content_type="text/csv"
+                "commands.csv", b"qid,P31,-P31\nQ123,Q123,Q123", content_type="text/csv"
             )
             response = self.client.post(
                 "/batch/new/",
@@ -437,7 +437,7 @@ class ViewsTest(TestCase):
             batch = response.context["batch"]
             self.assertEqual(batch.name, "My CSV batch with file")
             self.assertTrue(batch.is_initial)
-            self.assertEqual(batch.batchcommand_set.count(), 0)
+            self.assertEqual(batch.batchcommand_set.count(), 2)
 
             # Listing again. Now we have something
             response = self.client.get("/batches/")
