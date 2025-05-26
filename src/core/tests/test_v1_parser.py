@@ -798,3 +798,37 @@ class TestV1ParserCommand(TestCase):
             self.assertEqual(
                 context.exception.message, "Invalid value INVALID_REFERENCE"
             )
+
+    def test_v1_pipe_in_strings(self):
+        parser = V1CommandParser()
+        raw = next(parser.parse('Q123|P1|"this is a string with | pipe"')).raw
+        self.assertEqual(
+            raw,
+            'Q123\tP1\t"this is a string with | pipe"',
+        )
+
+        raw = next(parser.parse('Q123|P1|"""this is a string with | pipe"""')).raw
+        self.assertEqual(
+            raw,
+            'Q123\tP1\t"""this is a string with | pipe"""',
+        )
+
+        raw = next(parser.parse('Q123|P1|"this is a string without a"|pipe"')).raw
+        self.assertEqual(
+            raw,
+            'Q123\tP1\t"this is a string without a"\tpipe"',
+        )
+
+    def test_v1_pipe_in_comments(self):
+        parser = V1CommandParser()
+        raw = next(parser.parse('CREATE /* This is a comment with | pipe. */')).raw
+        self.assertEqual(
+            raw,
+            'CREATE /* This is a comment with | pipe. */',
+        )
+
+        raw = next(parser.parse('MERGE\tQ1\tQ2 /* This is a comment with | pipe. */')).raw
+        self.assertEqual(
+            raw,
+            'MERGE\tQ1\tQ2 /* This is a comment with | pipe. */',
+        )
