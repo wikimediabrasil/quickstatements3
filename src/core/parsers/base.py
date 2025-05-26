@@ -278,7 +278,7 @@ class BaseParser(object):
         Examples:
         +1967-01-17T00:00:00Z/11           → Gregorian
         +1967-01-17T00:00:00Z/11/J         → Julian (Q1985786)
-        +2968-09-22T00:00:00Z/11/CQ999999  → Custom calendar (Q999999)
+        +2968-09-22T00:00:00Z/11/C999999  → Custom calendar (Q999999)
         """
 
         pattern = re.compile(
@@ -332,9 +332,24 @@ class BaseParser(object):
 
         Examples:
             @43.26193/10.92708              - Default globe (Earth, Q2)
-            @43.26193/10.92708/0.1          - Default globe with a precision of 0.1 degree
-            @43.26193/10.92708/1arcmin      - Default globe with a precision of 1 arcminute
-            @43.26193/10.92708/GQ123456     - Custom globe (Q123456)
+            @43.26193/10.92708/-3          - Default globe with a precision of 0.001 degree
+            @43.26193/10.92708/arcmin      - Default globe with a precision of 1 arcminute
+            @43.26193/10.92708/G123456     - Custom globe (Q123456)
+
+            PRECISION:
+            arcsec     to an arcsecond
+            arcsec10   to 1/10 of an arcsecond
+            arcsec100  to 1/100 of an arcsecond
+            arcsec1000 to 1/1000 of an arcsecond
+            arcmin     to an arcminute
+            -6         ±0.000001°
+            -5         ±0.00001°
+            -4         ±0.0001°
+            -3         ±0.001°
+            -2         ±0.01°
+            -1         ±0.1°
+            0          ±1°
+            1          ±10°
 
         Returns a structured globecoordinate value or None.
         """
@@ -345,8 +360,7 @@ class BaseParser(object):
             \s*/\s*(?P<longitude>[+-]?[0-9.]+)
             (?:\s*/\s*G(?P<custom_globe_qid>\d+))?   # Optional custom globe QID
             (?:
-            \s*/\s*(?P<precision>10?|0\.0{0,5}1)     # Optional precision
-            \s*(?P<arc>arc(sec|min))?                # Optional arcsec/min suffix (defaults degree)
+            \s*/\s*(?P<precision>(arcsec(10{0,3})?|arcmin|-[1-6]|0|1))     # Optional precision
             )?$
             """,
             re.VERBOSE,
@@ -358,14 +372,21 @@ class BaseParser(object):
             latitude = float(match.group("latitude"))
             longitude = float(match.group("longitude"))
             custom_globe_qid = match.group("custom_globe_qid")
-            precision = float(match.group("precision")) if match.group("precision") else 0.000001
-
-            if match.group("arc") == "arcmin":
-                precision *= 0.016666666666667
-            elif match.group("arc") == "arcsec":
-                precision *= 0.000277777777778
-
-            precision = round(precision, 15)
+            precision = {
+                    "arcsec":     0.000277777777778,
+                    "arcsec10":   0.000027777777778,
+                    "arcsec100":  0.000002777777778,
+                    "arcsec1000": 0.000000277777778,
+                    "arcmin":     0.016666666666667,
+                    "-6": 0.000001,
+                    "-5": 0.00001,
+                    "-4": 0.0001,
+                    "-3": 0.001,
+                    "-2": 0.01 ,
+                    "-1": 0.1,
+                    "0": 1,
+                    "1": 10,
+                }.get(match.group("precision"), 0.000001)
 
             globe_iri = (
                 f"http://www.wikidata.org/entity/Q{custom_globe_qid}"

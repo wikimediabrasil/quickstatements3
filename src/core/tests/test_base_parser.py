@@ -428,13 +428,10 @@ class TestBaseParser(TestCase):
                 "globe": "http://www.wikidata.org/entity/Q2",
             },
         }
-        self.assertEqual(parser.parse_value("@43.26193/10.92708/1"), ret)
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/0"), ret)
         self.assertIsNone(parser.parse_value("@43.26193"))
-        self.assertIsNone(parser.parse_value("@43.26193/10.92708/2"))
-        self.assertIsNone(parser.parse_value("@43.26193/10.92708/0.2"))
-        self.assertIsNone(parser.parse_value("@43.26193/10.92708/0.01arcse"))
-        self.assertIsNone(parser.parse_value("@43.26193/10.92708/100"))
-        self.assertIsNone(parser.parse_value("@43.26193/10.92708/0.0000001"))
+        self.assertIsNone(parser.parse_value("@43.26193/10.92708/0.1"))
+        self.assertIsNone(parser.parse_value("@43.26193/10.92708/9"))
 
         ret = {
             "type": "globecoordinate",
@@ -445,7 +442,7 @@ class TestBaseParser(TestCase):
                 "globe": "http://www.wikidata.org/entity/Q2",
             },
         }
-        self.assertEqual(parser.parse_value("@43.26193/10.92708/0.001"), ret)
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/-3"), ret)
 
         ret = {
             "type": "globecoordinate",
@@ -456,7 +453,7 @@ class TestBaseParser(TestCase):
                 "globe": "http://www.wikidata.org/entity/Q2",
             },
         }
-        self.assertEqual(parser.parse_value("@43.26193/10.92708/1arcmin"), ret)
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/arcmin"), ret)
 
         ret = {
             "type": "globecoordinate",
@@ -467,7 +464,7 @@ class TestBaseParser(TestCase):
                 "globe": "http://www.wikidata.org/entity/Q2",
             },
         }
-        self.assertEqual(parser.parse_value("@43.26193/10.92708/1 arcsec"), ret)
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/arcsec"), ret)
 
         ret = {
             "type": "globecoordinate",
@@ -478,7 +475,7 @@ class TestBaseParser(TestCase):
                 "globe": "http://www.wikidata.org/entity/Q2",
             },
         }
-        self.assertEqual(parser.parse_value("@43.26193/10.92708/0.01arcsec"), ret)
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/arcsec100"), ret)
 
     def test_parse_value_quantity(self):
         parser = BaseParser()
