@@ -2,13 +2,9 @@ from django.http import Http404
 
 from rest_framework import generics
 from rest_framework import mixins
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from api.serializers import BatchListSerializer
-from api.serializers import BatchDetailSerializer
-from api.serializers import BatchCommandListSerializer
-from api.serializers import BatchCommandDetailSerializer
+from api import serializers
 from api.paginators import CustomPagination
 from api.paginators import CustomBatchCommandPagination
 
@@ -16,19 +12,24 @@ from core.models import Batch
 from core.models import BatchCommand
 
 
-class BatchListView(generics.GenericAPIView, mixins.ListModelMixin):
+class BatchListView(generics.ListCreateAPIView):
     """
     Available batches listing
     """
 
     pagination_class = CustomPagination
-    serializer_class = BatchListSerializer
-
-    authentication_classes = [TokenAuthentication]
+    serializer_class = serializers.BatchListSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_serializer_class(self):
+        return (
+            serializers.BatchCreationSerializer
+            if self.request.method == "POST"
+            else serializers.BatchListSerializer
+        )
+
     def get_queryset(self):
-        queryset = Batch.objects.all().order_by("-created")
+        queryset = Batch.objects.order_by("-created")
         user = self.request.query_params.get("username")
         if user is not None:
             queryset = queryset.filter(user=user)
@@ -37,20 +38,16 @@ class BatchListView(generics.GenericAPIView, mixins.ListModelMixin):
             queryset = queryset.filter(status=status)
         return queryset
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
 
 class BatchDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin):
     """
     Batch detail
     """
 
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     queryset = Batch.objects.all()
-    serializer_class = BatchDetailSerializer
+    serializer_class = serializers.BatchDetailSerializer
 
     def get_object(self):
         from django.db.models import Q, Count
@@ -91,13 +88,10 @@ class BatchCommandListView(generics.GenericAPIView, mixins.ListModelMixin):
     Batch commands listing. Uses pagination.
     """
 
-    authentication_classes = [
-        TokenAuthentication,
-    ]
     permission_classes = [IsAuthenticated]
 
     pagination_class = CustomBatchCommandPagination
-    serializer_class = BatchCommandListSerializer
+    serializer_class = serializers.BatchCommandListSerializer
 
     def get_queryset(self):
         return (
@@ -120,11 +114,10 @@ class BatchCommandDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin)
     Batch command detail
     """
 
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     queryset = BatchCommand.objects.select_related("batch").all()
-    serializer_class = BatchCommandDetailSerializer
+    serializer_class = serializers.BatchCommandDetailSerializer
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
