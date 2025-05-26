@@ -417,6 +417,69 @@ class TestBaseParser(TestCase):
         self.assertEqual(parser.parse_value("@43.26193/10.92708/G999999"), ret)
         self.assertIsNone(parser.parse_value("@43.26193"))
 
+    def test_parse_value_location_precision(self):
+        parser = BaseParser()
+        ret = {
+            "type": "globecoordinate",
+            "value": {
+                "latitude": 43.26193,
+                "longitude": 10.92708,
+                "precision": 1,
+                "globe": "http://www.wikidata.org/entity/Q2",
+            },
+        }
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/1"), ret)
+        self.assertIsNone(parser.parse_value("@43.26193"))
+        self.assertIsNone(parser.parse_value("@43.26193/10.92708/2"))
+        self.assertIsNone(parser.parse_value("@43.26193/10.92708/0.2"))
+        self.assertIsNone(parser.parse_value("@43.26193/10.92708/0.01arcse"))
+        self.assertIsNone(parser.parse_value("@43.26193/10.92708/100"))
+        self.assertIsNone(parser.parse_value("@43.26193/10.92708/0.0000001"))
+
+        ret = {
+            "type": "globecoordinate",
+            "value": {
+                "latitude": 43.26193,
+                "longitude": 10.92708,
+                "precision": 0.001,
+                "globe": "http://www.wikidata.org/entity/Q2",
+            },
+        }
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/0.001"), ret)
+
+        ret = {
+            "type": "globecoordinate",
+            "value": {
+                "latitude": 43.26193,
+                "longitude": 10.92708,
+                "precision": 0.016666666666667,
+                "globe": "http://www.wikidata.org/entity/Q2",
+            },
+        }
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/1arcmin"), ret)
+
+        ret = {
+            "type": "globecoordinate",
+            "value": {
+                "latitude": 43.26193,
+                "longitude": 10.92708,
+                "precision": 0.000277777777778,
+                "globe": "http://www.wikidata.org/entity/Q2",
+            },
+        }
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/1 arcsec"), ret)
+
+        ret = {
+            "type": "globecoordinate",
+            "value": {
+                "latitude": 43.26193,
+                "longitude": 10.92708,
+                "precision": 0.000002777777778,
+                "globe": "http://www.wikidata.org/entity/Q2",
+            },
+        }
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/0.01arcsec"), ret)
+
     def test_parse_value_quantity(self):
         parser = BaseParser()
         ret = {"type": "quantity", "value": {"amount": "+10", "unit": "1"}}
