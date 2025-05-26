@@ -156,11 +156,19 @@ def new_batch(request):
 
             batch_commands = batch_commands.strip()
             if not batch_commands:
-                raise ParserException("Command string cannot be empty")
+                raise ParserException(pgettext_lazy(
+                    "batch-py-empty-command-input",
+                    "Command input cannot be empty. Please provide valid commands."
+                ))
 
             if batch_type == "v1":
                 parser = V1CommandParser()
             else:
+                if "\n" not in batch_commands:
+                    raise ParserException(pgettext_lazy(
+                        "batch-py-csv-only-header",
+                        "CSV input must include more than just the header row"
+                    ))
                 parser = CSVCommandParser()
 
             wikibase_url = request.POST.get("wikibase")
@@ -176,9 +184,16 @@ def new_batch(request):
                 block_on_errors="block_on_errors" in request.POST,
                 combine_commands="do_not_combine_commands" not in request.POST,
             )
+
             for batch_command in parser.parse(batch_commands):
                 batch_command.batch = batch
                 batch_command.save()
+
+            if not batch.batchcommand_set.exists():
+                raise ParserException(pgettext_lazy(
+                    "batch-py-valid-command-not-found",
+                    "No valid commands found in the provided input."
+                ))
 
             request.session["preferred_batch_type"] = batch_type
             # Set up editing session for the newly created batch.
@@ -258,7 +273,7 @@ def batch_allow_start(request):
     if not can_start:
         not_confirmed = pgettext_lazy(
             "batch-py-user-not-autoconfirmed",
-            "User is not autoconfirmed. Only autoconfirmed users can run batches.",
+            "User is not autoconfirmed. Only autoconfirmed users can run batches."
         )
         blocked = pgettext_lazy(
             "batch-py-user-blocked", "User is blocked and can not run batches."

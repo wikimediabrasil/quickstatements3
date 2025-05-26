@@ -272,6 +272,63 @@ class ViewsTest(TestCase):
             self.assertTemplateUsed("batch.html")
 
     @requests_mock.Mocker()
+    def test_create_empty_command_input(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            user, api_client = self.login_user_and_get_token("user")
+
+            response = self.client.post(
+                "/batch/new/", data={"type": "v1", "commands": ""}
+            )
+
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("new_batch.html")
+            self.assertInRes(
+                "Command input cannot be empty. Please provide valid commands.",
+                response
+            )
+
+    @requests_mock.Mocker()
+    def test_create_header_only_csv_command_input(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            user, api_client = self.login_user_and_get_token("user")
+
+            response = self.client.post(
+                "/batch/new/", data={"type": "csv", "commands": "qid,P31,-P31"}
+            )
+
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("new_batch.html")
+            self.assertInRes("CSV input must include more than just the header row", response)
+
+    @requests_mock.Mocker()
+    def test_create_invalid_command_input(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+            user, api_client = self.login_user_and_get_token("user")
+
+            response = self.client.post(
+                "/batch/new/", data={"type": "csv", "commands": "qid,invalid\ncsv,data"}
+            )
+
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("new_batch.html")
+            self.assertInRes("No valid commands found in the provided input.", response)
+
+            response = self.client.post(
+                "/batch/new/", data={"type": "v1", "commands": "INVALID|COMMAND"}
+            )
+
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed("new_batch.html")
+            self.assertInRes("No valid commands found in the provided input.", response)
+
+
+    @requests_mock.Mocker()
     def test_create_csv_batch_logged_user(self, mocker):
         self.api_mocker.is_autoconfirmed(mocker)
         with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
@@ -294,7 +351,7 @@ class ViewsTest(TestCase):
                 data={
                     "name": "My CSV batch",
                     "type": "csv",
-                    "commands": "qid,P31,-P31",
+                    "commands": "qid,P31,-P31\nQ123,Q456,Q321",
                 },
             )
             self.assertEqual(response.status_code, 302)
@@ -311,7 +368,7 @@ class ViewsTest(TestCase):
             batch = response.context["batch"]
             self.assertEqual(batch.name, "My CSV batch")
             self.assertTrue(batch.is_initial)
-            self.assertEqual(batch.batchcommand_set.count(), 0)
+            self.assertEqual(batch.batchcommand_set.count(), 2)
 
             # Listing again. Now we have something
             response = self.client.get("/batches/")
