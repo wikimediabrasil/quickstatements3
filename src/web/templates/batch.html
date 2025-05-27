@@ -42,6 +42,10 @@
       <form method="POST" action="{% url 'batch_rerun' pk=batch.pk %}">
         {% csrf_token %}
         <input class="secondary" type="submit" value="Rerun">
+        <label>
+          <input type="checkbox" name="combine_commands" role="switch" checked >
+            {% translate 'Combine' context 'batch-combine-commands' %}
+        </label>
       </form>
     {% else %}
       <span></span>
