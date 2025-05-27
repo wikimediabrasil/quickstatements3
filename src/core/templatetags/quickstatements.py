@@ -161,6 +161,8 @@ def has_multiple_wikibases():
 
 @register.simple_tag
 def label_display(entity_id):
+    if not entity_id or entity_id.strip() == "LAST":
+        return entity_id
     return mark_safe(render_entity_label(entity_id))
 
 
@@ -187,7 +189,6 @@ def command_operation_display(command):
 def datavalue_display(command, datavalue):
     if not datavalue:
         return ""
-    logger.info(f"datatype: {datavalue['type']}")
     render_action = {
         "wikibase-entityid": render_entity_datavalue,
         "time": render_time_datavalue,
