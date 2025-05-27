@@ -1,7 +1,30 @@
+from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.reverse import reverse_lazy
 
-from core.models import Batch, BatchCommand
+from core.parsers import V1CommandParser
+from core.exceptions import ServerError, UnauthorizedToken
+from core.models import Batch, BatchCommand, Wikibase, get_default_wikibase, Token, Client
+
+
+class WikibaseField(serializers.ChoiceField):
+    def __init__(self, *args, **kw):
+        kw.setdefault("choices", Wikibase.objects.all())
+        return super().__init__(*args, **kw)
+
+    def to_representation(self, value):
+        return value.url
+
+
+class RawV1CommandField(serializers.CharField):
+    many = True
+
+    def to_internal_value(self, data):
+        parser = V1CommandParser()
+        return [c for c in parser.parse(data or "")]
+
+    def to_representation(self, value):
+        return "\n".join(value.values_list("raw", flat=True))
 
 
 class BatchListSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,16 +39,53 @@ class BatchListSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Batch
-        fields = [
+        fields = ("url", "pk", "user", "name", "status", "message", "created", "modified")
+
+
+class BatchCreationSerializer(serializers.HyperlinkedModelSerializer):
+    name = serializers.CharField(required=False, write_only=True)
+    v1 = RawV1CommandField(write_only=True)
+    wikibase = WikibaseField(required=False)
+
+    def validate_name(self, value):
+        request = self.context.get("request")
+        return value or f"Batch user:{request.user.username} {timezone.now().isoformat()}"
+
+    def validate_wikibase(self, value):
+        request = self.context.get("request")
+        wikibase = value or get_default_wikibase()
+
+        try:
+            token = Token.objects.get(user=request.user)
+            client = Client(token=token, wikibase=wikibase)
+            assert client.get_is_autoconfirmed()
+            assert client.get_is_blocked()
+        except (AssertionError, UnauthorizedToken, Token.DoesNotExist, ServerError):
+            raise serializers.ValidationError(f"Failed to authenticate user at {wikibase.url}")
+        return wikibase
+
+    def create(self, validated_data):
+        request = self.context.get("request")
+        batch_commands = validated_data.pop("v1", [])
+
+        batch = Batch.objects.create(
+            user=request.user.username, status=Batch.STATUS_INITIAL, **validated_data
+        )
+        for batch_command in batch_commands:
+            batch_command.batch = batch
+            batch_command.save()
+        return batch
+
+    class Meta:
+        model = Batch
+        fields = (
             "url",
-            "pk",
-            "user",
             "name",
-            "status",
-            "message",
-            "created",
-            "modified",
-        ]
+            "v1",
+            "wikibase",
+            "combine_commands",
+            "block_on_errors",
+        )
 
 
 class BatchDetailSerializer(serializers.HyperlinkedModelSerializer):

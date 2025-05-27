@@ -1,15 +1,16 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
+import requests_mock
 from rest_framework.authtoken.models import Token
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
 from core.models import Batch
+from core.tests.test_api import ApiMocker
 
 
 class BatchListViewTest(TestCase):
-
     def setUp(self):
         self.user = User.objects.create(username="myuser")
         self.token = Token.objects.create(user=self.user)
@@ -41,9 +42,7 @@ class BatchListViewTest(TestCase):
         self.assertEqual(data["page_size"], 1)
         self.assertEqual(len(data["batches"]), 1)
         batch = data["batches"][0]
-        self.assertEqual(
-            batch["url"], f"http://testserver/api/v1/batches/{original.pk}/"
-        )
+        self.assertEqual(batch["url"], f"http://testserver/api/v1/batches/{original.pk}/")
         self.assertEqual(batch["pk"], original.pk)
         self.assertEqual(batch["user"], "testuser")
         self.assertEqual(batch["name"], "Batch 0")
@@ -63,9 +62,7 @@ class BatchListViewTest(TestCase):
         response = self.client.get(reverse("batch-list"))
         data = response.data
         batch = data["batches"][0]
-        self.assertEqual(
-            batch["url"], f"http://testserver/api/v1/batches/{original.pk}/"
-        )
+        self.assertEqual(batch["url"], f"http://testserver/api/v1/batches/{original.pk}/")
         self.assertEqual(batch["pk"], original.pk)
         self.assertEqual(batch["user"], "testuser")
         self.assertEqual(batch["name"], "Batch 1")
@@ -85,9 +82,7 @@ class BatchListViewTest(TestCase):
         response = self.client.get(reverse("batch-list"))
         data = response.data
         batch = data["batches"][0]
-        self.assertEqual(
-            batch["url"], f"http://testserver/api/v1/batches/{original.pk}/"
-        )
+        self.assertEqual(batch["url"], f"http://testserver/api/v1/batches/{original.pk}/")
         self.assertEqual(batch["pk"], original.pk)
         self.assertEqual(batch["user"], "testuser")
         self.assertEqual(batch["name"], "Batch 2")
@@ -107,9 +102,7 @@ class BatchListViewTest(TestCase):
         response = self.client.get(reverse("batch-list"))
         data = response.data
         batch = data["batches"][0]
-        self.assertEqual(
-            batch["url"], f"http://testserver/api/v1/batches/{original.pk}/"
-        )
+        self.assertEqual(batch["url"], f"http://testserver/api/v1/batches/{original.pk}/")
         self.assertEqual(batch["pk"], original.pk)
         self.assertEqual(batch["user"], "testuser")
         self.assertEqual(batch["name"], "Batch 3")
@@ -132,9 +125,7 @@ class BatchListViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.data
         self.assertTrue("links" in data)
-        self.assertEqual(
-            data["links"]["next"], "http://testserver/api/v1/batches/?page=2"
-        )
+        self.assertEqual(data["links"]["next"], "http://testserver/api/v1/batches/?page=2")
         self.assertEqual(data["links"]["previous"], None)
         self.assertEqual(data["total"], 70)
         self.assertEqual(data["page_size"], 20)
@@ -144,9 +135,7 @@ class BatchListViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.data
         self.assertTrue("links" in data)
-        self.assertEqual(
-            data["links"]["next"], "http://testserver/api/v1/batches/?page=3"
-        )
+        self.assertEqual(data["links"]["next"], "http://testserver/api/v1/batches/?page=3")
         self.assertEqual(data["links"]["previous"], "http://testserver/api/v1/batches/")
         self.assertEqual(data["total"], 70)
         self.assertEqual(data["page_size"], 20)
@@ -156,12 +145,8 @@ class BatchListViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.data
         self.assertTrue("links" in data)
-        self.assertEqual(
-            data["links"]["next"], "http://testserver/api/v1/batches/?page=4"
-        )
-        self.assertEqual(
-            data["links"]["previous"], "http://testserver/api/v1/batches/?page=2"
-        )
+        self.assertEqual(data["links"]["next"], "http://testserver/api/v1/batches/?page=4")
+        self.assertEqual(data["links"]["previous"], "http://testserver/api/v1/batches/?page=2")
         self.assertEqual(data["total"], 70)
         self.assertEqual(data["page_size"], 20)
         self.assertEqual(len(data["batches"]), 20)
@@ -171,9 +156,7 @@ class BatchListViewTest(TestCase):
         data = response.data
         self.assertTrue("links" in data)
         self.assertEqual(data["links"]["next"], None)
-        self.assertEqual(
-            data["links"]["previous"], "http://testserver/api/v1/batches/?page=3"
-        )
+        self.assertEqual(data["links"]["previous"], "http://testserver/api/v1/batches/?page=3")
         self.assertEqual(data["total"], 70)
         self.assertEqual(data["page_size"], 10)
         self.assertEqual(len(data["batches"]), 10)
@@ -196,9 +179,7 @@ class BatchListViewTest(TestCase):
         for b in data["batches"]:
             self.assertEqual(b["user"], "user1")
 
-        response = self.client.get(
-            "http://testserver/api/v1/batches/?username=user1&page=2"
-        )
+        response = self.client.get("http://testserver/api/v1/batches/?username=user1&page=2")
         self.assertEqual(response.status_code, 200)
         data = response.data
         self.assertTrue("links" in data)
@@ -231,9 +212,7 @@ class BatchListViewTest(TestCase):
         for b in data["batches"]:
             self.assertEqual(b["user"], "user2")
 
-        response = self.client.get(
-            "http://testserver/api/v1/batches/?username=user2&page=2"
-        )
+        response = self.client.get("http://testserver/api/v1/batches/?username=user2&page=2")
         self.assertEqual(response.status_code, 200)
         data = response.data
         self.assertTrue("links" in data)
@@ -248,11 +227,24 @@ class BatchListViewTest(TestCase):
         for b in data["batches"]:
             self.assertEqual(b["user"], "user2")
 
-    def test_non_allowed_methods_request(self):
+    @requests_mock.Mocker()
+    def test_create_batch_endpoint(self, mocker):
+        api_mocker = ApiMocker()
+        api_mocker.is_autoconfirmed(mocker)
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
-        response = self.client.post(reverse("batch-list"))
-        self.assertEqual(response.status_code, 405)
+        data = {"name": "Batch created via API", "v1": "CREATE||-Q1234|P1|12||Q222|P4|9~0.1"}
+
+        response = self.client.post(reverse("batch-list"), data=data)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(Batch.objects.count(), 1)
+        batch = Batch.objects.first()
+
+        self.assertEqual(batch.user, "myuser")
+        self.assertEqual(batch.status, Batch.STATUS_INITIAL)
+
+    def test_non_allowed_methods_request(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
         response = self.client.put(reverse("batch-list"))
         self.assertEqual(response.status_code, 405)

@@ -161,9 +161,7 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "simple": {
-            "format": "%(levelname)s:%(module)s:%(funcName)s #%(lineno)d %(message)s"
-        },
+        "simple": {"format": "%(levelname)s:%(module)s:%(funcName)s #%(lineno)d %(message)s"},
         "complete": {
             "format": "%(asctime)s %(levelname)s:%(module)s %(process)d %(lineno)d %(message)s"
         },
@@ -237,9 +235,7 @@ TRANSLATED_LANGUAGES = sorted(translations)
 OAUTH_CLIENT_ID = os.getenv("OAUTH_CLIENT_ID")
 OAUTH_CLIENT_SECRET = os.getenv("OAUTH_CLIENT_SECRET")
 
-OAUTH_AUTHORIZATION_SERVER = os.getenv(
-    "OAUTH_AUTHORIZATION_SERVER", "https://www.wikidata.org"
-)
+OAUTH_AUTHORIZATION_SERVER = os.getenv("OAUTH_AUTHORIZATION_SERVER", "https://www.wikidata.org")
 OAUTH_ACCESS_TOKEN_URL = os.getenv(
     "OAUTH_ACCESS_TOKEN_URL",
     f"{OAUTH_AUTHORIZATION_SERVER}/w/rest.php/oauth2/access_token",
