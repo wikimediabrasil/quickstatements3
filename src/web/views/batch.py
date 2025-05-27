@@ -105,6 +105,7 @@ def batch_rerun(request, pk):
             request.user.username == batch.user or request.user.is_superuser
         )
         assert user_is_authorized
+        batch.combine_commands = "combine_commands" in request.POST
         batch.rerun()
         return redirect(reverse("batch", args=[batch.pk]))
     except Batch.DoesNotExist:
