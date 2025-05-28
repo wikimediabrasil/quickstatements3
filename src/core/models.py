@@ -1220,25 +1220,14 @@ class BatchCommand(models.Model):
             self.statement_rank(),
         )
 
-        duplicate_statement = True
-        if refs:
-            for ref in refs:
-                for ref_part in ref["parts"]:
-                    if not self.is_part_in_references(ref_part):
-                        duplicate_statement = False
-                        break
-            if quals and duplicate_statement:
-                for q in quals:
-                    if not self.is_in_qualifiers(q):
-                        duplicate_statement = False
-                        break
-
         if quals:
             st.setdefault("qualifiers", [])
             st["qualifiers"].extend(quals)
-        if refs and not duplicate_statement:
+        if refs:
             st.setdefault("references", [])
-            st["references"].extend(refs)
+            for ref in refs:
+                if ref not in st["references"]:
+                    st["references"].append(ref)
         if rank:
             st["rank"] = rank
 
