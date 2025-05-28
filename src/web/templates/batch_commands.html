@@ -14,11 +14,15 @@
 
       <td>
         {% if command.entity_id %}
+          {% if command.entity_id == "LAST" %}
+          LAST
+          {% else %}
           {% label_display command.entity_id %}
-          {% if command.entity_url %}
-          <a href="{{ command.entity_url }}">{{ command.entity_info }}</a>
-          {% elif command.entity_id != "LAST"%}
-          {{ command.entity_info }}
+            {% if command.entity_url %}
+            <a href="{{ command.entity_url }}">{{ command.entity_info }}</a>
+            {% else %}
+            {{ command.entity_info }}
+            {% endif %}
           {% endif %}
         {% endif %}
       </td>

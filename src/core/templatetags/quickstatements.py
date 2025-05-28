@@ -161,8 +161,6 @@ def has_multiple_wikibases():
 
 @register.simple_tag
 def label_display(entity_id):
-    if not entity_id or entity_id.strip() == "LAST":
-        return entity_id
     return mark_safe(render_entity_label(entity_id))
 
 
