@@ -7,7 +7,11 @@
 
    if (spans.length === 0) return
 
-   const AllEntityIds = Array.from(spans).map(span => span.getAttribute("data-entity-id"))
+   const AllEntityIds = Array.from(
+    new Set(
+      Array.from(spans).map(span => span.getAttribute("data-entity-id"))
+    )
+  )
    const userLanguage = "{{ user|language_preference }}"
    const languages = userLanguage === "en" ? "en" : `${userLanguage}|en`
 
