@@ -211,5 +211,8 @@
 	"layout-navbar-repository": "Складиште",
 	"layout-navbar-statistics": "Статистика",
 	"layout-navbar-logout": "Одјава",
-	"layout-navbar-your-statistics": "Ваша статистика"
+	"layout-navbar-your-statistics": "Ваша статистика",
+	"batch-py-empty-command-input": "Вносот за наредба не може да стои празен. Внесете важечки наредби.",
+	"batch-py-csv-only-header": "CSV-вносот мора да содржи повеќе од само заглавен ред",
+	"batch-py-valid-command-not-found": "Немате внесено важечки наредби."
 }

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ederporto"
+			"Ederporto",
+			"Eduardoaddad"
 		]
 	},
 	"batch-py-status-stopped": "Parado",
@@ -197,5 +198,18 @@
 	"statistics-edits-only": "Número cumulativo de edições",
 	"batch-summary-commands-eta": "Tempo restante estimado",
 	"new-batch-file-upload": "Upload de arquivo",
-	"new-batch-file-upload-targeting": "Opção para quando o usuário prefere fazer upload de um arquivo, em vez de escrever os comandos no formulário"
+	"new-batch-file-upload-targeting": "Opção para quando o usuário prefere fazer upload de um arquivo, em vez de escrever os comandos no formulário",
+	"layout-navbar-new-batch": "Novo lote",
+	"layout-navbar-last-batches": "Últimos lotes",
+	"layout-navbar-help": "Ajuda",
+	"layout-navbar-menu": "Menu",
+	"layout-navbar-login": "Entrar",
+	"layout-navbar-help-us-translate": "Ajude-nos a traduzir",
+	"layout-navbar-preferences": "Preferências",
+	"layout-navbar-your-batches": "Seus lotes",
+	"layout-navbar-help-slash-documentation": "Ajuda/Documentação",
+	"layout-navbar-repository": "Repositório",
+	"layout-navbar-statistics": "Estatísticas",
+	"layout-navbar-logout": "Sair",
+	"layout-navbar-your-statistics": "Suas estatísticas"
 }
