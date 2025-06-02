@@ -16,67 +16,67 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: core/models.py:484
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Pysäytetty"
+msgstr "已停止"
 
 #: core/models.py:485
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Lukittu"
+msgstr "已中止"
 
 #: core/models.py:486
 msgctxt "batch-py-status-preview"
 msgid "Preview"
-msgstr "Esikatselu"
+msgstr "预览模式"
 
 #: core/models.py:487
 msgctxt "batch-py-status-initial"
 msgid "Initial"
-msgstr "Käynnistetty"
+msgstr "初始化"
 
 #: core/models.py:488
 msgctxt "batch-py-status-running"
 msgid "Running"
-msgstr "Käynnissä"
+msgstr "运行中"
 
 #: core/models.py:489
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Valmis"
+msgstr "已完成"
 
 #: core/models.py:512
 msgctxt "batch-py-batch"
 msgid "Batch"
-msgstr "Erä"
+msgstr "批处理"
 
 #: core/models.py:513
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Erät"
+msgstr "批处理"
 
 #: core/models.py:766
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
-msgstr "Virhe"
+msgstr "错误"
 
 #: core/models.py:767
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
-msgstr "Käynnistetty"
+msgstr "初始化"
 
 #: core/models.py:768
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
-msgstr "Käynnissä"
+msgstr "运行中"
 
 #: core/models.py:769
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Valmis"
+msgstr "已完成"
 
 #: core/models.py:778
 msgctxt "batchcommand-py-action-create"
@@ -101,508 +101,508 @@ msgstr "MERGE"
 #: core/models.py:814
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Luo kohde"
+msgstr "创建项目"
 
 #: core/models.py:819
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
-msgstr "Luo ominaisuus"
+msgstr "创建属性"
 
 #: core/models.py:825
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Aseta esitys"
+msgstr "设置陈述"
 
 #: core/models.py:830
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Luo esitys"
+msgstr "创建陈述"
 
 #: core/models.py:838
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
-msgstr "Poista esitys tunnisteen perusteella"
+msgstr "按ID移除陈述"
 
 #: core/models.py:845
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
-msgstr "Poista esitys arvon perusteella"
+msgstr "按值移除陈述"
 
 #: core/models.py:852
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
-msgstr "Poista tarkenne"
+msgstr "移除修饰符"
 
 #: core/models.py:858
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Poista lähde"
+msgstr "移除参考文献"
 
 #: core/models.py:864
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
-msgstr "Aseta sivustolinkki"
+msgstr "设置项目网站链接"
 
 #: core/models.py:868
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Aseta nimi"
+msgstr "设置标签"
 
 #: core/models.py:873
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Aseta kuvaus"
+msgstr "设置描述"
 
 #: core/models.py:880
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
-msgstr "Poista sivustolinkki"
+msgstr "移除项目网站链接"
 
 #: core/models.py:885
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Poisto nimi"
+msgstr "移除标签"
 
 #: core/models.py:890
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Poista kuvaus"
+msgstr "移除描述"
 
 #: core/models.py:896
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Lisää alias"
+msgstr "添加别名"
 
 #: core/models.py:900
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Poista alias"
+msgstr "移除别名"
 
 #: core/models.py:927
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
-msgstr "Operaatiota ei toteutettu"
+msgstr "操作未实现"
 
 #: core/models.py:934
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
-msgstr "Ei esityksiä annetulla ominaisuudella"
+msgstr "未找到指定属性的陈述"
 
 #: core/models.py:941
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
-msgstr "Ei esityksuä annetulla arvolla"
+msgstr "未找到指定值的陈述"
 
 #: core/models.py:947
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
-msgstr "Ei tarkenteita annetulla arvolla"
+msgstr "未找到指定值的修饰符"
 
 #: core/models.py:954
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
-msgstr "Ei lähteiden osia annetulla arvolla"
+msgstr "未找到指定值的参考文献"
 
 #: core/models.py:960
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "Sivustolinkin tunnus on virheellinen"
+msgstr "项目网站链接ID无效"
 
 #: core/models.py:966
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
-msgstr "Seuraava komento epäonnistui"
+msgstr "下一个命令失败"
 
 #: core/models.py:972
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
-msgstr "API palautti \"käyttäjävirhe\""
+msgstr "API返回用户错误"
 
 #: core/models.py:978
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
-msgstr "API palautti \"palvelinvirhe\""
+msgstr "API返回服务器错误"
 
 #: core/models.py:985
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
-msgstr "LAST could not be evaluated."
+msgstr "LAST无法解析。"
 
 #: core/models.py:1807
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
-msgstr "Eräkomento"
+msgstr "批处理命令"
 
 #: core/models.py:1809
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
-msgstr "Eräkomennot"
+msgstr "批处理命令"
 
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "vuosikymmen"
+msgstr "十年"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "vuosisata"
+msgstr "百年"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
 msgid "millennium"
-msgstr "vuosituhat"
+msgstr "千年"
 
 #: core/templatetags/quickstatements.py:55
 msgctxt "batch-command-time-hundred-thousand"
 msgid "hundred thousand years"
-msgstr "satatuhatta vuotta"
+msgstr "十万年"
 
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "miljoonaa vuotta"
+msgstr "百万年"
 
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "miljardi vuotta"
+msgstr "十亿年"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Tuntematon arvo)"
+msgstr "（未知值）"
 
 #: core/templatetags/quickstatements.py:142
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(Ei arvoa)"
+msgstr "（无值）"
 
 #: web/models.py:52
 msgctxt "web-models-token"
 msgid "Token"
-msgstr "Poletti"
+msgstr "令牌"
 
 #: web/models.py:53
 msgctxt "web-models-tokens"
 msgid "Tokens"
-msgstr "Poletit"
+msgstr "令牌"
 
 #: web/models.py:104 web/models.py:105
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Asetukset"
+msgstr "参数设置"
 
 #: web/templates/batch.html:4 web/templates/batch.html:13
 msgctxt "batch-batch"
 msgid "Batch"
-msgstr "Erä"
+msgstr "批处理"
 
 #: web/templates/batch.html:16
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
-msgstr "Lähetetty kohteeseen"
+msgstr "已提交至"
 
 #: web/templates/batch.html:19
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Luonut"
+msgstr "创建者"
 
 #: web/templates/batch.html:21
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "Näytä erät"
+msgstr "查看批处理"
 
 #: web/templates/batch.html:22
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Kumoa / Keskustele"
+msgstr "还原/讨论"
 
 #: web/templates/batch.html:30
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
-msgstr "Pysäytä ajo"
+msgstr "停止执行"
 
 #: web/templates/batch.html:63
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
-msgstr "Ladataan yhteenvetoa..."
+msgstr "正在加载摘要..."
 
 #: web/templates/batch.html:66
 msgctxt "batch-commands"
 msgid "Commands"
-msgstr "Komennot"
+msgstr "命名"
 
 #: web/templates/batch.html:74
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Ladataan komentoja..."
+msgstr "正在加载命令..."
 
 #: web/templates/batch.html:83
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
-msgstr "Pysäytä erän #%(1)s ajo"
+msgstr "中止批处理#%(1)s的执行"
 
 #: web/templates/batch.html:85
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
-msgstr "Haluatko varmasti pysäyttää nykyisen erän ajon?"
+msgstr "您确定要停止当前批处理吗？"
 
 #: web/templates/batch.html:88
 msgctxt "batch-no-continue"
 msgid "No, continue"
-msgstr "Ei, jatka"
+msgstr "否，继续"
 
 #: web/templates/batch.html:89
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
-msgstr "Pysäytyä ajo"
+msgstr "停止处理"
 
 #: web/templates/batch_commands.html:38
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Esitys"
+msgstr "陈述"
 
 #: web/templates/batch_commands.html:55
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
-msgstr "Tarkenteet"
+msgstr "修饰符"
 
 #: web/templates/batch_commands.html:64
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "Lähteet"
+msgstr "参考文献"
 
 #: web/templates/batch_commands.html:84
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "NÄYTETÄÄN VAIN VIRHEET"
+msgstr "仅显示错误"
 
 #: web/templates/batch_commands.html:89
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "NÄYTÄ KAIKKI"
+msgstr "显示全部"
 
 #: web/templates/batch_commands.html:92
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "NÄYTETÄÄN KAIKKI"
+msgstr "显示全部"
 
 #: web/templates/batch_commands.html:97
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "NÄYTÄ VAIN VIRHEET"
+msgstr "仅显示错误"
 
 #: web/templates/batch_commands.html:110
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "ENSIMMÄINEN"
+msgstr "首页"
 
 #: web/templates/batch_commands.html:118
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "EDELLINEN"
+msgstr "上一页"
 
 #: web/templates/batch_commands.html:126 web/templates/batches.html:104
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Sivu %(1)s / %(2)s"
+msgstr "第%(1)s页，共%(2)s页"
 
 #: web/templates/batch_commands.html:136
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "SEURAAVA"
+msgstr "下一页"
 
 #: web/templates/batch_commands.html:144
 msgctxt "batch-commands-last"
 msgid "LAST"
-msgstr "VIIMEINEN"
+msgstr "末页"
 
 #: web/templates/batch_commands.html:153 web/templates/batch_commands.html:157
 #: web/templates/batch_commands.html:165
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
-msgstr "Sivun koko:"
+msgstr "页面大小："
 
 #: web/templates/batch_not_found.html:7
 #, python-format
 msgctxt "batch-not-found-number"
 msgid "Batch <code>#%(1)s</code> not found."
-msgstr "Erää <code>#%(1)s</code> ei löytynyt."
+msgstr "未找到批处理<code>#%(1)s</code>。"
 
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "Erän tunniste"
+msgstr "批处理编号"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "Näytä erän tiedot"
+msgstr "查看批处理详情"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "ERÄN TILA"
+msgstr "批处理状态"
 
 #: web/templates/batch_summary.html:28
 #, python-format
 msgctxt "batch-summary-done-count"
 msgid "%(1)s of %(2)s done"
-msgstr "%(1)s / %(2)s tehty"
+msgstr "已完成%(1)s项，共%(2)s项"
 
 #: web/templates/batch_summary.html:32
 msgctxt "batch-summary-commands-summary"
 msgid "COMMANDS SUMMARY"
-msgstr "KOMENTOJEN YHTEENVETO"
+msgstr "命令摘要"
 
 #: web/templates/batch_summary.html:33
 msgctxt "batch-summary-total"
 msgid "TOTAL"
-msgstr "YHTEENSÄ"
+msgstr "总计"
 
 #: web/templates/batch_summary.html:34 web/templates/batches.html:63
 msgctxt "batch-summary-init"
 msgid "INIT"
-msgstr "KÄYNNISTETTY"
+msgstr "初始化"
 
 #: web/templates/batch_summary.html:35 web/templates/batches.html:64
 msgctxt "batch-summary-running"
 msgid "RUNNING"
-msgstr "KÄYNNISSÄ"
+msgstr "运行中"
 
 #: web/templates/batch_summary.html:36 web/templates/batches.html:65
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "VALMIS"
+msgstr "已完成"
 
 #: web/templates/batch_summary.html:37 web/templates/batches.html:66
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "VIRHEITÄ"
+msgstr "错误"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
 msgid "This batch will be blocked if a command fails."
-msgstr "Tämä erä lukitaan, jos komento epäonnistuu."
+msgstr "若命令执行失败，此批处理将被中止。"
 
 #: web/templates/batch_summary.html:46
 msgctxt "batch-summary-commands-eta"
 msgid "ETA"
-msgstr "Kestoarvio"
+msgstr "预计剩余时间"
 
 #: web/templates/batches.html:5
 msgctxt "batches-quickstatements-last-batches"
 msgid "QuickStatements 3.0 - Last batches"
-msgstr "QuickStatements 3.0 – Tuoreet erät"
+msgstr "QuickStatements 3.0 - 最近批处理"
 
 #: web/templates/batches.html:25
 msgctxt "batches-last-batches"
 msgid "Last batches"
-msgstr "Tuoreet erät"
+msgstr "最近批处理"
 
 #: web/templates/batches.html:25
 msgctxt "batches-from"
 msgid "from"
-msgstr "from"
+msgstr "由"
 
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "Käyttäjä"
+msgstr "用户"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Nimi"
+msgstr "名称"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
 msgid "Status"
-msgstr "Tila"
+msgstr "状态"
 
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
 msgid "Modified"
-msgstr "Muutettu"
+msgstr "最后更改"
 
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Toiminnot"
+msgstr "操作"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
 msgid "View batches"
-msgstr "Näytä erät"
+msgstr "查看批处理"
 
 #: web/templates/batches.html:71
 msgctxt "batches-view"
 msgid "View"
-msgstr "Näytä"
+msgstr "查看"
 
 #: web/templates/batches.html:73
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Kumoa / Keskustele"
+msgstr "还原/讨论"
 
 #: web/templates/batches.html:89
 msgctxt "batches-first"
 msgid "FIRST"
-msgstr "ENSIMMÄINEN"
+msgstr "首页"
 
 #: web/templates/batches.html:95
 msgctxt "batches-previous"
 msgid "PREVIOUS"
-msgstr "EDELLINEN"
+msgstr "上一页"
 
 #: web/templates/batches.html:113
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "SEURAAVA"
+msgstr "下一页"
 
 #: web/templates/batches.html:119
 msgctxt "batches-last"
 msgid "LAST"
-msgstr "VIIMEINEN"
+msgstr "末页"
 
 #: web/templates/batches.html:130 web/templates/batches.html:134
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Sivun koko:"
+msgstr "页面大小："
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
 msgid "Welcome to QuickStatements 3.0"
-msgstr "Tervetuloa QuickStatements 3.0:aan"
+msgstr "欢迎使用QuickStatements 3.0"
 
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
 msgid "New batch"
-msgstr "Uusi erä"
+msgstr "新建批处理"
 
 #: web/templates/index.html:17
 msgctxt "index-batch-id"
 msgid "Batch ID..."
-msgstr "Erän tunniste..."
+msgstr "批处理编号..."
 
 #: web/templates/index.html:18
 msgctxt "index-see-batch-details"
 msgid "See batch details"
-msgstr "Näytä erän tiedot"
+msgstr "查看批处理详情"
 
 #: web/templates/index.html:24
 msgctxt "index-username"
 msgid "Username..."
-msgstr "Käyttäjänimi..."
+msgstr "用户名..."
 
 #: web/templates/index.html:25
 msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
-msgstr "Näytä käyttäjän erät"
+msgstr "查看用户的批处理"
 
 #: web/templates/layout_desktop_menu.html:7
 #: web/templates/layout_mobile_menu.html:3
@@ -614,495 +614,483 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu_content.html:18
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "Uusi erä"
+msgstr "新建批处理"
 
 #: web/templates/layout_desktop_menu.html:12
 #: web/templates/layout_menu_content.html:19
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Tuoreet erät"
+msgstr "最近批处理"
 
 #: web/templates/layout_desktop_menu.html:13
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Ohje"
+msgstr "帮助"
 
 #: web/templates/layout_desktop_menu.html:20
 msgctxt "layout-navbar-menu"
 msgid "Menu"
-msgstr "Valikko"
+msgstr "菜单"
 
 #: web/templates/layout_desktop_menu.html:28
 #: web/templates/layout_menu_content.html:14
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Kirjaudu sisään"
+msgstr "登录"
 
 #: web/templates/layout_dropdown_languages.html:14
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Auta kääntämisessä"
+msgstr "帮助我们翻译"
 
 #: web/templates/layout_menu_content.html:12
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Asetukset"
+msgstr "参数设置"
 
 #: web/templates/layout_menu_content.html:21 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
 msgid "Your batches"
-msgstr "Omat erät"
+msgstr "您的批处理"
 
 #: web/templates/layout_menu_content.html:24
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
-msgstr "Ohje/Dokumentaatio"
+msgstr "帮助/文档"
 
 #: web/templates/layout_menu_content.html:25
 msgctxt "layout-navbar-repository"
 msgid "Repository"
-msgstr "Repository"
+msgstr "仓库"
 
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Tilastot"
+msgstr "统计数据"
 
 #: web/templates/layout_menu_content.html:29
 msgctxt "layout-navbar-logout"
 msgid "Log out"
-msgstr "Kirjaudu ulos"
+msgstr "退出"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 – Kirjaudu sisään"
+msgstr "QuickStatements 3.0 - 登录"
 
 #: web/templates/login.html:8
 msgctxt "login-page-title"
 msgid "Login"
-msgstr "Kirjaudu sisään"
+msgstr "登录"
 
 #: web/templates/login.html:34
 msgctxt "login-sign-in-with-wikimedia-account"
 msgid "Sign in with Wikimedia account"
-msgstr "Kirjaudu sisään Wikimedia-tunnuksella"
+msgstr "使用维基媒体账户登录"
 
 #: web/templates/login.html:37
 msgctxt "login-advanced-consumer-key"
 msgid "Advanced: login with a developer consumer key"
-msgstr "Advanced: login with a developer consumer key"
+msgstr "高级：使用开发者密钥登录"
 
 #: web/templates/login_dev.html:4
 msgctxt "login-dev-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 – Kirjaudu sisään"
+msgstr "QuickStatements 3.0 - 登录"
 
 #: web/templates/login_dev.html:9
 msgctxt "login-dev-developer-access"
 msgid "Developer access"
-msgstr "Developer access"
+msgstr "开发者访问"
 
 #: web/templates/login_dev.html:11
 msgctxt "login-dev-submit-your-access-token-below"
 msgid "Submit your access token below."
-msgstr "Submit your access token below."
+msgstr "在下方提交您的访问令牌。"
 
 #: web/templates/login_dev.html:19 web/templates/login_dev.html:20
 msgctxt "login-dev-access-token"
 msgid "Access Token"
-msgstr "Access Token"
+msgstr "访问令牌"
 
 #: web/templates/login_dev.html:23
 msgctxt "login-dev-log-in"
 msgid "Log in"
-msgstr "Kirjaudu sisään"
+msgstr "登录"
 
 #: web/templates/login_dev.html:30
 msgctxt "login-dev-your-access-token-is-not-valid"
 msgid "Your access token is not valid:"
-msgstr "Your access token is not valid:"
+msgstr "您的访问令牌无效："
 
 #: web/templates/navbar.html:8
 msgctxt "layout-new-batch"
 msgid "New batch"
-msgstr "Uusi erä"
+msgstr "新建批处理"
 
 #: web/templates/navbar.html:9
 msgctxt "layout-last-batches"
 msgid "Last batches"
-msgstr "Tuoreet erät"
+msgstr "最近批处理"
 
 #: web/templates/navbar.html:10
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Tilastot"
+msgstr "统计数据"
 
 #: web/templates/navbar.html:20
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Kirjaudu sisään"
+msgstr "登录"
 
 #: web/templates/navbar.html:22
 msgctxt "layout-user"
 msgid "User"
-msgstr "Käyttäjä"
+msgstr "用户"
 
 #: web/templates/navbar.html:23
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
-msgstr "Viimeisimmät eräsi"
+msgstr "您最近的批处理"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
 msgid "QuickStatements 3.0 - New batch"
-msgstr "QuickStatements 3.0 – Uusi erä"
+msgstr "QuickStatements 3.0 - 新建批处理"
 
 #: web/templates/new_batch.html:12
 msgctxt "new-batch-new-batch"
 msgid "New batch"
-msgstr "Uusi erä"
+msgstr "新建批处理"
 
 #: web/templates/new_batch.html:21
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Tunnuksesi on estetty etkä voi siksi ajaa eriä."
+msgstr "您的账户已被封禁，无法运行任何批处理。"
 
 #: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
-msgstr "Wikibase"
+msgstr "维基数据库"
 
 #: web/templates/new_batch.html:41
 msgctxt "new-batch-command-format"
 msgid "Command format"
-msgstr "Komentomuoto"
+msgstr "命令格式"
 
 #: web/templates/new_batch.html:49
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
-msgstr "Mukautettu erän nimi..."
+msgstr "自定义批处理名称..."
 
 #: web/templates/new_batch.html:54
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
-msgstr "Lukitse, jos komento epäonnistuu"
+msgstr "命令失败时中止批处理"
 
 #: web/templates/new_batch.html:55
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
-msgstr "Erän ajo pysähtyy, jos komento antaa virheen."
+msgstr "若某条命令执行出错，批处理将停止运行。"
 
 #: web/templates/new_batch.html:60
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
-msgstr "Älä yhdistä komentoja"
+msgstr "不合并命令"
 
 #: web/templates/new_batch.html:61
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
-msgstr ""
-"Samaan entiteettiin kohdistettuja komentoja ei yhdistetä yhdeksi "
-"muokkaukseksi."
+msgstr "对同一实体的命令将不会合并为单次编辑。"
 
 #: web/templates/new_batch.html:66
 msgctxt "new-batch-file-upload"
 msgid "File upload"
-msgstr "File upload"
+msgstr "文件上传"
 
 #: web/templates/new_batch.html:67
 msgctxt "new-batch-file-upload-targeting"
 msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
-msgstr ""
-"Option for when the user prefers to upload a file, intead of writing the "
-"commands in the form"
+msgstr "当用户希望上传文件，而非在表单中输入命令时的选项"
 
 #: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
-msgstr "Syötä komentosi tähän..."
+msgstr "在此处输入您的命令..."
 
 #: web/templates/new_batch.html:85
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr "Huom. vain automaattisesti hyväksytyt käyttäjät voivat ajaa eriä."
+msgstr "注意：仅自动确认用户可运行批处理。"
 
 #: web/templates/preview_batch.html:3
 msgctxt "preview-batch-batch"
 msgid "Batch"
-msgstr "Erä"
+msgstr "批处理"
 
 #: web/templates/preview_batch.html:23
 msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
-msgstr "Erän esikatselu"
+msgstr "批处理预览"
 
 #: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
-msgstr "Tallenna ja aja erä"
+msgstr "保存并运行批处理"
 
 #: web/templates/preview_batch.html:39
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Tunnuksesi on estetty etkä voi siksi ajaa eriä."
+msgstr "您的账户已被封禁，无法运行任何批处理。"
 
 #: web/templates/preview_batch.html:41
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr "Huom. vain automaattisesti hyväksytyt käyttäjät voivat ajaa eriä."
+msgstr "注意：仅自动确认用户可运行批处理。"
 
 #: web/templates/preview_batch.html:49
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
 msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
 "CLICKING 'Save and run batch'."
-msgstr ""
-"TÄMÄ ERÄ ON ESIKATSELUTILASSA JA SE TALLENNETTAAN JA AJETAAN VASTA "
-"\"Tallenna ja aja erä\" -PAINIKKEEN PAINAMISEN JÄLKEEN."
+msgstr "当前批处理处于预览模式，点击“保存并运行批处理”后才会保存并执行。"
 
 #: web/templates/preview_batch.html:55
 msgctxt "preview-batch-commands"
 msgid "Commands"
-msgstr "Komennot"
+msgstr "命令"
 
 #: web/templates/preview_batch.html:57
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Ladataan komentoja..."
+msgstr "正在加载命令..."
 
 #: web/templates/profile.html:5
 msgctxt "profile-quickstatements-profile"
 msgid "QuickStatements 3.0 - Profile"
-msgstr "QuickStatements 3.0 – Profiili"
+msgstr "QuickStatements 3.0 - 用户资料"
 
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Omat tilastot"
+msgstr "您的统计数据"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
 msgid "Autoconfirmed status"
-msgstr "Automaattisesti hyväksytty -status"
+msgstr "自动确认状态"
 
 #: web/templates/profile.html:26
 msgctxt "profile-only-autoconfirmed-users-can-run-batches-on-quickstatements"
 msgid "Only autoconfirmed users can run batches on Quickstatements"
-msgstr ""
-"Vain automaattisesti hyväksytyt käyttäjät voivat ajaa eriä QuickStatements-"
-"palvelussa"
+msgstr "仅自动确认用户可在Quickstatements运行批处理"
 
 #: web/templates/profile.html:28
 msgctxt "profile-read-about-autoconfirmed-user-definition"
 msgid "Read about autoconfirmed user definition"
-msgstr "Lisätietoja automaattisesti hyväksyistä käyttäjistä"
+msgstr "了解自动确认用户定义"
 
 #: web/templates/profile.html:34
 msgctxt ""
 "profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user"
 msgid "We have successfully verified that you are an autoconfirmed user."
-msgstr "Olemme vahvistaneet, että olet automaattisesti hyväksytty käyttäjä."
+msgstr "我们已成功验证您是自动确认用户。"
 
 #: web/templates/profile.html:41
 msgctxt "profile-we-could-not-verify-you-are-an-autoconfirmed-user"
 msgid "We could not verify you are an autoconfirmed user."
-msgstr ""
-"Emme voineet vahvistaa, että olet automaattisesti hyväksytty käyttäjä."
+msgstr "我们无法验证您是自动确认用户。"
 
 #: web/templates/profile.html:43
 msgctxt "profile-you-are-not-an-autoconfirmed-user"
 msgid "You are not an autoconfirmed user."
-msgstr "Et ole automaattisesti hyväksytty käyttäjä."
+msgstr "您不是自动确认用户。"
 
 #: web/templates/profile.html:52
 msgctxt "profile-preferences"
 msgid "Preferences"
-msgstr "Asetukset"
+msgstr "参数设置"
 
 #: web/templates/profile.html:55
 msgctxt "profile-preferred-language"
 msgid "Preferred language"
-msgstr "Ensisijainen kieli"
+msgstr "首选语言"
 
 #: web/templates/profile.html:62
 msgctxt "profile-update-preferred-language"
 msgid "Update preferred language"
-msgstr "Päivitä ensisijainen kieli"
+msgstr "更新首选语言"
 
 #: web/templates/profile.html:67
 msgctxt "profile-api-token"
 msgid "API Token"
-msgstr "API-avain"
+msgstr "API令牌"
 
 #: web/templates/profile.html:70
 msgctxt "profile-here-you-can-generate-a-token"
 msgid ""
 "Here, you can generate a token to use when querying batch jobs "
 "programatically."
-msgstr ""
-"Here, you can generate a token to use when querying batch jobs "
-"programatically."
+msgstr "此处可生成用于编程查询批处理作业的令牌。"
 
 #: web/templates/profile.html:72
 msgctxt "profile-you-currently-have-the-following-token"
 msgid ""
 "You currently have the following token. This token must be kept private:"
-msgstr ""
-"You currently have the following token. This token must be kept private:"
+msgstr "您当前的令牌如下（需严格保密）："
 
 #: web/templates/profile.html:78
 msgctxt "profile-update-token"
 msgid "Update token"
-msgstr "Update token"
+msgstr "更新令牌"
 
 #: web/templates/profile.html:83
 msgctxt "profile-click-here-to-log-out"
 msgid "Click here to log out."
-msgstr "Kirjaudu ulos klikkaamalla tästä."
+msgstr "点击此处退出。"
 
 #: web/templates/profile.html:88
 msgctxt "profile-youre-not-logged-in"
 msgid "You're not logged in."
-msgstr "Et ole kirjautunut sisään."
+msgstr "您尚未登录。"
 
 #: web/templates/profile.html:89
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Klikkaa tästä kirjautuaksesi sisään."
+msgstr "点击此处登录。"
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
-msgstr "QuickStatements 3.0 – Tilastot"
+msgstr "QuickStatements 3.0 - 统计数据"
 
 #: web/templates/statistics.html:16
 #, python-format
 msgctxt "statistics-title-username"
 msgid " Statistics of %(1)s "
-msgstr " Statistics of %(1)s "
+msgstr "%(1)s的统计数据"
 
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Tilastot"
+msgstr "统计数据"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
 msgid "All-time numbers"
-msgstr "All-time numbers"
+msgstr "历史数据"
 
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
 msgid "Batches"
-msgstr "Eriä"
+msgstr "批处理总数"
 
 #: web/templates/statistics_all_time_counters.html:11
 msgctxt "statistics-commands"
 msgid "Commands"
-msgstr "Komentoja"
+msgstr "命令总数"
 
 #: web/templates/statistics_all_time_counters.html:16
 msgctxt "statistics-avg-commands"
 msgid "Average number of commands per batch"
-msgstr "Komentojen keskimääräinen määrä erää kohden"
+msgstr "每个批处理平均命令数"
 
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Kohteita luotu"
+msgstr "新建项目数"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Muokkaajia"
+msgstr "编辑者数"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
 msgid "Hey, it's you!"
-msgstr "Hei, sehän olet sinä!"
+msgstr "嘿，就是你！"
 
 #: web/templates/statistics_all_time_counters.html:38
 #, python-format
 msgctxt "statistics-hey-its-them"
 msgid "Hey it's %(1)s!"
-msgstr "Hei, sehän on %(1)s!"
+msgstr "嘿，这是%(1)s！"
 
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Muokkauksia"
+msgstr "编辑总数"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
 msgid "Cumulative number of batches"
-msgstr "Erien kumulatiivinen määrä"
+msgstr "累计批处理数量"
 
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Muokkausten kumulatiivinen määrä"
+msgstr "累计编辑数"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
 msgid "Cumulative number of edits and new editors"
-msgstr "Muokkausten ja uusien muokkaajien kumulatiivinen määrä"
+msgstr "累计编辑数与新编辑者"
 
 #: web/templates/statistics_plots.html:29
 msgctxt "statistics-done-and-error-commands"
 msgid "Done and error commands per day"
-msgstr "Onnistuineiden ja virheellisten komentojen määrä päivittäin"
+msgstr "每日命令执行状态"
 
 #: web/templates/statistics_plots.html:53
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
-msgstr "Erien määrä"
+msgstr "批处理数"
 
 #: web/templates/statistics_plots.html:104
 #: web/templates/statistics_plots.html:141
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
-msgstr "Muokkausten määrä"
+msgstr "编辑数"
 
 #: web/templates/statistics_plots.html:115
 #: web/templates/statistics_plots.html:148
 msgctxt "statistics-number-of-editors"
 msgid "Number of editors"
-msgstr "Muokkaajien määrä"
+msgstr "编辑者人数"
 
 #: web/templates/statistics_plots.html:187
 msgctxt "statistics-done-status"
 msgid "Done status"
-msgstr "Tila: Valmis"
+msgstr "成功状态"
 
 #: web/templates/statistics_plots.html:194
 msgctxt "statistics-error-status"
 msgid "Error status"
-msgstr "Tila: Virhe"
+msgstr "错误状态"
 
 #: web/views/new_batch.py:161
 msgctxt "batch-py-empty-command-input"
 msgid "Command input cannot be empty. Please provide valid commands."
-msgstr "Command input cannot be empty. Please provide valid commands."
+msgstr "命令输入不能为空，请提供有效命令。"
 
 #: web/views/new_batch.py:170
 msgctxt "batch-py-csv-only-header"
 msgid "CSV input must include more than just the header row"
-msgstr "CSV input must include more than just the header row"
+msgstr "CSV输入不能仅包含标题行。"
 
 #: web/views/new_batch.py:195
 msgctxt "batch-py-valid-command-not-found"
 msgid "No valid commands found in the provided input."
-msgstr "No valid commands found in the provided input."
+msgstr "提供的输入中未找到有效命令。"
 
 #: web/views/new_batch.py:276
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
-msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
+msgstr "用户未自动确认，仅自动确认用户可运行批处理。"
 
 #: web/views/new_batch.py:279
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
-msgstr "User is blocked and can not run batches."
+msgstr "用户被封禁，无法运行批处理。"

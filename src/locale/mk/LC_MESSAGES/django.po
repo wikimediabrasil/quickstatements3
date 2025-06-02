@@ -1081,17 +1081,17 @@ msgstr "Статус на грешка"
 #: web/views/new_batch.py:161
 msgctxt "batch-py-empty-command-input"
 msgid "Command input cannot be empty. Please provide valid commands."
-msgstr "Command input cannot be empty. Please provide valid commands."
+msgstr "Вносот за наредба не може да стои празен. Внесете важечки наредби."
 
 #: web/views/new_batch.py:170
 msgctxt "batch-py-csv-only-header"
 msgid "CSV input must include more than just the header row"
-msgstr "CSV input must include more than just the header row"
+msgstr "CSV-вносот мора да содржи повеќе од само заглавен ред"
 
 #: web/views/new_batch.py:195
 msgctxt "batch-py-valid-command-not-found"
 msgid "No valid commands found in the provided input."
-msgstr "No valid commands found in the provided input."
+msgstr "Немате внесено важечки наредби."
 
 #: web/views/new_batch.py:276
 msgctxt "batch-py-user-not-autoconfirmed"

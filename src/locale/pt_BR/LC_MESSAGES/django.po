@@ -614,18 +614,18 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu_content.html:18
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Novo lote"
 
 #: web/templates/layout_desktop_menu.html:12
 #: web/templates/layout_menu_content.html:19
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Últimos lotes"
 
 #: web/templates/layout_desktop_menu.html:13
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Help"
+msgstr "Ajuda"
 
 #: web/templates/layout_desktop_menu.html:20
 msgctxt "layout-navbar-menu"
@@ -636,42 +636,42 @@ msgstr "Menu"
 #: web/templates/layout_menu_content.html:14
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Entrar"
 
 #: web/templates/layout_dropdown_languages.html:14
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Help us translate"
+msgstr "Ajude-nos a traduzir"
 
 #: web/templates/layout_menu_content.html:12
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Preferências"
 
 #: web/templates/layout_menu_content.html:21 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
 msgid "Your batches"
-msgstr "Your batches"
+msgstr "Seus lotes"
 
 #: web/templates/layout_menu_content.html:24
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
-msgstr "Help/Documentation"
+msgstr "Ajuda/Documentação"
 
 #: web/templates/layout_menu_content.html:25
 msgctxt "layout-navbar-repository"
 msgid "Repository"
-msgstr "Repository"
+msgstr "Repositório"
 
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Estatísticas"
 
 #: web/templates/layout_menu_content.html:29
 msgctxt "layout-navbar-logout"
 msgid "Log out"
-msgstr "Log out"
+msgstr "Sair"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
@@ -882,7 +882,7 @@ msgstr "Perfil | QS 3.0"
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Your statistics"
+msgstr "Suas estatísticas"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
