@@ -53,9 +53,7 @@ def get_default_wikibase():
 
     if not wikibase:
         parsed_root_enpoint = urlparse(settings.DEFAULT_WIKIBASE_URL)
-        default_wikibase_url = (
-            f"{parsed_root_enpoint.scheme}://{parsed_root_enpoint.netloc}"
-        )
+        default_wikibase_url = f"{parsed_root_enpoint.scheme}://{parsed_root_enpoint.netloc}"
         wikibase, _ = Wikibase.objects.get_or_create(url=default_wikibase_url)
     return wikibase
 
@@ -342,25 +340,6 @@ class BatchQuerySet(models.QuerySet):
         )
 
 
-class Label(models.Model):
-    MAX_AGE = timedelta(days=5)
-
-    entity_id = models.CharField(max_length=20, db_index=True)
-    language = models.CharField(max_length=5, db_index=True)
-    value = models.CharField(max_length=300)
-    fetched_on = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.entity_id}: {self.value} ({self.language})"
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=("entity_id", "language"), name="unique_language_per_entity"
-            )
-        ]
-
-
 class Wikibase(models.Model):
     url = models.URLField(primary_key=True)
     description = models.TextField()
@@ -499,9 +478,7 @@ class Batch(models.Model):
     modified = models.DateTimeField(auto_now=True, db_index=True)
     block_on_errors = models.BooleanField(default=False)
     combine_commands = models.BooleanField(default=False)
-    wikibase = models.ForeignKey(
-        Wikibase, default=get_default_wikibase, on_delete=models.CASCADE
-    )
+    wikibase = models.ForeignKey(Wikibase, default=get_default_wikibase, on_delete=models.CASCADE)
 
     objects = BatchQuerySet.as_manager()
 
@@ -579,9 +556,7 @@ class Batch(models.Model):
             pass
 
         if self.commands().filter(status=BatchCommand.STATUS_INITIAL).exists():
-            logger.warning(
-                f"[{self}] finished running but still has init commands, restarting..."
-            )
+            logger.warning(f"[{self}] finished running but still has init commands, restarting...")
             self.status = Batch.STATUS_INITIAL
             self.save()
             return
@@ -633,9 +608,7 @@ class Batch(models.Model):
         self.block_with_message(message)
 
     def block_no_token(self):
-        logger.error(
-            f"[{self}] blocked, we don't have a valid token for the user {self.user}"
-        )
+        logger.error(f"[{self}] blocked, we don't have a valid token for the user {self.user}")
         message = "We don't have a valid API token for the user"
         self.block_with_message(message)
 
@@ -690,9 +663,7 @@ class Batch(models.Model):
         if self.estimated_runtime is None:
             return None
 
-        concurrent = Batch.objects.filter(status=Batch.STATUS_RUNNING).exclude(
-            id=self.id
-        )
+        concurrent = Batch.objects.filter(status=Batch.STATUS_RUNNING).exclude(id=self.id)
 
         concurrent_runtime = sum([b.estimated_runtime or 0 for b in concurrent])
         total_estimated_time = self.estimated_runtime + concurrent_runtime
@@ -710,9 +681,7 @@ class Batch(models.Model):
         RATE_LIMIT_PER_MINUTE = 90
         MAX_REQUESTS_PER_SECOND = RATE_LIMIT_PER_MINUTE / 60
 
-        total_pending = self.batchcommand_set.filter(
-            status=BatchCommand.STATUS_INITIAL
-        ).count()
+        total_pending = self.batchcommand_set.filter(status=BatchCommand.STATUS_INITIAL).count()
 
         return math.ceil(total_pending / MAX_REQUESTS_PER_SECOND)
 
@@ -806,7 +775,6 @@ class BatchCommand(models.Model):
         default=ACTION_CREATE, choices=ACTION_CHOICES, null=False, blank=False
     )
     user_summary = models.TextField(blank=True, null=True)
-    labels = models.ManyToManyField(Label)
 
     class Operation(models.TextChoices):
         CREATE_ITEM = (
@@ -815,9 +783,7 @@ class BatchCommand(models.Model):
         )
         CREATE_PROPERTY = (
             "create_property",
-            pgettext_lazy(
-                "batchcommand-py-operation-create-property", "Create property"
-            ),
+            pgettext_lazy("batchcommand-py-operation-create-property", "Create property"),
         )
         #
         SET_STATEMENT = (
@@ -826,9 +792,7 @@ class BatchCommand(models.Model):
         )
         CREATE_STATEMENT = (
             "create_statement",
-            pgettext_lazy(
-                "batchcommand-py-operation-create-statement", "Create statement"
-            ),
+            pgettext_lazy("batchcommand-py-operation-create-statement", "Create statement"),
         )
         #
         REMOVE_STATEMENT_BY_ID = (
@@ -848,15 +812,11 @@ class BatchCommand(models.Model):
         #
         REMOVE_QUALIFIER = (
             "remove_qualifier",
-            pgettext_lazy(
-                "batchcommand-py-operation-remove-qualifier", "Remove qualifier"
-            ),
+            pgettext_lazy("batchcommand-py-operation-remove-qualifier", "Remove qualifier"),
         )
         REMOVE_REFERENCE = (
             "remove_reference",
-            pgettext_lazy(
-                "batchcommand-py-operation-remove-reference", "Remove reference"
-            ),
+            pgettext_lazy("batchcommand-py-operation-remove-reference", "Remove reference"),
         )
         #
         SET_SITELINK = (
@@ -869,16 +829,12 @@ class BatchCommand(models.Model):
         )
         SET_DESCRIPTION = (
             "set_description",
-            pgettext_lazy(
-                "batchcommand-py-operation-set-description", "Set description"
-            ),
+            pgettext_lazy("batchcommand-py-operation-set-description", "Set description"),
         )
         #
         REMOVE_SITELINK = (
             "remove_sitelink",
-            pgettext_lazy(
-                "batchcommand-py-operation-remove-sitelink", "Remove sitelink"
-            ),
+            pgettext_lazy("batchcommand-py-operation-remove-sitelink", "Remove sitelink"),
         )
         REMOVE_LABEL = (
             "remove_label",
@@ -886,9 +842,7 @@ class BatchCommand(models.Model):
         )
         REMOVE_DESCRIPTION = (
             "remove_description",
-            pgettext_lazy(
-                "batchcommand-py-operation-remove-description", "Remove description"
-            ),
+            pgettext_lazy("batchcommand-py-operation-remove-description", "Remove description"),
         )
         #
         ADD_ALIAS = (
@@ -923,9 +877,7 @@ class BatchCommand(models.Model):
     class Error(models.TextChoices):
         OP_NOT_IMPLEMENTED = (
             "op_not_implemented",
-            pgettext_lazy(
-                "batchcommand-py-error-op-not-implemented", "Operation not implemented"
-            ),
+            pgettext_lazy("batchcommand-py-error-op-not-implemented", "Operation not implemented"),
         )
         NO_STATEMENTS_PROPERTY = (
             "no_statements_property",
@@ -943,9 +895,7 @@ class BatchCommand(models.Model):
         )
         NO_QUALIIFERS = (
             "no_qualifiers",
-            pgettext_lazy(
-                "batchcommand-py-error-no-qualifiers", "No qualifiers with given value"
-            ),
+            pgettext_lazy("batchcommand-py-error-no-qualifiers", "No qualifiers with given value"),
         )
         NO_REFERENCE_PARTS = (
             "no_reference_parts",
@@ -956,27 +906,19 @@ class BatchCommand(models.Model):
         )
         SITELINK_INVALID = (
             "sitelink_invalid",
-            pgettext_lazy(
-                "batchcommand-py-error-sitelink-invalid", "The sitelink id is invalid"
-            ),
+            pgettext_lazy("batchcommand-py-error-sitelink-invalid", "The sitelink id is invalid"),
         )
         COMBINING_COMMAND_FAILED = (
             "combining_failed",
-            pgettext_lazy(
-                "batchcommand-py-error-combining-failed", "The next command failed"
-            ),
+            pgettext_lazy("batchcommand-py-error-combining-failed", "The next command failed"),
         )
         API_USER_ERROR = (
             "api_user_error",
-            pgettext_lazy(
-                "batchcommand-py-error-api-user-error", "API returned a User error"
-            ),
+            pgettext_lazy("batchcommand-py-error-api-user-error", "API returned a User error"),
         )
         API_SERVER_ERROR = (
             "api_server_error",
-            pgettext_lazy(
-                "batchcommand-py-error-api-server-error", "API returned a server error"
-            ),
+            pgettext_lazy("batchcommand-py-error-api-server-error", "API returned a server error"),
         )
         LAST_NOT_EVALUATED = (
             "last_not_evaluated",
@@ -1400,9 +1342,7 @@ class BatchCommand(models.Model):
         Also joins the summary from the previous combined commands.
         """
         summaries = [self.user_summary]
-        summaries.extend(
-            [c.user_summary for c in getattr(self, "previous_commands", [])]
-        )
+        summaries.extend([c.user_summary for c in getattr(self, "previous_commands", [])])
         combined = " | ".join([s for s in summaries[::-1] if bool(s)])
         editgroups = self.editgroups_summary()
         if editgroups:
@@ -1476,9 +1416,9 @@ class BatchCommand(models.Model):
         Returns True if `self` is CREATE_ITEM and `next`
         has LAST as entity id, or if both have the same entity id.
         """
-        return (
-            self.operation == self.Operation.CREATE_ITEM and next.entity_id == "LAST"
-        ) or (self.entity_id == next.entity_id)
+        return (self.operation == self.Operation.CREATE_ITEM and next.entity_id == "LAST") or (
+            self.entity_id == next.entity_id
+        )
 
     def update_combining_state(self, client: Client):
         """
@@ -1651,9 +1591,7 @@ class BatchCommand(models.Model):
         for i, statement in enumerate(statements):
             if statement["value"] == self.statement_api_value:
                 return entity["statements"][self.prop].pop(i)
-        raise NoStatementsWithThatValue(
-            self.entity_id, self.prop, self.statement_api_value
-        )
+        raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
 
     def _update_entity_aliases(self, entity: dict):
         """
@@ -1805,15 +1743,11 @@ class BatchCommand(models.Model):
 
     class Meta:
         verbose_name = pgettext_lazy("batchcommand-py-batchcommand", "Batch Command")
-        verbose_name_plural = pgettext_lazy(
-            "batchcommand-py-batchcommands", "Batch Commands"
-        )
+        verbose_name_plural = pgettext_lazy("batchcommand-py-batchcommands", "Batch Commands")
         index_together = ("batch", "index")
         ordering = ("batch", "index")
 
 
 class BatchEditingSession(models.Model):
-    batch = models.OneToOneField(
-        Batch, related_name="editing_session", on_delete=models.CASCADE
-    )
+    batch = models.OneToOneField(Batch, related_name="editing_session", on_delete=models.CASCADE)
     session_key = models.CharField(max_length=64, blank=True, null=True, db_index=True)

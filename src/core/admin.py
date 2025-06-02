@@ -1,13 +1,6 @@
 from django.contrib import admin
 
-from core.models import Batch, BatchCommand, Token, Wikibase, Label
-
-
-@admin.register(Label)
-class LabelAdmin(admin.ModelAdmin):
-    list_display = ("entity_id", "language", "value")
-    list_filter = ("language",)
-    search_field = ("entity_id", "value")
+from core.models import Batch, BatchCommand, Token, Wikibase
 
 
 @admin.register(Wikibase)
