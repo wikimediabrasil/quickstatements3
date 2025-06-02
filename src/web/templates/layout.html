@@ -78,6 +78,21 @@
     {% endblock %}
 
   </style>
+  <script data-moon="{% static 'moon.svg' %}" data-sun="{% static 'sun.svg' %}">
+    const sunThemeSrc = document.currentScript.dataset.sun;
+    const moonThemeSrc = document.currentScript.dataset.moon;
+    const setTheme = (theme) => {
+      theme ??= localStorage.theme || "light";
+      document.documentElement.dataset.theme = theme;
+      localStorage.theme = theme;
+      const themeSwitcherSrc = theme === 'light' ? moonThemeSrc : sunThemeSrc;
+      document.getElementById("themeSwitcher").src = themeSwitcherSrc;
+    };
+    const switchTheme = () => {
+      const newTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      setTheme(newTheme);
+    };
+  </script>
 </head>
 
 <body>

@@ -85,10 +85,10 @@
   var data_edits = [];
   var editorsBorderColor = "#353744";
   var editorsBackgroundColor = "#3537447F";
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  if (document.documentElement.dataset.theme === 'dark') {
     editorsBorderColor = "#F1F1F1";
     editorsBackgroundColor = "#F1F1F17F";
-  }
+  };
   {% if username %}
   var hideEditorsPlot = true;
   {% else %}
