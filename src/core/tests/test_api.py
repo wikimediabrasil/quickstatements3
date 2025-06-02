@@ -15,7 +15,7 @@ from core.exceptions import (
     UnauthorizedToken,
 )
 from core.factories import TokenFactory, UserFactory, WikibaseFactory, BatchFactory
-from core.models import BatchCommand, Client, Token, Label
+from core.models import BatchCommand, Client, Token
 from core.parsers.v1 import V1CommandParser
 
 
@@ -184,9 +184,7 @@ class ApiMocker:
         )
 
     def add_statement_successful(self, mocker, item_id, response_json=None):
-        response_json = (
-            response_json if response_json else {"id": f"{item_id}$somestuff"}
-        )
+        response_json = response_json if response_json else {"id": f"{item_id}$somestuff"}
         mocker.patch(
             self.wikibase_url(f"/entities/items/{item_id}"),
             json=response_json,
@@ -630,9 +628,9 @@ class TestBatchCommand(TestCase):
     def test_api_payload(self):
         payload = BatchCommand().api_payload(self.api_client)
         self.assertEqual(payload, {})
-        payload = BatchCommand(
-            operation=BatchCommand.Operation.CREATE_ITEM
-        ).api_payload(self.api_client)
+        payload = BatchCommand(operation=BatchCommand.Operation.CREATE_ITEM).api_payload(
+            self.api_client
+        )
         self.assertEqual(payload, {"item": {}})
 
     @override_settings(TOOLFORGE_TOOL_NAME="qs-dev")
@@ -641,7 +639,9 @@ class TestBatchCommand(TestCase):
         batch = BatchFactory.load_from_parser(parser, "b", "u", "CREATE /* hello */")
         batch_id = batch.id
         cmd = batch.commands()[0]
-        comment = f"QuickStatements 3.0 [[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: hello"
+        comment = (
+            f"QuickStatements 3.0 [[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: hello"
+        )
         self.assertEqual(
             cmd.api_body(self.api_client),
             {
