@@ -1,0 +1,38 @@
+{% load i18n %}
+{% load static %}
+<nav>
+  <ul>
+    <li>
+      <a href="{% url 'home' %}">
+        <span style="font-weight: bold;">
+          {% translate "QuickStatements 3.0" context "layout-quickstatements-title" %}
+        </span>
+      </a>
+    </li>
+    <li class="desktop-only"><a href="{% url 'new_batch' %}">{% translate "New batch" context 'layout-navbar-new-batch' %}</a></li>
+    <li class="desktop-only"><a href="{% url 'last_batches' %}">{% translate "Last batches" context 'layout-navbar-last-batches' %}</a></li>
+    <li class="desktop-only"><a href="https://meta.wikimedia.org/wiki/QuickStatements_3.0/Documentation">{% translate "Help" context "layout-navbar-help" %}</a></li>
+  </ul>
+  <ul>
+    <a href="#" style="padding-bottom: 4px; margin-right: 2px;">
+      <img id="themeSwitcher" width="24px" height="24px" src="{% static 'moon.svg' %}" onclick="switchTheme()" />
+    </a>
+    <script>setTheme();</script>
+    <li class="desktop-only">
+      {% if user.is_authenticated %}
+      <a href="{% url 'profile' %}">{{ user }}</a>
+      {% else %}
+      <a href="{% url 'login' %}">{% translate "Log in" context "layout-navbar-login" %}</a>
+      {% endif %}
+    </li>
+    <li>{% include "layout_dropdown_languages.html" %}</li>
+    <li>
+      <details class="dropdown" id="layout-hamburguer-menu">
+        <summary></summary>
+        <ul dir="rtl" style="text-align: center; padding: 0.5em 4em 0.5em 4em; overflow: auto; max-height: 80vh;" >
+          {% include "layout_menu_content.html" %}
+        </ul>
+      </details>
+    </li>
+  </ul>
+</nav>

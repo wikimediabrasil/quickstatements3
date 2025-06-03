@@ -64,25 +64,46 @@
     @media screen and (max-width: 1030px) {
       .mobile-only { display: block; }
       .desktop-only { display: none; }
+      #layout-hamburguer-menu > ul { position: fixed; margin-top: 0.5em; height: 100%; }
     }
+
+    #layout-hamburguer-menu {
+      > summary::after { background-image: none; content: '☰'; }
+      > summary { padding-right: 1em; padding-left: 1em; }
+    }
+
+    #layout-hamburguer-menu[open] > summary:after { content: '✕'; }
 
     {% block css %}
     {% endblock %}
 
   </style>
+  <script data-moon="{% static 'moon.svg' %}" data-sun="{% static 'sun.svg' %}">
+    const sunThemeSrc = document.currentScript.dataset.sun;
+    const moonThemeSrc = document.currentScript.dataset.moon;
+    const setTheme = (theme) => {
+      theme ??= localStorage.theme || "light";
+      document.documentElement.dataset.theme = theme;
+      localStorage.theme = theme;
+      const themeSwitcherSrc = theme === 'light' ? moonThemeSrc : sunThemeSrc;
+      document.getElementById("themeSwitcher").src = themeSwitcherSrc;
+    };
+    const switchTheme = () => {
+      const newTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      setTheme(newTheme);
+    };
+  </script>
 </head>
 
 <body>
   <main class="container">
-    {% include "layout_mobile_menu.html" %}
-    {% include "layout_desktop_menu.html" %}
+    {% include "layout_menu.html" %}
     {% block content %}
     {% endblock content %}
   </main>
 
   {% block scripts %}
   {% endblock scripts %}
-
 
 </body>
 
