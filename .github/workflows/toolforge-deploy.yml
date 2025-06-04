@@ -29,13 +29,13 @@ jobs:
           request_pty: true
           script: |
             set -xe
-            become qs-dev git -C '$HOME/www/python' fetch origin
-            become qs-dev git -C '$HOME/www/python' reset --hard origin/main
-            become qs-dev git -C '$HOME/www/python' pull origin main
+            become qs-dev git -C ./www/python fetch origin
+            become qs-dev git -C ./www/python reset --hard origin/main
+            become qs-dev git -C ./www/python pull origin main
             become qs-dev kubectl delete pods -n tool-qs-dev -l app.kubernetes.io/component=webservice-interactive
             become qs-dev webservice --mem 512Mi python3.11 shell -- webservice-python-bootstrap
-            become qs-dev webservice --mem 512Mi python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' migrate
-            become qs-dev webservice --mem 512Mi python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' collectstatic --noinput
+            become qs-dev webservice --mem 512Mi python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
+            become qs-dev webservice --mem 512Mi python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput
             become qs-dev webservice python3.11 restart --mem 4Gi
             become qs-dev webservice python3.11 status
 
