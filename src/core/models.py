@@ -190,11 +190,11 @@ class Client:
 
         self.token.refresh_if_needed()
 
-        logger.debug(f"{method} request at {url} | sending with body {body}")
+        # logger.debug(f"{method} request at {url} | sending with body {body}")
 
         res = getattr(self.session, method.lower())(url, **kwargs)
 
-        logger.debug(f"{method} request at {url} | response: {res.json()}")
+        # logger.debug(f"{method} request at {url} | response: {res.json()}")
         self.raise_for_status(res)
         return res.json()
 
@@ -1167,21 +1167,30 @@ class BatchCommand(models.Model):
             if not st["references"]:
                 st["references"].extend(refs)
             else:
+                # Frozenset to track parts alreafy in the statement
+                existing_parts_sets = {
+                    frozenset((part["property"]["id"], part["value"]["content"]) 
+                        for part in st_ref.get("parts", []))
+                    for st_ref in st["references"]
+                }
+
                 for ref in refs:
-                    found = False
-                    for st_ref in st["references"]:
-                        if all(
-                            all(
-                                part["property"]["id"] == st_part["property"]["id"]
-                                and part["value"]["content"] == st_part["value"]["content"]
-                                for st_part in st_ref.get("parts", [])
-                            )
-                            for part in ref.get("parts", [])
-                        ):
-                            found = True
-                            break
-                    if not found and ref not in st["references"]:
+                    # Check if reference is already in st["references"]
+                    if ref in st["references"]:
+                        continue
+
+                    # Frozenset of parts in the current reference
+                    ref_parts_set = frozenset(
+                        (part["property"]["id"], part["value"]["content"])
+                        for part in ref.get("parts", []))
+
+                    # Check if this parts combination already exists
+                    if ref_parts_set not in existing_parts_sets:
+                        logger.info(f"[{self}] Updating {st['references']}")
+                        logger.info(f"[{self}] Adding new reference block: {ref}")
                         st["references"].append(ref)
+                        existing_parts_sets.add(ref_parts_set) # Non-duplicate insertion
+
         if quals:
             st.setdefault("qualifiers", [])
             st["qualifiers"].extend(quals)
