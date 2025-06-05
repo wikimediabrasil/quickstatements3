@@ -190,11 +190,11 @@ class Client:
 
         self.token.refresh_if_needed()
 
-        # logger.debug(f"{method} request at {url} | sending with body {body}")
+        logger.debug(f"{method} request at {url} | sending with body {body}")
 
         res = getattr(self.session, method.lower())(url, **kwargs)
 
-        # logger.debug(f"{method} request at {url} | response: {res.json()}")
+        logger.debug(f"{method} request at {url} | response: {res.json()}")
         self.raise_for_status(res)
         return res.json()
 
@@ -1186,8 +1186,6 @@ class BatchCommand(models.Model):
 
                     # Check if this parts combination already exists
                     if ref_parts_set not in existing_parts_sets:
-                        logger.info(f"[{self}] Updating {st['references']}")
-                        logger.info(f"[{self}] Adding new reference block: {ref}")
                         st["references"].append(ref)
                         existing_parts_sets.add(ref_parts_set) # Non-duplicate insertion
 
