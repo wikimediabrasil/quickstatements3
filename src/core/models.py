@@ -1169,7 +1169,7 @@ class BatchCommand(models.Model):
             else:
                 # Frozenset to track parts alreafy in the statement
                 existing_parts_sets = {
-                    frozenset((part["property"]["id"], part["value"]["content"]) 
+                    frozenset((part["property"]["id"], str(part["value"]["content"]))
                         for part in st_ref.get("parts", []))
                     for st_ref in st["references"]
                 }
@@ -1181,7 +1181,7 @@ class BatchCommand(models.Model):
 
                     # Frozenset of parts in the current reference
                     ref_parts_set = frozenset(
-                        (part["property"]["id"], part["value"]["content"])
+                        (part["property"]["id"], str(part["value"]["content"]))
                         for part in ref.get("parts", []))
 
                     # Check if this parts combination already exists
