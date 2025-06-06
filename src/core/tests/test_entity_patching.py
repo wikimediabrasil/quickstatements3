@@ -7,7 +7,7 @@ from core.exceptions import NoQualifiers
 from core.exceptions import NoReferenceParts
 
 
-class RemoveQualRefTests(TestCase):
+class AddRemoveQualRefTests(TestCase):
     INITIAL: dict = {
         "type": "item",
         "id": "Q12345678",
@@ -65,7 +65,10 @@ class RemoveQualRefTests(TestCase):
                             "hash": "95cc6e523b528da734a9cfdcb25c79f5a423cefe",
                             "parts": [
                                 {
-                                    "property": {"id": "P93", "data_type": "url"},
+                                    "property": {
+                                        "id": "P93",
+                                        "data_type": "url"
+                                    },
                                     "value": {
                                         "type": "value",
                                         "content": "https://kernel.org/",
@@ -87,14 +90,20 @@ class RemoveQualRefTests(TestCase):
                             "hash": "71a764a610caa3ea6161dfee9115a682945223c7",
                             "parts": [
                                 {
-                                    "property": {"id": "P93", "data_type": "url"},
+                                    "property": {
+                                        "id": "P93",
+                                        "data_type": "url"
+                                    },
                                     "value": {
                                         "type": "value",
                                         "content": "https://www.mediawiki.org/",
                                     },
                                 },
                                 {
-                                    "property": {"id": "P74", "data_type": "time"},
+                                    "property": {
+                                        "id": "P74",
+                                        "data_type": "time"
+                                    },
                                     "value": {
                                         "type": "value",
                                         "content": {
@@ -293,3 +302,56 @@ class RemoveQualRefTests(TestCase):
         self.assertEqual(prop["id"], "P93")
         prop = entity["statements"]["P31"][0]["references"][1]["parts"][0]["property"]
         self.assertEqual(prop["id"], "P74")
+
+    def test_add_reference(self):
+        text = """
+        Q12345678|P31|somevalue|S93|"https://example.com/"
+        Q12345678|P31|somevalue|S93|"https://kernel.org/"
+        Q12345678|P31|somevalue|S93|"https://kernel.org/"
+        Q12345678|P31|somevalue|S93|"https://kernel.org/"|S84267|42
+        Q12345678|P31|somevalue|S93|"https://kernel.org/"|S84267|43
+        """
+        batch = self.parse(text)
+        entity = copy.deepcopy(self.INITIAL)
+        # -----
+        add_new = batch.commands()[0]
+        self.assertRefCount(entity, "P31", 2)
+        add_new.update_entity_json(entity)
+        self.assertRefCount(entity, "P31", 3)
+        # ---
+        add_matching_part = batch.commands()[1]
+        self.assertRefPartsCount(entity, "P31", 2, ipart=0)
+        self.assertRefPartsCount(entity, "P31", 3, ipart=1)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=2)
+        add_matching_part.update_entity_json(entity)
+        self.assertRefCount(entity, "P31", 4)
+        self.assertRefPartsCount(entity, "P31", 2, ipart=0)
+        self.assertRefPartsCount(entity, "P31", 3, ipart=1)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=2)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=3)
+        # -----
+        dont_add_duplicate = batch.commands()[2]
+        dont_add_duplicate.update_entity_json(entity)
+        self.assertRefCount(entity, "P31", 4)
+        self.assertRefPartsCount(entity, "P31", 2, ipart=0)
+        self.assertRefPartsCount(entity, "P31", 3, ipart=1)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=2)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=3)
+        # -----
+        dont_add_duplicate_existing = batch.commands()[3]
+        dont_add_duplicate_existing.update_entity_json(entity)
+        self.assertRefCount(entity, "P31", 4)
+        self.assertRefPartsCount(entity, "P31", 2, ipart=0)
+        self.assertRefPartsCount(entity, "P31", 3, ipart=1)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=2)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=3)
+        # -----
+        add_extended_matching_part = batch.commands()[4]
+        add_extended_matching_part.update_entity_json(entity)
+        self.assertRefCount(entity, "P31", 5)
+        self.assertRefPartsCount(entity, "P31", 2, ipart=0)
+        self.assertRefPartsCount(entity, "P31", 3, ipart=1)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=2)
+        self.assertRefPartsCount(entity, "P31", 1, ipart=3)
+        self.assertRefPartsCount(entity, "P31", 2, ipart=4)
+        # ----

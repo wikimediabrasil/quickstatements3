@@ -1161,12 +1161,37 @@ class BatchCommand(models.Model):
             self.references_for_api(),
             self.statement_rank(),
         )
+
+        if refs:
+            st.setdefault("references", [])
+            if not st["references"]:
+                st["references"].extend(refs)
+            else:
+                # Frozenset to track parts alreafy in the statement
+                existing_parts_sets = {
+                    frozenset((part["property"]["id"], str(part["value"]["content"]))
+                        for part in st_ref.get("parts", []))
+                    for st_ref in st["references"]
+                }
+
+                for ref in refs:
+                    # Check if reference is already in st["references"]
+                    if ref in st["references"]:
+                        continue
+
+                    # Frozenset of parts in the current reference
+                    ref_parts_set = frozenset(
+                        (part["property"]["id"], str(part["value"]["content"]))
+                        for part in ref.get("parts", []))
+
+                    # Check if this parts combination already exists
+                    if ref_parts_set not in existing_parts_sets:
+                        st["references"].append(ref)
+                        existing_parts_sets.add(ref_parts_set) # Non-duplicate insertion
+
         if quals:
             st.setdefault("qualifiers", [])
             st["qualifiers"].extend(quals)
-        if refs:
-            st.setdefault("references", [])
-            st["references"].extend(refs)
         if rank:
             st["rank"] = rank
 
