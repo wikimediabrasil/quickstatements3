@@ -187,7 +187,6 @@ def command_operation_display(command):
 def datavalue_display(command, datavalue):
     if not datavalue:
         return ""
-    logger.info(f"datatype: {datavalue['type']}")
     render_action = {
         "wikibase-entityid": render_entity_datavalue,
         "time": render_time_datavalue,
