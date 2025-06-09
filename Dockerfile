@@ -2,7 +2,7 @@ FROM docker-registry.tools.wmflabs.org/toolforge-python311-sssd-web:latest AS bu
 LABEL maintainer="Miguel Galves <mgalves@gmail.com>"
 
 # Install system dependencies
-RUN apt-get update && apt-get -y install sudo gettext
+RUN apt-get update && apt-get -y install sudo gettext curl
 
 # Creating our local user and group
 RUN adduser --disabled-password --home /home/wmb --shell /bin/bash wmb && \
