@@ -1,4 +1,6 @@
 from django.utils import timezone
+from django.db.utils import OperationalError
+from django.db.utils import ProgrammingError
 from rest_framework import serializers
 from rest_framework.reverse import reverse_lazy
 
@@ -8,8 +10,14 @@ from core.models import Batch, BatchCommand, Wikibase, get_default_wikibase, Tok
 
 
 class WikibaseField(serializers.ChoiceField):
+    choices = []
+
     def __init__(self, *args, **kw):
-        kw.setdefault("choices", Wikibase.objects.all())
+        try:
+            kw.setdefault("choices", Wikibase.objects.all())
+        except (OperationalError, ProgrammingError):
+            # db not initialized
+            pass
         return super().__init__(*args, **kw)
 
     def to_representation(self, value):
