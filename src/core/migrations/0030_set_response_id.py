@@ -4,9 +4,10 @@ from django.db import migrations
 
 
 def set_response_id(apps, schema_editor):
+    db_alias = schema_editor.connection.alias
     BatchCommand = apps.get_model("core", "BatchCommand")
 
-    for command in BatchCommand.objects.filter(
+    for command in BatchCommand.objects.using(db_alias).filter(
         response_json__id__isnull=False
     ).iterator():
         command.response_id = command.response_json.get("id")
