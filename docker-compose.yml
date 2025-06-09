@@ -1,27 +1,25 @@
-version: '3.8'
-
-
 x-application-service: &application-service
   build:
     context: ./
     dockerfile: Dockerfile
-  restart: on-failure
   stdin_open: true
   tty: true
   depends_on:
     mariadb:
       condition: service_healthy
-
-  environment: &application-environment
+  environment:
     DJANGO_SETTINGS_MODULE: qsts3.settings
-    DB_NAME: quickstatements
-    DB_USER: root # For dev/testing only.
-    DB_PASSWORD: quickstatements_pass
-    DB_HOST: mariadb
-    STATIC_ROOT: /home/wmb/www/python/static
-    QSTS_DEBUG: "True"
+    DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-django-insecure-2ir3a7tRpdDNBdymZYdmvQ61Qv1gJF9CyUoxkZcQHqg}
+    QSTS_DEBUG: ${QSTS_DEBUG:-True}
+    DB_NAME: ${DB_NAME:-quickstatements}
+    DB_USER: ${DB_USER:-root}
+    DB_PASSWORD: ${DB_PASSWORD:-quickstatements_pass}
+    DB_HOST: ${DB_HOST:-mariadb}
+    STATIC_ROOT: ${STATIC_ROOT:-/home/wmb/www/python/static}
+    OAUTH_AUTHORIZATION_SERVER: ${OAUTH_AUTHORIZATION_SERVER:-https://test.wikidata.org}
+    DEFAULT_WIKIBASE_URL: ${DEFAULT_WIKIBASE_URL:-https://test.wikidata.org}
   env_file:
-    - ./etc/env
+    - ./.env
   volumes:
     - ./src:/home/wmb/www/python/src
     - ./translations:/home/wmb/www/python/translations
@@ -35,47 +33,50 @@ x-wikibase-volumes: &wikibase-volumes
 services:
   mariadb:
     image: mariadb:11.7.2
-    restart: unless-stopped
     environment:
-      # For testing we need to create a new db automatically, so we *must*
-      # use the root user
-      MARIADB_DATABASE: quickstatements
-      MARIADB_ROOT_PASSWORD: quickstatements_pass
+      MARIADB_DATABASE: ${DB_NAME:-quickstatements}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD:-quickstatements_pass}
     volumes:
       - qs-mariadb-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      test: healthcheck.sh --connect --innodb_initialized
       start_period: 10s
       interval: 10s
       timeout: 5s
       retries: 3
 
-  webserver:
+  nginx:
     image: nginx
-    restart: unless-stopped
     ports:
       - "8000:80"
     volumes:
       - qs-static-data:/static
       - ./etc/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-      - app
+      app:
+        condition: service_healthy
 
   app:
     <<: *application-service
-    command: django-admin runserver 0.0.0.0:8000
+    command: >
+      /bin/bash -c "
+        django-admin collectstatic --no-input &&
+        django-admin migrate &&
+        django-admin runserver 0.0.0.0:8000
+      "
+    healthcheck:
+      test: curl --fail http://localhost:8000/ || exit 1
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-  init_collect_static:
-    <<: *application-service
-    command: django-admin collectstatic --no-input
-
-  init_migrations:
-    <<: *application-service
-    command: django-admin migrate --no-input
-
-  run_send_batches:
+  send_batches:
     <<: *application-service
     command: django-admin send_batches
+    depends_on:
+      app:
+        condition: service_healthy
 
   wikibase:
     <<: *wikibase-volumes
@@ -98,7 +99,6 @@ services:
     depends_on:
       wikibase-db:
         condition: service_healthy
-    restart: unless-stopped
 
   wikibase-jobrunner:
     <<: *wikibase-volumes
@@ -107,7 +107,6 @@ services:
     depends_on:
       wikibase:
         condition: service_healthy
-    restart: unless-stopped
 
   wikibase-db:
     image: mariadb:10.11
@@ -121,7 +120,6 @@ services:
       start_period: 1m
       interval: 20s
       timeout: 5s
-    restart: unless-stopped
     volumes:
       - wikibase-db-data:/var/lib/mysql
 

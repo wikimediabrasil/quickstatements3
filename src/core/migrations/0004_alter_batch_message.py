@@ -3,6 +3,13 @@
 from django.db import migrations, models
 
 
+def set_nulls_to_empty(apps, schema_editor):
+    db_alias = schema_editor.connection.alias
+    Batch = apps.get_model("core", "Batch")
+    for b in Batch.objects.using(db_alias).filter(message__isnull=True).all():
+        b.message = ""
+        b.save()
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -14,5 +21,9 @@ class Migration(migrations.Migration):
             model_name="batch",
             name="message",
             field=models.TextField(blank=True, null=True),
+        ),
+        migrations.RunPython(
+            code=migrations.RunPython.noop,
+            reverse_code=set_nulls_to_empty,
         ),
     ]

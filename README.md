@@ -8,64 +8,37 @@ Required tools:
 
 * [Docker](https://docs.docker.com/engine/install/)
 * [docker-compose](https://docs.docker.com/compose/install/)
-* Make
 
-Make sure that you have an env file inside the local etc/ dir.
-This file contains all the **ENVIRONMENT VARIABLES** used by the system and must never be added to your git repo.
-
-Copy the etc/env.SAMPLE file. No changes are needed for local development:
+To start the services, run:
 
 ```bash
-cp etc/env.SAMPLE etc/env
+docker-compose up --build
 ```
-If you do not have `autoconfirmed` rights on test.wikidata.org, you will need to change the value of WHITELISTED_USERS to your user name.
 
-To build the development container
+QuickStatements 3.0 will be available at <http://localhost:8000/>.
+
+If you want to modify configurations, copy `.env.sample` into `.env` and modify the environment variables. The documentation for each environment variable is explained in `.env.sample`.
+
+By default, QuickStatements 3.0 will target <https://test.wikidata.org/> as its default Wikibase.
+
+To authenticate it locally, you will need to use the developer access. Request an access token at <https://api.wikimedia.org/wiki/Special:AppManagement>, click on "Create key". You should ask for a **Personal API token**, allow it to create and edit items and save. Copy the **Access token**. The access token can be used on <http://localhost:8000/auth/login/dev/> to log in.
+
+### Admin access 
+
+After logging in, you can give your user access to the admin panel at <http://localhost:8000/admin/> by running:
 
 ```bash
-docker-compose build
+docker-compose exec app python3 manage.py give_admin_access "username"
 ```
-
-To generate a good secret key you can run with python 3.6+
-
-```
-python -c "import secrets; print(secrets.token_urlsafe())"
-```
-
-To start all services (database, web server, run a shell inside the container)
-
-```bash
-docker-compose up
-```
-
-If everything is correct, QuickStatements will be available at http://localhost:8000/
-
-To authenticate it locally, you will need to use the developer access page, available at http://localhost:8000/auth/login/dev/.
-
-You may get the access token at https://api.wikimedia.org/wiki/Special:AppManagement, click on "Create key". You may use any App name and App description (e.g "Test"). You should ask for a Personal API token, allow it to create and edit items and save. 
-
-The long access token may be used on "http://localhost:8000/auth/login/dev/".
 
 ### Checking set up
 
-To check your local set up you may go to http://localhost:8000/batch/new/ and add a test batch on test.wikidata.org. 
-
-For example, you may run the V1 command, which should create:
+To check your local set up you may go to <http://localhost:8000/batch/new/> and add a test batch on <https://test.wikidata.org>. For example, you may run the following v1 commands, which should create an item and add a statement to it:
 
 ```
 CREATE
 LAST|P65|42
 ```
-
-### Admin access 
-
-To gain admin access you will have to create a superuser for the Django admin. You can access the container with `make shell`. From there:
-
-```bash
-django-admin createsuperuser
-```
-will run an interactive command which will ask you for your username, password, email, etc... follow the prompts and you should be able to login to the admin at `http://localhost:8000/admin`
-
 
 ## Wikibase server
 
@@ -75,7 +48,7 @@ You can define which wikibase you can connect to via the admin. There you will n
 
  - URL of the server
  - Identifier (Any string that is unique to your set of servers)
- - OAuth Client ID & secret (see section below)
+ - OAuth Client ID & secret (see section below) if you will be using OAuth login. If you're using the developer access login, OAuth Client ID & secret are not needed.
 
 ## OAuth
 
@@ -89,12 +62,9 @@ You will probably need the following grants:
   * Edit protected pages (risk rating: vandalism)
   * Create, edit, and move pages
 
-
 ### Consumer
 
-After registering a consumer in
-
-<https://meta.wikimedia.org/wiki/Special:OAuthConsumerRegistration>
+Register a consumer in <https://meta.wikimedia.org/wiki/Special:OAuthConsumerRegistration>.
 
 This application is listening on `/auth/callback/`, so, when registering, define the callback endpoint as `https://yourdomain.com/auth/callback/`.
 
@@ -102,15 +72,13 @@ After receiving the consumer id and secret, set up the `OAUTH_CLIENT_ID` and `OA
 
 ### Developer access
 
-If you want to login with a developer access token, you need to register for yourself an owner-only consumer application for OAuth2.
-Follow the form and be sure to tick "This consumer is for use only by <YOUR USERNAME>".
+If you want to login with a developer access token, you need to register for yourself an owner-only consumer application for OAuth2. Follow the form and be sure to tick "This consumer is for use only by <YOUR USERNAME>".
 
 ### Integration tests
 
 To run Integration tests on https://test.wikidata.org, you'll need a developer access token (owner-only) to edit on `test.wikidata.org`.
 
-After obtaining it, define the environment variable `INTEGRATION_TEST_AUTH_TOKEN` in `etc/env` file as your developer access token.
-Then, run the tests with `make integration`.
+After obtaining it, define the environment variable `INTEGRATION_TEST_AUTH_TOKEN` in `.env` file as your developer access token. Then, run the tests with `make integration`.
 
 Alternatively, define that environment varibale inside the container shell and run the tests directly with `python3 manage.py test integration`.
 
@@ -120,9 +88,8 @@ If you want to use QuickStatements for a deploy that is completely independent f
 
  - `OAUTH_AUTHORIZATION_SERVER` (Default: "https://www.wikidata.org")
  - `OAUTH_ACCESS_TOKEN_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/access_token)
- - `OAUTH_AUTHORIZATION_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/authorize)
+ - `OAUTH_AUTHORIZATION_URL`    (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/authorize)
  - `OAUTH_PROFILE_URL`          (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/resource/profile)
-
 
 ## Toolforge Deployment
 
@@ -134,8 +101,8 @@ If you want to use QuickStatements for a deploy that is completely independent f
 6. Initialize your webservice environment, database tables and static directory with:
    ```bash
    webservice python3.11 shell -- webservice-python-bootstrap
-   webservice python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' migrate
-   webservice python3.11 shell -- '$HOME/www/python/venv/bin/python' '$HOME/www/python/src/manage.py' collectstatic --noinput
+   webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
+   webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput
    ```
 7. Start your webservice: `webservice python3.11 start`
 8. Logs are at `~/uwsgi.log`

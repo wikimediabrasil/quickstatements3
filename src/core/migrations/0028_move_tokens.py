@@ -4,11 +4,12 @@ from django.db import migrations
 
 
 def move_web_tokens_to_core(apps, schema_editor):
+    db_alias = schema_editor.connection.alias
     WebToken = apps.get_model("web", "Token")
     Token = apps.get_model("core", "Token")
 
-    for web_token in WebToken.objects.all():
-        Token.objects.create(
+    for web_token in WebToken.objects.using(db_alias).all():
+        Token.objects.using(db_alias).create(
             user=web_token.user,
             value=web_token.value,
             refresh_token=web_token.refresh_token,
