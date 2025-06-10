@@ -293,68 +293,83 @@ msgctxt "web-models-preferences"
 msgid "Preferences"
 msgstr "Нагодувања"
 
-#: web/templates/batch.html:4 web/templates/batch.html:13
+#: web/templates/batch.html:4 web/templates/batch.html:15
 msgctxt "batch-batch"
 msgid "Batch"
 msgstr "Купче"
 
-#: web/templates/batch.html:16
+#: web/templates/batch.html:18
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
 msgstr "Поднесено на"
 
-#: web/templates/batch.html:19
+#: web/templates/batch.html:21
 msgctxt "batch-created-by"
 msgid "Created by"
 msgstr "Создадено од"
 
-#: web/templates/batch.html:21
+#: web/templates/batch.html:23
 msgctxt "batch-view-batches"
 msgid "View batches"
 msgstr "Погл. купчиња"
 
-#: web/templates/batch.html:22
+#: web/templates/batch.html:24
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
 msgstr "Отповикај / Расправи"
 
-#: web/templates/batch.html:30
+#: web/templates/batch.html:33
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
 msgstr "Сопри извршување"
 
-#: web/templates/batch.html:63
+#: web/templates/batch.html:46
+msgctxt "batch-button-rerun-uncombined"
+msgid "Rerun uncombined"
+msgstr "Rerun uncombined"
+
+#: web/templates/batch.html:52
+msgctxt "batch-button-rerun"
+msgid "Rerun"
+msgstr "Rerun"
+
+#: web/templates/batch.html:57
+msgctxt "batch-button-download-report"
+msgid "Download report"
+msgstr "Download report"
+
+#: web/templates/batch.html:73
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
 msgstr "Го вчитувам резимето..."
 
-#: web/templates/batch.html:66
+#: web/templates/batch.html:76
 msgctxt "batch-commands"
 msgid "Commands"
 msgstr "Наредби"
 
-#: web/templates/batch.html:74
+#: web/templates/batch.html:84
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
 msgstr "Вчитувам наредби..."
 
-#: web/templates/batch.html:83
+#: web/templates/batch.html:93
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
 msgstr "Запри ја обработката на купчето бр. %(1)s"
 
-#: web/templates/batch.html:85
+#: web/templates/batch.html:95
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
 msgstr "Дали сигурно сакате да ја запрете тековната обработка на купче?"
 
-#: web/templates/batch.html:88
+#: web/templates/batch.html:98
 msgctxt "batch-no-continue"
 msgid "No, continue"
 msgstr "Не, продолжи"
 
-#: web/templates/batch.html:89
+#: web/templates/batch.html:99
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "Запри обработка"

@@ -208,5 +208,8 @@
     "layout-navbar-your-statistics": "Your statistics",
     "batch-py-empty-command-input": "Command input cannot be empty. Please provide valid commands.",
     "batch-py-csv-only-header": "CSV input must include more than just the header row",
-    "batch-py-valid-command-not-found": "No valid commands found in the provided input."
+    "batch-py-valid-command-not-found": "No valid commands found in the provided input.",
+    "batch-button-rerun-uncombined": "Rerun uncombined",
+    "batch-button-rerun": "Rerun",
+    "batch-button-download-report": "Download report"
 }
