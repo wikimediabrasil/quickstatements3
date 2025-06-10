@@ -8,7 +8,9 @@
 {% endblock %}
 
 {% block content %}
-<div style="float: left;">
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+
+<div>
 <hgroup>
   <h2> {% translate 'Batch' context 'batch-batch' %} #{{ batch.pk }} <img id="spinner" class="htmx-indicator"></h2>
   <p><b>{{batch.name}}</b></p>
@@ -25,33 +27,41 @@
 </div>
 
 {% if user_is_authorized %}
+  <div style="flex: 1; display: flex; gap: 10px; align-items: center; justify-content: flex-end;">
   {% if batch.is_initial_or_running %}
-  <div class="grid" style="float: right;">
-    <button class="secondary" onclick="showStopModal();">{% translate 'Stop execution' context 'batch-stop-execution' %}</button>
-  </div>
+    <div>
+      <button class="secondary" onclick="showStopModal();" style="margin-bottom: 0px;">{% translate 'Stop execution' context 'batch-stop-execution' %}</button>
+    </div>
   {% elif batch.is_stopped %}
-  <div class="grid" style="float: right;">
     <form method="POST" action="{% url 'batch_restart' pk=batch.pk %}">
       {% csrf_token %}
-      <input type="submit" value="Restart">
+      <input type="submit" value="Restart" style="margin-bottom: 0px;">
     </form>
-  </div>
   {% elif batch.is_done %}
-  <div class="grid" style="float: right; grid-template-columns: 1fr 2fr;">
     {% if batch.is_done_and_has_pending %}
-      <form method="POST" action="{% url 'batch_rerun' pk=batch.pk %}">
+      {% if batch.combine_commands %}
+        <form method="POST" action="{% url 'batch_rerun' pk=batch.pk %}">
         {% csrf_token %}
-        <input class="secondary" type="submit" value="Rerun">
+        <button class="secondary" name="uncombine_commands" type="submit" style="margin-bottom: 0px;">
+          {% translate "Rerun uncombined" context "batch-button-rerun-uncombined" %}
+        </button>
+        </form>
+      {% endif %}
+      <form method="POST" action="{% url 'batch_rerun' pk=batch.pk %}">
+      {% csrf_token %}
+      <input class="secondary" type="submit" value="{% translate 'Rerun' context 'batch-button-rerun' %}" style="margin-bottom: 0px;">
       </form>
-    {% else %}
-      <span></span>
     {% endif %}
     <form method="GET" action="{% url 'batch_report' pk=batch.pk %}">
-      <input type="submit" value="Download report">
+      <button type="submit" id="downloadReport" style="margin-bottom: 0px;">
+        {% translate "Download report" context "batch-button-download-report" %}
+      </button>
     </form>
-  </div>
   {% endif %}
+  </div>
 {% endif %}
+
+</div>
 
 
 <div id="batchProgressDiv"
