@@ -18,222 +18,222 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: core/models.py:484
+#: core/models.py:463
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
 msgstr "Stopped"
 
-#: core/models.py:485
+#: core/models.py:464
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
 msgstr "Blocked"
 
-#: core/models.py:486
+#: core/models.py:465
 msgctxt "batch-py-status-preview"
 msgid "Preview"
 msgstr "Preview"
 
-#: core/models.py:487
+#: core/models.py:466
 msgctxt "batch-py-status-initial"
 msgid "Initial"
 msgstr "Initial"
 
-#: core/models.py:488
+#: core/models.py:467
 msgctxt "batch-py-status-running"
 msgid "Running"
 msgstr "Running"
 
-#: core/models.py:489
+#: core/models.py:468
 msgctxt "batch-py-status-done"
 msgid "Done"
 msgstr "Done"
 
-#: core/models.py:512
+#: core/models.py:489
 msgctxt "batch-py-batch"
 msgid "Batch"
 msgstr "Batch"
 
-#: core/models.py:513
+#: core/models.py:490
 msgctxt "batch-py-batches"
 msgid "Batches"
 msgstr "Batches"
 
-#: core/models.py:766
+#: core/models.py:735
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
 msgstr "Error"
 
-#: core/models.py:767
+#: core/models.py:736
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
 msgstr "Initial"
 
-#: core/models.py:768
+#: core/models.py:737
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
 msgstr "Running"
 
-#: core/models.py:769
+#: core/models.py:738
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
 msgstr "Done"
 
-#: core/models.py:778
+#: core/models.py:747
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
 msgstr "CREATE"
 
-#: core/models.py:779
+#: core/models.py:748
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
 msgstr "ADD"
 
-#: core/models.py:780
+#: core/models.py:749
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
 msgstr "REMOVE"
 
-#: core/models.py:781
+#: core/models.py:750
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
 msgstr "MERGE"
 
-#: core/models.py:814
+#: core/models.py:782
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
 msgstr "Create item"
 
-#: core/models.py:819
+#: core/models.py:786
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
 msgstr "Create property"
 
-#: core/models.py:825
+#: core/models.py:791
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
 msgstr "Set statement"
 
-#: core/models.py:830
+#: core/models.py:795
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
 msgstr "Create statement"
 
-#: core/models.py:838
+#: core/models.py:802
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
 msgstr "Remove statement by id"
 
-#: core/models.py:845
+#: core/models.py:809
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
 msgstr "Remove statement by value"
 
-#: core/models.py:852
+#: core/models.py:815
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
 msgstr "Remove qualifier"
 
-#: core/models.py:858
+#: core/models.py:819
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
 msgstr "Remove reference"
 
-#: core/models.py:864
+#: core/models.py:824
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
 msgstr "Set sitelink"
 
-#: core/models.py:868
+#: core/models.py:828
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
 msgstr "Set label"
 
-#: core/models.py:873
+#: core/models.py:832
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
 msgstr "Set description"
 
-#: core/models.py:880
+#: core/models.py:837
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
 msgstr "Remove sitelink"
 
-#: core/models.py:885
+#: core/models.py:841
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
 msgstr "Remove label"
 
-#: core/models.py:890
+#: core/models.py:845
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
 msgstr "Remove description"
 
-#: core/models.py:896
+#: core/models.py:850
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
 msgstr "Add alias"
 
-#: core/models.py:900
+#: core/models.py:854
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
 msgstr "Remove alias"
 
-#: core/models.py:927
+#: core/models.py:880
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
 msgstr "Operation not implemented"
 
-#: core/models.py:934
+#: core/models.py:886
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
 msgstr "No statements for given property"
 
-#: core/models.py:941
+#: core/models.py:893
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
 msgstr "No statements with given value"
 
-#: core/models.py:947
+#: core/models.py:898
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
 msgstr "No qualifiers with given value"
 
-#: core/models.py:954
+#: core/models.py:904
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
 msgstr "No reference parts with given value"
 
-#: core/models.py:960
+#: core/models.py:909
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
 msgstr "The sitelink id is invalid"
 
-#: core/models.py:966
+#: core/models.py:913
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
 msgstr "The next command failed"
 
-#: core/models.py:972
+#: core/models.py:917
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
 msgstr "API returned a User error"
 
-#: core/models.py:978
+#: core/models.py:921
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
 msgstr "API returned a server error"
 
-#: core/models.py:985
+#: core/models.py:927
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
 msgstr "LAST could not be evaluated."
 
-#: core/models.py:1807
+#: core/models.py:1770
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
 msgstr "Batch Command"
 
-#: core/models.py:1809
+#: core/models.py:1771
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Batch Commands"
@@ -359,69 +359,69 @@ msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "Stop processing"
 
-#: web/templates/batch_commands.html:38
+#: web/templates/batch_commands.html:44
 msgctxt "batch-commands-statement"
 msgid "Statement"
 msgstr "Statement"
 
-#: web/templates/batch_commands.html:55
+#: web/templates/batch_commands.html:61
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
 msgstr "Qualifiers"
 
-#: web/templates/batch_commands.html:64
+#: web/templates/batch_commands.html:70
 msgctxt "batch-commands-references"
 msgid "References"
 msgstr "References"
 
-#: web/templates/batch_commands.html:84
+#: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
 msgstr "SHOWING ONLY ERRORS"
 
-#: web/templates/batch_commands.html:89
+#: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
 msgstr "SHOW ALL"
 
-#: web/templates/batch_commands.html:92
+#: web/templates/batch_commands.html:98
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
 msgstr "SHOWING ALL"
 
-#: web/templates/batch_commands.html:97
+#: web/templates/batch_commands.html:103
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
 msgstr "SHOW ONLY ERRORS"
 
-#: web/templates/batch_commands.html:110
+#: web/templates/batch_commands.html:116
 msgctxt "batch-commands-first"
 msgid "FIRST"
 msgstr "FIRST"
 
-#: web/templates/batch_commands.html:118
+#: web/templates/batch_commands.html:124
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
 msgstr "PREVIOUS"
 
-#: web/templates/batch_commands.html:126 web/templates/batches.html:104
+#: web/templates/batch_commands.html:132 web/templates/batches.html:104
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
 msgstr "Pg. %(1)s of %(2)s"
 
-#: web/templates/batch_commands.html:136
+#: web/templates/batch_commands.html:142
 msgctxt "batch-commands-next"
 msgid "NEXT"
 msgstr "NEXT"
 
-#: web/templates/batch_commands.html:144
+#: web/templates/batch_commands.html:150
 msgctxt "batch-commands-last"
 msgid "LAST"
 msgstr "LAST"
 
-#: web/templates/batch_commands.html:153 web/templates/batch_commands.html:157
-#: web/templates/batch_commands.html:165
+#: web/templates/batch_commands.html:159 web/templates/batch_commands.html:163
+#: web/templates/batch_commands.html:171
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
 msgstr "Page size:"
@@ -604,71 +604,62 @@ msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
 msgstr "See batches by user"
 
-#: web/templates/layout_desktop_menu.html:7
-#: web/templates/layout_mobile_menu.html:3
-msgctxt "layout-quickstatements-title"
-msgid "QuickStatements 3.0"
-msgstr "QuickStatements 3.0"
-
-#: web/templates/layout_desktop_menu.html:11
-#: web/templates/layout_menu_content.html:18
-msgctxt "layout-navbar-new-batch"
-msgid "New batch"
-msgstr "New batch"
-
-#: web/templates/layout_desktop_menu.html:12
-#: web/templates/layout_menu_content.html:19
-msgctxt "layout-navbar-last-batches"
-msgid "Last batches"
-msgstr "Last batches"
-
-#: web/templates/layout_desktop_menu.html:13
-msgctxt "layout-navbar-help"
-msgid "Help"
-msgstr "Help"
-
-#: web/templates/layout_desktop_menu.html:20
-msgctxt "layout-navbar-menu"
-msgid "Menu"
-msgstr "Menu"
-
-#: web/templates/layout_desktop_menu.html:28
-#: web/templates/layout_menu_content.html:14
-msgctxt "layout-navbar-login"
-msgid "Log in"
-msgstr "Log in"
-
-#: web/templates/layout_dropdown_languages.html:14
+#: web/templates/layout_dropdown_languages.html:6
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
 msgstr "Help us translate"
 
-#: web/templates/layout_menu_content.html:12
+#: web/templates/layout_menu.html:8
+msgctxt "layout-quickstatements-title"
+msgid "QuickStatements 3.0"
+msgstr "QuickStatements 3.0"
+
+#: web/templates/layout_menu.html:12 web/templates/layout_menu_content.html:15
+msgctxt "layout-navbar-new-batch"
+msgid "New batch"
+msgstr "New batch"
+
+#: web/templates/layout_menu.html:13 web/templates/layout_menu_content.html:16
+msgctxt "layout-navbar-last-batches"
+msgid "Last batches"
+msgstr "Last batches"
+
+#: web/templates/layout_menu.html:14
+msgctxt "layout-navbar-help"
+msgid "Help"
+msgstr "Help"
+
+#: web/templates/layout_menu.html:25 web/templates/layout_menu_content.html:11
+msgctxt "layout-navbar-login"
+msgid "Log in"
+msgstr "Log in"
+
+#: web/templates/layout_menu_content.html:9
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
 msgstr "Preferences"
 
-#: web/templates/layout_menu_content.html:21 web/templates/profile.html:18
+#: web/templates/layout_menu_content.html:18 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
 msgid "Your batches"
 msgstr "Your batches"
 
-#: web/templates/layout_menu_content.html:24
+#: web/templates/layout_menu_content.html:21
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
 msgstr "Help/Documentation"
 
-#: web/templates/layout_menu_content.html:25
+#: web/templates/layout_menu_content.html:22
 msgctxt "layout-navbar-repository"
 msgid "Repository"
 msgstr "Repository"
 
-#: web/templates/layout_menu_content.html:26
+#: web/templates/layout_menu_content.html:23
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
 msgstr "Statistics"
 
-#: web/templates/layout_menu_content.html:29
+#: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-logout"
 msgid "Log out"
 msgstr "Log out"
@@ -1051,54 +1042,52 @@ msgctxt "statistics-done-and-error-commands"
 msgid "Done and error commands per day"
 msgstr "Done and error commands per day"
 
-#: web/templates/statistics_plots.html:53
+#: web/templates/statistics_plots.html:48
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
 msgstr "Number of batches"
 
-#: web/templates/statistics_plots.html:104
-#: web/templates/statistics_plots.html:141
+#: web/templates/statistics_plots.html:49
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
 msgstr "Number of edits"
 
-#: web/templates/statistics_plots.html:115
-#: web/templates/statistics_plots.html:148
+#: web/templates/statistics_plots.html:50
 msgctxt "statistics-number-of-editors"
 msgid "Number of editors"
 msgstr "Number of editors"
 
-#: web/templates/statistics_plots.html:187
+#: web/templates/statistics_plots.html:51
 msgctxt "statistics-done-status"
 msgid "Done status"
 msgstr "Done status"
 
-#: web/templates/statistics_plots.html:194
+#: web/templates/statistics_plots.html:52
 msgctxt "statistics-error-status"
 msgid "Error status"
 msgstr "Error status"
 
-#: web/views/new_batch.py:161
+#: web/views/new_batch.py:157
 msgctxt "batch-py-empty-command-input"
 msgid "Command input cannot be empty. Please provide valid commands."
 msgstr "Command input cannot be empty. Please provide valid commands."
 
-#: web/views/new_batch.py:170
+#: web/views/new_batch.py:166
 msgctxt "batch-py-csv-only-header"
 msgid "CSV input must include more than just the header row"
 msgstr "CSV input must include more than just the header row"
 
-#: web/views/new_batch.py:195
+#: web/views/new_batch.py:189
 msgctxt "batch-py-valid-command-not-found"
 msgid "No valid commands found in the provided input."
 msgstr "No valid commands found in the provided input."
 
-#: web/views/new_batch.py:276
+#: web/views/new_batch.py:270
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
 msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
 
-#: web/views/new_batch.py:279
+#: web/views/new_batch.py:273
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
 msgstr "User is blocked and can not run batches."
