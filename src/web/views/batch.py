@@ -4,17 +4,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_http_methods
 
-from core.exceptions import ServerError, UnauthorizedToken
-from core.models import Batch, BatchCommand, Client, Token
-from web.models import Preferences
-
-from .auth import logout_per_token_expired
+from core.models import Batch
+from core.models import BatchCommand
 
 PAGE_SIZE = 25
-
-import logging
-
-logger = logging.getLogger("qsts3")
 
 
 @require_http_methods(
@@ -109,8 +102,12 @@ def batch_rerun(request, pk):
             request.user.username == batch.user or request.user.is_superuser
         )
         assert user_is_authorized
-        batch.combine_commands = "uncombine_commands" not in request.POST
+        was_combined = batch.combine_commands
+        if was_combined and "uncombine_commands" in request.POST:
+            batch.combine_commands = False
         batch.rerun()
+        batch.combine_commands = was_combined
+        batch.save()
         return redirect(reverse("batch", args=[batch.pk]))
     except Batch.DoesNotExist:
         return render(request, "batch_not_found.html", {"pk": pk}, status=404)
