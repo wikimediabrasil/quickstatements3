@@ -844,13 +844,13 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("batch.html")
         self.assertNotInRes(
-            f"""<form method="POST" action="/batch/{pk}/rerun/" """, response
+            f"""<form method="POST" action="/batch/{pk}/rerun/""", response
         )
         self.assertNotInRes(
-            """<input class="secondary" type="submit" value="Rerun">""", response
+            """<input class="secondary" type="submit" value="Rerun""", response
         )
         self.assertNotInRes(
-            """<button class="secondary" name="uncombine_commands" type="submit">""", response
+            """<button class="secondary" name="uncombine_commands" type="submit""", response
         )
 
         batch.run()
@@ -859,13 +859,13 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("batch.html")
         self.assertInRes(
-            f"""<form method="POST" action="/batch/{pk}/rerun/" """, response
+            f"""<form method="POST" action="/batch/{pk}/rerun/""", response
         )
         self.assertInRes(
-            """<input class="secondary" type="submit" value="Rerun">""", response
+            """<input class="secondary" type="submit" value="Rerun""", response
         )
         self.assertNotInRes(
-            """<button class="secondary" name="uncombine_commands" type="submit">""", response
+            """<button class="secondary" name="uncombine_commands" type="submit""", response
         )
 
         response = self.client.post(f"/batch/{pk}/rerun/")
@@ -881,13 +881,13 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("batch.html")
         self.assertInRes(
-            f"""<form method="POST" action="/batch/{pk}/rerun/" """, response
+            f"""<form method="POST" action="/batch/{pk}/rerun/""", response
         )
         self.assertInRes(
-            """<input class="secondary" type="submit" value="Rerun">""", response
+            """<input class="secondary" type="submit" value="Rerun""", response
         )
         self.assertInRes(
-            """<button class="secondary" name="uncombine_commands" type="submit">""", response
+            """<button class="secondary" name="uncombine_commands" type="submit""", response
         )
 
         response = self.client.post(f"/batch/{pk}/rerun/")
@@ -949,7 +949,7 @@ class ViewsTest(TestCase):
             f"""<form method="GET" action="/batch/{pk}/report/">""", response
         )
         self.assertNotInRes(
-            """<button type="submit" id="downloadReport">""", response
+            """<button type="submit" id="downloadReport""", response
         )
 
         batch.run()
@@ -960,7 +960,7 @@ class ViewsTest(TestCase):
         self.assertInRes(
             f"""<form method="GET" action="/batch/{pk}/report/">""", response
         )
-        self.assertInRes("""<button type="submit" id="downloadReport">""", response)
+        self.assertInRes("""<button type="submit" id="downloadReport""", response)
 
         response = self.client.post(f"/batch/{pk}/report/")
         self.assertEqual(response.status_code, 405)
@@ -1190,12 +1190,12 @@ class ViewsTest(TestCase):
             # Checks if the user can access the batch stop option
             if authorized:
                 self.assertInRes(
-                    """<button class="secondary" onclick="showStopModal();">""",
+                    """<button class="secondary" onclick="showStopModal();""",
                     response,
                 )
             else:
                 self.assertNotInRes(
-                    """<button class="secondary" onclick="showStopModal();">""",
+                    """<button class="secondary" onclick="showStopModal();""",
                     response,
                 )
 
@@ -1334,10 +1334,10 @@ class ViewsTest(TestCase):
             batch = response.context["batch"]
             pk = batch.pk
             self.assertNotInRes(
-                f"""<form method="POST" action="/batch/{pk}/rerun/" """, response
+                f"""<form method="POST" action="/batch/{pk}/rerun/""", response
             )
             self.assertNotInRes(
-                """<input class="secondary" type="submit" value="Rerun">""", response
+                """<input class="secondary" type="submit" value="Rerun""", response
             )
             batch.run()
 
@@ -1356,13 +1356,13 @@ class ViewsTest(TestCase):
                 if authorized:
                     self.assertInRes("rerun", response)
                     self.assertInRes(
-                        f"""<form method="POST" action="/batch/{pk}/rerun/" """,
+                        f"""<form method="POST" action="/batch/{pk}/rerun/""",
                         response,
                     )
                 else:
                     self.assertNotInRes("rerun", response)
                     self.assertNotInRes(
-                        f"""<form method="POST" action="/batch/{pk}/rerun/" """,
+                        f"""<form method="POST" action="/batch/{pk}/rerun/""",
                         response,
                     )
                 return self.client.post(f"/batch/{pk}/rerun/")
@@ -1424,7 +1424,7 @@ class ViewsTest(TestCase):
                 f"""<form method="GET" action="/batch/{pk}/report/">""", response
             )
             self.assertNotInRes(
-                """<button type="submit" id="downloadReport">""", response
+                """<button type="submit" id="downloadReport""", response
             )
             batch.run()
 
@@ -1443,14 +1443,14 @@ class ViewsTest(TestCase):
                     f"""<form method="GET" action="/batch/{pk}/report/">""", response
                 )
                 self.assertInRes(
-                    """<button type="submit" id="downloadReport">""", response
+                    """<button type="submit" id="downloadReport""", response
                 )
             else:
                 self.assertNotInRes(
                     f"""<form method="GET" action="/batch/{pk}/report/">""", response
                 )
                 self.assertNotInRes(
-                    """<input type="submit" value="Download report">""", response
+                    """<input type="submit" value="Download report""", response
                 )
 
             return self.client.get(f"/batch/{pk}/report/")
