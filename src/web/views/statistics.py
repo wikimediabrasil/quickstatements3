@@ -9,12 +9,18 @@ from django.db.models import Q
 from django.utils.timezone import now
 from django.views.decorators.cache import cache_page
 from django.db.models.functions import TruncDay
+from django.template import Context
+from django.template import Template
 
 
 from core.models import Batch
 from core.models import BatchCommand
 
 logger = logging.getLogger("qsts3")
+
+
+def dates_after_basedate(basedate, delta):
+    return [basedate + timedelta(days=x) for x in range(1, delta + 1)]
 
 
 def plot_cumulative_batches(all_batches, basedate, delta):
@@ -26,10 +32,10 @@ def plot_cumulative_batches(all_batches, basedate, delta):
         .order_by("date")
     }
     current_count = 0
-    batches_per_day = {basedate: 0}
-    for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
+    batches_per_day = [0]
+    for date in dates_after_basedate(basedate, delta):
         current_count += created_batches_per_day.get(date, 0)
-        batches_per_day[date] = current_count
+        batches_per_day.append(current_count)
     return batches_per_day
 
 
@@ -42,10 +48,13 @@ def plot_number_of_commands(all_commands, basedate, delta):
         .annotate(error_count=Count("pk", filter=Q(status=BatchCommand.STATUS_ERROR)))
         .order_by("date")
     }
-    commands_per_day = {basedate: (0, 0)}
-    for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
-        commands_per_day[date] = query_commands_per_day.get(date, (0, 0))
-    return commands_per_day
+    done_per_day = [0]
+    error_per_day = [0]
+    for date in dates_after_basedate(basedate, delta):
+        done, error = query_commands_per_day.get(date, (0, 0))
+        done_per_day.append(done)
+        error_per_day.append(error)
+    return {"done": done_per_day, "error": error_per_day}
 
 
 def plot_cumulative_editors_and_edits(all_batches, all_commands, basedate, delta):
@@ -73,12 +82,14 @@ def plot_cumulative_editors_and_edits(all_batches, all_commands, basedate, delta
     }
     current_edit_count = 0
     current_editors_count = 0
-    editors_and_edits_per_day = {basedate: (0, 0)}
-    for date in [basedate + timedelta(days=x) for x in range(1, delta + 1)]:
+    editors_per_day = [0]
+    edits_per_day = [0]
+    for date in dates_after_basedate(basedate, delta):
         current_editors_count += dates_and_new_users_count.get(date, 0)
         current_edit_count += query_edits_per_day.get(date, 0)
-        editors_and_edits_per_day[date] = (current_editors_count, current_edit_count)
-    return editors_and_edits_per_day
+        editors_per_day.append(current_editors_count)
+        edits_per_day.append(current_edit_count)
+    return {"editors": editors_per_day, "edits": edits_per_day}
 
 
 def count_items_created(all_commands):
@@ -110,6 +121,13 @@ def plots_data(request, username):
     basedate = first_batch.created.date() - timedelta(days=1) if first_batch else today
     delta = (today - basedate).days
     # ---
+    date_template = Template("{{ date }}")
+    all_dates_str = []
+    for date in [basedate, *dates_after_basedate(basedate, delta)]:
+        context = Context({"date": date})
+        rendered_string = date_template.render(context)
+        all_dates_str.append(rendered_string)
+    # ---
     with ThreadPoolExecutor() as executor:
         t1 = executor.submit(plot_cumulative_batches, all_batches, basedate, delta)
         t2 = executor.submit(plot_number_of_commands, all_commands, basedate, delta)
@@ -126,6 +144,7 @@ def plots_data(request, username):
     # ---
     data = {
         "username": username,
+        "all_dates_str": all_dates_str,
         "batches_per_day": batches_per_day,
         "commands_per_day": commands_per_day,
         "editors_and_edits_per_day": editors_and_edits_per_day,
@@ -143,9 +162,7 @@ def all_time_counters_data(request, username):
     batches_count = all_batches.count()
     editors = all_batches.values("user").distinct().count()
     commands_count = all_commands.count()
-    average_commands_per_batch = (
-        round(commands_count / batches_count) if batches_count > 0 else 0
-    )
+    average_commands_per_batch = round(commands_count / batches_count) if batches_count > 0 else 0
     # only these ones multi-threaded because they are the slowest
     # the above ones are quite fast
     with ThreadPoolExecutor() as executor:

@@ -37,83 +37,98 @@
 {% endif %}
 
 {% if not loading %}
-<script>
+
+{{ all_dates_str|json_script:"all-dates-str" }}
+{{ batches_per_day|json_script:"batches-per-day" }}
+{{ commands_per_day|json_script:"commands-per-day" }}
+{{ editors_and_edits_per_day|json_script:"editors-and-edits-per-day" }}
+
+<script
+  data-username="{% if username %}{{ username }}{% else %}{% endif %}"
+  data-label-number-of-batches="{% translate 'Number of batches' context 'statistics-number-of-batches' %}"
+  data-label-number-of-edits="{% translate 'Number of edits' context 'statistics-number-of-edits' %}"
+  data-label-number-of-editors="{% translate 'Number of editors' context 'statistics-number-of-editors' %}"
+  data-label-done-status="{% translate 'Done status' context 'statistics-done-status' %}"
+  data-label-error-status="{% translate 'Error status' context 'statistics-error-status' %}"
+  data-green="#008836"
+  data-green-opaque="#0088367F"
+  data-red="#A52A2A"
+  data-red-opaque="#A52A2A7F"
+  data-black="#353744"
+  data-black-opaque="#3537447F"
+  data-white="#F1F1F1"
+  data-white-opaque="#F1F1F17F"
+>
+  const dateLabels = JSON.parse(document.getElementById("all-dates-str").textContent);
+  const scriptData = document.currentScript.dataset;
+  // ------------------------------------------------------
+  const plugins = {
+    zoom: {
+      pan: {
+        enabled: true
+      },
+      zoom: {
+        wheel: {
+          enabled: true
+        },
+        mode: 'xy',
+        scaleMode: 'xy'
+      },
+      limits: {
+        y: {min: 'original', max: 'original'}
+      }
+    }
+  };
+  // ------------------------------------------------------
   const ctx1 = document.getElementById('batchCumulativeCountChart');
-  var labels = [];
-  var data = [];
-  {% for date, count in batches_per_day.items %}
-  labels.push('{{ date }}');
-  data.push({{count}});
-  {% endfor %}
+  const batchesPerDay = JSON.parse(document.getElementById("batches-per-day").textContent);
   new Chart(ctx1, {
     type: 'line',
     data: {
-      labels: labels,
+      labels: dateLabels,
       datasets: [{
-        label: "{% translate 'Number of batches' context 'statistics-number-of-batches' %}",
-        data: data,
-        borderColor: "#008836",
-        backgroundColor: "#0088367F",
+        label: scriptData.labelNumberOfBatches,
+        data: batchesPerDay,
+        borderColor: scriptData.green,
+        backgroundColor: scriptData.greenOpaque,
         pointStyle: false,
         borderWidth: 2
       }]
     },
     options: {
-      plugins: {
-        zoom: {
-          pan: {
-            enabled: true
-          },
-          zoom: {
-            wheel: {
-              enabled: true
-            },
-            mode: 'xy',
-            scaleMode: 'xy'
-          },
-          limits: {
-            y: {min: 'original', max: 'original'}
-          }
-        }
-      }
+      plugins: plugins
     }
   });
   // ------------------------------------------------------
-  const ctx_editors_edits = document.getElementById('editorsAndEditsCumulativeChart');
-  var labels = [];
-  var data_editors = [];
-  var data_edits = [];
-  var editorsBorderColor = "#353744";
-  var editorsBackgroundColor = "#3537447F";
+  // ------------------------------------------------------
+  // ------------------------------------------------------
+  const ctxEditorsEdits = document.getElementById('editorsAndEditsCumulativeChart');
+  var editorsBorderColor = scriptData.black;
+  var editorsBackgroundColor = scriptData.blackOpaque;
   if (document.documentElement.dataset.theme === 'dark') {
-    editorsBorderColor = "#F1F1F1";
-    editorsBackgroundColor = "#F1F1F17F";
+    editorsBorderColor = scriptData.white;
+    editorsBackgroundColor = scriptData.whiteOpaque;
   };
-  {% if username %}
-  var hideEditorsPlot = true;
-  {% else %}
-  var hideEditorsPlot = false;
-  {% endif %}
-  {% for date, counts in editors_and_edits_per_day.items %}
-  labels.push('{{ date }}');
-  data_editors.push({{counts.0}});
-  data_edits.push({{counts.1}});
-  {% endfor %}
+  const dataEditorsAndEdits = JSON.parse(document.getElementById("editors-and-edits-per-day").textContent);
+  const dataEditors = dataEditorsAndEdits["editors"];
+  const dataEdits = dataEditorsAndEdits["edits"];
   var editorsAndEditsDatasets = [
     {
-      label: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}",
-      data: data_edits,
-      borderColor: "#008836",
-      backgroundColor: "#0088367F",
+      label: scriptData.labelNumberOfEdits,
+      data: dataEdits,
+      borderColor: scriptData.green,
+      backgroundColor: scriptData.greenOpaque,
       pointStyle: false,
       yAxisID: 'y1',
       borderWidth: 2
     }
   ];
+  const username = scriptData.username;
+  var hideEditorsPlot = Boolean(username);
   if (!hideEditorsPlot) {
     editorsAndEditsDatasets.push({
-      label: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}",
-      data: data_editors,
+      label: scriptData.labelNumberOfEditors,
+      data: dataEditors,
       borderColor: editorsBorderColor,
       backgroundColor: editorsBackgroundColor,
       pointStyle: false,
@@ -121,10 +136,10 @@
       borderWidth: 2
     });
   }
-  new Chart(ctx_editors_edits, {
+  new Chart(ctxEditorsEdits, {
     type: 'line',
     data: {
-      labels: labels,
+      labels: dateLabels,
       datasets: editorsAndEditsDatasets,
     },
     options: {
@@ -138,63 +153,44 @@
                 },
                 title: {
                   display: true,
-                  text: "{% translate 'Number of edits' context 'statistics-number-of-edits' %}"
+                  text: scriptData.labelNumberOfEdits
                 }
             },
             y1: {
                 position: 'left',
                 title: {
                   display: !hideEditorsPlot,
-                  text: "{% translate 'Number of editors' context 'statistics-number-of-editors' %}"
+                  text: scriptData.labelNumberOfEditors
                 }
             }
         },
-      plugins: {
-        zoom: {
-          pan: {
-            enabled: true
-          },
-          zoom: {
-            wheel: {
-              enabled: true
-            },
-            mode: 'xy',
-            scaleMode: 'xy'
-          },
-          limits: {
-            y: {min: 'original', max: 'original'},
-          }
-        }
-      }
+      plugins: plugins
     }
   });
   // ------------------------------------------------------
-  const ctx2 = document.getElementById('commandCountChart');
-  var labels = [];
-  var data_done = [];
-  var data_error = [];
-  {% for date, counts in commands_per_day.items %}
-  labels.push('{{ date }}');
-  data_done.push({{counts.0}});
-  data_error.push({{counts.1}});
-  {% endfor %}
-  new Chart(ctx2, {
+  // ------------------------------------------------------
+  // ------------------------------------------------------
+  const ctxCommands = document.getElementById('commandCountChart');
+  const dataCommands = JSON.parse(document.getElementById("commands-per-day").textContent);
+  const dataDone = dataCommands["done"];
+  const dataError = dataCommands["error"];
+  new Chart(ctxCommands, {
     type: 'bar',
     data: {
-      labels: labels,
+      labels: dateLabels,
       datasets: [
         {
-          label: "{% translate 'Done status' context 'statistics-done-status' %}",
-          data: data_done,
-          borderColor: "#008836",
-          backgroundColor: "#0088367F",
+          label: scriptData.labelDoneStatus,
+          data: dataDone,
+          borderColor: scriptData.green,
+          backgroundColor: scriptData.greenOpaque,
           borderWidth: 1
         },
         {
-          label: "{% translate 'Error status' context 'statistics-error-status' %}",
-          data: data_error,
-          borderColor: "#A52A2A",
-          backgroundColor: "#A52A2A7F",
+          label: scriptData.labelErrorStatus,
+          data: dataError,
+          borderColor: scriptData.red,
+          backgroundColor: scriptData.redOpaque,
           borderWidth: 1
         }
       ]
@@ -208,23 +204,7 @@
                 stacked: true
             }
         },
-        plugins: {
-          zoom: {
-            pan: {
-              enabled: true
-            },
-            zoom: {
-              wheel: {
-                enabled: true
-              },
-              mode: 'xy',
-              scaleMode: 'xy'
-            },
-            limits: {
-              y: {min: 'original', max: 'original'}
-            }
-          }
-        }
+        plugins: plugins
     }
   });
 </script>
