@@ -821,7 +821,7 @@ msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 msgstr ""
-"Option for when the user prefers to upload a file, intead of writing the "
+"Option for when the user prefers to upload a file, instead of writing the "
 "commands in the form"
 
 #: web/templates/new_batch.html:77
