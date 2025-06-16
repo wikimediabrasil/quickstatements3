@@ -416,7 +416,18 @@ class TestBaseParser(TestCase):
             },
         }
         self.assertEqual(parser.parse_value("@43.26193/10.92708/G999999"), ret)
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/G999999/-6"), ret)
         self.assertIsNone(parser.parse_value("@43.26193"))
+        ret = {
+            "type": "globecoordinate",
+            "value": {
+                "latitude": 43.26193,
+                "longitude": 10.92708,
+                "precision": 0.0001,
+                "globe": "http://www.wikidata.org/entity/Q999999",
+            },
+        }
+        self.assertEqual(parser.parse_value("@43.26193/10.92708/G999999/-4"), ret)
 
     def test_parse_value_location_precision(self):
         parser = BaseParser()
