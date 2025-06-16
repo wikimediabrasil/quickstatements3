@@ -342,7 +342,7 @@ class BaseParser(object):
             arcsec100  to 1/100 of an arcsecond
             arcsec1000 to 1/1000 of an arcsecond
             arcmin     to an arcminute
-            -6         ±0.000001°
+            -6         ±0.000001° (default)
             -5         ±0.00001°
             -4         ±0.0001°
             -3         ±0.001°
