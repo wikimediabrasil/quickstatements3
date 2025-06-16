@@ -335,6 +335,7 @@ class BaseParser(object):
             @43.26193/10.92708/-3          - Default globe with a precision of 0.001 degree
             @43.26193/10.92708/arcmin      - Default globe with a precision of 1 arcminute
             @43.26193/10.92708/G123456     - Custom globe (Q123456)
+            @43.26193/10.92708/G123456/-5  - Custom globe (Q123456) and custom precision of -5
 
             PRECISION:
             arcsec     to an arcsecond
@@ -342,7 +343,7 @@ class BaseParser(object):
             arcsec100  to 1/100 of an arcsecond
             arcsec1000 to 1/1000 of an arcsecond
             arcmin     to an arcminute
-            -6         ±0.000001°
+            -6         ±0.000001° (default)
             -5         ±0.00001°
             -4         ±0.0001°
             -3         ±0.001°
