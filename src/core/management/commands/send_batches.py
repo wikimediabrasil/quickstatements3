@@ -42,7 +42,7 @@ class Command(BaseCommand):
         Batch.objects.bulk_update(batches, ["message", "status"])
 
         while True:
-            batches = Batch.objects.filter(status=Batch.STATUS_INITIAL)
+            batches = Batch.objects.for_send_batches()
             users = batches.values_list("user", flat=True).distinct()
 
             completed = [u for u, t in user_threads.items() if not t.is_alive()]
