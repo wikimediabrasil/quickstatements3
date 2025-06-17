@@ -339,6 +339,8 @@ class BatchQuerySet(models.QuerySet):
             total_done=get_status_subquery(BatchCommand.STATUS_DONE),
         )
 
+    def for_send_batches(self):
+        return self.filter(status=Batch.STATUS_INITIAL).order_by("id")
 
 class Wikibase(models.Model):
     url = models.URLField(primary_key=True)
@@ -622,6 +624,12 @@ class Batch(models.Model):
         self.status = self.STATUS_BLOCKED
         self.save()
 
+    def previous_batches_to_run(self):
+        """
+        Batches that will run before this one
+        """
+        return Batch.objects.for_send_batches().filter(user=self.user, id__lt=self.id)
+
     @property
     def is_preview(self):
         return self.status == Batch.STATUS_PREVIEW
@@ -662,16 +670,24 @@ class Batch(models.Model):
     def eta(self):
         if self.estimated_runtime is None:
             return None
+        return timezone.now() + timedelta(seconds=self.estimated_runtime_total)
 
-        concurrent = Batch.objects.filter(status=Batch.STATUS_RUNNING).exclude(id=self.id)
-
-        concurrent_runtime = sum([b.estimated_runtime or 0 for b in concurrent])
-        total_estimated_time = self.estimated_runtime + concurrent_runtime
-
-        return timedelta(seconds=total_estimated_time) + timezone.now()
+    @property
+    def estimated_runtime_total(self):
+        """
+        Estimated time in seconds to finish adding times for previous batches of this user
+        """
+        if self.estimated_runtime is None:
+            return None
+        previous = self.previous_batches_to_run()
+        previous_runtimes = sum([b.estimated_runtime or 0 for b in previous])
+        return self.estimated_runtime + previous_runtimes
 
     @property
     def estimated_runtime(self):
+        """
+        Individual estimated time to finish in seconds
+        """
         if self.status in [Batch.STATUS_STOPPED, Batch.STATUS_BLOCKED]:
             return None
 
@@ -681,7 +697,7 @@ class Batch(models.Model):
         RATE_LIMIT_PER_MINUTE = 90
         MAX_REQUESTS_PER_SECOND = RATE_LIMIT_PER_MINUTE / 60
 
-        total_pending = self.batchcommand_set.filter(status=BatchCommand.STATUS_INITIAL).count()
+        total_pending = self.commands().filter(status=BatchCommand.STATUS_INITIAL).count()
 
         return math.ceil(total_pending / MAX_REQUESTS_PER_SECOND)
 

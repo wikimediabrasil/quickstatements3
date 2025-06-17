@@ -869,3 +869,40 @@ class ProcessingTests(TestCase):
         self.assertEqual(commands[1].status, BatchCommand.STATUS_DONE)
         # was not updated because we hacked the status:
         self.assertEqual(commands[1].entity_id, "LAST")
+
+    @requests_mock.Mocker()
+    def test_batch_estimated_runtime(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.create_item(mocker, "Q3")
+        v1 = V1CommandParser()
+        raw1 = "||".join(["CREATE" for _ in range (90)])
+        BatchFactory.load_from_parser(
+            v1,
+            "without",
+            "user",
+            raw1,
+            wikibase=self.api_mocker.wikibase,
+        )
+        raw2 = "||".join(["CREATE" for _ in range (180)])
+        BatchFactory.load_from_parser(
+            v1,
+            "without",
+            "user",
+            raw2,
+            wikibase=self.api_mocker.wikibase,
+        )
+        batches = Batch.objects.for_send_batches()
+        batch1, batch2 = batches
+        self.assertEqual(batch1.estimated_runtime, 60)
+        self.assertEqual(batch2.estimated_runtime, 120)
+        self.assertEqual(batch1.estimated_runtime_total, 60)
+        self.assertEqual(batch2.estimated_runtime_total, 180)
+        self.assertEqual(len(batch1.previous_batches_to_run()), 0)
+        self.assertEqual(len(batch2.previous_batches_to_run()), 1)
+        self.assertEqual(batch2.previous_batches_to_run()[0].id, batch1.id)
+        batch1.block_is_not_autoconfirmed()
+        self.assertIsNone(batch1.estimated_runtime)
+        self.assertEqual(batch2.estimated_runtime, 120)
+        self.assertIsNone(batch1.estimated_runtime_total)
+        self.assertEqual(batch2.estimated_runtime_total, 120)
