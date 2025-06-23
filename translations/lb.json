@@ -82,7 +82,6 @@
 	"layout-navbar-new-batch": "Neie Batch",
 	"layout-navbar-last-batches": "Rezent Batchen",
 	"layout-navbar-help": "Hëllef",
-	"layout-navbar-menu": "Menü",
 	"layout-navbar-login": "Aloggen",
 	"layout-navbar-help-us-translate": "Hëlleft eis beim Iwwersetzen",
 	"layout-navbar-preferences": "Astellungen",
@@ -90,5 +89,6 @@
 	"layout-navbar-help-slash-documentation": "Hëllef/Dokumentatioun",
 	"layout-navbar-statistics": "Statistiken",
 	"layout-navbar-logout": "Ausloggen",
-	"layout-navbar-your-statistics": "Är Statistiken"
+	"layout-navbar-your-statistics": "Är Statistiken",
+	"batch-button-download-report": "Rapport eroflueden"
 }

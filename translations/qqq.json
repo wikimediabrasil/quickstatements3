@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Solidest"
+		]
 	},
 	"batch-py-status-stopped": "Batch status code displayed in batch status bar",
 	"batch-py-status-blocked": "Batch status code displayed in batch status bar",
@@ -161,8 +163,8 @@
 	"profile-click-here-to-log-in": "Log in link",
 	"statistics-quickstatements-statistics": "Page title",
 	"statistics-number-of-batches": "Statistics section title",
-	"statistics-done-status": "Done status",
-	"statistics-error-status": "Error status",
+	"statistics-done-status": "Legend for the graph in statistics",
+	"statistics-error-status": "Legend for the graph in statistics",
 	"statistics-batches": "Statistics counter box heading",
 	"statistics-commands": "Statistics counter box heading",
 	"statistics-avg-commands": "Statistics counter box heading",

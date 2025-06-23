@@ -132,7 +132,7 @@
 	"new-batch-custom-batch-name": "Прилагодено име на купчето...",
 	"new-batch-block-batch-if-a-command-fails": "Блокирај го купчето ако не успее наредбата",
 	"new-batch-the-batch-will-stop": "Купчето ќе престане со обработка ако наредбата даде грешка.",
-	"new-batch-do-not-combine-commands": "Не мешајте наредби",
+	"new-batch-do-not-combine-commands": "Не здружувај наредби",
 	"new-batch-commands-targeting": "Наредбите насочени кон иста единица нема да бидат здружени во едно уредување.",
 	"new-batch-enter-your-commands-here": "Тука внесете ги наредбите...",
 	"new-batch-note-only-autoconfirmed": "Напомена: со купчиња можат да работат само автопотврдени корисници.",
@@ -202,7 +202,6 @@
 	"layout-navbar-new-batch": "Ново купче",
 	"layout-navbar-last-batches": "Последни купчиња",
 	"layout-navbar-help": "Помош",
-	"layout-navbar-menu": "Мени",
 	"layout-navbar-login": "Најава",
 	"layout-navbar-help-us-translate": "Помогнете со преводот",
 	"layout-navbar-preferences": "Нагодувања",
@@ -214,5 +213,8 @@
 	"layout-navbar-your-statistics": "Ваша статистика",
 	"batch-py-empty-command-input": "Вносот за наредба не може да стои празен. Внесете важечки наредби.",
 	"batch-py-csv-only-header": "CSV-вносот мора да содржи повеќе од само заглавен ред",
-	"batch-py-valid-command-not-found": "Немате внесено важечки наредби."
+	"batch-py-valid-command-not-found": "Немате внесено важечки наредби.",
+	"batch-button-rerun-uncombined": "Преизврши нездружено",
+	"batch-button-rerun": "Преизврши",
+	"batch-button-download-report": "Преземи извештај"
 }
