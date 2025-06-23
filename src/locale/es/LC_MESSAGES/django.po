@@ -18,222 +18,222 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: core/models.py:463
+#: core/models.py:465
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Stopped"
-
-#: core/models.py:464
-msgctxt "batch-py-status-blocked"
-msgid "Blocked"
-msgstr "Blocked"
-
-#: core/models.py:465
-msgctxt "batch-py-status-preview"
-msgid "Preview"
-msgstr "Preview"
+msgstr "Interrumpido"
 
 #: core/models.py:466
-msgctxt "batch-py-status-initial"
-msgid "Initial"
-msgstr "Initial"
+msgctxt "batch-py-status-blocked"
+msgid "Blocked"
+msgstr "Bloqueado"
 
 #: core/models.py:467
-msgctxt "batch-py-status-running"
-msgid "Running"
-msgstr "Running"
+msgctxt "batch-py-status-preview"
+msgid "Preview"
+msgstr "Previsualización"
 
 #: core/models.py:468
+msgctxt "batch-py-status-initial"
+msgid "Initial"
+msgstr "Inicial"
+
+#: core/models.py:469
+msgctxt "batch-py-status-running"
+msgid "Running"
+msgstr "En ejecución"
+
+#: core/models.py:470
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Hecho"
 
-#: core/models.py:489
+#: core/models.py:491
 msgctxt "batch-py-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Lote"
 
-#: core/models.py:490
+#: core/models.py:492
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Lotes"
 
-#: core/models.py:735
+#: core/models.py:751
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
 msgstr "Error"
 
-#: core/models.py:736
+#: core/models.py:752
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
 msgstr "Initial"
 
-#: core/models.py:737
+#: core/models.py:753
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "En ejecución"
 
-#: core/models.py:738
+#: core/models.py:754
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Hecho"
 
-#: core/models.py:747
+#: core/models.py:763
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "CREAR"
 
-#: core/models.py:748
+#: core/models.py:764
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
-msgstr "ADD"
+msgstr "AGREGAR"
 
-#: core/models.py:749
+#: core/models.py:765
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "REMOVE"
+msgstr "ELIMINAR"
 
-#: core/models.py:750
+#: core/models.py:766
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "MERGE"
+msgstr "UNIR"
 
-#: core/models.py:782
+#: core/models.py:798
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Create item"
-
-#: core/models.py:786
-msgctxt "batchcommand-py-operation-create-property"
-msgid "Create property"
-msgstr "Create property"
-
-#: core/models.py:791
-msgctxt "batchcommand-py-operation-set-statement"
-msgid "Set statement"
-msgstr "Set statement"
-
-#: core/models.py:795
-msgctxt "batchcommand-py-operation-create-statement"
-msgid "Create statement"
-msgstr "Create statement"
+msgstr "Crear elemento"
 
 #: core/models.py:802
+msgctxt "batchcommand-py-operation-create-property"
+msgid "Create property"
+msgstr "Crear propiedad"
+
+#: core/models.py:807
+msgctxt "batchcommand-py-operation-set-statement"
+msgid "Set statement"
+msgstr "Añadir declaración"
+
+#: core/models.py:811
+msgctxt "batchcommand-py-operation-create-statement"
+msgid "Create statement"
+msgstr "Crear declaración"
+
+#: core/models.py:818
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
-msgstr "Remove statement by id"
+msgstr "Eliminar declaración por ID"
 
-#: core/models.py:809
+#: core/models.py:825
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
-msgstr "Remove statement by value"
+msgstr "Eliminar declaración por valor"
 
-#: core/models.py:815
+#: core/models.py:831
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
-msgstr "Remove qualifier"
+msgstr "Eliminar calificador"
 
-#: core/models.py:819
+#: core/models.py:835
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Remove reference"
+msgstr "Eliminar referencia"
 
-#: core/models.py:824
+#: core/models.py:840
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
-msgstr "Set sitelink"
+msgstr "Establecer enlace de sitio"
 
-#: core/models.py:828
+#: core/models.py:844
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Set label"
+msgstr "Definir etiqueta"
 
-#: core/models.py:832
+#: core/models.py:848
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Set description"
+msgstr "Definir descripción"
 
-#: core/models.py:837
+#: core/models.py:853
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
-msgstr "Remove sitelink"
+msgstr "Eliminar enlace de sitio"
 
-#: core/models.py:841
+#: core/models.py:857
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Remove label"
+msgstr "Eliminar etiqueta"
 
-#: core/models.py:845
+#: core/models.py:861
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Remove description"
+msgstr "Eliminar descripción"
 
-#: core/models.py:850
+#: core/models.py:866
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Add alias"
+msgstr "Agregar alias"
 
-#: core/models.py:854
+#: core/models.py:870
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Remove alias"
+msgstr "Quitar alias"
 
-#: core/models.py:880
+#: core/models.py:896
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
-msgstr "Operation not implemented"
+msgstr "Operación no ejecutada"
 
-#: core/models.py:886
+#: core/models.py:902
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
-msgstr "No statements for given property"
-
-#: core/models.py:893
-msgctxt "batchcommand-py-error-no-statements-value"
-msgid "No statements with given value"
-msgstr "No statements with given value"
-
-#: core/models.py:898
-msgctxt "batchcommand-py-error-no-qualifiers"
-msgid "No qualifiers with given value"
-msgstr "No qualifiers with given value"
-
-#: core/models.py:904
-msgctxt "batchcommand-py-error-no-reference-parts"
-msgid "No reference parts with given value"
-msgstr "No reference parts with given value"
+msgstr "No hay declaraciones para una propiedad determinada"
 
 #: core/models.py:909
+msgctxt "batchcommand-py-error-no-statements-value"
+msgid "No statements with given value"
+msgstr "No hay declaraciones con valor dado"
+
+#: core/models.py:914
+msgctxt "batchcommand-py-error-no-qualifiers"
+msgid "No qualifiers with given value"
+msgstr "No hay calificadores con valor determinado"
+
+#: core/models.py:920
+msgctxt "batchcommand-py-error-no-reference-parts"
+msgid "No reference parts with given value"
+msgstr "No hay piezas de referencia con el valor indicado"
+
+#: core/models.py:925
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "The sitelink id is invalid"
+msgstr "El código de enlace de sitio es inválido"
 
-#: core/models.py:913
+#: core/models.py:929
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
-msgstr "The next command failed"
+msgstr "El siguiente comando falló"
 
-#: core/models.py:917
+#: core/models.py:933
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
-msgstr "API returned a User error"
+msgstr "La API devolvió un error de usuario"
 
-#: core/models.py:921
+#: core/models.py:937
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
-msgstr "API returned a server error"
+msgstr "La API devolvió un error de servidor"
 
-#: core/models.py:927
+#: core/models.py:943
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
-msgstr "LAST could not be evaluated."
+msgstr "No se pudo evaluar LAST."
 
-#: core/models.py:1770
+#: core/models.py:1786
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
-msgstr "Batch Command"
+msgstr "Comando de lote"
 
-#: core/models.py:1771
+#: core/models.py:1787
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Batch Commands"
@@ -241,42 +241,42 @@ msgstr "Batch Commands"
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "decade"
+msgstr "década"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "century"
+msgstr "siglo"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
 msgid "millennium"
-msgstr "millennium"
+msgstr "milenio"
 
 #: core/templatetags/quickstatements.py:55
 msgctxt "batch-command-time-hundred-thousand"
 msgid "hundred thousand years"
-msgstr "hundred thousand years"
+msgstr "cien mil años"
 
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "million years"
+msgstr "millón de años"
 
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "billion years"
+msgstr "mil millones de años"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Unknown Value)"
+msgstr "(Valor desconocido)"
 
 #: core/templatetags/quickstatements.py:142
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(No Value)"
+msgstr "(Sin valor)"
 
 #: web/models.py:52
 msgctxt "web-models-token"
@@ -291,182 +291,183 @@ msgstr "Tokens"
 #: web/models.py:104 web/models.py:105
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Preferencias"
 
 #: web/templates/batch.html:4 web/templates/batch.html:15
 msgctxt "batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Lote"
 
 #: web/templates/batch.html:18
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
-msgstr "Submitted to"
+msgstr "Enviada por"
 
 #: web/templates/batch.html:21
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Created by"
+msgstr "Creado por"
 
 #: web/templates/batch.html:23
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Ver lotes"
 
 #: web/templates/batch.html:24
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "Revertir / Discutir"
 
 #: web/templates/batch.html:33
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
-msgstr "Stop execution"
+msgstr "Detener la ejecución"
 
 #: web/templates/batch.html:46
 msgctxt "batch-button-rerun-uncombined"
 msgid "Rerun uncombined"
-msgstr "Rerun uncombined"
+msgstr "Reintentar sin combinación"
 
 #: web/templates/batch.html:52
 msgctxt "batch-button-rerun"
 msgid "Rerun"
-msgstr "Rerun"
+msgstr "Reintentar"
 
 #: web/templates/batch.html:57
 msgctxt "batch-button-download-report"
 msgid "Download report"
-msgstr "Download report"
+msgstr "Descargar informe"
 
 #: web/templates/batch.html:73
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
-msgstr "Loading summary..."
+msgstr "Cargando resumen..."
 
 #: web/templates/batch.html:76
 msgctxt "batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Comandos"
 
 #: web/templates/batch.html:84
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "Cargando comandos..."
 
 #: web/templates/batch.html:93
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
-msgstr "Stop batch #%(1)s processing"
+msgstr "Detener el procesamiento del lote #%(1)s"
 
 #: web/templates/batch.html:95
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
-msgstr "Are you sure you want to stop the current batch processing?"
+msgstr ""
+"¿Estás seguro de que quieres detener el procesamiento actual del lote?"
 
 #: web/templates/batch.html:98
 msgctxt "batch-no-continue"
 msgid "No, continue"
-msgstr "No, continue"
+msgstr "No, continúa"
 
 #: web/templates/batch.html:99
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
-msgstr "Stop processing"
+msgstr "Detener el procesamiento"
 
 #: web/templates/batch_commands.html:44
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Statement"
+msgstr "Declaración"
 
 #: web/templates/batch_commands.html:61
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
-msgstr "Qualifiers"
+msgstr "Calificadores"
 
 #: web/templates/batch_commands.html:70
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "References"
+msgstr "Referencias"
 
 #: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "SHOWING ONLY ERRORS"
+msgstr "MOSTRANDO SOLO ERRORES"
 
 #: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "SHOW ALL"
+msgstr "MOSTRAR TODO"
 
 #: web/templates/batch_commands.html:98
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "SHOWING ALL"
+msgstr "MOSTRANDO TODO"
 
 #: web/templates/batch_commands.html:103
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "SHOW ONLY ERRORS"
+msgstr "MOSTRAR SOLO ERRORES"
 
 #: web/templates/batch_commands.html:116
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "PRIMERO"
 
 #: web/templates/batch_commands.html:124
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "ANTERIOR"
 
 #: web/templates/batch_commands.html:132 web/templates/batches.html:104
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Pg. %(1)s of %(2)s"
+msgstr "Pág. %(1)s de %(2)s"
 
 #: web/templates/batch_commands.html:142
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "PRÓXIMO"
 
 #: web/templates/batch_commands.html:150
 msgctxt "batch-commands-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "ÚLTIMO"
 
 #: web/templates/batch_commands.html:159 web/templates/batch_commands.html:163
 #: web/templates/batch_commands.html:171
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Tamaño de página:"
 
 #: web/templates/batch_not_found.html:7
 #, python-format
 msgctxt "batch-not-found-number"
 msgid "Batch <code>#%(1)s</code> not found."
-msgstr "Batch <code>#%(1)s</code> not found."
+msgstr "Lote <code>#%(1)s</code> no encontrado."
 
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "Batch ID"
+msgstr "ID de lote"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Ver detalles del lote"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "BATCH STATUS"
+msgstr "ESTADO DEL LOTE"
 
 #: web/templates/batch_summary.html:28
 #, python-format
 msgctxt "batch-summary-done-count"
 msgid "%(1)s of %(2)s done"
-msgstr "%(1)s of %(2)s done"
+msgstr "%(1)s de %(2)s hecho"
 
 #: web/templates/batch_summary.html:32
 msgctxt "batch-summary-commands-summary"
@@ -481,7 +482,7 @@ msgstr "TOTAL"
 #: web/templates/batch_summary.html:34 web/templates/batches.html:63
 msgctxt "batch-summary-init"
 msgid "INIT"
-msgstr "INIT"
+msgstr "INICIAR"
 
 #: web/templates/batch_summary.html:35 web/templates/batches.html:64
 msgctxt "batch-summary-running"
@@ -491,12 +492,12 @@ msgstr "CORRIENDO"
 #: web/templates/batch_summary.html:36 web/templates/batches.html:65
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "DONE"
+msgstr "HECHO"
 
 #: web/templates/batch_summary.html:37 web/templates/batches.html:66
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "ERRORS"
+msgstr "ERRORES"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
@@ -506,7 +507,7 @@ msgstr "Este lote será bloqueado si un comando falla."
 #: web/templates/batch_summary.html:46
 msgctxt "batch-summary-commands-eta"
 msgid "ETA"
-msgstr "ETA"
+msgstr "Tiempo estimado"
 
 #: web/templates/batches.html:5
 msgctxt "batches-quickstatements-last-batches"
@@ -521,32 +522,32 @@ msgstr "Últimos lotes"
 #: web/templates/batches.html:25
 msgctxt "batches-from"
 msgid "from"
-msgstr "from"
+msgstr "de"
 
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "User"
+msgstr "Usuario"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Name"
+msgstr "Nombre"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
 msgid "Status"
-msgstr "Status"
+msgstr "Estado"
 
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
 msgid "Modified"
-msgstr "Modified"
+msgstr "Modificado"
 
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Actions"
+msgstr "Acciones"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
@@ -587,7 +588,7 @@ msgstr "ÚLTIMO"
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Tamaño de página:"
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
@@ -632,22 +633,22 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu.html:12 web/templates/layout_menu_content.html:15
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nuevo lote"
 
 #: web/templates/layout_menu.html:13 web/templates/layout_menu_content.html:16
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Últimos lotes"
 
 #: web/templates/layout_menu.html:14
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Help"
+msgstr "Ayuda"
 
 #: web/templates/layout_menu.html:25 web/templates/layout_menu_content.html:11
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Acceder"
 
 #: web/templates/layout_menu_content.html:9
 msgctxt "layout-navbar-preferences"
@@ -814,7 +815,7 @@ msgstr ""
 #: web/templates/new_batch.html:66
 msgctxt "new-batch-file-upload"
 msgid "File upload"
-msgstr "File upload"
+msgstr "Carga de archivos"
 
 #: web/templates/new_batch.html:67
 msgctxt "new-batch-file-upload-targeting"
@@ -822,8 +823,8 @@ msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 msgstr ""
-"Option for when the user prefers to upload a file, intead of writing the "
-"commands in the form"
+"Opción para cuando el usuario prefiere subir un archivo en lugar de escribir"
+" los comandos en el formulario."
 
 #: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
@@ -838,7 +839,7 @@ msgstr "Nota: solo los usuarios autoconfirmados pueden ejecutar lotes."
 #: web/templates/preview_batch.html:3
 msgctxt "preview-batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Lote"
 
 #: web/templates/preview_batch.html:23
 msgctxt "preview-batch-batch-preview"
@@ -892,33 +893,35 @@ msgstr "Tus estadísticas"
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
 msgid "Autoconfirmed status"
-msgstr "Autoconfirmed status"
+msgstr "Estado autoconfirmado"
 
 #: web/templates/profile.html:26
 msgctxt "profile-only-autoconfirmed-users-can-run-batches-on-quickstatements"
 msgid "Only autoconfirmed users can run batches on Quickstatements"
-msgstr "Only autoconfirmed users can run batches on Quickstatements"
+msgstr ""
+"Solo los usuarios confirmados automáticamente pueden ejecutar lotes en "
+"Quickstatements"
 
 #: web/templates/profile.html:28
 msgctxt "profile-read-about-autoconfirmed-user-definition"
 msgid "Read about autoconfirmed user definition"
-msgstr "Read about autoconfirmed user definition"
+msgstr "Lea sobre la definición de usuario autoconfirmado"
 
 #: web/templates/profile.html:34
 msgctxt ""
 "profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user"
 msgid "We have successfully verified that you are an autoconfirmed user."
-msgstr "We have successfully verified that you are an autoconfirmed user."
+msgstr "Hemos verificado exitosamente que usted es un usuario autoconfirmado."
 
 #: web/templates/profile.html:41
 msgctxt "profile-we-could-not-verify-you-are-an-autoconfirmed-user"
 msgid "We could not verify you are an autoconfirmed user."
-msgstr "We could not verify you are an autoconfirmed user."
+msgstr "No pudimos verificar que usted es un usuario autoconfirmado."
 
 #: web/templates/profile.html:43
 msgctxt "profile-you-are-not-an-autoconfirmed-user"
 msgid "You are not an autoconfirmed user."
-msgstr "You are not an autoconfirmed user."
+msgstr "No eres un usuario autoconfirmado."
 
 #: web/templates/profile.html:52
 msgctxt "profile-preferences"
@@ -928,17 +931,17 @@ msgstr "Preferencias"
 #: web/templates/profile.html:55
 msgctxt "profile-preferred-language"
 msgid "Preferred language"
-msgstr "Preferred language"
+msgstr "Idioma preferido"
 
 #: web/templates/profile.html:62
 msgctxt "profile-update-preferred-language"
 msgid "Update preferred language"
-msgstr "Update preferred language"
+msgstr "Actualizar el idioma preferido"
 
 #: web/templates/profile.html:67
 msgctxt "profile-api-token"
 msgid "API Token"
-msgstr "API Token"
+msgstr "Token de API"
 
 #: web/templates/profile.html:70
 msgctxt "profile-here-you-can-generate-a-token"
@@ -946,164 +949,168 @@ msgid ""
 "Here, you can generate a token to use when querying batch jobs "
 "programatically."
 msgstr ""
-"Here, you can generate a token to use when querying batch jobs "
-"programatically."
+"Aquí puedes generar un token para usar al consultar trabajos por lotes "
+"mediante programación."
 
 #: web/templates/profile.html:72
 msgctxt "profile-you-currently-have-the-following-token"
 msgid ""
 "You currently have the following token. This token must be kept private:"
 msgstr ""
-"You currently have the following token. This token must be kept private:"
+"Actualmente tienes el siguiente token. Este token debe mantenerse privado:"
 
 #: web/templates/profile.html:78
 msgctxt "profile-update-token"
 msgid "Update token"
-msgstr "Update token"
+msgstr "Actualizar token"
 
 #: web/templates/profile.html:83
 msgctxt "profile-click-here-to-log-out"
 msgid "Click here to log out."
-msgstr "Click here to log out."
+msgstr "Haga clic aquí para cerrar sesión."
 
 #: web/templates/profile.html:88
 msgctxt "profile-youre-not-logged-in"
 msgid "You're not logged in."
-msgstr "You're not logged in."
+msgstr "No has iniciado sesión"
 
 #: web/templates/profile.html:89
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Click here to log in."
+msgstr "Haga clic aquí para iniciar sesión."
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
-msgstr "QuickStatements 3.0 - Statistics"
+msgstr "QuickStatements 3.0 - Estadísticas"
 
 #: web/templates/statistics.html:16
 #, python-format
 msgctxt "statistics-title-username"
 msgid " Statistics of %(1)s "
-msgstr " Statistics of %(1)s "
+msgstr "Estadísticas de %(1)s"
 
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Estadísticas"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
 msgid "All-time numbers"
-msgstr "All-time numbers"
+msgstr "Números de todos los tiempos"
 
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Lotes"
 
 #: web/templates/statistics_all_time_counters.html:11
 msgctxt "statistics-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Comandos"
 
 #: web/templates/statistics_all_time_counters.html:16
 msgctxt "statistics-avg-commands"
 msgid "Average number of commands per batch"
-msgstr "Average number of commands per batch"
+msgstr "Número promedio de comandos por lote"
 
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Items created"
+msgstr "Elementos creados"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Editors"
+msgstr "Editores"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
 msgid "Hey, it's you!"
-msgstr "Hey, it's you!"
+msgstr "¡Oye, eres tú!"
 
 #: web/templates/statistics_all_time_counters.html:38
 #, python-format
 msgctxt "statistics-hey-its-them"
 msgid "Hey it's %(1)s!"
-msgstr "Hey it's %(1)s!"
+msgstr "¡Ey, es %(1)s!"
 
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Edits"
+msgstr "Ediciones"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
 msgid "Cumulative number of batches"
-msgstr "Cumulative number of batches"
+msgstr "Número acumulado de lotes"
 
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Cumulative number of edits"
+msgstr "Número acumulado de ediciones"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
 msgid "Cumulative number of edits and new editors"
-msgstr "Cumulative number of edits and new editors"
+msgstr "Número acumulado de ediciones y nuevos editores"
 
 #: web/templates/statistics_plots.html:29
 msgctxt "statistics-done-and-error-commands"
 msgid "Done and error commands per day"
-msgstr "Done and error commands per day"
+msgstr "Comandos realizados y con errores por día"
 
 #: web/templates/statistics_plots.html:48
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
-msgstr "Number of batches"
+msgstr "Numero de lotes"
 
 #: web/templates/statistics_plots.html:49
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
-msgstr "Number of edits"
+msgstr "Número de ediciones"
 
 #: web/templates/statistics_plots.html:50
 msgctxt "statistics-number-of-editors"
 msgid "Number of editors"
-msgstr "Number of editors"
+msgstr "Número de editores"
 
 #: web/templates/statistics_plots.html:51
 msgctxt "statistics-done-status"
 msgid "Done status"
-msgstr "Done status"
+msgstr "Estado de finalización"
 
 #: web/templates/statistics_plots.html:52
 msgctxt "statistics-error-status"
 msgid "Error status"
-msgstr "Error status"
+msgstr "Estado de error"
 
 #: web/views/new_batch.py:157
 msgctxt "batch-py-empty-command-input"
 msgid "Command input cannot be empty. Please provide valid commands."
-msgstr "Command input cannot be empty. Please provide valid commands."
+msgstr ""
+"El campo de comando no puede estar vacío. Por favor, proporcione comandos "
+"válidos."
 
 #: web/views/new_batch.py:166
 msgctxt "batch-py-csv-only-header"
 msgid "CSV input must include more than just the header row"
-msgstr "CSV input must include more than just the header row"
+msgstr "La entrada CSV debe incluir más que solo la fila del encabezado"
 
 #: web/views/new_batch.py:189
 msgctxt "batch-py-valid-command-not-found"
 msgid "No valid commands found in the provided input."
-msgstr "No valid commands found in the provided input."
+msgstr "No se encontraron comandos válidos en la entrada proporcionada."
 
 #: web/views/new_batch.py:270
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
-msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
+msgstr ""
+"El usuario no está autoconfirmado. Solo los usuarios autoconfirmados pueden "
+"ejecutar lotes."
 
 #: web/views/new_batch.py:273
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
-msgstr "User is blocked and can not run batches."
+msgstr "El usuario está bloqueado y no puede ejecutar lotes."

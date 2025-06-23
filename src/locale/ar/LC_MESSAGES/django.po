@@ -16,212 +16,212 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: core/models.py:465
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Stopped"
+msgstr "متوقف"
 
 #: core/models.py:466
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Blocked"
+msgstr "ممنوع"
 
 #: core/models.py:467
 msgctxt "batch-py-status-preview"
 msgid "Preview"
-msgstr "Preview"
+msgstr "معاينة"
 
 #: core/models.py:468
 msgctxt "batch-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "أولي"
 
 #: core/models.py:469
 msgctxt "batch-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "قيد التشغيل"
 
 #: core/models.py:470
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "نُفذ"
 
 #: core/models.py:491
 msgctxt "batch-py-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "حزمة"
 
 #: core/models.py:492
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "دفعات"
 
 #: core/models.py:751
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
-msgstr "Error"
+msgstr "خطأ"
 
 #: core/models.py:752
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "أولي"
 
 #: core/models.py:753
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "قيد التشغيل"
 
 #: core/models.py:754
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "تم"
 
 #: core/models.py:763
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "إنشاء"
 
 #: core/models.py:764
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
-msgstr "ADD"
+msgstr "إضافة"
 
 #: core/models.py:765
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "REMOVE"
+msgstr "إزالة"
 
 #: core/models.py:766
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "MERGE"
+msgstr "دمج"
 
 #: core/models.py:798
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Create item"
+msgstr "إنشاء عنصر"
 
 #: core/models.py:802
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
-msgstr "Create property"
+msgstr "أنشئ خاصية"
 
 #: core/models.py:807
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Set statement"
+msgstr "أضِف بياناً"
 
 #: core/models.py:811
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Create statement"
+msgstr "إنشاء بيان"
 
 #: core/models.py:818
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
-msgstr "Remove statement by id"
+msgstr "إزالة البيان حسب المعرف"
 
 #: core/models.py:825
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
-msgstr "Remove statement by value"
+msgstr "إزالة البيان حسب القيمة"
 
 #: core/models.py:831
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
-msgstr "Remove qualifier"
+msgstr "إزالة التصفية"
 
 #: core/models.py:835
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Remove reference"
+msgstr "إزالة المرجع"
 
 #: core/models.py:840
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
-msgstr "Set sitelink"
+msgstr "أضِف وصلة الموقع"
 
 #: core/models.py:844
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Set label"
+msgstr "أضِف تسمية"
 
 #: core/models.py:848
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Set description"
+msgstr "أضف وصفًا"
 
 #: core/models.py:853
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
-msgstr "Remove sitelink"
+msgstr "إزالة وصلة الموقع"
 
 #: core/models.py:857
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Remove label"
+msgstr "إزالة التسمية"
 
 #: core/models.py:861
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Remove description"
+msgstr "إزالة الوصف"
 
 #: core/models.py:866
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Add alias"
+msgstr "إضافة تسمية أخرى"
 
 #: core/models.py:870
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Remove alias"
+msgstr "إزالة الاسماء الأخرى"
 
 #: core/models.py:896
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
-msgstr "Operation not implemented"
+msgstr "لم تُنفذ العملية"
 
 #: core/models.py:902
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
-msgstr "No statements for given property"
+msgstr "لا توجد بيانات للخاصية المحددة"
 
 #: core/models.py:909
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
-msgstr "No statements with given value"
+msgstr "لا توجد بيانات ذات قيمة معينة"
 
 #: core/models.py:914
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
-msgstr "No qualifiers with given value"
+msgstr "لا تصفيات ذات قيمة معينة"
 
 #: core/models.py:920
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
-msgstr "No reference parts with given value"
+msgstr "لا توجد أجزاء مرجعية ذات قيمة معينة"
 
 #: core/models.py:925
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "The sitelink id is invalid"
+msgstr "معرف رابط الموقع غير صالح"
 
 #: core/models.py:929
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
-msgstr "The next command failed"
+msgstr "فشل الأمر التالي"
 
 #: core/models.py:933
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
-msgstr "API returned a User error"
+msgstr "أرجعت واجهة برمجة التطبيقات خطأ المستخدم"
 
 #: core/models.py:937
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
-msgstr "API returned a server error"
+msgstr "أرجعت واجهة برمجة التطبيقات خطأ في الخادم"
 
 #: core/models.py:943
 msgctxt "batchcommand-py-error-last-not-evaluated"
@@ -231,12 +231,12 @@ msgstr "LAST could not be evaluated."
 #: core/models.py:1786
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
-msgstr "Batch Command"
+msgstr "أمر الدفعة"
 
 #: core/models.py:1787
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
-msgstr "Batch Commands"
+msgstr "أوامر الدفعة"
 
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
@@ -246,7 +246,7 @@ msgstr "decade"
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "century"
+msgstr "القرن"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
@@ -261,12 +261,12 @@ msgstr "hundred thousand years"
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "million years"
+msgstr "مليون سنة"
 
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "billion years"
+msgstr "مليار سنة"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
@@ -281,47 +281,47 @@ msgstr "(No Value)"
 #: web/models.py:52
 msgctxt "web-models-token"
 msgid "Token"
-msgstr "Token"
+msgstr "الرمز"
 
 #: web/models.py:53
 msgctxt "web-models-tokens"
 msgid "Tokens"
-msgstr "Tokens"
+msgstr "الرموز"
 
 #: web/models.py:104 web/models.py:105
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "تفضيلات"
 
 #: web/templates/batch.html:4 web/templates/batch.html:15
 msgctxt "batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "دفعة"
 
 #: web/templates/batch.html:18
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
-msgstr "Submitted to"
+msgstr "قُدِّمت إلى"
 
 #: web/templates/batch.html:21
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Created by"
+msgstr "أنشأها"
 
 #: web/templates/batch.html:23
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "عرض الدفعات"
 
 #: web/templates/batch.html:24
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "الرجوع / مناقشة"
 
 #: web/templates/batch.html:33
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
-msgstr "Stop execution"
+msgstr "إيقاف التنفيذ"
 
 #: web/templates/batch.html:46
 msgctxt "batch-button-rerun-uncombined"
@@ -341,38 +341,38 @@ msgstr "Download report"
 #: web/templates/batch.html:73
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
-msgstr "Loading summary..."
+msgstr "جاري تحميل الملخص..."
 
 #: web/templates/batch.html:76
 msgctxt "batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "الأوامر"
 
 #: web/templates/batch.html:84
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "جاري تحميل الأوامر..."
 
 #: web/templates/batch.html:93
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
-msgstr "Stop batch #%(1)s processing"
+msgstr "إيقاف معالجة الدفعة رقم %(1)s"
 
 #: web/templates/batch.html:95
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
-msgstr "Are you sure you want to stop the current batch processing?"
+msgstr "هل أنت متأكد أنك تريد إيقاف معالجة الدفعة الحالية؟"
 
 #: web/templates/batch.html:98
 msgctxt "batch-no-continue"
 msgid "No, continue"
-msgstr "No, continue"
+msgstr "لا، استمر"
 
 #: web/templates/batch.html:99
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
-msgstr "Stop processing"
+msgstr "إيقاف المعالجة"
 
 #: web/templates/batch_commands.html:44
 msgctxt "batch-commands-statement"
@@ -392,54 +392,54 @@ msgstr "References"
 #: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "SHOWING ONLY ERRORS"
+msgstr "إظهار الأخطاء فقط"
 
 #: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "SHOW ALL"
+msgstr "إظهار الكل"
 
 #: web/templates/batch_commands.html:98
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "SHOWING ALL"
+msgstr "عرض الكل"
 
 #: web/templates/batch_commands.html:103
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "SHOW ONLY ERRORS"
+msgstr "إظهار الأخطاء فقط"
 
 #: web/templates/batch_commands.html:116
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "أولاً"
 
 #: web/templates/batch_commands.html:124
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "السابق"
 
 #: web/templates/batch_commands.html:132 web/templates/batches.html:104
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Pg. %(1)s of %(2)s"
+msgstr "الصفحة %(1)s من %(2)s"
 
 #: web/templates/batch_commands.html:142
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "التالي"
 
 #: web/templates/batch_commands.html:150
 msgctxt "batch-commands-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "الأخير"
 
 #: web/templates/batch_commands.html:159 web/templates/batch_commands.html:163
 #: web/templates/batch_commands.html:171
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "حجم الصفحة:"
 
 #: web/templates/batch_not_found.html:7
 #, python-format
@@ -450,33 +450,33 @@ msgstr "Batch <code>#%(1)s</code> not found."
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "Batch ID"
+msgstr "معرف الدفعة"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "انظر تفاصيل الدفعة"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "BATCH STATUS"
+msgstr "حالة الدفعة"
 
 #: web/templates/batch_summary.html:28
 #, python-format
 msgctxt "batch-summary-done-count"
 msgid "%(1)s of %(2)s done"
-msgstr "%(1)s of %(2)s done"
+msgstr "أنجز %(1)s من أصل %(2)s"
 
 #: web/templates/batch_summary.html:32
 msgctxt "batch-summary-commands-summary"
 msgid "COMMANDS SUMMARY"
-msgstr "COMMANDS SUMMARY"
+msgstr "ملخص الأوامر"
 
 #: web/templates/batch_summary.html:33
 msgctxt "batch-summary-total"
 msgid "TOTAL"
-msgstr "TOTAL"
+msgstr "المجموع"
 
 #: web/templates/batch_summary.html:34 web/templates/batches.html:63
 msgctxt "batch-summary-init"
@@ -501,7 +501,7 @@ msgstr "ERRORS"
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
 msgid "This batch will be blocked if a command fails."
-msgstr "This batch will be blocked if a command fails."
+msgstr "هذه اللحظة ستُغلق إذا فشل الأمر"
 
 #: web/templates/batch_summary.html:46
 msgctxt "batch-summary-commands-eta"
@@ -511,118 +511,118 @@ msgstr "ETA"
 #: web/templates/batches.html:5
 msgctxt "batches-quickstatements-last-batches"
 msgid "QuickStatements 3.0 - Last batches"
-msgstr "QuickStatements 3.0 - Last batches"
+msgstr "QuickStatements 3.0 - الدفعات الأخيرة"
 
 #: web/templates/batches.html:25
 msgctxt "batches-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "الدفعات الأخيرة"
 
 #: web/templates/batches.html:25
 msgctxt "batches-from"
 msgid "from"
-msgstr "from"
+msgstr "من"
 
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "User"
+msgstr "مستخدم"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Name"
+msgstr "اسم"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
 msgid "Status"
-msgstr "Status"
+msgstr "الحالة"
 
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
 msgid "Modified"
-msgstr "Modified"
+msgstr "المعدل"
 
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Actions"
+msgstr "الإجراءات"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "عرض الدفعات"
 
 #: web/templates/batches.html:71
 msgctxt "batches-view"
 msgid "View"
-msgstr "View"
+msgstr "عرض"
 
 #: web/templates/batches.html:73
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "الرجوع / مناقشة"
 
 #: web/templates/batches.html:89
 msgctxt "batches-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "أولاً"
 
 #: web/templates/batches.html:95
 msgctxt "batches-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "السابق"
 
 #: web/templates/batches.html:113
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "التالي"
 
 #: web/templates/batches.html:119
 msgctxt "batches-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "الأخير"
 
 #: web/templates/batches.html:130 web/templates/batches.html:134
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "حجم الصفحة:"
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
 msgid "Welcome to QuickStatements 3.0"
-msgstr "Welcome to QuickStatements 3.0"
+msgstr "مرحبًا بك في QuickStatements 3.0"
 
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "دفعة جديدة"
 
 #: web/templates/index.html:17
 msgctxt "index-batch-id"
 msgid "Batch ID..."
-msgstr "Batch ID..."
+msgstr "معرف الدفعة..."
 
 #: web/templates/index.html:18
 msgctxt "index-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "انظر تفاصيل الدفعة"
 
 #: web/templates/index.html:24
 msgctxt "index-username"
 msgid "Username..."
-msgstr "Username..."
+msgstr "اسم المستخدم..."
 
 #: web/templates/index.html:25
 msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
-msgstr "See batches by user"
+msgstr "مشاهدة الدفعات حسب المستخدم"
 
 #: web/templates/layout_dropdown_languages.html:6
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Help us translate"
+msgstr "ساعدنا في الترجمة"
 
 #: web/templates/layout_menu.html:8
 msgctxt "layout-quickstatements-title"
@@ -632,62 +632,62 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu.html:12 web/templates/layout_menu_content.html:15
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "دفعة جديدة"
 
 #: web/templates/layout_menu.html:13 web/templates/layout_menu_content.html:16
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "الدفعات الأخيرة"
 
 #: web/templates/layout_menu.html:14
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Help"
+msgstr "مساعدة"
 
 #: web/templates/layout_menu.html:25 web/templates/layout_menu_content.html:11
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Log in"
+msgstr "تسجيل الدخول"
 
 #: web/templates/layout_menu_content.html:9
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "تفضيلات"
 
 #: web/templates/layout_menu_content.html:18 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
 msgid "Your batches"
-msgstr "Your batches"
+msgstr "دفعاتك"
 
 #: web/templates/layout_menu_content.html:21
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
-msgstr "Help/Documentation"
+msgstr "المساعدة/الوثائق"
 
 #: web/templates/layout_menu_content.html:22
 msgctxt "layout-navbar-repository"
 msgid "Repository"
-msgstr "Repository"
+msgstr "المستودع"
 
 #: web/templates/layout_menu_content.html:23
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "إحصاءات"
 
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-logout"
 msgid "Log out"
-msgstr "Log out"
+msgstr "تسجيل الخروج"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 - Login"
+msgstr "QuickStatements 3.0 - تسجيل الدخول"
 
 #: web/templates/login.html:8
 msgctxt "login-page-title"
 msgid "Login"
-msgstr "Login"
+msgstr "تسجيل الدخول"
 
 #: web/templates/login.html:34
 msgctxt "login-sign-in-with-wikimedia-account"
@@ -732,32 +732,32 @@ msgstr "Your access token is not valid:"
 #: web/templates/navbar.html:8
 msgctxt "layout-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "دفعة جديدة"
 
 #: web/templates/navbar.html:9
 msgctxt "layout-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "الدفعات الأخيرة"
 
 #: web/templates/navbar.html:10
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "إحصاءات"
 
 #: web/templates/navbar.html:20
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Login"
+msgstr "تسجيل الدخول"
 
 #: web/templates/navbar.html:22
 msgctxt "layout-user"
 msgid "User"
-msgstr "User"
+msgstr "مستخدم"
 
 #: web/templates/navbar.html:23
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
-msgstr "Your last batches"
+msgstr "دفعاتك الأخيرة"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
@@ -777,7 +777,7 @@ msgstr "Your account is blocked and you will not be able to run any batches."
 #: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
-msgstr "Wikibase"
+msgstr "قاعدة بيانات ويكي"
 
 #: web/templates/new_batch.html:41
 msgctxt "new-batch-command-format"
@@ -813,7 +813,7 @@ msgstr ""
 #: web/templates/new_batch.html:66
 msgctxt "new-batch-file-upload"
 msgid "File upload"
-msgstr "File upload"
+msgstr "تحميل الملفات"
 
 #: web/templates/new_batch.html:67
 msgctxt "new-batch-file-upload-targeting"
@@ -821,13 +821,13 @@ msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 msgstr ""
-"Option for when the user prefers to upload a file, instead of writing the "
+"Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 
 #: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
-msgstr "Enter your commands here..."
+msgstr "أدخل أوامرك هنا..."
 
 #: web/templates/new_batch.html:85
 msgctxt "new-batch-note-only-autoconfirmed"
@@ -871,7 +871,7 @@ msgstr ""
 #: web/templates/preview_batch.html:55
 msgctxt "preview-batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "الأوامر"
 
 #: web/templates/preview_batch.html:57
 msgctxt "preview-batch-loading-commands"
@@ -886,7 +886,7 @@ msgstr "QuickStatements 3.0 - Profile"
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Your statistics"
+msgstr "إحصائياتك"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
@@ -973,12 +973,12 @@ msgstr "You're not logged in."
 #: web/templates/profile.html:89
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Click here to log in."
+msgstr "انقر هنا لتسجيل الدخول."
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
-msgstr "QuickStatements 3.0 - Statistics"
+msgstr "QuickStatements 3.0 - الإحصائيات"
 
 #: web/templates/statistics.html:16
 #, python-format
@@ -989,7 +989,7 @@ msgstr " Statistics of %(1)s "
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "إحصائيات"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
@@ -1014,12 +1014,12 @@ msgstr "Average number of commands per batch"
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Items created"
+msgstr "العناصر المنشأة"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Editors"
+msgstr "المحررون"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
@@ -1035,17 +1035,17 @@ msgstr "Hey it's %(1)s!"
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Edits"
+msgstr "التعديلات"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
 msgid "Cumulative number of batches"
-msgstr "Cumulative number of batches"
+msgstr "العدد التراكمي للدفعات"
 
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Cumulative number of edits"
+msgstr "العدد التراكمي للتعديلات"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
@@ -1080,7 +1080,7 @@ msgstr "Done status"
 #: web/templates/statistics_plots.html:52
 msgctxt "statistics-error-status"
 msgid "Error status"
-msgstr "Error status"
+msgstr "حالة الخطأ"
 
 #: web/views/new_batch.py:157
 msgctxt "batch-py-empty-command-input"

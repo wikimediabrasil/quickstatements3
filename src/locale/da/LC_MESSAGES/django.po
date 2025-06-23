@@ -21,262 +21,262 @@ msgstr ""
 #: core/models.py:465
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Stopped"
+msgstr "Standset"
 
 #: core/models.py:466
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Blocked"
+msgstr "Blokeret"
 
 #: core/models.py:467
 msgctxt "batch-py-status-preview"
 msgid "Preview"
-msgstr "Preview"
+msgstr "Forhåndsvisning"
 
 #: core/models.py:468
 msgctxt "batch-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "Initiel"
 
 #: core/models.py:469
 msgctxt "batch-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "Kører"
 
 #: core/models.py:470
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Udført"
 
 #: core/models.py:491
 msgctxt "batch-py-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Job"
 
 #: core/models.py:492
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Jobs"
 
 #: core/models.py:751
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
-msgstr "Error"
+msgstr "Fejl"
 
 #: core/models.py:752
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
-msgstr "Initial"
+msgstr "Initiel"
 
 #: core/models.py:753
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
-msgstr "Running"
+msgstr "Kører"
 
 #: core/models.py:754
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "Udført"
 
 #: core/models.py:763
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "OPRET"
 
 #: core/models.py:764
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
-msgstr "ADD"
+msgstr "TILFØJ"
 
 #: core/models.py:765
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "REMOVE"
+msgstr "FJERN"
 
 #: core/models.py:766
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "MERGE"
+msgstr "KOMBINER"
 
 #: core/models.py:798
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Create item"
+msgstr "Opret emne"
 
 #: core/models.py:802
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
-msgstr "Create property"
+msgstr "Opret egenskab"
 
 #: core/models.py:807
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Set statement"
+msgstr "Angiv udsagn"
 
 #: core/models.py:811
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Create statement"
+msgstr "Opret udsagn"
 
 #: core/models.py:818
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
-msgstr "Remove statement by id"
+msgstr "Fjern udsagn ud fra id"
 
 #: core/models.py:825
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
-msgstr "Remove statement by value"
+msgstr "Fjern udsagn ud fra værdi"
 
 #: core/models.py:831
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
-msgstr "Remove qualifier"
+msgstr "Fjern kvalifikator"
 
 #: core/models.py:835
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Remove reference"
+msgstr "Fjern reference"
 
 #: core/models.py:840
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
-msgstr "Set sitelink"
+msgstr "Angiv webstedslink"
 
 #: core/models.py:844
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Set label"
+msgstr "Angiv etiket"
 
 #: core/models.py:848
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Set description"
+msgstr "Angiv beskrivelse"
 
 #: core/models.py:853
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
-msgstr "Remove sitelink"
+msgstr "Fjern webstedslink"
 
 #: core/models.py:857
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Remove label"
+msgstr "Fjern etiket"
 
 #: core/models.py:861
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Remove description"
+msgstr "Fjern beskrivelse"
 
 #: core/models.py:866
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Add alias"
+msgstr "Tilføj alias"
 
 #: core/models.py:870
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Remove alias"
+msgstr "Fjern alias"
 
 #: core/models.py:896
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
-msgstr "Operation not implemented"
+msgstr "Operation ikke implementeret"
 
 #: core/models.py:902
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
-msgstr "No statements for given property"
+msgstr "Ingen udsagn med den angivne egenskab"
 
 #: core/models.py:909
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
-msgstr "No statements with given value"
+msgstr "Ingen udsagn med den angivne værdi"
 
 #: core/models.py:914
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
-msgstr "No qualifiers with given value"
+msgstr "Ingen kvalifikatorer med den angivne værdi"
 
 #: core/models.py:920
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
-msgstr "No reference parts with given value"
+msgstr "Ingen referencer med den angivne værdi"
 
 #: core/models.py:925
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "The sitelink id is invalid"
+msgstr "Webstedslinkets id er ugyldigt"
 
 #: core/models.py:929
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
-msgstr "The next command failed"
+msgstr "Følgende kommando fejlede"
 
 #: core/models.py:933
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
-msgstr "API returned a User error"
+msgstr "API returnerede en brugerfejl"
 
 #: core/models.py:937
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
-msgstr "API returned a server error"
+msgstr "API returnerede en serverfejl"
 
 #: core/models.py:943
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
-msgstr "LAST could not be evaluated."
+msgstr "LAST kunne ikke evalueres."
 
 #: core/models.py:1786
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
-msgstr "Batch Command"
+msgstr "Jobkommando"
 
 #: core/models.py:1787
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
-msgstr "Batch Commands"
+msgstr "Jobkommandoer"
 
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "decade"
+msgstr "årti"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "century"
+msgstr "århundrede"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
 msgid "millennium"
-msgstr "millennium"
+msgstr "årtusind"
 
 #: core/templatetags/quickstatements.py:55
 msgctxt "batch-command-time-hundred-thousand"
 msgid "hundred thousand years"
-msgstr "hundred thousand years"
+msgstr "hundredtusind år"
 
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "million years"
+msgstr "million år"
 
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "billion years"
+msgstr "milliard år"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Unknown Value)"
+msgstr "(ukendt værdi)"
 
 #: core/templatetags/quickstatements.py:142
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(No Value)"
+msgstr "(ingen værdi)"
 
 #: web/models.py:52
 msgctxt "web-models-token"
@@ -291,192 +291,192 @@ msgstr "Tokens"
 #: web/models.py:104 web/models.py:105
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Indstillinger"
 
 #: web/templates/batch.html:4 web/templates/batch.html:15
 msgctxt "batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Job"
 
 #: web/templates/batch.html:18
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
-msgstr "Submitted to"
+msgstr "Indsendt til"
 
 #: web/templates/batch.html:21
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Created by"
+msgstr "Oprettet af"
 
 #: web/templates/batch.html:23
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Se jobs"
 
 #: web/templates/batch.html:24
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "Tilbagerul/diskuter"
 
 #: web/templates/batch.html:33
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
-msgstr "Stop execution"
+msgstr "Stands afvikling"
 
 #: web/templates/batch.html:46
 msgctxt "batch-button-rerun-uncombined"
 msgid "Rerun uncombined"
-msgstr "Rerun uncombined"
+msgstr "Kør igen ukombineret"
 
 #: web/templates/batch.html:52
 msgctxt "batch-button-rerun"
 msgid "Rerun"
-msgstr "Rerun"
+msgstr "Kør igen"
 
 #: web/templates/batch.html:57
 msgctxt "batch-button-download-report"
 msgid "Download report"
-msgstr "Download report"
+msgstr "Download rapport"
 
 #: web/templates/batch.html:73
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
-msgstr "Loading summary..."
+msgstr "Indlæser opsummering..."
 
 #: web/templates/batch.html:76
 msgctxt "batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Kommandoer"
 
 #: web/templates/batch.html:84
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "Indlæser kommandoer..."
 
 #: web/templates/batch.html:93
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
-msgstr "Stop batch #%(1)s processing"
+msgstr "Stands afvikling af job #%(1)s"
 
 #: web/templates/batch.html:95
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
-msgstr "Are you sure you want to stop the current batch processing?"
+msgstr "Er du sikker på, at du vil standse det aktuelle job?"
 
 #: web/templates/batch.html:98
 msgctxt "batch-no-continue"
 msgid "No, continue"
-msgstr "No, continue"
+msgstr "Nej, fortsæt"
 
 #: web/templates/batch.html:99
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
-msgstr "Stop processing"
+msgstr "Stands afvikling"
 
 #: web/templates/batch_commands.html:44
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Statement"
+msgstr "Udsagn"
 
 #: web/templates/batch_commands.html:61
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
-msgstr "Qualifiers"
+msgstr "Kvalifikatorer"
 
 #: web/templates/batch_commands.html:70
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "References"
+msgstr "Referencer"
 
 #: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "SHOWING ONLY ERRORS"
+msgstr "VISER KUN FEJL"
 
 #: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "SHOW ALL"
+msgstr "VIS ALLE"
 
 #: web/templates/batch_commands.html:98
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "SHOWING ALL"
+msgstr "VISER ALLE"
 
 #: web/templates/batch_commands.html:103
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "SHOW ONLY ERRORS"
+msgstr "VIS KUN FEJL"
 
 #: web/templates/batch_commands.html:116
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "FØRSTE"
 
 #: web/templates/batch_commands.html:124
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "FORRIGE"
 
 #: web/templates/batch_commands.html:132 web/templates/batches.html:104
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Pg. %(1)s of %(2)s"
+msgstr "Side %(1)s af %(2)s"
 
 #: web/templates/batch_commands.html:142
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "NÆSTE"
 
 #: web/templates/batch_commands.html:150
 msgctxt "batch-commands-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "SIDSTE"
 
 #: web/templates/batch_commands.html:159 web/templates/batch_commands.html:163
 #: web/templates/batch_commands.html:171
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Sidestørrelse:"
 
 #: web/templates/batch_not_found.html:7
 #, python-format
 msgctxt "batch-not-found-number"
 msgid "Batch <code>#%(1)s</code> not found."
-msgstr "Batch <code>#%(1)s</code> not found."
+msgstr "Job <code>#%(1)s</code> ikke fundet."
 
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "Batch ID"
+msgstr "Job-ID"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Se jobdetaljer"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "BATCH STATUS"
+msgstr "JOBSTATUS"
 
 #: web/templates/batch_summary.html:28
 #, python-format
 msgctxt "batch-summary-done-count"
 msgid "%(1)s of %(2)s done"
-msgstr "%(1)s of %(2)s done"
+msgstr "%(1)s af %(2)s udført"
 
 #: web/templates/batch_summary.html:32
 msgctxt "batch-summary-commands-summary"
 msgid "COMMANDS SUMMARY"
-msgstr "COMMANDS SUMMARY"
+msgstr "KOMMANDOOPSUMMERING"
 
 #: web/templates/batch_summary.html:33
 msgctxt "batch-summary-total"
 msgid "TOTAL"
-msgstr "TOTAL"
+msgstr "I ALT"
 
 #: web/templates/batch_summary.html:34 web/templates/batches.html:63
 msgctxt "batch-summary-init"
@@ -486,52 +486,52 @@ msgstr "INIT"
 #: web/templates/batch_summary.html:35 web/templates/batches.html:64
 msgctxt "batch-summary-running"
 msgid "RUNNING"
-msgstr "RUNNING"
+msgstr "KØRER"
 
 #: web/templates/batch_summary.html:36 web/templates/batches.html:65
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "DONE"
+msgstr "UDFØRT"
 
 #: web/templates/batch_summary.html:37 web/templates/batches.html:66
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "ERRORS"
+msgstr "FEJL"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
 msgid "This batch will be blocked if a command fails."
-msgstr "This batch will be blocked if a command fails."
+msgstr "Jobbet vil blive blokeret, hvis en kommando fejler."
 
 #: web/templates/batch_summary.html:46
 msgctxt "batch-summary-commands-eta"
 msgid "ETA"
-msgstr "ETA"
+msgstr "Forventet afslutning"
 
 #: web/templates/batches.html:5
 msgctxt "batches-quickstatements-last-batches"
 msgid "QuickStatements 3.0 - Last batches"
-msgstr "QuickStatements 3.0 - Last batches"
+msgstr "QuickStatements 3.0 - Seneste jobs"
 
 #: web/templates/batches.html:25
 msgctxt "batches-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Seneste jobs"
 
 #: web/templates/batches.html:25
 msgctxt "batches-from"
 msgid "from"
-msgstr "from"
+msgstr "fra"
 
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "User"
+msgstr "Bruger"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Name"
+msgstr "Navn"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
@@ -541,88 +541,88 @@ msgstr "Status"
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
 msgid "Modified"
-msgstr "Modified"
+msgstr "Ændret"
 
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Actions"
+msgstr "Handlinger"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
 msgid "View batches"
-msgstr "View batches"
+msgstr "Se jobs"
 
 #: web/templates/batches.html:71
 msgctxt "batches-view"
 msgid "View"
-msgstr "View"
+msgstr "Vis"
 
 #: web/templates/batches.html:73
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "Tilbagerul/diskuter"
 
 #: web/templates/batches.html:89
 msgctxt "batches-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "FØRSTE"
 
 #: web/templates/batches.html:95
 msgctxt "batches-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "FORRIGE"
 
 #: web/templates/batches.html:113
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "NÆSTE"
 
 #: web/templates/batches.html:119
 msgctxt "batches-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "SIDSTE"
 
 #: web/templates/batches.html:130 web/templates/batches.html:134
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "Sidestørrelse:"
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
 msgid "Welcome to QuickStatements 3.0"
-msgstr "Welcome to QuickStatements 3.0"
+msgstr "Velkommen til QuickStatements 3.0"
 
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nyt job"
 
 #: web/templates/index.html:17
 msgctxt "index-batch-id"
 msgid "Batch ID..."
-msgstr "Batch ID..."
+msgstr "Job-ID..."
 
 #: web/templates/index.html:18
 msgctxt "index-see-batch-details"
 msgid "See batch details"
-msgstr "See batch details"
+msgstr "Se jobdetaljer"
 
 #: web/templates/index.html:24
 msgctxt "index-username"
 msgid "Username..."
-msgstr "Username..."
+msgstr "Brugernavn..."
 
 #: web/templates/index.html:25
 msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
-msgstr "See batches by user"
+msgstr "Se jobs af bruger"
 
 #: web/templates/layout_dropdown_languages.html:6
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Help us translate"
+msgstr "Hjælp os med at oversætte"
 
 #: web/templates/layout_menu.html:8
 msgctxt "layout-quickstatements-title"
@@ -632,147 +632,147 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu.html:12 web/templates/layout_menu_content.html:15
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nyt job"
 
 #: web/templates/layout_menu.html:13 web/templates/layout_menu_content.html:16
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Seneste batches"
 
 #: web/templates/layout_menu.html:14
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Help"
+msgstr "Hjælp"
 
 #: web/templates/layout_menu.html:25 web/templates/layout_menu_content.html:11
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Log ind"
 
 #: web/templates/layout_menu_content.html:9
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Indstillinger"
 
 #: web/templates/layout_menu_content.html:18 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
 msgid "Your batches"
-msgstr "Your batches"
+msgstr "Dine jobs"
 
 #: web/templates/layout_menu_content.html:21
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
-msgstr "Help/Documentation"
+msgstr "Hjælp/dokumentation"
 
 #: web/templates/layout_menu_content.html:22
 msgctxt "layout-navbar-repository"
 msgid "Repository"
-msgstr "Repository"
+msgstr "Koderepositorium"
 
 #: web/templates/layout_menu_content.html:23
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistik"
 
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-logout"
 msgid "Log out"
-msgstr "Log out"
+msgstr "Log ud"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 - Login"
+msgstr "QuickStatements 3.0 - Log ind"
 
 #: web/templates/login.html:8
 msgctxt "login-page-title"
 msgid "Login"
-msgstr "Login"
+msgstr "Log ind"
 
 #: web/templates/login.html:34
 msgctxt "login-sign-in-with-wikimedia-account"
 msgid "Sign in with Wikimedia account"
-msgstr "Sign in with Wikimedia account"
+msgstr "Log ind med Wikimedia-konto"
 
 #: web/templates/login.html:37
 msgctxt "login-advanced-consumer-key"
 msgid "Advanced: login with a developer consumer key"
-msgstr "Advanced: login with a developer consumer key"
+msgstr "Avanceret: Log ind med en udviklerforbrugernøgle"
 
 #: web/templates/login_dev.html:4
 msgctxt "login-dev-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 - Login"
+msgstr "QuickStatements 3.0 - Log ind"
 
 #: web/templates/login_dev.html:9
 msgctxt "login-dev-developer-access"
 msgid "Developer access"
-msgstr "Developer access"
+msgstr "Udvikleradgang"
 
 #: web/templates/login_dev.html:11
 msgctxt "login-dev-submit-your-access-token-below"
 msgid "Submit your access token below."
-msgstr "Submit your access token below."
+msgstr "Angiv dit adgangskoden herunder."
 
 #: web/templates/login_dev.html:19 web/templates/login_dev.html:20
 msgctxt "login-dev-access-token"
 msgid "Access Token"
-msgstr "Access Token"
+msgstr "Adgangstoken"
 
 #: web/templates/login_dev.html:23
 msgctxt "login-dev-log-in"
 msgid "Log in"
-msgstr "Log in"
+msgstr "Log ind"
 
 #: web/templates/login_dev.html:30
 msgctxt "login-dev-your-access-token-is-not-valid"
 msgid "Your access token is not valid:"
-msgstr "Your access token is not valid:"
+msgstr "Dit adgangstoken er ugyldigt:"
 
 #: web/templates/navbar.html:8
 msgctxt "layout-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nyt job"
 
 #: web/templates/navbar.html:9
 msgctxt "layout-last-batches"
 msgid "Last batches"
-msgstr "Last batches"
+msgstr "Seneste jobs"
 
 #: web/templates/navbar.html:10
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistik"
 
 #: web/templates/navbar.html:20
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Login"
+msgstr "Log ind"
 
 #: web/templates/navbar.html:22
 msgctxt "layout-user"
 msgid "User"
-msgstr "User"
+msgstr "Bruger"
 
 #: web/templates/navbar.html:23
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
-msgstr "Your last batches"
+msgstr "Dine seneste jobs"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
 msgid "QuickStatements 3.0 - New batch"
-msgstr "QuickStatements 3.0 - New batch"
+msgstr "QuickStatements 3.0 - Nyt job"
 
 #: web/templates/new_batch.html:12
 msgctxt "new-batch-new-batch"
 msgid "New batch"
-msgstr "New batch"
+msgstr "Nyt job"
 
 #: web/templates/new_batch.html:21
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "Din konto er blokeret, du kan ikke afvikle jobs."
 
 #: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
@@ -782,38 +782,39 @@ msgstr "Wikibase"
 #: web/templates/new_batch.html:41
 msgctxt "new-batch-command-format"
 msgid "Command format"
-msgstr "Command format"
+msgstr "Kommandoformat"
 
 #: web/templates/new_batch.html:49
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
-msgstr "Custom batch name..."
+msgstr "Brugerdefineret jobnavn..."
 
 #: web/templates/new_batch.html:54
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
-msgstr "Block batch if a command fails"
+msgstr "Bloker job, hvis en kommando fejler"
 
 #: web/templates/new_batch.html:55
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
-msgstr "The batch will stop processing if a command gives an error."
+msgstr "Afvikling af jobbet vil standse, hvis en kommando medfører en fejl."
 
 #: web/templates/new_batch.html:60
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
-msgstr "Do not combine commands"
+msgstr "Kombiner ikke kommandoer"
 
 #: web/templates/new_batch.html:61
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
 msgstr ""
-"Commands targeting the same entity will not be combined into one edit."
+"Kommandoer, der berører samme enhed, vil ikke blive kombineret til én "
+"redigering."
 
 #: web/templates/new_batch.html:66
 msgctxt "new-batch-file-upload"
 msgid "File upload"
-msgstr "File upload"
+msgstr "Filupload"
 
 #: web/templates/new_batch.html:67
 msgctxt "new-batch-file-upload-targeting"
@@ -821,43 +822,43 @@ msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 msgstr ""
-"Option for when the user prefers to upload a file, instead of writing the "
-"commands in the form"
+"Mulighed for brugere, der foretrækker at uploade en fil i stedet for at "
+"indtaste kommandoer her på siden"
 
 #: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
-msgstr "Enter your commands here..."
+msgstr "Indtast dine kommandoer her..."
 
 #: web/templates/new_batch.html:85
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr "Note: only autoconfirmed users can run batches."
+msgstr "Bemærk: Kun autobekræftede brugere kan afvikle batches."
 
 #: web/templates/preview_batch.html:3
 msgctxt "preview-batch-batch"
 msgid "Batch"
-msgstr "Batch"
+msgstr "Job"
 
 #: web/templates/preview_batch.html:23
 msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
-msgstr "Batch Preview"
+msgstr "Forhåndsvisning af job"
 
 #: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
-msgstr "Save and run batch"
+msgstr "Gem og afvikl job"
 
 #: web/templates/preview_batch.html:39
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "Din konto er blokeret, og du kan ikke afvikle jobs."
 
 #: web/templates/preview_batch.html:41
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr "Note: only autoconfirmed users can run batches."
+msgstr "Bemærk: Kun autobekræftede brugere kan afvikle jobs."
 
 #: web/templates/preview_batch.html:49
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
@@ -865,79 +866,79 @@ msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
 "CLICKING 'Save and run batch'."
 msgstr ""
-"THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
-"CLICKING 'Save and run batch'."
+"DETTE JOB ER I FORHOLDSVISNING, OG VIL FØRST BLIVE GEMT OG AFVIKLET, NÅR DU "
+"KLIKKER 'Gem og afvikl job'."
 
 #: web/templates/preview_batch.html:55
 msgctxt "preview-batch-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Kommandoer"
 
 #: web/templates/preview_batch.html:57
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Loading commands..."
+msgstr "Indlæser kommandoer..."
 
 #: web/templates/profile.html:5
 msgctxt "profile-quickstatements-profile"
 msgid "QuickStatements 3.0 - Profile"
-msgstr "QuickStatements 3.0 - Profile"
+msgstr "QuickStatements 3.0 - Profil"
 
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Your statistics"
+msgstr "Din statistik"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
 msgid "Autoconfirmed status"
-msgstr "Autoconfirmed status"
+msgstr "Autobekræftelsestilstand"
 
 #: web/templates/profile.html:26
 msgctxt "profile-only-autoconfirmed-users-can-run-batches-on-quickstatements"
 msgid "Only autoconfirmed users can run batches on Quickstatements"
-msgstr "Only autoconfirmed users can run batches on Quickstatements"
+msgstr "Kun autobekræftede brugere kan afvikle jobs på Quickstatements."
 
 #: web/templates/profile.html:28
 msgctxt "profile-read-about-autoconfirmed-user-definition"
 msgid "Read about autoconfirmed user definition"
-msgstr "Read about autoconfirmed user definition"
+msgstr "Læs mere om autobekræftede brugere"
 
 #: web/templates/profile.html:34
 msgctxt ""
 "profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user"
 msgid "We have successfully verified that you are an autoconfirmed user."
-msgstr "We have successfully verified that you are an autoconfirmed user."
+msgstr "Vi har verificeret, at du er en autobekræftet bruger."
 
 #: web/templates/profile.html:41
 msgctxt "profile-we-could-not-verify-you-are-an-autoconfirmed-user"
 msgid "We could not verify you are an autoconfirmed user."
-msgstr "We could not verify you are an autoconfirmed user."
+msgstr "Vi kunne ikke verificere, at du er en autobekræftet bruger."
 
 #: web/templates/profile.html:43
 msgctxt "profile-you-are-not-an-autoconfirmed-user"
 msgid "You are not an autoconfirmed user."
-msgstr "You are not an autoconfirmed user."
+msgstr "Du er ikke en autobekræftet bruger."
 
 #: web/templates/profile.html:52
 msgctxt "profile-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "Indstillinger"
 
 #: web/templates/profile.html:55
 msgctxt "profile-preferred-language"
 msgid "Preferred language"
-msgstr "Preferred language"
+msgstr "Foretrukket sprog"
 
 #: web/templates/profile.html:62
 msgctxt "profile-update-preferred-language"
 msgid "Update preferred language"
-msgstr "Update preferred language"
+msgstr "Opdater foretrukket sprog"
 
 #: web/templates/profile.html:67
 msgctxt "profile-api-token"
 msgid "API Token"
-msgstr "API Token"
+msgstr "API-token"
 
 #: web/templates/profile.html:70
 msgctxt "profile-here-you-can-generate-a-token"
@@ -945,164 +946,165 @@ msgid ""
 "Here, you can generate a token to use when querying batch jobs "
 "programatically."
 msgstr ""
-"Here, you can generate a token to use when querying batch jobs "
-"programatically."
+"Her kan du generere et token, du kan bruge til at tilgå batchjobs via vores "
+"API."
 
 #: web/templates/profile.html:72
 msgctxt "profile-you-currently-have-the-following-token"
 msgid ""
 "You currently have the following token. This token must be kept private:"
 msgstr ""
-"You currently have the following token. This token must be kept private:"
+"Du har i øjeblikket følgende token. Dette token skal holdes hemmeligt:"
 
 #: web/templates/profile.html:78
 msgctxt "profile-update-token"
 msgid "Update token"
-msgstr "Update token"
+msgstr "Opdater token"
 
 #: web/templates/profile.html:83
 msgctxt "profile-click-here-to-log-out"
 msgid "Click here to log out."
-msgstr "Click here to log out."
+msgstr "Klik her for at logge ud."
 
 #: web/templates/profile.html:88
 msgctxt "profile-youre-not-logged-in"
 msgid "You're not logged in."
-msgstr "You're not logged in."
+msgstr "Du er ikke logget ind."
 
 #: web/templates/profile.html:89
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Click here to log in."
+msgstr "Klik her for at logge ind."
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
-msgstr "QuickStatements 3.0 - Statistics"
+msgstr "QuickStatements 3.0 - Statistik"
 
 #: web/templates/statistics.html:16
 #, python-format
 msgctxt "statistics-title-username"
 msgid " Statistics of %(1)s "
-msgstr " Statistics of %(1)s "
+msgstr "Statistik for %(1)s"
 
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "Statistik"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
 msgid "All-time numbers"
-msgstr "All-time numbers"
+msgstr "Levetidsstatistik"
 
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
 msgid "Batches"
-msgstr "Batches"
+msgstr "Jobs"
 
 #: web/templates/statistics_all_time_counters.html:11
 msgctxt "statistics-commands"
 msgid "Commands"
-msgstr "Commands"
+msgstr "Kommandoer"
 
 #: web/templates/statistics_all_time_counters.html:16
 msgctxt "statistics-avg-commands"
 msgid "Average number of commands per batch"
-msgstr "Average number of commands per batch"
+msgstr "Gennemsnitligt antal kommandoer pr. jobs"
 
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Items created"
+msgstr "Oprettede emner"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Editors"
+msgstr "Brugere"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
 msgid "Hey, it's you!"
-msgstr "Hey, it's you!"
+msgstr "Hej, det er dig!"
 
 #: web/templates/statistics_all_time_counters.html:38
 #, python-format
 msgctxt "statistics-hey-its-them"
 msgid "Hey it's %(1)s!"
-msgstr "Hey it's %(1)s!"
+msgstr "Hej, det er %(1)s!"
 
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Edits"
+msgstr "Redigeringer"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
 msgid "Cumulative number of batches"
-msgstr "Cumulative number of batches"
+msgstr "Kumuleret antal jobs"
 
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Cumulative number of edits"
+msgstr "Kumuleret antal redigeringer"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
 msgid "Cumulative number of edits and new editors"
-msgstr "Cumulative number of edits and new editors"
+msgstr "Kumuleret antal redigeringer og nye brugere"
 
 #: web/templates/statistics_plots.html:29
 msgctxt "statistics-done-and-error-commands"
 msgid "Done and error commands per day"
-msgstr "Done and error commands per day"
+msgstr "Udførte og fejlede kommandoer pr. dag"
 
 #: web/templates/statistics_plots.html:48
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
-msgstr "Number of batches"
+msgstr "Antal jobs"
 
 #: web/templates/statistics_plots.html:49
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
-msgstr "Number of edits"
+msgstr "Antal redigeringer"
 
 #: web/templates/statistics_plots.html:50
 msgctxt "statistics-number-of-editors"
 msgid "Number of editors"
-msgstr "Number of editors"
+msgstr "Antal brugere"
 
 #: web/templates/statistics_plots.html:51
 msgctxt "statistics-done-status"
 msgid "Done status"
-msgstr "Done status"
+msgstr "Udført"
 
 #: web/templates/statistics_plots.html:52
 msgctxt "statistics-error-status"
 msgid "Error status"
-msgstr "Error status"
+msgstr "Fejl"
 
 #: web/views/new_batch.py:157
 msgctxt "batch-py-empty-command-input"
 msgid "Command input cannot be empty. Please provide valid commands."
-msgstr "Command input cannot be empty. Please provide valid commands."
+msgstr "Inddata kan ikke være tomt. Indtast nogle gyldige kommandoer."
 
 #: web/views/new_batch.py:166
 msgctxt "batch-py-csv-only-header"
 msgid "CSV input must include more than just the header row"
-msgstr "CSV input must include more than just the header row"
+msgstr "CSV-input skal indeholde mere end blot rækken med kolonnenavne"
 
 #: web/views/new_batch.py:189
 msgctxt "batch-py-valid-command-not-found"
 msgid "No valid commands found in the provided input."
-msgstr "No valid commands found in the provided input."
+msgstr "Ingen gyldige kommandoer fundet i det angivne input."
 
 #: web/views/new_batch.py:270
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
-msgstr "User is not autoconfirmed. Only autoconfirmed users can run batches."
+msgstr ""
+"Bruger er ikke autobekræftet. Kun autobekræftede brugere kan afvikle jobs."
 
 #: web/views/new_batch.py:273
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
-msgstr "User is blocked and can not run batches."
+msgstr "Bruger er blokeret og kan ikke afvikle jobs."

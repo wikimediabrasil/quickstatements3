@@ -16,22 +16,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: core/models.py:465
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Stopped"
+msgstr "ودرول‌شوی"
 
 #: core/models.py:466
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Blocked"
+msgstr "بنديز لگېدلی"
 
 #: core/models.py:467
 msgctxt "batch-py-status-preview"
 msgid "Preview"
-msgstr "Preview"
+msgstr "مخکتنه"
 
 #: core/models.py:468
 msgctxt "batch-py-status-initial"
@@ -46,7 +45,7 @@ msgstr "Running"
 #: core/models.py:470
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "وشو"
 
 #: core/models.py:491
 msgctxt "batch-py-batch"
@@ -76,12 +75,12 @@ msgstr "Running"
 #: core/models.py:754
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Done"
+msgstr "وشو"
 
 #: core/models.py:763
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "جوړول"
 
 #: core/models.py:764
 msgctxt "batchcommand-py-action-add"
@@ -91,7 +90,7 @@ msgstr "ADD"
 #: core/models.py:765
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "REMOVE"
+msgstr "لرې‌کول"
 
 #: core/models.py:766
 msgctxt "batchcommand-py-action-merge"
@@ -111,12 +110,12 @@ msgstr "Create property"
 #: core/models.py:807
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Set statement"
+msgstr "پرېکړه‌ليک اوڼل"
 
 #: core/models.py:811
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Create statement"
+msgstr "پرېکړه‌ليک جوړول"
 
 #: core/models.py:818
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
@@ -146,12 +145,12 @@ msgstr "Set sitelink"
 #: core/models.py:844
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Set label"
+msgstr "نښه ټاکل"
 
 #: core/models.py:848
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Set description"
+msgstr "څرگنداوی اوڼل"
 
 #: core/models.py:853
 msgctxt "batchcommand-py-operation-remove-sitelink"
@@ -161,12 +160,12 @@ msgstr "Remove sitelink"
 #: core/models.py:857
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Remove label"
+msgstr "نښه لرې‌کول"
 
 #: core/models.py:861
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Remove description"
+msgstr "څرگنداوی لرې کول"
 
 #: core/models.py:866
 msgctxt "batchcommand-py-operation-add-alias"
@@ -191,7 +190,7 @@ msgstr "No statements for given property"
 #: core/models.py:909
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
-msgstr "No statements with given value"
+msgstr "ورکړل شوي ارزښت سره هيڅ پرېکړه‌ليک نشته"
 
 #: core/models.py:914
 msgctxt "batchcommand-py-error-no-qualifiers"
@@ -206,7 +205,7 @@ msgstr "No reference parts with given value"
 #: core/models.py:925
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "The sitelink id is invalid"
+msgstr "د وېبځي وېبتړ پېژند ناسم دی"
 
 #: core/models.py:929
 msgctxt "batchcommand-py-error-combining-failed"
@@ -241,12 +240,12 @@ msgstr "Batch Commands"
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "decade"
+msgstr "لسیزه"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "century"
+msgstr "پېړۍ"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
@@ -266,17 +265,17 @@ msgstr "million years"
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "billion years"
+msgstr "ميليارد کاله"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Unknown Value)"
+msgstr "(ناجوت ارزښت)"
 
 #: core/templatetags/quickstatements.py:142
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(No Value)"
+msgstr "(هیڅ ارزښت نلري)"
 
 #: web/models.py:52
 msgctxt "web-models-token"
@@ -306,7 +305,7 @@ msgstr "Submitted to"
 #: web/templates/batch.html:21
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Created by"
+msgstr "جوړوونکی:"
 
 #: web/templates/batch.html:23
 msgctxt "batch-view-batches"
@@ -377,7 +376,7 @@ msgstr "Stop processing"
 #: web/templates/batch_commands.html:44
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Statement"
+msgstr "پرېکړه‌ليک"
 
 #: web/templates/batch_commands.html:61
 msgctxt "batch-commands-qualifier"
@@ -387,37 +386,37 @@ msgstr "Qualifiers"
 #: web/templates/batch_commands.html:70
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "References"
+msgstr "سرچينې"
 
 #: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "SHOWING ONLY ERRORS"
+msgstr "یوازې تېروتنې ښودل"
 
 #: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "SHOW ALL"
+msgstr "ټول وښایاست"
 
 #: web/templates/batch_commands.html:98
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "SHOWING ALL"
+msgstr "ټول ښودل"
 
 #: web/templates/batch_commands.html:103
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "SHOW ONLY ERRORS"
+msgstr "یوازې تېروتنې ښودل"
 
 #: web/templates/batch_commands.html:116
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "لومړی"
 
 #: web/templates/batch_commands.html:124
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "PREVIOUS"
+msgstr "مخکنی"
 
 #: web/templates/batch_commands.html:132 web/templates/batches.html:104
 #, python-format
@@ -428,7 +427,7 @@ msgstr "Pg. %(1)s of %(2)s"
 #: web/templates/batch_commands.html:142
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "راتلونکی"
 
 #: web/templates/batch_commands.html:150
 msgctxt "batch-commands-last"
@@ -476,7 +475,7 @@ msgstr "COMMANDS SUMMARY"
 #: web/templates/batch_summary.html:33
 msgctxt "batch-summary-total"
 msgid "TOTAL"
-msgstr "TOTAL"
+msgstr "ټول"
 
 #: web/templates/batch_summary.html:34 web/templates/batches.html:63
 msgctxt "batch-summary-init"
@@ -491,12 +490,12 @@ msgstr "RUNNING"
 #: web/templates/batch_summary.html:36 web/templates/batches.html:65
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "DONE"
+msgstr "وشو"
 
 #: web/templates/batch_summary.html:37 web/templates/batches.html:66
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "ERRORS"
+msgstr "تېروتنې"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
@@ -526,7 +525,7 @@ msgstr "from"
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "User"
+msgstr "کارن"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
@@ -536,7 +535,7 @@ msgstr "Name"
 #: web/templates/batches.html:36
 msgctxt "batches-status"
 msgid "Status"
-msgstr "Status"
+msgstr "دريځ"
 
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
@@ -546,7 +545,7 @@ msgstr "Modified"
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Actions"
+msgstr "چارې"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
@@ -556,17 +555,17 @@ msgstr "View batches"
 #: web/templates/batches.html:71
 msgctxt "batches-view"
 msgid "View"
-msgstr "View"
+msgstr "کتل"
 
 #: web/templates/batches.html:73
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Revert / Discuss"
+msgstr "په څټ گرځول / شننه"
 
 #: web/templates/batches.html:89
 msgctxt "batches-first"
 msgid "FIRST"
-msgstr "FIRST"
+msgstr "لومړی"
 
 #: web/templates/batches.html:95
 msgctxt "batches-previous"
@@ -576,23 +575,23 @@ msgstr "PREVIOUS"
 #: web/templates/batches.html:113
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "بل"
 
 #: web/templates/batches.html:119
 msgctxt "batches-last"
 msgid "LAST"
-msgstr "LAST"
+msgstr "وروستی"
 
 #: web/templates/batches.html:130 web/templates/batches.html:134
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Page size:"
+msgstr "مخ کچه:"
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
 msgid "Welcome to QuickStatements 3.0"
-msgstr "Welcome to QuickStatements 3.0"
+msgstr "چټک‌پرېکړه‌ليکونه ۳.۰ ته ښه راغلاست"
 
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
@@ -622,12 +621,12 @@ msgstr "See batches by user"
 #: web/templates/layout_dropdown_languages.html:6
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Help us translate"
+msgstr "ژباړلو کې له موږ سره مرسته وکړئ"
 
 #: web/templates/layout_menu.html:8
 msgctxt "layout-quickstatements-title"
 msgid "QuickStatements 3.0"
-msgstr "QuickStatements 3.0"
+msgstr "چټک پرېکړه ليکونه ۳.۰"
 
 #: web/templates/layout_menu.html:12 web/templates/layout_menu_content.html:15
 msgctxt "layout-navbar-new-batch"
@@ -642,17 +641,17 @@ msgstr "Last batches"
 #: web/templates/layout_menu.html:14
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Help"
+msgstr "لارښود"
 
 #: web/templates/layout_menu.html:25 web/templates/layout_menu_content.html:11
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Log in"
+msgstr "ننوتل"
 
 #: web/templates/layout_menu_content.html:9
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "غوره توبونه"
 
 #: web/templates/layout_menu_content.html:18 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
@@ -662,22 +661,22 @@ msgstr "Your batches"
 #: web/templates/layout_menu_content.html:21
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
-msgstr "Help/Documentation"
+msgstr "لارښود/لاسوند"
 
 #: web/templates/layout_menu_content.html:22
 msgctxt "layout-navbar-repository"
 msgid "Repository"
-msgstr "Repository"
+msgstr "زېرمتون"
 
 #: web/templates/layout_menu_content.html:23
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "شمارنې"
 
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-logout"
 msgid "Log out"
-msgstr "Log out"
+msgstr "وتل"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
@@ -712,17 +711,17 @@ msgstr "Developer access"
 #: web/templates/login_dev.html:11
 msgctxt "login-dev-submit-your-access-token-below"
 msgid "Submit your access token below."
-msgstr "Submit your access token below."
+msgstr "خپل د لاسرسي نښه لاندې وسپارئ."
 
 #: web/templates/login_dev.html:19 web/templates/login_dev.html:20
 msgctxt "login-dev-access-token"
 msgid "Access Token"
-msgstr "Access Token"
+msgstr "د لاسرسي نښه"
 
 #: web/templates/login_dev.html:23
 msgctxt "login-dev-log-in"
 msgid "Log in"
-msgstr "Log in"
+msgstr "ننوتل"
 
 #: web/templates/login_dev.html:30
 msgctxt "login-dev-your-access-token-is-not-valid"
@@ -742,12 +741,12 @@ msgstr "Last batches"
 #: web/templates/navbar.html:10
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Statistics"
+msgstr "شمارنې"
 
 #: web/templates/navbar.html:20
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Login"
+msgstr "ننوتل"
 
 #: web/templates/navbar.html:22
 msgctxt "layout-user"
@@ -772,12 +771,12 @@ msgstr "New batch"
 #: web/templates/new_batch.html:21
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr "Your account is blocked and you will not be able to run any batches."
+msgstr "ستاسو په گڼون بنديز لگېدلی دی او تاسو نشئ کولی چې کومه ډله پرمخ بوځئ."
 
 #: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
-msgstr "Wikibase"
+msgstr "ويکي‌اډانه"
 
 #: web/templates/new_batch.html:41
 msgctxt "new-batch-command-format"
@@ -813,7 +812,7 @@ msgstr ""
 #: web/templates/new_batch.html:66
 msgctxt "new-batch-file-upload"
 msgid "File upload"
-msgstr "File upload"
+msgstr "دوتنه راپورته‌کول"
 
 #: web/templates/new_batch.html:67
 msgctxt "new-batch-file-upload-targeting"
@@ -821,13 +820,13 @@ msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 msgstr ""
-"Option for when the user prefers to upload a file, instead of writing the "
+"Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 
 #: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
-msgstr "Enter your commands here..."
+msgstr "خپل امرونه دلته دننه کړئ..."
 
 #: web/templates/new_batch.html:85
 msgctxt "new-batch-note-only-autoconfirmed"
@@ -886,12 +885,12 @@ msgstr "QuickStatements 3.0 - Profile"
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Your statistics"
+msgstr "ستاسو شمارنې"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
 msgid "Autoconfirmed status"
-msgstr "Autoconfirmed status"
+msgstr "تاييد‌شوی دريځ"
 
 #: web/templates/profile.html:26
 msgctxt "profile-only-autoconfirmed-users-can-run-batches-on-quickstatements"
@@ -922,7 +921,7 @@ msgstr "You are not an autoconfirmed user."
 #: web/templates/profile.html:52
 msgctxt "profile-preferences"
 msgid "Preferences"
-msgstr "Preferences"
+msgstr "غوره‌توبونه"
 
 #: web/templates/profile.html:55
 msgctxt "profile-preferred-language"
@@ -973,7 +972,7 @@ msgstr "You're not logged in."
 #: web/templates/profile.html:89
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Click here to log in."
+msgstr "د ننوتلو لپاره دلته کلیک وکړئ."
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
@@ -1019,12 +1018,12 @@ msgstr "Items created"
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Editors"
+msgstr "سمونگران"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
 msgid "Hey, it's you!"
-msgstr "Hey, it's you!"
+msgstr "هې، دا ته يې!"
 
 #: web/templates/statistics_all_time_counters.html:38
 #, python-format
@@ -1035,7 +1034,7 @@ msgstr "Hey it's %(1)s!"
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Edits"
+msgstr "سمونونه"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
@@ -1045,7 +1044,7 @@ msgstr "Cumulative number of batches"
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Cumulative number of edits"
+msgstr "سمونونو ټوليزه شمېر"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
@@ -1075,7 +1074,7 @@ msgstr "Number of editors"
 #: web/templates/statistics_plots.html:51
 msgctxt "statistics-done-status"
 msgid "Done status"
-msgstr "Done status"
+msgstr "بشپړ‌شوی دريځ"
 
 #: web/templates/statistics_plots.html:52
 msgctxt "statistics-error-status"

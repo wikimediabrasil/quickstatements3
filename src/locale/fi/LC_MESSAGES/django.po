@@ -18,222 +18,222 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: core/models.py:463
+#: core/models.py:465
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
 msgstr "Pysäytetty"
 
-#: core/models.py:464
+#: core/models.py:466
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
 msgstr "Lukittu"
 
-#: core/models.py:465
+#: core/models.py:467
 msgctxt "batch-py-status-preview"
 msgid "Preview"
 msgstr "Esikatselu"
 
-#: core/models.py:466
+#: core/models.py:468
 msgctxt "batch-py-status-initial"
 msgid "Initial"
 msgstr "Käynnistetty"
 
-#: core/models.py:467
+#: core/models.py:469
 msgctxt "batch-py-status-running"
 msgid "Running"
 msgstr "Käynnissä"
 
-#: core/models.py:468
+#: core/models.py:470
 msgctxt "batch-py-status-done"
 msgid "Done"
 msgstr "Valmis"
 
-#: core/models.py:489
+#: core/models.py:491
 msgctxt "batch-py-batch"
 msgid "Batch"
 msgstr "Erä"
 
-#: core/models.py:490
+#: core/models.py:492
 msgctxt "batch-py-batches"
 msgid "Batches"
 msgstr "Erät"
 
-#: core/models.py:735
+#: core/models.py:751
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
 msgstr "Virhe"
 
-#: core/models.py:736
+#: core/models.py:752
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
 msgstr "Käynnistetty"
 
-#: core/models.py:737
+#: core/models.py:753
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
 msgstr "Käynnissä"
 
-#: core/models.py:738
+#: core/models.py:754
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
 msgstr "Valmis"
 
-#: core/models.py:747
+#: core/models.py:763
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "CREATE"
+msgstr "LUO"
 
-#: core/models.py:748
+#: core/models.py:764
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
-msgstr "ADD"
+msgstr "LISÄÄ"
 
-#: core/models.py:749
+#: core/models.py:765
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "REMOVE"
+msgstr "POISTA"
 
-#: core/models.py:750
+#: core/models.py:766
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "MERGE"
+msgstr "YHDISTÄ"
 
-#: core/models.py:782
+#: core/models.py:798
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
 msgstr "Luo kohde"
 
-#: core/models.py:786
+#: core/models.py:802
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
 msgstr "Luo ominaisuus"
 
-#: core/models.py:791
+#: core/models.py:807
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
 msgstr "Aseta esitys"
 
-#: core/models.py:795
+#: core/models.py:811
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
 msgstr "Luo esitys"
 
-#: core/models.py:802
+#: core/models.py:818
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
 msgstr "Poista esitys tunnisteen perusteella"
 
-#: core/models.py:809
+#: core/models.py:825
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
 msgstr "Poista esitys arvon perusteella"
 
-#: core/models.py:815
+#: core/models.py:831
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
 msgstr "Poista tarkenne"
 
-#: core/models.py:819
+#: core/models.py:835
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
 msgstr "Poista lähde"
 
-#: core/models.py:824
+#: core/models.py:840
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
 msgstr "Aseta sivustolinkki"
 
-#: core/models.py:828
+#: core/models.py:844
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
 msgstr "Aseta nimi"
 
-#: core/models.py:832
+#: core/models.py:848
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
 msgstr "Aseta kuvaus"
 
-#: core/models.py:837
+#: core/models.py:853
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
 msgstr "Poista sivustolinkki"
 
-#: core/models.py:841
+#: core/models.py:857
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
 msgstr "Poisto nimi"
 
-#: core/models.py:845
+#: core/models.py:861
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
 msgstr "Poista kuvaus"
 
-#: core/models.py:850
+#: core/models.py:866
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
 msgstr "Lisää alias"
 
-#: core/models.py:854
+#: core/models.py:870
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
 msgstr "Poista alias"
 
-#: core/models.py:880
+#: core/models.py:896
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
 msgstr "Operaatiota ei toteutettu"
 
-#: core/models.py:886
+#: core/models.py:902
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
 msgstr "Ei esityksiä annetulla ominaisuudella"
 
-#: core/models.py:893
+#: core/models.py:909
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
 msgstr "Ei esityksuä annetulla arvolla"
 
-#: core/models.py:898
+#: core/models.py:914
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
 msgstr "Ei tarkenteita annetulla arvolla"
 
-#: core/models.py:904
+#: core/models.py:920
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
 msgstr "Ei lähteiden osia annetulla arvolla"
 
-#: core/models.py:909
+#: core/models.py:925
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
 msgstr "Sivustolinkin tunnus on virheellinen"
 
-#: core/models.py:913
+#: core/models.py:929
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
 msgstr "Seuraava komento epäonnistui"
 
-#: core/models.py:917
+#: core/models.py:933
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
 msgstr "API palautti \"käyttäjävirhe\""
 
-#: core/models.py:921
+#: core/models.py:937
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
 msgstr "API palautti \"palvelinvirhe\""
 
-#: core/models.py:927
+#: core/models.py:943
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
 msgstr "LAST could not be evaluated."
 
-#: core/models.py:1770
+#: core/models.py:1786
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
 msgstr "Eräkomento"
 
-#: core/models.py:1771
+#: core/models.py:1787
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
 msgstr "Eräkomennot"
@@ -336,7 +336,7 @@ msgstr "Rerun"
 #: web/templates/batch.html:57
 msgctxt "batch-button-download-report"
 msgid "Download report"
-msgstr "Download report"
+msgstr "Lataa raportti"
 
 #: web/templates/batch.html:73
 msgctxt "batch-loading-summary"
@@ -667,7 +667,7 @@ msgstr "Ohje/Dokumentaatio"
 #: web/templates/layout_menu_content.html:22
 msgctxt "layout-navbar-repository"
 msgid "Repository"
-msgstr "Repository"
+msgstr "Lähdekoodi"
 
 #: web/templates/layout_menu_content.html:23
 msgctxt "layout-navbar-statistics"
@@ -988,7 +988,7 @@ msgstr "QuickStatements 3.0 – Tilastot"
 #, python-format
 msgctxt "statistics-title-username"
 msgid " Statistics of %(1)s "
-msgstr " Statistics of %(1)s "
+msgstr "Käyttäjän %(1)s tilastot"
 
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
