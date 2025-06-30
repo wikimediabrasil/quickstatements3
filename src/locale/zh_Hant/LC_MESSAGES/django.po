@@ -16,613 +16,613 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: core/models.py:465
 msgctxt "batch-py-status-stopped"
 msgid "Stopped"
-msgstr "Остановлено"
+msgstr "已停止"
 
 #: core/models.py:466
 msgctxt "batch-py-status-blocked"
 msgid "Blocked"
-msgstr "Заблокировано"
+msgstr "已封鎖"
 
 #: core/models.py:467
 msgctxt "batch-py-status-preview"
 msgid "Preview"
-msgstr "Предпросмотр"
+msgstr "預覽"
 
 #: core/models.py:468
 msgctxt "batch-py-status-initial"
 msgid "Initial"
-msgstr "Исходное"
+msgstr "初始化"
 
 #: core/models.py:469
 msgctxt "batch-py-status-running"
 msgid "Running"
-msgstr "Выполняется"
+msgstr "運作中"
 
 #: core/models.py:470
 msgctxt "batch-py-status-done"
 msgid "Done"
-msgstr "Готово"
+msgstr "完成"
 
 #: core/models.py:491
 msgctxt "batch-py-batch"
 msgid "Batch"
-msgstr "Пакет"
+msgstr "批次"
 
 #: core/models.py:492
 msgctxt "batch-py-batches"
 msgid "Batches"
-msgstr "Пакеты"
+msgstr "批次"
 
 #: core/models.py:751
 msgctxt "batchcommand-py-status-error"
 msgid "Error"
-msgstr "Ошибка"
+msgstr "錯誤"
 
 #: core/models.py:752
 msgctxt "batchcommand-py-status-initial"
 msgid "Initial"
-msgstr "Исходное"
+msgstr "初始化"
 
 #: core/models.py:753
 msgctxt "batchcommand-py-status-running"
 msgid "Running"
-msgstr "Выполняется"
+msgstr "運作中"
 
 #: core/models.py:754
 msgctxt "batchcommand-py-status-done"
 msgid "Done"
-msgstr "Готово"
+msgstr "完成"
 
 #: core/models.py:763
 msgctxt "batchcommand-py-action-create"
 msgid "CREATE"
-msgstr "СОЗДАТЬ"
+msgstr "創建"
 
 #: core/models.py:764
 msgctxt "batchcommand-py-action-add"
 msgid "ADD"
-msgstr "ДОБАВЛЕНИЕ"
+msgstr "新增"
 
 #: core/models.py:765
 msgctxt "batchcommand-py-action-remove"
 msgid "REMOVE"
-msgstr "УДАЛЕНИЕ"
+msgstr "移除"
 
 #: core/models.py:766
 msgctxt "batchcommand-py-action-merge"
 msgid "MERGE"
-msgstr "ОБЪЕДИНЕНИЕ"
+msgstr "合併"
 
 #: core/models.py:798
 msgctxt "batchcommand-py-operation-create-item"
 msgid "Create item"
-msgstr "Создание элемента"
+msgstr "新增項目"
 
 #: core/models.py:802
 msgctxt "batchcommand-py-operation-create-property"
 msgid "Create property"
-msgstr "Создание свойства"
+msgstr "新增屬性"
 
 #: core/models.py:807
 msgctxt "batchcommand-py-operation-set-statement"
 msgid "Set statement"
-msgstr "Добавить утверждение"
+msgstr "設定聲稱"
 
 #: core/models.py:811
 msgctxt "batchcommand-py-operation-create-statement"
 msgid "Create statement"
-msgstr "Создание утверждения"
+msgstr "創建聲稱"
 
 #: core/models.py:818
 msgctxt "batchcommand-py-operation-remove-statement-by-id"
 msgid "Remove statement by id"
-msgstr "Удалить утверждение по ID"
+msgstr "根據編號移除聲稱"
 
 #: core/models.py:825
 msgctxt "batchcommand-py-operation-remove-statement-by-value"
 msgid "Remove statement by value"
-msgstr "Удалить утверждение по значению"
+msgstr "根據陳述移除聲稱"
 
 #: core/models.py:831
 msgctxt "batchcommand-py-operation-remove-qualifier"
 msgid "Remove qualifier"
-msgstr "Удаление квалификатора"
+msgstr "移除限定符"
 
 #: core/models.py:835
 msgctxt "batchcommand-py-operation-remove-reference"
 msgid "Remove reference"
-msgstr "Удалить источник"
+msgstr "移除參考文獻"
 
 #: core/models.py:840
 msgctxt "batchcommand-py-operation-set-sitelink"
 msgid "Set sitelink"
-msgstr "Установки ссылки на сайт"
+msgstr "設定網路連結"
 
 #: core/models.py:844
 msgctxt "batchcommand-py-operation-set-label"
 msgid "Set label"
-msgstr "Установка метки"
+msgstr "設定標籤"
 
 #: core/models.py:848
 msgctxt "batchcommand-py-operation-set-description"
 msgid "Set description"
-msgstr "Добавление описания"
+msgstr "設定描述"
 
 #: core/models.py:853
 msgctxt "batchcommand-py-operation-remove-sitelink"
 msgid "Remove sitelink"
-msgstr "Удаление ссылки на сайт"
+msgstr "移除網路連結"
 
 #: core/models.py:857
 msgctxt "batchcommand-py-operation-remove-label"
 msgid "Remove label"
-msgstr "Удаление метки"
+msgstr "移除標籤"
 
 #: core/models.py:861
 msgctxt "batchcommand-py-operation-remove-description"
 msgid "Remove description"
-msgstr "Удаление описания"
+msgstr "移除描述"
 
 #: core/models.py:866
 msgctxt "batchcommand-py-operation-add-alias"
 msgid "Add alias"
-msgstr "Добавление псевдонима"
+msgstr "新增別名"
 
 #: core/models.py:870
 msgctxt "batchcommand-py-operation-remove-alias"
 msgid "Remove alias"
-msgstr "Удаление псевдонима"
+msgstr "移除別名"
 
 #: core/models.py:896
 msgctxt "batchcommand-py-error-op-not-implemented"
 msgid "Operation not implemented"
-msgstr "Операция не выполнена"
+msgstr "未實施的操作"
 
 #: core/models.py:902
 msgctxt "batchcommand-py-error-no-statements-property"
 msgid "No statements for given property"
-msgstr "Нет утверждений для указанного свойства"
+msgstr "指定屬性沒有聲稱"
 
 #: core/models.py:909
 msgctxt "batchcommand-py-error-no-statements-value"
 msgid "No statements with given value"
-msgstr "Нет утверждений с указанным значением"
+msgstr "指定定值沒有聲稱"
 
 #: core/models.py:914
 msgctxt "batchcommand-py-error-no-qualifiers"
 msgid "No qualifiers with given value"
-msgstr "Нет квалификаторов с указанным значением"
+msgstr "指定定值沒有限定符"
 
 #: core/models.py:920
 msgctxt "batchcommand-py-error-no-reference-parts"
 msgid "No reference parts with given value"
-msgstr "Нет источников с указанным значением"
+msgstr "未找到指定值的參考文獻"
 
 #: core/models.py:925
 msgctxt "batchcommand-py-error-sitelink-invalid"
 msgid "The sitelink id is invalid"
-msgstr "Некорректный идентификатор ссылки сайта"
+msgstr "計畫網站連結ID無效"
 
 #: core/models.py:929
 msgctxt "batchcommand-py-error-combining-failed"
 msgid "The next command failed"
-msgstr "Следующая команда не выполнена"
+msgstr "下一個命令失敗"
 
 #: core/models.py:933
 msgctxt "batchcommand-py-error-api-user-error"
 msgid "API returned a User error"
-msgstr "API вернул ошибку пользователя"
+msgstr "API回傳了使用者錯誤"
 
 #: core/models.py:937
 msgctxt "batchcommand-py-error-api-server-error"
 msgid "API returned a server error"
-msgstr "API вернул ошибку сервера"
+msgstr "API回傳了伺服器錯誤"
 
 #: core/models.py:943
 msgctxt "batchcommand-py-error-last-not-evaluated"
 msgid "LAST could not be evaluated."
-msgstr "LAST не может быть оценен."
+msgstr "無法解析LAST。"
 
 #: core/models.py:1786
 msgctxt "batchcommand-py-batchcommand"
 msgid "Batch Command"
-msgstr "Пакетная команда"
+msgstr "批次命令"
 
 #: core/models.py:1787
 msgctxt "batchcommand-py-batchcommands"
 msgid "Batch Commands"
-msgstr "Пакетные команды"
+msgstr "批次命令"
 
 #: core/templatetags/quickstatements.py:51
 msgctxt "batch-command-time-decade"
 msgid "decade"
-msgstr "десятилетие"
+msgstr "十年"
 
 #: core/templatetags/quickstatements.py:52
 msgctxt "batch-command-time-century"
 msgid "century"
-msgstr "столетие"
+msgstr "百年"
 
 #: core/templatetags/quickstatements.py:53
 msgctxt "batch-command-time-millennium"
 msgid "millennium"
-msgstr "тысячелетие"
+msgstr "千年"
 
 #: core/templatetags/quickstatements.py:55
 msgctxt "batch-command-time-hundred-thousand"
 msgid "hundred thousand years"
-msgstr "сто тысяч лет"
+msgstr "十萬年"
 
 #: core/templatetags/quickstatements.py:57
 msgctxt "batch-command-time-million-years"
 msgid "million years"
-msgstr "миллион лет"
+msgstr "百萬年"
 
 #: core/templatetags/quickstatements.py:58
 msgctxt "batch-command-time-billion-years"
 msgid "billion years"
-msgstr "миллиард лет"
+msgstr "十億年"
 
 #: core/templatetags/quickstatements.py:138
 msgctxt "batch-command-somevalue"
 msgid "(Unknown Value)"
-msgstr "(Неизвестное значение)"
+msgstr "（未知值）"
 
 #: core/templatetags/quickstatements.py:142
 msgctxt "batch-command-novalue"
 msgid "(No Value)"
-msgstr "(Нет значения)"
+msgstr "（無值）"
 
 #: web/models.py:52
 msgctxt "web-models-token"
 msgid "Token"
-msgstr "Токен"
+msgstr "權杖"
 
 #: web/models.py:53
 msgctxt "web-models-tokens"
 msgid "Tokens"
-msgstr "Токены"
+msgstr "權杖"
 
 #: web/models.py:104 web/models.py:105
 msgctxt "web-models-preferences"
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "偏好設定"
 
 #: web/templates/batch.html:4 web/templates/batch.html:15
 msgctxt "batch-batch"
 msgid "Batch"
-msgstr "Пакет"
+msgstr "批次"
 
 #: web/templates/batch.html:18
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
-msgstr "Отправлено на"
+msgstr "已提交至"
 
 #: web/templates/batch.html:21
 msgctxt "batch-created-by"
 msgid "Created by"
-msgstr "Создано"
+msgstr "建立者"
 
 #: web/templates/batch.html:23
 msgctxt "batch-view-batches"
 msgid "View batches"
-msgstr "Посмотреть пакеты"
+msgstr "檢視批次"
 
 #: web/templates/batch.html:24
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Отменить / Обсудить"
+msgstr "還原/討論"
 
 #: web/templates/batch.html:33
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
-msgstr "Остановить выполнение"
+msgstr "停止執行"
 
 #: web/templates/batch.html:46
 msgctxt "batch-button-rerun-uncombined"
 msgid "Rerun uncombined"
-msgstr "Повторить некомбинированные"
+msgstr "重新執行未合併的"
 
 #: web/templates/batch.html:52
 msgctxt "batch-button-rerun"
 msgid "Rerun"
-msgstr "Повторить"
+msgstr "重新執行"
 
 #: web/templates/batch.html:57
 msgctxt "batch-button-download-report"
 msgid "Download report"
-msgstr "Скачать отчёт"
+msgstr "下載報告"
 
 #: web/templates/batch.html:73
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
-msgstr "Загрузка сводки…"
+msgstr "正在載入摘要……"
 
 #: web/templates/batch.html:76
 msgctxt "batch-commands"
 msgid "Commands"
-msgstr "Команды"
+msgstr "命令"
 
 #: web/templates/batch.html:84
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Загрузка команд…"
+msgstr "正在載入命令……"
 
 #: web/templates/batch.html:93
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
-msgstr "Остановить обработку пакета #%(1)s"
+msgstr "停止批次 #%(1)s 處理"
 
 #: web/templates/batch.html:95
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
-msgstr "Вы уверены, что хотите остановить текущую пакетную обработку?"
+msgstr "您確定要停止目前的批次處理嗎？"
 
 #: web/templates/batch.html:98
 msgctxt "batch-no-continue"
 msgid "No, continue"
-msgstr "Нет, продолжить"
+msgstr "不，請繼續"
 
 #: web/templates/batch.html:99
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
-msgstr "Остановить обработку"
+msgstr "停止處理"
 
 #: web/templates/batch_commands.html:44
 msgctxt "batch-commands-statement"
 msgid "Statement"
-msgstr "Утверждение"
+msgstr "陳述"
 
 #: web/templates/batch_commands.html:61
 msgctxt "batch-commands-qualifier"
 msgid "Qualifiers"
-msgstr "Квалификаторы"
+msgstr "限定詞"
 
 #: web/templates/batch_commands.html:70
 msgctxt "batch-commands-references"
 msgid "References"
-msgstr "Примечания"
+msgstr "參考文獻"
 
 #: web/templates/batch_commands.html:90
 msgctxt "batch-commands-showing-only-errors"
 msgid "SHOWING ONLY ERRORS"
-msgstr "ОТОБРАЖЕНИЕ ТОЛЬКО ОШИБОК"
+msgstr "僅顯示錯誤"
 
 #: web/templates/batch_commands.html:95
 msgctxt "batch-commands-show-all"
 msgid "SHOW ALL"
-msgstr "ПОКАЗАТЬ ВСЕ"
+msgstr "全部顯示"
 
 #: web/templates/batch_commands.html:98
 msgctxt "batch-commands-showing-all"
 msgid "SHOWING ALL"
-msgstr "ОТОБРАЖЕНИЕ ВСЕХ"
+msgstr "全部顯示"
 
 #: web/templates/batch_commands.html:103
 msgctxt "batch-commands-show-only-errors"
 msgid "SHOW ONLY ERRORS"
-msgstr "ПОКАЗАТЬ ТОЛЬКО ОШИБКИ"
+msgstr "僅顯示錯誤"
 
 #: web/templates/batch_commands.html:116
 msgctxt "batch-commands-first"
 msgid "FIRST"
-msgstr "ПЕРВАЯ"
+msgstr "第一頁"
 
 #: web/templates/batch_commands.html:124
 msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
-msgstr "ПРЕДЫДУЩАЯ"
+msgstr "上一頁"
 
 #: web/templates/batch_commands.html:132 web/templates/batches.html:104
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
-msgstr "Стр. %(1)s из %(2)s"
+msgstr "第%(1)s頁，共%(2)s頁"
 
 #: web/templates/batch_commands.html:142
 msgctxt "batch-commands-next"
 msgid "NEXT"
-msgstr "СЛЕДУЮЩАЯ"
+msgstr "下一頁"
 
 #: web/templates/batch_commands.html:150
 msgctxt "batch-commands-last"
 msgid "LAST"
-msgstr "ПОСЛЕДНЯЯ"
+msgstr "最後一頁"
 
 #: web/templates/batch_commands.html:159 web/templates/batch_commands.html:163
 #: web/templates/batch_commands.html:171
 msgctxt "batch-commands-page-size"
 msgid "Page size:"
-msgstr "Размер страницы:"
+msgstr "頁面大小："
 
 #: web/templates/batch_not_found.html:7
 #, python-format
 msgctxt "batch-not-found-number"
 msgid "Batch <code>#%(1)s</code> not found."
-msgstr "Пакет <code># %(1)s</code> не найден."
+msgstr "找不到批次<code>#%(1)s</code>。"
 
 #: web/templates/batch_not_found.html:12
 msgctxt "batch-not-found-batch-id"
 msgid "Batch ID"
-msgstr "ID пакета"
+msgstr "批次 ID"
 
 #: web/templates/batch_not_found.html:13
 msgctxt "batch-not-found-see-batch-details"
 msgid "See batch details"
-msgstr "Посмотреть детали пакета"
+msgstr "檢視批次詳細資訊"
 
 #: web/templates/batch_summary.html:13
 msgctxt "batch-summary-batch-status"
 msgid "BATCH STATUS"
-msgstr "СТАТУС ПАКЕТА"
+msgstr "批次狀態"
 
 #: web/templates/batch_summary.html:28
 #, python-format
 msgctxt "batch-summary-done-count"
 msgid "%(1)s of %(2)s done"
-msgstr "%(1)s из %(2)s сделано"
+msgstr "已完成%(1)s項，共%(2)s項"
 
 #: web/templates/batch_summary.html:32
 msgctxt "batch-summary-commands-summary"
 msgid "COMMANDS SUMMARY"
-msgstr "СВОДКА КОМАНД"
+msgstr "命令摘要"
 
 #: web/templates/batch_summary.html:33
 msgctxt "batch-summary-total"
 msgid "TOTAL"
-msgstr "ВСЕГО"
+msgstr "總計"
 
 #: web/templates/batch_summary.html:34 web/templates/batches.html:63
 msgctxt "batch-summary-init"
 msgid "INIT"
-msgstr "ИНИЦ."
+msgstr "初始化"
 
 #: web/templates/batch_summary.html:35 web/templates/batches.html:64
 msgctxt "batch-summary-running"
 msgid "RUNNING"
-msgstr "ОБРАБОТКА"
+msgstr "正在執行"
 
 #: web/templates/batch_summary.html:36 web/templates/batches.html:65
 msgctxt "batch-summary-done"
 msgid "DONE"
-msgstr "ВЫПОЛНЕНО"
+msgstr "完成"
 
 #: web/templates/batch_summary.html:37 web/templates/batches.html:66
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
-msgstr "ОШИБКИ"
+msgstr "錯誤"
 
 #: web/templates/batch_summary.html:40
 msgctxt "batch-summary-this-batch"
 msgid "This batch will be blocked if a command fails."
-msgstr "Этот пакет будет заблокирован в случае сбоя команды."
+msgstr "若命令執行失敗，將會中止此批次。"
 
 #: web/templates/batch_summary.html:46
 msgctxt "batch-summary-commands-eta"
 msgid "ETA"
-msgstr "Осталось до завершения"
+msgstr "預計剩餘時間"
 
 #: web/templates/batches.html:5
 msgctxt "batches-quickstatements-last-batches"
 msgid "QuickStatements 3.0 - Last batches"
-msgstr "QuickStatements 3.0 — последние пакеты"
+msgstr "QuickStatements 3.0 - 最近批次"
 
 #: web/templates/batches.html:25
 msgctxt "batches-last-batches"
 msgid "Last batches"
-msgstr "Последние пакеты"
+msgstr "最近批次"
 
 #: web/templates/batches.html:25
 msgctxt "batches-from"
 msgid "from"
-msgstr "из"
+msgstr "從"
 
 #: web/templates/batches.html:34
 msgctxt "batches-user"
 msgid "User"
-msgstr "Участник"
+msgstr "使用者"
 
 #: web/templates/batches.html:35
 msgctxt "batches-name"
 msgid "Name"
-msgstr "Название"
+msgstr "名稱"
 
 #: web/templates/batches.html:36
 msgctxt "batches-status"
 msgid "Status"
-msgstr "Статус"
+msgstr "狀態"
 
 #: web/templates/batches.html:37
 msgctxt "batches-modified"
 msgid "Modified"
-msgstr "Изменено"
+msgstr "最後修改"
 
 #: web/templates/batches.html:38
 msgctxt "batches-actions"
 msgid "Actions"
-msgstr "Действия"
+msgstr "動作"
 
 #: web/templates/batches.html:53
 msgctxt "batches-view-batches"
 msgid "View batches"
-msgstr "Просмотреть пакеты"
+msgstr "檢視批次"
 
 #: web/templates/batches.html:71
 msgctxt "batches-view"
 msgid "View"
-msgstr "Посмотреть"
+msgstr "檢視"
 
 #: web/templates/batches.html:73
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
-msgstr "Отменить / Обсудить"
+msgstr "還原/討論"
 
 #: web/templates/batches.html:89
 msgctxt "batches-first"
 msgid "FIRST"
-msgstr "ПЕРВАЯ"
+msgstr "第一頁"
 
 #: web/templates/batches.html:95
 msgctxt "batches-previous"
 msgid "PREVIOUS"
-msgstr "ПРЕДЫДУЩАЯ"
+msgstr "上一頁"
 
 #: web/templates/batches.html:113
 msgctxt "batches-next"
 msgid "NEXT"
-msgstr "СЛЕДУЮЩАЯ"
+msgstr "下一頁"
 
 #: web/templates/batches.html:119
 msgctxt "batches-last"
 msgid "LAST"
-msgstr "ПОСЛЕДНЯЯ"
+msgstr "最後一頁"
 
 #: web/templates/batches.html:130 web/templates/batches.html:134
 #: web/templates/batches.html:138
 msgctxt "batches-page-size"
 msgid "Page size:"
-msgstr "Размер страницы:"
+msgstr "頁面大小："
 
 #: web/templates/index.html:8
 msgctxt "index-welcome-to-quickstatements"
 msgid "Welcome to QuickStatements 3.0"
-msgstr "Добро пожаловать в QuickStatements 3.0"
+msgstr "歡迎使用 QuickStatements 3.0"
 
 #: web/templates/index.html:11
 msgctxt "index-new-batch"
 msgid "New batch"
-msgstr "Новый пакет"
+msgstr "新批次"
 
 #: web/templates/index.html:17
 msgctxt "index-batch-id"
 msgid "Batch ID..."
-msgstr "Идентификатор пакета..."
+msgstr "批次 ID……"
 
 #: web/templates/index.html:18
 msgctxt "index-see-batch-details"
 msgid "See batch details"
-msgstr "Посмотреть детали пакета"
+msgstr "檢視批次詳細資訊"
 
 #: web/templates/index.html:24
 msgctxt "index-username"
 msgid "Username..."
-msgstr "Имя участника..."
+msgstr "使用者名稱……"
 
 #: web/templates/index.html:25
 msgctxt "index-see-batches-by-user"
 msgid "See batches by user"
-msgstr "Просмотреть пакеты по участникам"
+msgstr "檢視使用者的批次"
 
 #: web/templates/layout_dropdown_languages.html:6
 msgctxt "layout-navbar-help-us-translate"
 msgid "Help us translate"
-msgstr "Помочь с переводом"
+msgstr "協助我們翻譯"
 
 #: web/templates/layout_menu.html:8
 msgctxt "layout-quickstatements-title"
@@ -632,489 +632,469 @@ msgstr "QuickStatements 3.0"
 #: web/templates/layout_menu.html:12 web/templates/layout_menu_content.html:15
 msgctxt "layout-navbar-new-batch"
 msgid "New batch"
-msgstr "Новый пакет"
+msgstr "新批次"
 
 #: web/templates/layout_menu.html:13 web/templates/layout_menu_content.html:16
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Последние пакеты"
+msgstr "最近批次"
 
 #: web/templates/layout_menu.html:14
 msgctxt "layout-navbar-help"
 msgid "Help"
-msgstr "Справка"
+msgstr "說明"
 
 #: web/templates/layout_menu.html:25 web/templates/layout_menu_content.html:11
 msgctxt "layout-navbar-login"
 msgid "Log in"
-msgstr "Войти"
+msgstr "登入"
 
 #: web/templates/layout_menu_content.html:9
 msgctxt "layout-navbar-preferences"
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "偏好設定"
 
 #: web/templates/layout_menu_content.html:18 web/templates/profile.html:18
 msgctxt "layout-navbar-your-batches"
 msgid "Your batches"
-msgstr "Ваши пакеты"
+msgstr "您的批次"
 
 #: web/templates/layout_menu_content.html:21
 msgctxt "layout-navbar-help-slash-documentation"
 msgid "Help/Documentation"
-msgstr "Помощь/Документация"
+msgstr "說明/文件"
 
 #: web/templates/layout_menu_content.html:22
 msgctxt "layout-navbar-repository"
 msgid "Repository"
-msgstr "Репозиторий"
+msgstr "原始碼儲存庫"
 
 #: web/templates/layout_menu_content.html:23
 msgctxt "layout-navbar-statistics"
 msgid "Statistics"
-msgstr "Статистика"
+msgstr "統計資料"
 
 #: web/templates/layout_menu_content.html:26
 msgctxt "layout-navbar-logout"
 msgid "Log out"
-msgstr "Выйти"
+msgstr "登出"
 
 #: web/templates/login.html:4
 msgctxt "login-quickstatements-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 — Вход"
+msgstr "QuickStatements 3.0 - 登入"
 
 #: web/templates/login.html:8
 msgctxt "login-page-title"
 msgid "Login"
-msgstr "Войти"
+msgstr "登入"
 
 #: web/templates/login.html:34
 msgctxt "login-sign-in-with-wikimedia-account"
 msgid "Sign in with Wikimedia account"
-msgstr "Войти через учётную запись Викимедиа"
+msgstr "使用維基媒體帳號登入"
 
 #: web/templates/login.html:37
 msgctxt "login-advanced-consumer-key"
 msgid "Advanced: login with a developer consumer key"
-msgstr "Дополнительно: вход с потребительским ключом разработчика"
+msgstr "進階：使用開發者金鑰登入"
 
 #: web/templates/login_dev.html:4
 msgctxt "login-dev-login"
 msgid "QuickStatements 3.0 - Login"
-msgstr "QuickStatements 3.0 — вход"
+msgstr "QuickStatements 3.0 - 登入"
 
 #: web/templates/login_dev.html:9
 msgctxt "login-dev-developer-access"
 msgid "Developer access"
-msgstr "Доступ разработчика"
+msgstr "開發者存取"
 
 #: web/templates/login_dev.html:11
 msgctxt "login-dev-submit-your-access-token-below"
 msgid "Submit your access token below."
-msgstr "Заполните свой токен доступа ниже."
+msgstr "在下方提交您的存取權杖。"
 
 #: web/templates/login_dev.html:19 web/templates/login_dev.html:20
 msgctxt "login-dev-access-token"
 msgid "Access Token"
-msgstr "Токен доступа"
+msgstr "存取權杖"
 
 #: web/templates/login_dev.html:23
 msgctxt "login-dev-log-in"
 msgid "Log in"
-msgstr "Войти"
+msgstr "登入"
 
 #: web/templates/login_dev.html:30
 msgctxt "login-dev-your-access-token-is-not-valid"
 msgid "Your access token is not valid:"
-msgstr "Ваш токен доступа недействителен:"
+msgstr "您的存取權杖無效："
 
 #: web/templates/navbar.html:8
 msgctxt "layout-new-batch"
 msgid "New batch"
-msgstr "Новый пакет"
+msgstr "新批次"
 
 #: web/templates/navbar.html:9
 msgctxt "layout-last-batches"
 msgid "Last batches"
-msgstr "Последние пакеты"
+msgstr "最近批次"
 
 #: web/templates/navbar.html:10
 msgctxt "layout-statistics"
 msgid "Statistics"
-msgstr "Статистика"
+msgstr "統計資料"
 
 #: web/templates/navbar.html:20
 msgctxt "layout-login"
 msgid "Login"
-msgstr "Войти"
+msgstr "登入"
 
 #: web/templates/navbar.html:22
 msgctxt "layout-user"
 msgid "User"
-msgstr "Участник"
+msgstr "使用者"
 
 #: web/templates/navbar.html:23
 msgctxt "layout-your-last-batches"
 msgid "Your last batches"
-msgstr "Ваши последние пакеты"
+msgstr "您最近的批次"
 
 #: web/templates/new_batch.html:4
 msgctxt "new-batch-quickstatements-new-batch"
 msgid "QuickStatements 3.0 - New batch"
-msgstr "QuickStatements 3.0 — новый пакет"
+msgstr "QuickStatements 3.0 - 新批次"
 
 #: web/templates/new_batch.html:12
 msgctxt "new-batch-new-batch"
 msgid "New batch"
-msgstr "Новый пакет"
+msgstr "新批次"
 
 #: web/templates/new_batch.html:21
 msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr ""
-"Ваша учетная запись заблокирована, и вы не сможете запускать обработку."
+msgstr "您的帳號已被封鎖，無法執行任何批次。"
 
 #: web/templates/new_batch.html:30
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
-msgstr "Викибаза"
+msgstr "Wikibase"
 
 #: web/templates/new_batch.html:41
 msgctxt "new-batch-command-format"
 msgid "Command format"
-msgstr "Формат команд"
+msgstr "命令格式"
 
 #: web/templates/new_batch.html:49
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
-msgstr "Пользовательское название пакета…"
+msgstr "自訂批次名稱……"
 
 #: web/templates/new_batch.html:54
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
-msgstr "Остановить выполнение, в случае сбоя команды"
+msgstr "命令失敗時中止批次"
 
 #: web/templates/new_batch.html:55
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
-msgstr "Пакет прекратит обработку, если команда выдаст ошибку."
+msgstr "若某個命令發生錯誤，批次將會停止執行。"
 
 #: web/templates/new_batch.html:60
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
-msgstr "Не объединяйте команды"
+msgstr "不要合併命令"
 
 #: web/templates/new_batch.html:61
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
-msgstr ""
-"Команды, затрагивающие один и тот же объект, не будут объединены в одну "
-"правку."
+msgstr "針對同一個實體的命令不會合併為單次編輯。"
 
 #: web/templates/new_batch.html:66
 msgctxt "new-batch-file-upload"
 msgid "File upload"
-msgstr "Загрузка файла"
+msgstr "檔案上傳"
 
 #: web/templates/new_batch.html:67
 msgctxt "new-batch-file-upload-targeting"
 msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
-msgstr ""
-"Опция для случаев, когда пользователь предпочитает загрузить файл, а не "
-"писать команды в форме"
+msgstr "當使用者偏好上傳檔案，而非在表單中編寫命令時的選項"
 
 #: web/templates/new_batch.html:77
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
-msgstr "Введите ваши команды здесь..."
+msgstr "在此輸入您的命令……"
 
 #: web/templates/new_batch.html:85
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr ""
-"Примечание: только автоподтверждённые участники могут запускать пакеты."
+msgstr "注意：僅自動確認使用者可以執行批次。"
 
 #: web/templates/preview_batch.html:3
 msgctxt "preview-batch-batch"
 msgid "Batch"
-msgstr "Пакет"
+msgstr "批次"
 
 #: web/templates/preview_batch.html:23
 msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
-msgstr "Предпросмотр пакета"
+msgstr "批次預覽"
 
 #: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
-msgstr "Сохранить и запустить пакет"
+msgstr "儲存並執行批次"
 
 #: web/templates/preview_batch.html:39
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
-msgstr ""
-"Ваша учетная запись заблокирована, и вы не можете запускать пакетную "
-"обработку."
+msgstr "您的帳號已被封鎖，無法執行任何批次。"
 
 #: web/templates/preview_batch.html:41
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
-msgstr ""
-"Примечание: запускать пакеты могут только автоподтвержденные участники."
+msgstr "注意：僅自動確認使用者可以執行批次。"
 
 #: web/templates/preview_batch.html:49
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
 msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
 "CLICKING 'Save and run batch'."
-msgstr ""
-"ЭТОТ ПАКЕТ НАХОДИТСЯ В РЕЖИМЕ ПРЕДВАРИТЕЛЬНОГО ПРОСМОТРА И БУДЕТ СОХРАНЕН И "
-"ОБРАБОТАН ТОЛЬКО ПОСЛЕ НАЖАТИЯ «Сохранить и запустить пакет»."
+msgstr "此批次處於預覽模式，點選「儲存並執行批次」後才會儲存並執行。"
 
 #: web/templates/preview_batch.html:55
 msgctxt "preview-batch-commands"
 msgid "Commands"
-msgstr "Команды"
+msgstr "命令"
 
 #: web/templates/preview_batch.html:57
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
-msgstr "Загрузка команд..."
+msgstr "正在載入命令……"
 
 #: web/templates/profile.html:5
 msgctxt "profile-quickstatements-profile"
 msgid "QuickStatements 3.0 - Profile"
-msgstr "QuickStatements 3.0 — профиль"
+msgstr "QuickStatements 3.0 - 個人檔案"
 
 #: web/templates/profile.html:19
 msgctxt "layout-navbar-your-statistics"
 msgid "Your statistics"
-msgstr "Ваша статистика"
+msgstr "您的統計資料"
 
 #: web/templates/profile.html:24
 msgctxt "profile-autoconfirmed-status"
 msgid "Autoconfirmed status"
-msgstr "Автоподтверждённый статус"
+msgstr "自動確認狀態"
 
 #: web/templates/profile.html:26
 msgctxt "profile-only-autoconfirmed-users-can-run-batches-on-quickstatements"
 msgid "Only autoconfirmed users can run batches on Quickstatements"
-msgstr ""
-"Только автоподтверждённые участники могут запускать пакеты в Quickstatements"
+msgstr "僅自動確認使用者可以在Quickstatements上執行批次"
 
 #: web/templates/profile.html:28
 msgctxt "profile-read-about-autoconfirmed-user-definition"
 msgid "Read about autoconfirmed user definition"
-msgstr "Прочитайте определение автоподтверждённого участника"
+msgstr "了解自動確認使用者的定義"
 
 #: web/templates/profile.html:34
 msgctxt ""
 "profile-we-have-successfully-verified-that-you-are-an-autoconfirmed-user"
 msgid "We have successfully verified that you are an autoconfirmed user."
-msgstr "Мы успешно подтвердили, что вы автоподтвержденный пользователь."
+msgstr "我們已成功驗證您為自動確認使用者。"
 
 #: web/templates/profile.html:41
 msgctxt "profile-we-could-not-verify-you-are-an-autoconfirmed-user"
 msgid "We could not verify you are an autoconfirmed user."
-msgstr ""
-"Мы не смогли подтвердить, что вы являетесь автоподтверждённым участником."
+msgstr "我們無法驗證您為自動確認使用者。"
 
 #: web/templates/profile.html:43
 msgctxt "profile-you-are-not-an-autoconfirmed-user"
 msgid "You are not an autoconfirmed user."
-msgstr "Вы не являетесь автоподтверждённым участником."
+msgstr "您並非自動確認使用者。"
 
 #: web/templates/profile.html:52
 msgctxt "profile-preferences"
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "偏好設定"
 
 #: web/templates/profile.html:55
 msgctxt "profile-preferred-language"
 msgid "Preferred language"
-msgstr "Предпочитаемый язык"
+msgstr "偏好的語言"
 
 #: web/templates/profile.html:62
 msgctxt "profile-update-preferred-language"
 msgid "Update preferred language"
-msgstr "Обновить предпочитаемый язык"
+msgstr "更新偏好的語言"
 
 #: web/templates/profile.html:67
 msgctxt "profile-api-token"
 msgid "API Token"
-msgstr "API-токен"
+msgstr "API權杖"
 
 #: web/templates/profile.html:70
 msgctxt "profile-here-you-can-generate-a-token"
 msgid ""
 "Here, you can generate a token to use when querying batch jobs "
 "programatically."
-msgstr ""
-"Здесь вы можете создать токен для использования при запросах пакетных "
-"заданий программно."
+msgstr "此處可產生用來程式化查詢批次作業的權杖。"
 
 #: web/templates/profile.html:72
 msgctxt "profile-you-currently-have-the-following-token"
 msgid ""
 "You currently have the following token. This token must be kept private:"
-msgstr ""
-"В настоящее время у вас есть следующий токен. Этот токен должен оставаться в"
-" секрете:"
+msgstr "您目前的權杖如下，請嚴格保密："
 
 #: web/templates/profile.html:78
 msgctxt "profile-update-token"
 msgid "Update token"
-msgstr "Обновить токен"
+msgstr "更新權杖"
 
 #: web/templates/profile.html:83
 msgctxt "profile-click-here-to-log-out"
 msgid "Click here to log out."
-msgstr "Нажмите здесь, чтобы выйти."
+msgstr "點選此處以登出。"
 
 #: web/templates/profile.html:88
 msgctxt "profile-youre-not-logged-in"
 msgid "You're not logged in."
-msgstr "Вы не вошли в систему."
+msgstr "您尚未登入。"
 
 #: web/templates/profile.html:89
 msgctxt "profile-click-here-to-log-in"
 msgid "Click here to log in."
-msgstr "Нажмите здесь, чтобы войти."
+msgstr "點選此處以登入。"
 
 #: web/templates/statistics.html:5
 msgctxt "statistics-quickstatements-statistics"
 msgid "QuickStatements 3.0 - Statistics"
-msgstr "QuickStatements 3.0 — статистика"
+msgstr "QuickStatements 3.0 - 統計資料"
 
 #: web/templates/statistics.html:16
 #, python-format
 msgctxt "statistics-title-username"
 msgid " Statistics of %(1)s "
-msgstr "Статистика %(1)s"
+msgstr "%(1)s的統計資料"
 
 #: web/templates/statistics.html:18
 msgctxt "statistics-title"
 msgid "Statistics"
-msgstr "Статистика"
+msgstr "統計資料"
 
 #: web/templates/statistics.html:22
 msgctxt "statistics-all-time-numbers"
 msgid "All-time numbers"
-msgstr "Данные за всё время"
+msgstr "歷史數據"
 
 #: web/templates/statistics_all_time_counters.html:6
 msgctxt "statistics-batches"
 msgid "Batches"
-msgstr "Пакеты"
+msgstr "批次"
 
 #: web/templates/statistics_all_time_counters.html:11
 msgctxt "statistics-commands"
 msgid "Commands"
-msgstr "Команды"
+msgstr "命令"
 
 #: web/templates/statistics_all_time_counters.html:16
 msgctxt "statistics-avg-commands"
 msgid "Average number of commands per batch"
-msgstr "Среднее количество команд в пакете"
+msgstr "每個批次的平均命令數"
 
 #: web/templates/statistics_all_time_counters.html:25
 msgctxt "statistics-items-created"
 msgid "Items created"
-msgstr "Создано элементов"
+msgstr "建立項目數"
 
 #: web/templates/statistics_all_time_counters.html:30
 msgctxt "statistics-editors"
 msgid "Editors"
-msgstr "Редакторы"
+msgstr "編者數"
 
 #: web/templates/statistics_all_time_counters.html:36
 msgctxt "statistics-hey-its-you"
 msgid "Hey, it's you!"
-msgstr "Привет, это ты!"
+msgstr "嘿，就是你！"
 
 #: web/templates/statistics_all_time_counters.html:38
 #, python-format
 msgctxt "statistics-hey-its-them"
 msgid "Hey it's %(1)s!"
-msgstr "Привет, это %(1)s!"
+msgstr "嘿，這是 %(1)s！"
 
 #: web/templates/statistics_all_time_counters.html:45
 msgctxt "statistics-edits"
 msgid "Edits"
-msgstr "Правки"
+msgstr "編輯數"
 
 #: web/templates/statistics_plots.html:3
 msgctxt "statistics-cumulative-batches"
 msgid "Cumulative number of batches"
-msgstr "Общее количество пакетов"
+msgstr "累計批次數"
 
 #: web/templates/statistics_plots.html:15
 msgctxt "statistics-edits-only"
 msgid "Cumulative number of edits"
-msgstr "Общее количество правок"
+msgstr "累計編輯數"
 
 #: web/templates/statistics_plots.html:17
 msgctxt "statistics-edits-and-editors"
 msgid "Cumulative number of edits and new editors"
-msgstr "Общее количество правок и новых редакторов"
+msgstr "累計編輯數與新編者"
 
 #: web/templates/statistics_plots.html:29
 msgctxt "statistics-done-and-error-commands"
 msgid "Done and error commands per day"
-msgstr "Выполненные и ошибочные команды по дням"
+msgstr "每日命令執行狀態"
 
 #: web/templates/statistics_plots.html:48
 msgctxt "statistics-number-of-batches"
 msgid "Number of batches"
-msgstr "Количество пакетов"
+msgstr "批次數"
 
 #: web/templates/statistics_plots.html:49
 msgctxt "statistics-number-of-edits"
 msgid "Number of edits"
-msgstr "Количество правок"
+msgstr "編輯數"
 
 #: web/templates/statistics_plots.html:50
 msgctxt "statistics-number-of-editors"
 msgid "Number of editors"
-msgstr "Количество редакторов"
+msgstr "編者數"
 
 #: web/templates/statistics_plots.html:51
 msgctxt "statistics-done-status"
 msgid "Done status"
-msgstr "Успешные"
+msgstr "完成狀態"
 
 #: web/templates/statistics_plots.html:52
 msgctxt "statistics-error-status"
 msgid "Error status"
-msgstr "Ошибки"
+msgstr "錯誤狀態"
 
 #: web/views/new_batch.py:157
 msgctxt "batch-py-empty-command-input"
 msgid "Command input cannot be empty. Please provide valid commands."
-msgstr ""
-"Ввод команд не может быть пустым. Пожалуйста, укажите допустимые команды."
+msgstr "命令輸入不能為空。請提供有效的命令。"
 
 #: web/views/new_batch.py:166
 msgctxt "batch-py-csv-only-header"
 msgid "CSV input must include more than just the header row"
-msgstr "Входные данные CSV должны включать не только строку заголовка"
+msgstr "CSV輸入不能僅包含標題列。"
 
 #: web/views/new_batch.py:189
 msgctxt "batch-py-valid-command-not-found"
 msgid "No valid commands found in the provided input."
-msgstr "В предоставленных входных данных не найдено допустимых команд."
+msgstr "提供的輸入中找不到有效的命令。"
 
 #: web/views/new_batch.py:270
 msgctxt "batch-py-user-not-autoconfirmed"
 msgid "User is not autoconfirmed. Only autoconfirmed users can run batches."
-msgstr ""
-"Пользователь не является автоподтверждённым. Только пользователи со статусом"
-" автоподтверждённых могут запускать пакеты."
+msgstr "使用者尚未自動確認。僅自動確認使用者可以執行批次。"
 
 #: web/views/new_batch.py:273
 msgctxt "batch-py-user-blocked"
 msgid "User is blocked and can not run batches."
-msgstr "Участник заблокирован и не может запускать пакеты."
+msgstr "使用者被封鎖，無法執行批次。"
