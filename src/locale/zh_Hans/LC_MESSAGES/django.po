@@ -326,17 +326,17 @@ msgstr "停止执行"
 #: web/templates/batch.html:46
 msgctxt "batch-button-rerun-uncombined"
 msgid "Rerun uncombined"
-msgstr "Rerun uncombined"
+msgstr "重新运行未合并的"
 
 #: web/templates/batch.html:52
 msgctxt "batch-button-rerun"
 msgid "Rerun"
-msgstr "Rerun"
+msgstr "重新运行"
 
 #: web/templates/batch.html:57
 msgctxt "batch-button-download-report"
 msgid "Download report"
-msgstr "Download report"
+msgstr "下载报告"
 
 #: web/templates/batch.html:73
 msgctxt "batch-loading-summary"
