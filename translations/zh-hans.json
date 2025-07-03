@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Kcx36",
-			"Peterxy12"
+			"Peterxy12",
+			"沈澄心"
 		]
 	},
 	"batch-py-status-stopped": "已停止",
@@ -214,5 +215,8 @@
 	"layout-navbar-your-statistics": "您的统计数据",
 	"batch-py-empty-command-input": "命令输入不能为空，请提供有效命令。",
 	"batch-py-csv-only-header": "CSV输入不能仅包含标题行。",
-	"batch-py-valid-command-not-found": "提供的输入中未找到有效命令。"
+	"batch-py-valid-command-not-found": "提供的输入中未找到有效命令。",
+	"batch-button-rerun-uncombined": "重新运行未合并的",
+	"batch-button-rerun": "重新运行",
+	"batch-button-download-report": "下载报告"
 }
