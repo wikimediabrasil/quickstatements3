@@ -69,7 +69,7 @@
         <td>{{ batch.modified }}</td>
         <td>
           <a href="{% url 'batch' pk=batch.pk %}">{% translate 'View' context 'batches-view' %}</a><br>
-          {% if batck.wikibase.has_discussion_links %}
+          {% if batch.wikibase.has_discussion_links %}
           <a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batches-revert-discuss' %}</a>
           {% endif %}
         </td>
@@ -86,13 +86,13 @@
         {% if page.has_previous %}
         <span class="pagination prev-page">
           <a href="{{base_url}}?page=1&page_size={{page_size}}">
-            << {% translate 'FIRST' context 'batches-first' %}
+            &lt;&lt; {% translate 'FIRST' context 'batches-first' %}
           </a>
         </span>
 
         <span class="pagination prev-page">
           <a href="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}">
-            < {% translate 'PREVIOUS' context 'batches-previous' %}
+            &lt; {% translate 'PREVIOUS' context 'batches-previous' %}
           </a>
         </span>
         {% endif%}
@@ -110,13 +110,13 @@
       {% if page.has_next %}
       <span class="pagination next-page">
         <a href="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}">
-            {% translate 'NEXT' context 'batches-next' %} >
+            {% translate 'NEXT' context 'batches-next' %} &gt;
         </a>
       </span>
 
       <span class="pagination next-page">
         <a href="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}">
-            {% translate 'LAST' context 'batches-last' %}>>
+            {% translate 'LAST' context 'batches-last' %} &gt;&gt;
         </a>
       </span>
       {% endif%}
