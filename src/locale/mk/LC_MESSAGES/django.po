@@ -298,78 +298,78 @@ msgctxt "batch-batch"
 msgid "Batch"
 msgstr "Купче"
 
-#: web/templates/batch.html:18
+#: web/templates/batch.html:17 web/templates/preview_batch.html:25
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
 msgstr "Поднесено на"
 
-#: web/templates/batch.html:21
+#: web/templates/batch.html:19
 msgctxt "batch-created-by"
 msgid "Created by"
 msgstr "Создадено од"
 
-#: web/templates/batch.html:23
+#: web/templates/batch.html:21
 msgctxt "batch-view-batches"
 msgid "View batches"
 msgstr "Погл. купчиња"
 
-#: web/templates/batch.html:24
+#: web/templates/batch.html:22
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
 msgstr "Отповикај / Расправи"
 
-#: web/templates/batch.html:33
+#: web/templates/batch.html:31
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
 msgstr "Сопри извршување"
 
-#: web/templates/batch.html:46
+#: web/templates/batch.html:44
 msgctxt "batch-button-rerun-uncombined"
 msgid "Rerun uncombined"
 msgstr "Преизврши нездружено"
 
-#: web/templates/batch.html:52
+#: web/templates/batch.html:50
 msgctxt "batch-button-rerun"
 msgid "Rerun"
 msgstr "Преизврши"
 
-#: web/templates/batch.html:57
+#: web/templates/batch.html:55
 msgctxt "batch-button-download-report"
 msgid "Download report"
 msgstr "Преземи извештај"
 
-#: web/templates/batch.html:73
+#: web/templates/batch.html:71
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
 msgstr "Го вчитувам резимето..."
 
-#: web/templates/batch.html:76
+#: web/templates/batch.html:74
 msgctxt "batch-commands"
 msgid "Commands"
 msgstr "Наредби"
 
-#: web/templates/batch.html:84
+#: web/templates/batch.html:82
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
 msgstr "Вчитувам наредби..."
 
-#: web/templates/batch.html:93
+#: web/templates/batch.html:91
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
 msgstr "Запри ја обработката на купчето бр. %(1)s"
 
-#: web/templates/batch.html:95
+#: web/templates/batch.html:93
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
 msgstr "Дали сигурно сакате да ја запрете тековната обработка на купче?"
 
-#: web/templates/batch.html:98
+#: web/templates/batch.html:96
 msgctxt "batch-no-continue"
 msgid "No, continue"
 msgstr "Не, продолжи"
 
-#: web/templates/batch.html:99
+#: web/templates/batch.html:97
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "Запри обработка"
@@ -774,49 +774,49 @@ msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "Вашата сметка е блокирана и нема да можете да пуштате купчиња."
 
-#: web/templates/new_batch.html:30
+#: web/templates/new_batch.html:29
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
 msgstr "Викибаза"
 
-#: web/templates/new_batch.html:41
+#: web/templates/new_batch.html:37
 msgctxt "new-batch-command-format"
 msgid "Command format"
 msgstr "Наредбен формат"
 
-#: web/templates/new_batch.html:49
+#: web/templates/new_batch.html:45
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
 msgstr "Прилагодено име на купчето..."
 
-#: web/templates/new_batch.html:54
+#: web/templates/new_batch.html:50
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
 msgstr "Блокирај го купчето ако не успее наредбата"
 
-#: web/templates/new_batch.html:55
+#: web/templates/new_batch.html:51
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
 msgstr "Купчето ќе престане со обработка ако наредбата даде грешка."
 
-#: web/templates/new_batch.html:60
+#: web/templates/new_batch.html:56
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
 msgstr "Не здружувај наредби"
 
-#: web/templates/new_batch.html:61
+#: web/templates/new_batch.html:57
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
 msgstr ""
 "Наредбите насочени кон иста единица нема да бидат здружени во едно "
 "уредување."
 
-#: web/templates/new_batch.html:66
+#: web/templates/new_batch.html:62
 msgctxt "new-batch-file-upload"
 msgid "File upload"
 msgstr "Подигање на податотека"
 
-#: web/templates/new_batch.html:67
+#: web/templates/new_batch.html:63
 msgctxt "new-batch-file-upload-targeting"
 msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
@@ -825,12 +825,12 @@ msgstr ""
 "Можност за кога корисникот претпочита да подигне податотека наместо да "
 "внесува наредби во образецот"
 
-#: web/templates/new_batch.html:77
+#: web/templates/new_batch.html:73
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
 msgstr "Тука внесете ги наредбите..."
 
-#: web/templates/new_batch.html:85
+#: web/templates/new_batch.html:81
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "Напомена: со купчиња можат да работат само автопотврдени корисници."
@@ -845,22 +845,22 @@ msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
 msgstr "Преглед на купче"
 
-#: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
+#: web/templates/preview_batch.html:32 web/templates/preview_batch.html:34
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
 msgstr "Зачувај и пушти купче"
 
-#: web/templates/preview_batch.html:39
+#: web/templates/preview_batch.html:37
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "Вашата сметка е блокирана и нема да можете да пуштате купчиња."
 
-#: web/templates/preview_batch.html:41
+#: web/templates/preview_batch.html:39
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "Напомена: со купчиња можат да работат само автопотврдени корисници."
 
-#: web/templates/preview_batch.html:49
+#: web/templates/preview_batch.html:47
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
 msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
@@ -869,12 +869,12 @@ msgstr ""
 "ОВА КУПЧЕ Е ВО ПРЕГЛЕДЕН РЕЖИМ И ЌЕ БИДЕ ЗАЧУВАНО И ОБРАБОТЕНО САМО ОТКАКО "
 "ЌЕ СТИСНЕТЕ НА „Зачувај и пушти купче“."
 
-#: web/templates/preview_batch.html:55
+#: web/templates/preview_batch.html:53
 msgctxt "preview-batch-commands"
 msgid "Commands"
 msgstr "Наредби"
 
-#: web/templates/preview_batch.html:57
+#: web/templates/preview_batch.html:55
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
 msgstr "Вчитувам наредби..."

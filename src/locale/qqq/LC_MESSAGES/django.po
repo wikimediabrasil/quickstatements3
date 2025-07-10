@@ -317,78 +317,78 @@ msgctxt "batch-batch"
 msgid "Batch"
 msgstr "Word for a batch"
 
-#: web/templates/batch.html:18
+#: web/templates/batch.html:17 web/templates/preview_batch.html:25
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
 msgstr "String prepended to which wikibase the batch was submitted"
 
-#: web/templates/batch.html:21
+#: web/templates/batch.html:19
 msgctxt "batch-created-by"
 msgid "Created by"
 msgstr "String prepended to batch author"
 
-#: web/templates/batch.html:23
+#: web/templates/batch.html:21
 msgctxt "batch-view-batches"
 msgid "View batches"
 msgstr "Button to view batches of an user"
 
-#: web/templates/batch.html:24
+#: web/templates/batch.html:22
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
 msgstr "Batch to go to a batch's EditGroups page"
 
-#: web/templates/batch.html:33
+#: web/templates/batch.html:31
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
 msgstr "Button to stop a batch execution"
 
-#: web/templates/batch.html:46
+#: web/templates/batch.html:44
 msgctxt "batch-button-rerun-uncombined"
 msgid "Rerun uncombined"
 msgstr "Rerun uncombined"
 
-#: web/templates/batch.html:52
+#: web/templates/batch.html:50
 msgctxt "batch-button-rerun"
 msgid "Rerun"
 msgstr "Rerun"
 
-#: web/templates/batch.html:57
+#: web/templates/batch.html:55
 msgctxt "batch-button-download-report"
 msgid "Download report"
 msgstr "Download report"
 
-#: web/templates/batch.html:73
+#: web/templates/batch.html:71
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
 msgstr "Loading summary indication"
 
-#: web/templates/batch.html:76
+#: web/templates/batch.html:74
 msgctxt "batch-commands"
 msgid "Commands"
 msgstr "Title for section containing batch commands"
 
-#: web/templates/batch.html:84
+#: web/templates/batch.html:82
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
 msgstr "Loading commands indication"
 
-#: web/templates/batch.html:93
+#: web/templates/batch.html:91
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
 msgstr "Button to stop a batch"
 
-#: web/templates/batch.html:95
+#: web/templates/batch.html:93
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
 msgstr "Confirmation message of batch stopping"
 
-#: web/templates/batch.html:98
+#: web/templates/batch.html:96
 msgctxt "batch-no-continue"
 msgid "No, continue"
 msgstr "Button to not stop a batch"
 
-#: web/templates/batch.html:99
+#: web/templates/batch.html:97
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "Button to confirm batch stopping"
@@ -793,59 +793,59 @@ msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "Error message"
 
-#: web/templates/new_batch.html:30
+#: web/templates/new_batch.html:29
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
 msgstr "Wikibase input title"
 
-#: web/templates/new_batch.html:41
+#: web/templates/new_batch.html:37
 msgctxt "new-batch-command-format"
 msgid "Command format"
 msgstr "Command format input title"
 
-#: web/templates/new_batch.html:49
+#: web/templates/new_batch.html:45
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
 msgstr "Custom batch name... prepopulated string on input"
 
-#: web/templates/new_batch.html:54
+#: web/templates/new_batch.html:50
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
 msgstr "Toggle button"
 
-#: web/templates/new_batch.html:55
+#: web/templates/new_batch.html:51
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
 msgstr "Explanation of a toggle button"
 
-#: web/templates/new_batch.html:60
+#: web/templates/new_batch.html:56
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
 msgstr "Toggle button"
 
-#: web/templates/new_batch.html:61
+#: web/templates/new_batch.html:57
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
 msgstr "Explanation of a toggle button"
 
-#: web/templates/new_batch.html:66
+#: web/templates/new_batch.html:62
 msgctxt "new-batch-file-upload"
 msgid "File upload"
 msgstr "Form title of file upload"
 
-#: web/templates/new_batch.html:67
+#: web/templates/new_batch.html:63
 msgctxt "new-batch-file-upload-targeting"
 msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 msgstr "File upload explanation"
 
-#: web/templates/new_batch.html:77
+#: web/templates/new_batch.html:73
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
 msgstr "Enter your commands here... prepopulated string on input"
 
-#: web/templates/new_batch.html:85
+#: web/templates/new_batch.html:81
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "Note: only autoconfirmed users can run batches."
@@ -860,34 +860,34 @@ msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
 msgstr "Batch Preview"
 
-#: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
+#: web/templates/preview_batch.html:32 web/templates/preview_batch.html:34
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
 msgstr "Save and run batch"
 
-#: web/templates/preview_batch.html:39
+#: web/templates/preview_batch.html:37
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "Your account is blocked and you will not be able to run any batches."
 
-#: web/templates/preview_batch.html:41
+#: web/templates/preview_batch.html:39
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "Warning message"
 
-#: web/templates/preview_batch.html:49
+#: web/templates/preview_batch.html:47
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
 msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
 "CLICKING 'Save and run batch'."
 msgstr "Warning message after batch previewing"
 
-#: web/templates/preview_batch.html:55
+#: web/templates/preview_batch.html:53
 msgctxt "preview-batch-commands"
 msgid "Commands"
 msgstr "Commands section title"
 
-#: web/templates/preview_batch.html:57
+#: web/templates/preview_batch.html:55
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
 msgstr "Loading commands indication"

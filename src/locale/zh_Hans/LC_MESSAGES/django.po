@@ -298,78 +298,78 @@ msgctxt "batch-batch"
 msgid "Batch"
 msgstr "批处理"
 
-#: web/templates/batch.html:18
+#: web/templates/batch.html:17 web/templates/preview_batch.html:25
 msgctxt "batch-submitted-to"
 msgid "Submitted to"
 msgstr "已提交至"
 
-#: web/templates/batch.html:21
+#: web/templates/batch.html:19
 msgctxt "batch-created-by"
 msgid "Created by"
 msgstr "创建者"
 
-#: web/templates/batch.html:23
+#: web/templates/batch.html:21
 msgctxt "batch-view-batches"
 msgid "View batches"
 msgstr "查看批处理"
 
-#: web/templates/batch.html:24
+#: web/templates/batch.html:22
 msgctxt "batch-revert-discuss"
 msgid "Revert / Discuss"
 msgstr "还原/讨论"
 
-#: web/templates/batch.html:33
+#: web/templates/batch.html:31
 msgctxt "batch-stop-execution"
 msgid "Stop execution"
 msgstr "停止执行"
 
-#: web/templates/batch.html:46
+#: web/templates/batch.html:44
 msgctxt "batch-button-rerun-uncombined"
 msgid "Rerun uncombined"
 msgstr "重新运行未合并的"
 
-#: web/templates/batch.html:52
+#: web/templates/batch.html:50
 msgctxt "batch-button-rerun"
 msgid "Rerun"
 msgstr "重新运行"
 
-#: web/templates/batch.html:57
+#: web/templates/batch.html:55
 msgctxt "batch-button-download-report"
 msgid "Download report"
 msgstr "下载报告"
 
-#: web/templates/batch.html:73
+#: web/templates/batch.html:71
 msgctxt "batch-loading-summary"
 msgid "Loading summary..."
 msgstr "正在加载摘要..."
 
-#: web/templates/batch.html:76
+#: web/templates/batch.html:74
 msgctxt "batch-commands"
 msgid "Commands"
 msgstr "命名"
 
-#: web/templates/batch.html:84
+#: web/templates/batch.html:82
 msgctxt "batch-loading-commands"
 msgid "Loading commands..."
 msgstr "正在加载命令..."
 
-#: web/templates/batch.html:93
+#: web/templates/batch.html:91
 #, python-format
 msgctxt "batch-stop-batch"
 msgid "Stop batch #%(1)s processing"
 msgstr "中止批处理#%(1)s的执行"
 
-#: web/templates/batch.html:95
+#: web/templates/batch.html:93
 msgctxt "batch-are-you-sure-you-want-to-stop-the-current-batch-processing"
 msgid "Are you sure you want to stop the current batch processing?"
 msgstr "您确定要停止当前批处理吗？"
 
-#: web/templates/batch.html:98
+#: web/templates/batch.html:96
 msgctxt "batch-no-continue"
 msgid "No, continue"
 msgstr "否，继续"
 
-#: web/templates/batch.html:99
+#: web/templates/batch.html:97
 msgctxt "batch-stop-processing"
 msgid "Stop processing"
 msgstr "停止处理"
@@ -774,59 +774,59 @@ msgctxt "new-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "您的账户已被封禁，无法运行任何批处理。"
 
-#: web/templates/new_batch.html:30
+#: web/templates/new_batch.html:29
 msgctxt "new-batch-wikibase"
 msgid "Wikibase"
 msgstr "维基数据库"
 
-#: web/templates/new_batch.html:41
+#: web/templates/new_batch.html:37
 msgctxt "new-batch-command-format"
 msgid "Command format"
 msgstr "命令格式"
 
-#: web/templates/new_batch.html:49
+#: web/templates/new_batch.html:45
 msgctxt "new-batch-custom-batch-name"
 msgid "Custom batch name..."
 msgstr "自定义批处理名称..."
 
-#: web/templates/new_batch.html:54
+#: web/templates/new_batch.html:50
 msgctxt "new-batch-block-batch-if-a-command-fails"
 msgid "Block batch if a command fails"
 msgstr "命令失败时中止批处理"
 
-#: web/templates/new_batch.html:55
+#: web/templates/new_batch.html:51
 msgctxt "new-batch-the-batch-will-stop"
 msgid "The batch will stop processing if a command gives an error."
 msgstr "若某条命令执行出错，批处理将停止运行。"
 
-#: web/templates/new_batch.html:60
+#: web/templates/new_batch.html:56
 msgctxt "new-batch-do-not-combine-commands"
 msgid "Do not combine commands"
 msgstr "不合并命令"
 
-#: web/templates/new_batch.html:61
+#: web/templates/new_batch.html:57
 msgctxt "new-batch-commands-targeting"
 msgid "Commands targeting the same entity will not be combined into one edit."
 msgstr "对同一实体的命令将不会合并为单次编辑。"
 
-#: web/templates/new_batch.html:66
+#: web/templates/new_batch.html:62
 msgctxt "new-batch-file-upload"
 msgid "File upload"
 msgstr "文件上传"
 
-#: web/templates/new_batch.html:67
+#: web/templates/new_batch.html:63
 msgctxt "new-batch-file-upload-targeting"
 msgid ""
 "Option for when the user prefers to upload a file, intead of writing the "
 "commands in the form"
 msgstr "当用户希望上传文件，而非在表单中输入命令时的选项"
 
-#: web/templates/new_batch.html:77
+#: web/templates/new_batch.html:73
 msgctxt "new-batch-enter-your-commands-here"
 msgid "Enter your commands here..."
 msgstr "在此处输入您的命令..."
 
-#: web/templates/new_batch.html:85
+#: web/templates/new_batch.html:81
 msgctxt "new-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "注意：仅自动确认用户可运行批处理。"
@@ -841,34 +841,34 @@ msgctxt "preview-batch-batch-preview"
 msgid "Batch Preview"
 msgstr "批处理预览"
 
-#: web/templates/preview_batch.html:34 web/templates/preview_batch.html:36
+#: web/templates/preview_batch.html:32 web/templates/preview_batch.html:34
 msgctxt "preview-batch-save-and-run-batch"
 msgid "Save and run batch"
 msgstr "保存并运行批处理"
 
-#: web/templates/preview_batch.html:39
+#: web/templates/preview_batch.html:37
 msgctxt "preview-batch-your-account-is-blocked"
 msgid "Your account is blocked and you will not be able to run any batches."
 msgstr "您的账户已被封禁，无法运行任何批处理。"
 
-#: web/templates/preview_batch.html:41
+#: web/templates/preview_batch.html:39
 msgctxt "preview-batch-note-only-autoconfirmed"
 msgid "Note: only autoconfirmed users can run batches."
 msgstr "注意：仅自动确认用户可运行批处理。"
 
-#: web/templates/preview_batch.html:49
+#: web/templates/preview_batch.html:47
 msgctxt "preview-batch-this-batch-is-in-preview-mode"
 msgid ""
 "THIS BATCH IS IN PREVIEW MODE, AND WILL BE ONLY SAVED AND PROCESSED AFTER "
 "CLICKING 'Save and run batch'."
 msgstr "当前批处理处于预览模式，点击“保存并运行批处理”后才会保存并执行。"
 
-#: web/templates/preview_batch.html:55
+#: web/templates/preview_batch.html:53
 msgctxt "preview-batch-commands"
 msgid "Commands"
 msgstr "命令"
 
-#: web/templates/preview_batch.html:57
+#: web/templates/preview_batch.html:55
 msgctxt "preview-batch-loading-commands"
 msgid "Loading commands..."
 msgstr "正在加载命令..."
