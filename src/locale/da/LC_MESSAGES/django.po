@@ -419,7 +419,7 @@ msgctxt "batch-commands-previous"
 msgid "PREVIOUS"
 msgstr "FORRIGE"
 
-#: web/templates/batch_commands.html:132 web/templates/batches.html:104
+#: web/templates/batch_commands.html:132 web/templates/batches_table.html:75
 #, python-format
 msgctxt "batch-commands-pagination"
 msgid "Pg. %(1)s of %(2)s"
@@ -478,22 +478,22 @@ msgctxt "batch-summary-total"
 msgid "TOTAL"
 msgstr "I ALT"
 
-#: web/templates/batch_summary.html:34 web/templates/batches.html:63
+#: web/templates/batch_summary.html:34 web/templates/batches_table.html:34
 msgctxt "batch-summary-init"
 msgid "INIT"
 msgstr "INIT"
 
-#: web/templates/batch_summary.html:35 web/templates/batches.html:64
+#: web/templates/batch_summary.html:35 web/templates/batches_table.html:35
 msgctxt "batch-summary-running"
 msgid "RUNNING"
 msgstr "KØRER"
 
-#: web/templates/batch_summary.html:36 web/templates/batches.html:65
+#: web/templates/batch_summary.html:36 web/templates/batches_table.html:36
 msgctxt "batch-summary-done"
 msgid "DONE"
 msgstr "UDFØRT"
 
-#: web/templates/batch_summary.html:37 web/templates/batches.html:66
+#: web/templates/batch_summary.html:37 web/templates/batches_table.html:37
 msgctxt "batch-summary-errors"
 msgid "ERRORS"
 msgstr "FEJL"
@@ -508,83 +508,83 @@ msgctxt "batch-summary-commands-eta"
 msgid "ETA"
 msgstr "Forventet afslutning"
 
-#: web/templates/batches.html:5
+#: web/templates/batches.html:4
 msgctxt "batches-quickstatements-last-batches"
 msgid "QuickStatements 3.0 - Last batches"
 msgstr "QuickStatements 3.0 - Seneste jobs"
 
-#: web/templates/batches.html:25
+#: web/templates/batches.html:24
 msgctxt "batches-last-batches"
 msgid "Last batches"
 msgstr "Seneste jobs"
 
-#: web/templates/batches.html:25
+#: web/templates/batches.html:24
 msgctxt "batches-from"
 msgid "from"
 msgstr "fra"
 
-#: web/templates/batches.html:34
+#: web/templates/batches_table.html:8
 msgctxt "batches-user"
 msgid "User"
 msgstr "Bruger"
 
-#: web/templates/batches.html:35
+#: web/templates/batches_table.html:9
 msgctxt "batches-name"
 msgid "Name"
 msgstr "Navn"
 
-#: web/templates/batches.html:36
+#: web/templates/batches_table.html:10
 msgctxt "batches-status"
 msgid "Status"
 msgstr "Status"
 
-#: web/templates/batches.html:37
+#: web/templates/batches_table.html:11
 msgctxt "batches-modified"
 msgid "Modified"
 msgstr "Ændret"
 
-#: web/templates/batches.html:38
+#: web/templates/batches_table.html:12
 msgctxt "batches-actions"
 msgid "Actions"
 msgstr "Handlinger"
 
-#: web/templates/batches.html:53
+#: web/templates/batches_table.html:25
 msgctxt "batches-view-batches"
 msgid "View batches"
 msgstr "Se jobs"
 
-#: web/templates/batches.html:71
+#: web/templates/batches_table.html:42
 msgctxt "batches-view"
 msgid "View"
 msgstr "Vis"
 
-#: web/templates/batches.html:73
+#: web/templates/batches_table.html:44
 msgctxt "batches-revert-discuss"
 msgid "Revert / Discuss"
 msgstr "Tilbagerul/diskuter"
 
-#: web/templates/batches.html:89
+#: web/templates/batches_table.html:60
 msgctxt "batches-first"
 msgid "FIRST"
 msgstr "FØRSTE"
 
-#: web/templates/batches.html:95
+#: web/templates/batches_table.html:66
 msgctxt "batches-previous"
 msgid "PREVIOUS"
 msgstr "FORRIGE"
 
-#: web/templates/batches.html:113
+#: web/templates/batches_table.html:84
 msgctxt "batches-next"
 msgid "NEXT"
 msgstr "NÆSTE"
 
-#: web/templates/batches.html:119
+#: web/templates/batches_table.html:90
 msgctxt "batches-last"
 msgid "LAST"
 msgstr "SIDSTE"
 
-#: web/templates/batches.html:130 web/templates/batches.html:134
-#: web/templates/batches.html:138
+#: web/templates/batches_table.html:101 web/templates/batches_table.html:105
+#: web/templates/batches_table.html:109
 msgctxt "batches-page-size"
 msgid "Page size:"
 msgstr "Sidestørrelse:"
