@@ -72,13 +72,13 @@ class ViewsTest(TestCase):
         self.assertTemplateUsed("index.html")
 
     def test_batches(self):
-        response = self.client.get("/batches")
+        response = self.client.get("/batches_table")
         self.assertEqual(response.status_code, 301)
-        self.assertEqual(response["location"], "/batches/")
+        self.assertEqual(response["location"], "/batches_table/")
 
-        response = self.client.get("/batches/")
+        response = self.client.get("/batches_table/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("batches.html")
+        self.assertTemplateUsed("batches_table.html")
         self.assertEqual(list(response.context["page"].object_list), [])
 
     def test_batches_by_user(self):
@@ -86,9 +86,9 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response["location"], "/batches/mgalves80/")
 
-        response = self.client.get("/batches/mgalves80/")
+        response = self.client.get("/batches_table/?username=mgalves80")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("batches.html")
+        self.assertTemplateUsed("batches_table.html")
         self.assertEqual(list(response.context["page"].object_list), [])
         self.assertEqual(response.context["username"], "mgalves80")
 
@@ -188,22 +188,25 @@ class ViewsTest(TestCase):
         b2 = Batch.objects.create(name="My new batch", user="mgalves80")
         b3 = Batch.objects.create(name="My new batch", user="wikilover")
 
-        response = self.client.get("/batches/mgalves80/")
+        response = self.client.get("/batches_table/?username=mgalves80")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("batches.html")
-        self.assertEqual(list(response.context["page"].object_list), [b2, b1])
+        self.assertTemplateUsed("batches_table.html")
+        self.assertEqual(list(response.context["page"].object_list), [b2.id, b1.id])
+        self.assertEqual(list(response.context["batches"]), [b2, b1])
         self.assertEqual(response.context["username"], "mgalves80")
 
-        response = self.client.get("/batches/wikilover/")
+        response = self.client.get("/batches_table/?username=wikilover")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("batches.html")
-        self.assertEqual(list(response.context["page"].object_list), [b3])
+        self.assertTemplateUsed("batches_table.html")
+        self.assertEqual(list(response.context["page"].object_list), [b3.id])
+        self.assertEqual(list(response.context["batches"]), [b3])
         self.assertEqual(response.context["username"], "wikilover")
 
-        response = self.client.get("/batches/")
+        response = self.client.get("/batches_table/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("batches.html")
-        self.assertEqual(list(response.context["page"].object_list), [b3, b2, b1])
+        self.assertTemplateUsed("batches_table.html")
+        self.assertEqual(list(response.context["page"].object_list), [b3.id, b2.id, b1.id])
+        self.assertEqual(list(response.context["batches"]), [b3, b2, b1])
 
     @requests_mock.Mocker()
     def test_create_v1_batch_logged_user(self, mocker):
@@ -211,9 +214,9 @@ class ViewsTest(TestCase):
         user, api_client = self.login_user_and_get_token("user")
 
         # Black box testing. We dont have any batch listed
-        response = self.client.get("/batches/")
+        response = self.client.get("/batches_table/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("batches.html")
+        self.assertTemplateUsed("batches_table.html")
         self.assertEqual(list(response.context["page"].object_list), [])
 
         with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
@@ -248,10 +251,11 @@ class ViewsTest(TestCase):
             self.assertEqual(batch.batchcommand_set.count(), 3)
 
             # Listing again. Now we have something
-            response = self.client.get("/batches/")
+            response = self.client.get("/batches_table/")
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed("batches.html")
-            self.assertEqual(list(response.context["page"].object_list), [batch])
+            self.assertTemplateUsed("batches_table.html")
+            self.assertEqual(list(response.context["page"].object_list), [batch.id])
+            self.assertEqual(list(response.context["batches"]), [batch])
             self.assertTrue(batch.is_initial)
 
     @requests_mock.Mocker()
@@ -336,9 +340,9 @@ class ViewsTest(TestCase):
             user, api_client = self.login_user_and_get_token("user")
 
             # Black box testing. We dont have any batch listed
-            response = self.client.get("/batches/")
+            response = self.client.get("/batches_table/")
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed("batches.html")
+            self.assertTemplateUsed("batches_table.html")
             self.assertEqual(list(response.context["page"].object_list), [])
 
             # Creating our new batch
@@ -371,10 +375,11 @@ class ViewsTest(TestCase):
             self.assertEqual(batch.batchcommand_set.count(), 2)
 
             # Listing again. Now we have something
-            response = self.client.get("/batches/")
+            response = self.client.get("/batches_table/")
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed("batches.html")
-            self.assertEqual(list(response.context["page"].object_list), [batch])
+            self.assertTemplateUsed("batches_table.html")
+            self.assertEqual(list(response.context["page"].object_list), [batch.id])
+            self.assertEqual(list(response.context["batches"]), [batch])
             self.assertTrue(batch.is_initial)
 
     def test_create_batch_anonymous_user(self):
@@ -401,9 +406,9 @@ class ViewsTest(TestCase):
             user, api_client = self.login_user_and_get_token("user")
 
             # Black box testing. We don't have any batch listed
-            response = self.client.get("/batches/")
+            response = self.client.get("/batches_table/")
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed("batches.html")
+            self.assertTemplateUsed("batches_table.html")
             self.assertEqual(list(response.context["page"].object_list), [])
 
             # Creating our new batch
@@ -440,10 +445,11 @@ class ViewsTest(TestCase):
             self.assertEqual(batch.batchcommand_set.count(), 2)
 
             # Listing again. Now we have something
-            response = self.client.get("/batches/")
+            response = self.client.get("/batches_table/")
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed("batches.html")
-            self.assertEqual(list(response.context["page"].object_list), [batch])
+            self.assertTemplateUsed("batches_table.html")
+            self.assertEqual(list(response.context["page"].object_list), [batch.id])
+            self.assertEqual(list(response.context["batches"]), [batch])
             self.assertTrue(batch.is_initial)
 
     @requests_mock.Mocker()
@@ -453,10 +459,10 @@ class ViewsTest(TestCase):
             patched_wikibase.return_value = self.api_mocker.wikibase
             user, api_client = self.login_user_and_get_token("user")
 
-            # Black box testing. We don't have any batch listed
-            response = self.client.get("/batches/")
+            # Black box testing. We dont have any batch listed
+            response = self.client.get("/batches_table/")
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed("batches.html")
+            self.assertTemplateUsed("batches_table.html")
             self.assertEqual(list(response.context["page"].object_list), [])
 
             # Creating our new batch with a file upload
@@ -489,10 +495,11 @@ class ViewsTest(TestCase):
             self.assertEqual(batch.batchcommand_set.count(), 3)
 
             # Listing again. Now we have something
-            response = self.client.get("/batches/")
+            response = self.client.get("/batches_table/")
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed("batches.html")
-            self.assertEqual(list(response.context["page"].object_list), [batch])
+            self.assertTemplateUsed("batches_table.html")
+            self.assertEqual(list(response.context["page"].object_list), [batch.id])
+            self.assertEqual(list(response.context["batches"]), [batch])
             self.assertTrue(batch.is_initial)
 
     def test_create_batch_anonymous_user_with_file(self):

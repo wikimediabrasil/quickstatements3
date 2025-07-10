@@ -1,0 +1,117 @@
+{% load i18n %}
+
+<div class="overflow-auto list">
+  <table class="striped">
+    <thead>
+      <tr>
+        <th scope="col"> # </th>
+        {% if not username %}<th scope="col">{% translate 'User' context 'batches-user' %}</th>{% endif %}
+        <th scope="col">{% translate 'Name' context 'batches-name' %}</th>
+        <th scope="col">{% translate 'Status' context 'batches-status' %}</th>
+        <th scope="col">{% translate 'Modified' context 'batches-modified' %}</th>
+        <th scope="col">{% translate 'Actions' context 'batches-actions' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for batch in batches %}
+      <tr>
+        <th scope="row"><a href="{% url 'batch' pk=batch.pk %}">#{{ batch.pk }}</a></th>
+        {% if not username %}
+        <td>
+          <a href="https://www.wikidata.org/wiki/User:{{batch.user}}">
+            {{ batch.user }}
+          </a>
+          <br>
+          [<a href="{% url 'last_batches_by_user' user=batch.user %}">{% translate 'View batches' context 'batches-view-batches' %}</a>]
+        </td>
+        {% endif %}
+        <td>{% if batch.name %}{{ batch.name }}{% else %}-{% endif %}</td>
+        <td>
+          <div style="margin-bottom: 10px;">
+            <b>{{ batch.get_status_display | upper }}</b>
+          </div>
+          <div>
+            {% if batch.total_initial %}<span class="status status_initial">{% translate 'INIT' context 'batch-summary-init' %}: {{batch.total_initial}}</span>{% endif %}
+            {% if batch.total_running %}<span class="status status_running">{% translate 'RUNNING' context 'batch-summary-running' %}: {{batch.total_running}}</span>{% endif %}
+            {% if batch.total_done %}<span class="status status_done">{% translate 'DONE' context 'batch-summary-done' %}: {{batch.total_done}}</span>{% endif %}
+            {% if batch.total_error %}<span class="status status_error">{% translate 'ERRORS' context 'batch-summary-errors' %}: {{batch.total_error}}</span>{% endif %}
+          </div>
+        </td>
+        <td>{{ batch.modified }}</td>
+        <td>
+          <a href="{% url 'batch' pk=batch.pk %}">{% translate 'View' context 'batches-view' %}</a><br>
+          {% if batch.wikibase.has_discussion_links %}
+          <a href="https://editgroups.toolforge.org/b/QSv3/{{batch.pk}}">{% translate 'Revert / Discuss' context 'batches-revert-discuss' %}</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if page.has_other_pages %}
+  <div style="display: inline-block; width: 100%;">
+
+    <div style="display: inline-block; width: 35%;">
+
+        {% if page.has_previous %}
+        <span class="pagination prev-page">
+          <a href="{{base_url}}?page=1&page_size={{page_size}}">
+            &lt;&lt; {% translate 'FIRST' context 'batches-first' %}
+          </a>
+        </span>
+
+        <span class="pagination prev-page">
+          <a href="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}">
+            &lt; {% translate 'PREVIOUS' context 'batches-previous' %}
+          </a>
+        </span>
+        {% endif%}
+
+    </div>
+
+    <div style="display: inline-block; text-align: center; width: 30%;">
+        <span class="pagination current-page">
+          {% blocktranslate with 1=page.number 2=page.paginator.num_pages context 'batch-commands-pagination' %}Pg. {{1}} of {{2}}{% endblocktranslate %}
+        </span>
+    </div>
+
+    <div  style="display: inline-block; text-align: right;  width: 33%;">
+
+      {% if page.has_next %}
+      <span class="pagination next-page">
+        <a href="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}">
+            {% translate 'NEXT' context 'batches-next' %} &gt;
+        </a>
+      </span>
+
+      <span class="pagination next-page">
+        <a href="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}">
+            {% translate 'LAST' context 'batches-last' %} &gt;&gt;
+        </a>
+      </span>
+      {% endif%}
+
+    </div>
+
+  </div>
+  {% endif %}
+
+  <div style="float: right; font-size: medium;">
+    <label for="page_size">{% translate 'Page size:' context 'batches-page-size' %}</label>
+    <select id="page_size"
+            style="font-size: medium;"
+            name="page_size"
+            aria-label="{% translate 'Page size:' context 'batches-page-size' %}"
+            required
+            onchange="location.href='{{ base_url }}?page=1&page_size=' + this.value">
+      <option selected disabled value="">
+        {% translate 'Page size:' context 'batches-page-size' %}
+      </option>
+      <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
+      <option value="25" {% if page_size == 25 %}selected{% endif %}>25</option>
+      <option value="50" {% if page_size == 50 %}selected{% endif %}>50</option>
+      <option value="100" {% if page_size == 100 %}selected{% endif %}>100</option>
+      <option value="500" {% if page_size == 500 %}selected{% endif %}>500</option>
+    </select>
+  </div>

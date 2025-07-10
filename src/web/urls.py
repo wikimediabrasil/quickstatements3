@@ -15,6 +15,7 @@ from .views.batch import batch_summary
 from .views.batches import home
 from .views.batches import last_batches
 from .views.batches import last_batches_by_user
+from .views.batches import last_batches_table
 from .views.new_batch import batch_allow_start
 from .views.new_batch import new_batch
 from .views.new_batch import preview_batch
@@ -39,6 +40,7 @@ urlpatterns = [
     path("auth/callback/", oauth_callback, name="oauth_callback"),
     path("batches/", last_batches, name="last_batches"),
     path("batches/<str:user>/", last_batches_by_user, name="last_batches_by_user"),
+    path("batches_table/", last_batches_table, name="last_batches_table"),
     path("batch/<int:pk>/", batch, name="batch"),
     path("batch/preview/", batch, name="batch_preview"),
     path("batch/<int:pk>/stop/", batch_stop, name="batch_stop"),
