@@ -155,11 +155,6 @@ def render_default_datavalue(command, value):
 
 
 @register.simple_tag
-def has_multiple_wikibases():
-    return Wikibase.objects.all().count() > 1
-
-
-@register.simple_tag
 def label_display(entity_id):
     return mark_safe(render_entity_label(entity_id))
 
