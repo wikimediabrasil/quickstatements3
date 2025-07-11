@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.db.models import Count
 
 from rest_framework import generics
 from rest_framework import mixins
@@ -50,28 +51,9 @@ class BatchDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin):
     serializer_class = serializers.BatchDetailSerializer
 
     def get_object(self):
-        from django.db.models import Q, Count
-
         try:
-            error_commands = Count(
-                "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_ERROR)
-            )
-            initial_commands = Count(
-                "batchcommand",
-                filter=Q(batchcommand__status=BatchCommand.STATUS_INITIAL),
-            )
-            running_commands = Count(
-                "batchcommand",
-                filter=Q(batchcommand__status=BatchCommand.STATUS_RUNNING),
-            )
-            done_commands = Count(
-                "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_DONE)
-            )
             batch = (
-                Batch.objects.annotate(error_commands=error_commands)
-                .annotate(initial_commands=initial_commands)
-                .annotate(running_commands=running_commands)
-                .annotate(done_commands=done_commands)
+                Batch.objects.with_command_status_counts()
                 .annotate(total_commands=Count("batchcommand"))
                 .get(pk=self.kwargs["pk"])
             )
