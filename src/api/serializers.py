@@ -115,10 +115,10 @@ class BatchDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_summary(self, obj):
         return {
-            "initial_commands": obj.initial_commands,
-            "running_commands": obj.running_commands,
-            "done_commands": obj.done_commands,
-            "error_commands": obj.error_commands,
+            "initial_commands": obj.total_initial,
+            "running_commands": obj.total_running,
+            "done_commands": obj.total_done,
+            "error_commands": obj.total_error,
             "total_commands": obj.total_commands,
         }
 
