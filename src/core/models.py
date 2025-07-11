@@ -946,6 +946,19 @@ class BatchCommand(models.Model):
         choices=Error,
     )
 
+    # -----------------
+    # Meta
+    # -----------------
+
+    class Meta:
+        verbose_name = pgettext_lazy("batchcommand-py-batchcommand", "Batch Command")
+        verbose_name_plural = pgettext_lazy("batchcommand-py-batchcommands", "Batch Commands")
+        indexes = [
+            models.Index(fields=["batch", "index"]),
+            models.Index(fields=["batch", "status"]),
+        ]
+        ordering = ("batch", "index")
+
     def __str__(self):
         return f"Batch #{self.batch_id} Command #{self.pk} ##{self.index}"
 
@@ -1773,16 +1786,6 @@ class BatchCommand(models.Model):
         is_not_verified_yet = not self.value_type_verified
         is_needed_actions = self.is_add_statement()
         return is_not_verified_yet and is_needed_actions
-
-    # -----------------
-    # Meta
-    # -----------------
-
-    class Meta:
-        verbose_name = pgettext_lazy("batchcommand-py-batchcommand", "Batch Command")
-        verbose_name_plural = pgettext_lazy("batchcommand-py-batchcommands", "Batch Commands")
-        index_together = ("batch", "index")
-        ordering = ("batch", "index")
 
 
 class BatchEditingSession(models.Model):
