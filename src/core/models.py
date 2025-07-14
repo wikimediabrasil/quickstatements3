@@ -14,6 +14,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.cache import cache as django_cache
 from django.db import models
+from django.db.models import Count
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 from requests.exceptions import HTTPError
@@ -324,13 +326,7 @@ class TokenManager(models.Manager):
 class BatchQuerySet(models.QuerySet):
     def with_command_status_counts(self):
         def get_status_subquery(status):
-            return models.Subquery(
-                BatchCommand.objects.filter(batch=models.OuterRef("pk"), status=status)
-                .values("batch")
-                .annotate(count=models.Count("id"))
-                .values("count"),
-                output_field=models.IntegerField(),
-            )
+            return Count("batchcommand", filter=Q(batchcommand__status=status))
 
         return self.annotate(
             total_error=get_status_subquery(BatchCommand.STATUS_ERROR),
@@ -949,6 +945,19 @@ class BatchCommand(models.Model):
         blank=True,
         choices=Error,
     )
+
+    # -----------------
+    # Meta
+    # -----------------
+
+    class Meta:
+        verbose_name = pgettext_lazy("batchcommand-py-batchcommand", "Batch Command")
+        verbose_name_plural = pgettext_lazy("batchcommand-py-batchcommands", "Batch Commands")
+        indexes = [
+            models.Index(fields=["batch", "index"]),
+            models.Index(fields=["batch", "status"]),
+        ]
+        ordering = ("batch", "index")
 
     def __str__(self):
         return f"Batch #{self.batch_id} Command #{self.pk} ##{self.index}"
@@ -1777,16 +1786,6 @@ class BatchCommand(models.Model):
         is_not_verified_yet = not self.value_type_verified
         is_needed_actions = self.is_add_statement()
         return is_not_verified_yet and is_needed_actions
-
-    # -----------------
-    # Meta
-    # -----------------
-
-    class Meta:
-        verbose_name = pgettext_lazy("batchcommand-py-batchcommand", "Batch Command")
-        verbose_name_plural = pgettext_lazy("batchcommand-py-batchcommands", "Batch Commands")
-        index_together = ("batch", "index")
-        ordering = ("batch", "index")
 
 
 class BatchEditingSession(models.Model):

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_http_methods
+from django.db.models import Count
 
 from core.models import Batch
 from core.models import BatchCommand
@@ -190,32 +191,15 @@ def batch_summary(request, pk):
     INITIAL COMMANDS
     """
     try:
-        from django.db.models import Count, Q
-
-        error_commands = Count(
-            "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_ERROR)
-        )
-        initial_commands = Count(
-            "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_INITIAL)
-        )
-        running_commands = Count(
-            "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_RUNNING)
-        )
-        done_commands = Count(
-            "batchcommand", filter=Q(batchcommand__status=BatchCommand.STATUS_DONE)
-        )
         batch = (
-            Batch.objects.annotate(error_commands=error_commands)
-            .annotate(initial_commands=initial_commands)
-            .annotate(running_commands=running_commands)
-            .annotate(done_commands=done_commands)
+            Batch.objects.with_command_status_counts()
             .annotate(total_commands=Count("batchcommand"))
             .get(pk=pk)
         )
         show_block_on_errors_notice = (
             batch.is_preview_initial_or_running and batch.block_on_errors
         )
-        finished_commands = batch.done_commands + batch.error_commands
+        finished_commands = batch.total_done + batch.total_error
 
         def percentage(val, max):
             return round(float(100 * val / max)) if max else 0
@@ -227,19 +211,19 @@ def batch_summary(request, pk):
                 "pk": batch.pk,
                 "batch": batch,
                 "status": batch.get_status_display(),
-                "error_count": batch.error_commands,
-                "initial_count": batch.initial_commands,
-                "running_count": batch.running_commands,
-                "done_count": batch.done_commands,
+                "error_count": batch.total_error,
+                "initial_count": batch.total_initial,
+                "running_count": batch.total_running,
+                "done_count": batch.total_done,
                 "total_count": batch.total_commands,
                 "done_percentage": percentage(
-                    batch.done_commands, batch.total_commands
+                    batch.total_done, batch.total_commands
                 ),
                 "finish_percentage": percentage(
                     finished_commands, batch.total_commands
                 ),
                 "done_to_finish_percentage": percentage(
-                    batch.done_commands, finished_commands
+                    batch.total_done, finished_commands
                 ),
                 "show_block_on_errors_notice": show_block_on_errors_notice,
             },
