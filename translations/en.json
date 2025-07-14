@@ -175,7 +175,7 @@
     "batch-commands-references": "References",
     "batch-command-somevalue": "(Unknown Value)",
     "batch-command-novalue": "(No Value)",
-    "statistics-title-username": " Statistics of %(1)s ",
+    "statistics-title-username": " Statistics of $1 ",
     "statistics-title": "Statistics",
     "statistics-all-time-numbers": "All-time numbers",
     "statistics-cumulative-batches": "Cumulative number of batches",
@@ -211,5 +211,6 @@
     "batch-py-valid-command-not-found": "No valid commands found in the provided input.",
     "batch-button-rerun-uncombined": "Rerun uncombined",
     "batch-button-rerun": "Rerun",
-    "batch-button-download-report": "Download report"
+    "batch-button-download-report": "Download report",
+    "login-token-expired": "Your Wikimedia authentication has expired. This is completely normal and it happens for security reasons. Please, log in again."
 }

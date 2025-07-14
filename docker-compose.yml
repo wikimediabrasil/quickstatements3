@@ -15,15 +15,15 @@ x-application-service: &application-service
     DB_USER: ${DB_USER:-root}
     DB_PASSWORD: ${DB_PASSWORD:-quickstatements_pass}
     DB_HOST: ${DB_HOST:-mariadb}
-    STATIC_ROOT: ${STATIC_ROOT:-/home/wmb/www/python/static}
+    STATIC_ROOT: ${STATIC_ROOT:-/root/www/python/static}
     OAUTH_AUTHORIZATION_SERVER: ${OAUTH_AUTHORIZATION_SERVER:-https://test.wikidata.org}
     DEFAULT_WIKIBASE_URL: ${DEFAULT_WIKIBASE_URL:-https://test.wikidata.org}
   env_file:
     - ./.env
   volumes:
-    - ./src:/home/wmb/www/python/src
-    - ./translations:/home/wmb/www/python/translations
-    - qs-static-data:/home/wmb/www/python/static
+    - ./src:/root/www/python/src
+    - ./translations:/root/www/python/translations
+    - qs-static-data:/root/www/python/static
 
 x-wikibase-volumes: &wikibase-volumes
   volumes:
@@ -61,6 +61,7 @@ services:
     command: >
       /bin/bash -c "
         django-admin collectstatic --no-input &&
+        django-admin translate &&
         django-admin migrate &&
         django-admin runserver 0.0.0.0:8000
       "

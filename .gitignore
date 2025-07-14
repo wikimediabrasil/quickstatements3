@@ -4,6 +4,9 @@
 # Static files
 /src/static/
 
+# Django translations
+/src/locale/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

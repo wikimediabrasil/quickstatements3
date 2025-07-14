@@ -6,7 +6,9 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.conf import settings
 
+
 class Command(BaseCommand):
+    DEFAULT_APP_LANGUAGE = "en"
     help = "Convert JSON translations to PO files."
 
     def handle(self, *args, **options):
@@ -30,9 +32,12 @@ class Command(BaseCommand):
                 call_command('makemessages', f'-l{language_code}')
                 po_path = os.path.join(settings.BASE_DIR, 'locale', language_code, 'LC_MESSAGES', 'django.po')
                 po = self.convert_to_po(translations, language_code, po_path)
-                if language_code == 'en':
+                if language_code == self.DEFAULT_APP_LANGUAGE:
                     po = polib.pofile(po_path, encoding='utf-8')
                     # Step 4: Synchronize PO with JSON
+                    # TODO: this also needs to synchronize qqq.json somehow
+                    # maybe having an extra field in the translate blocks that should be paired with qqq
+                    # or the 'context' inside the app could have an extra special character such that after it it's the documentation
                     self.synchronize_po_with_json(po, translations, filepath)
 
                 # Step 5: Compile PO files into MO files
