@@ -1,5 +1,6 @@
 name: Toolforge Deploy
 on:
+  workflow_dispatch: ~
   push:
     branches:
       - main
@@ -7,6 +8,7 @@ on:
       - "uwsgi.ini"
       - "src/**"
       - "translations/**"
+      - ".github/workflows/toolforge-deploy.yml"
 
 jobs:
   deploy:
