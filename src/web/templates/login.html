@@ -9,9 +9,7 @@
 
 {% if token_expired %}
 <p>
-  Your Wikimedia authentication has expired.
-  This is completely normal and it happens for security reasons.
-  Please, log in again.
+  {% translate "Your Wikimedia authentication has expired. This is completely normal and it happens for security reasons. Please, log in again." context "login-token-expired" %}
 </p>
 {% endif %}
 
