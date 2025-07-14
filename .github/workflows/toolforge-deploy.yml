@@ -6,6 +6,7 @@ on:
     paths:
       - "uwsgi.ini"
       - "src/**"
+      - "translations/**"
 
 jobs:
   deploy:
@@ -13,11 +14,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install GNU gettext tools
+        run: |
+          echo "When Toolforge's python image will have gettext?"
+          sudo apt-get update && sudo apt-get install -y gettext
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r src/requirements.txt
+
+      - name: Compile translations
+        run: |
+          cd src
+          python manage.py translate
+
       - name: Configure SSH key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Copy translations to Toolforge project folder
+        run: |
+          scp -P ${{ secrets.PORT }} -r src/locale ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/data/project/qs-dev/locale
 
       - name: Run deployment commands
         uses: appleboy/ssh-action@v1.0.3
@@ -32,6 +60,9 @@ jobs:
             become qs-dev git -C ./www/python fetch origin
             become qs-dev git -C ./www/python reset --hard origin/main
             become qs-dev git -C ./www/python pull origin main
+            become qs-dev take ./locale
+            become qs-dev rm -rf ./www/python/src/locale
+            become qs-dev mv ./locale ./www/python/src/locale
             become qs-dev kubectl delete pods -n tool-qs-dev -l app.kubernetes.io/component=webservice-interactive
             become qs-dev webservice --mem 512Mi python3.11 shell -- webservice-python-bootstrap
             become qs-dev webservice --mem 512Mi python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
