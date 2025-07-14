@@ -637,7 +637,7 @@ msgstr "Nyt job"
 #: web/templates/layout_menu.html:13 web/templates/layout_menu_content.html:16
 msgctxt "layout-navbar-last-batches"
 msgid "Last batches"
-msgstr "Seneste batches"
+msgstr "Seneste jobs"
 
 #: web/templates/layout_menu.html:14
 msgctxt "layout-navbar-help"
