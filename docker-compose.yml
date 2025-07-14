@@ -61,6 +61,7 @@ services:
     command: >
       /bin/bash -c "
         django-admin collectstatic --no-input &&
+        django-admin translate &&
         django-admin migrate &&
         django-admin runserver 0.0.0.0:8000
       "
