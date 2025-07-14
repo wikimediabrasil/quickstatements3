@@ -45,7 +45,7 @@ jobs:
 
       - name: Copy translations to Toolforge project folder
         run: |
-          scp -P ${{ secrets.PORT }} -r src/locale ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/data/project/qs-dev/locale
+          scp -r src/locale ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/data/project/qs-dev/locale
 
       - name: Run deployment commands
         uses: appleboy/ssh-action@v1.0.3
@@ -53,7 +53,6 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
           request_pty: true
           script: |
             set -xe
