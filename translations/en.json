@@ -175,7 +175,7 @@
     "batch-commands-references": "References",
     "batch-command-somevalue": "(Unknown Value)",
     "batch-command-novalue": "(No Value)",
-    "statistics-title-username": " Statistics of %(1)s ",
+    "statistics-title-username": " Statistics of $1 ",
     "statistics-title": "Statistics",
     "statistics-all-time-numbers": "All-time numbers",
     "statistics-cumulative-batches": "Cumulative number of batches",
