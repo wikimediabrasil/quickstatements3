@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kly",
 			"S8321414",
 			"SupaplexTW"
 		]
@@ -181,7 +182,7 @@
 	"batch-commands-references": "參考文獻",
 	"batch-command-somevalue": "（未知值）",
 	"batch-command-novalue": "（無值）",
-	"statistics-title-username": "%(1)s的統計資料",
+	"statistics-title-username": "$1的統計資料",
 	"statistics-title": "統計資料",
 	"statistics-all-time-numbers": "歷史數據",
 	"statistics-cumulative-batches": "累計批次數",
@@ -217,5 +218,6 @@
 	"batch-py-valid-command-not-found": "提供的輸入中找不到有效的命令。",
 	"batch-button-rerun-uncombined": "重新執行未合併的",
 	"batch-button-rerun": "重新執行",
-	"batch-button-download-report": "下載報告"
+	"batch-button-download-report": "下載報告",
+	"login-token-expired": "您的維基媒體身份驗證已過期。這是出於安全考慮，會正常出現的情況。請您重新登入。"
 }

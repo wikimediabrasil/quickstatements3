@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Bananax47",
 			"Derugon",
 			"VIGNERON"
 		]
@@ -181,7 +182,7 @@
 	"batch-commands-references": "Références",
 	"batch-command-somevalue": "(valeur inconnue)",
 	"batch-command-novalue": "(aucune valeur)",
-	"statistics-title-username": "Statistiques de %(1)s",
+	"statistics-title-username": "Statistiques de $1",
 	"statistics-title": "Statistiques",
 	"statistics-all-time-numbers": "Nombres généraux",
 	"statistics-cumulative-batches": "Nombre cumulé de lots",
@@ -217,5 +218,6 @@
 	"batch-py-valid-command-not-found": "Aucune commande valide trouvée dans l’entrée fournie.",
 	"batch-button-rerun-uncombined": "Réexécuter sans combiner",
 	"batch-button-rerun": "Réexécuter",
-	"batch-button-download-report": "Télécharger le rapport"
+	"batch-button-download-report": "Télécharger le rapport",
+	"login-token-expired": "Votre authentification Wikimedia a expiré. C'est tout à fait normal et cela se produit pour des raisons de sécurité. Veuillez vous reconnecter."
 }

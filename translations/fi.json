@@ -168,7 +168,7 @@
 	"batch-commands-references": "Lähteet",
 	"batch-command-somevalue": "(Tuntematon arvo)",
 	"batch-command-novalue": "(Ei arvoa)",
-	"statistics-title-username": "Käyttäjän %(1)s tilastot",
+	"statistics-title-username": "Käyttäjän %1 tilastot",
 	"statistics-title": "Tilastot",
 	"statistics-cumulative-batches": "Erien kumulatiivinen määrä",
 	"statistics-edits-and-editors": "Muokkausten ja uusien muokkaajien kumulatiivinen määrä",

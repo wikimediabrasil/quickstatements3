@@ -198,5 +198,5 @@
 	"batch-summary-commands-eta": "Batch estimated amount of time left to complete",
 	"new-batch-file-upload": "Form title of file upload",
 	"new-batch-file-upload-targeting": "File upload explanation",
-  "login-token-expired": "Shown when the user is forcefully logged out and needs to log in again."
+	"login-token-expired": "Shown when the user is forcefully logged out and needs to log in again."
 }
