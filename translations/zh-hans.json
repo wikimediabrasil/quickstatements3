@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"GuoPC",
 			"Kcx36",
 			"Peterxy12",
 			"沈澄心"
@@ -182,7 +183,7 @@
 	"batch-commands-references": "参考文献",
 	"batch-command-somevalue": "（未知值）",
 	"batch-command-novalue": "（无值）",
-	"statistics-title-username": "%(1)s的统计数据",
+	"statistics-title-username": "$1的统计数据",
 	"statistics-title": "统计数据",
 	"statistics-all-time-numbers": "历史数据",
 	"statistics-cumulative-batches": "累计批处理数量",
@@ -218,5 +219,6 @@
 	"batch-py-valid-command-not-found": "提供的输入中未找到有效命令。",
 	"batch-button-rerun-uncombined": "重新运行未合并的",
 	"batch-button-rerun": "重新运行",
-	"batch-button-download-report": "下载报告"
+	"batch-button-download-report": "下载报告",
+	"login-token-expired": "您的维基媒体身份验证已过期。这是出于安全考虑，会正常出现的情况。请您重新登录。"
 }

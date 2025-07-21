@@ -180,7 +180,7 @@
 	"batch-commands-references": "Наводи",
 	"batch-command-somevalue": "(непозната вредност)",
 	"batch-command-novalue": "(без вредност)",
-	"statistics-title-username": "Статистика за %(1)s",
+	"statistics-title-username": "Статистика за $1",
 	"statistics-title": "Статистика",
 	"statistics-all-time-numbers": "Севкупни бројки",
 	"statistics-cumulative-batches": "Збирен број на купчиња",
@@ -216,5 +216,6 @@
 	"batch-py-valid-command-not-found": "Немате внесено важечки наредби.",
 	"batch-button-rerun-uncombined": "Преизврши нездружено",
 	"batch-button-rerun": "Преизврши",
-	"batch-button-download-report": "Преземи извештај"
+	"batch-button-download-report": "Преземи извештај",
+	"login-token-expired": "Вашата заверка истече. Ова е сосема нормално и се случува од безбедносни причини. Најавете се повторно."
 }
