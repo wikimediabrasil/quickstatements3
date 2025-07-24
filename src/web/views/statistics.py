@@ -190,7 +190,7 @@ def statistics_user(request, username):
     return render(request, "statistics.html", {"username": username})
 
 
-@cache_page(60)
+@cache_page(600)
 def plots(request):
     data = plots_data(request, None)
     return render(request, "statistics_plots.html", data)
@@ -202,7 +202,7 @@ def plots_user(request, username):
     return render(request, "statistics_plots.html", data)
 
 
-@cache_page(60)
+@cache_page(600)
 def all_time_counters(request):
     data = all_time_counters_data(request, None)
     return render(request, "statistics_all_time_counters.html", data)
