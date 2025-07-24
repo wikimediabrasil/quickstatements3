@@ -23,6 +23,7 @@
 	"batchcommand-py-operation-remove-description": "Beschreiwung ewechhuelen",
 	"batchcommand-py-operation-add-alias": "Alias derbäisetzen",
 	"batchcommand-py-operation-remove-alias": "Alias ewechhuelen",
+	"web-models-token": "Token",
 	"web-models-preferences": "Astellungen",
 	"batch-batch": "Batch",
 	"batch-view-batches": "Batche weisen",

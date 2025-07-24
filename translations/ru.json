@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Mitte27",
+			"Okras",
 			"Putnik",
 			"Solidest"
 		]
@@ -182,7 +183,7 @@
 	"batch-commands-references": "Примечания",
 	"batch-command-somevalue": "(Неизвестное значение)",
 	"batch-command-novalue": "(Нет значения)",
-	"statistics-title-username": "Статистика %(1)s",
+	"statistics-title-username": "Статистика $1",
 	"statistics-title": "Статистика",
 	"statistics-all-time-numbers": "Данные за всё время",
 	"statistics-cumulative-batches": "Общее количество пакетов",
@@ -218,5 +219,6 @@
 	"batch-py-valid-command-not-found": "В предоставленных входных данных не найдено допустимых команд.",
 	"batch-button-rerun-uncombined": "Повторить некомбинированные",
 	"batch-button-rerun": "Повторить",
-	"batch-button-download-report": "Скачать отчёт"
+	"batch-button-download-report": "Скачать отчёт",
+	"login-token-expired": "Срок действия вашей Викимедиа-аутентификации истёк. Это совершенно нормально и сделано в целях безопасности. Пожалуйста, войдите снова."
 }
