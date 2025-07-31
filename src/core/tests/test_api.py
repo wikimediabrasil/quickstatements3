@@ -94,6 +94,13 @@ class ApiMocker:
             status_code=200,
         )
 
+    def is_admin(self, mocker):
+        mocker.get(
+            self.oauth_profile_endpoint,
+            json={"groups": ["*", "autoconfirmed", "sysop"]},
+            status_code=200,
+        )
+
     def is_blocked(self, mocker):
         mocker.get(
             self.oauth_profile_endpoint,

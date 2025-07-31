@@ -164,6 +164,9 @@ class Client:
 
         return False
 
+    def get_is_admin(self):
+        return "sysop" in self.get_user_groups()
+
     def get_is_blocked(self):
         profile = self.get_profile()
         return profile.get("blocked", False)
@@ -321,6 +324,30 @@ class TokenManager(models.Manager):
             refresh_token=refresh_token,
             expires_at=expires_at,
         )
+
+    def get_for_user(self, user) -> Optional["Token"]:
+        """
+        Gets the Token for the user.
+
+        Deals with MultipleObjectsReturned by keeping
+        only the most recent token.
+
+        If the user is not authenticated,
+        which raises TypeError due to it not having an id,
+        raises Token.DoesNotExist.
+
+        Still can raise Token.DoesNotExist if
+        there are no tokens for an authenticated user.
+        """
+        try:
+            return self.get(user=user)
+        except Token.MultipleObjectsReturned:
+            most_recent = self.filter(user=user).order_by("-id").first()
+            self.filter(user=user).exclude(id=most_recent.id).delete()
+            return most_recent
+        except TypeError:
+            # happens if user is an AnonymousUser
+            raise Token.DoesNotExist()
 
 
 class BatchQuerySet(models.QuerySet):
@@ -705,7 +732,12 @@ class Batch(models.Model):
         is_authenticated = user.is_authenticated
         is_owner = user.username == self.user
         is_superuser = user.is_superuser
-        is_wikibase_admin = False  # FIXME: implement this
+        try:
+            token = Token.objects.get_for_user(user)
+            client = Client(token=token, wikibase=self.wikibase)
+            is_wikibase_admin = client.get_is_admin()
+        except (Token.DoesNotExist, ServerError, UnauthorizedToken):
+            is_wikibase_admin = False
         return is_authenticated and (is_owner or is_superuser or is_wikibase_admin)
 
     # ------

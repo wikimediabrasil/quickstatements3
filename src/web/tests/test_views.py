@@ -1481,14 +1481,24 @@ class ViewsTest(TestCase):
 
     @requests_mock.Mocker()
     def test_batch_user_is_authorized(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
         user, api_client = self.login_user_and_get_token("wikiuser")
-        batch = BatchFactory.load_from_parser(
-            V1CommandParser(), "Batch", "wikiuser", """Q11|Len|"label" """
+        batch = Batch.objects.create(
+            name="b",
+            user="wikiuser",
+            wikibase=self.api_mocker.wikibase
         )
         other_super = User.objects.create_user(username="other_super", is_superuser=True)
         other_not_super = User.objects.create_user(username="other_not_super")
+        even_with_token = User.objects.create_user(username="even_with_token")
+        Token.objects.create(user=even_with_token, value="even_with_token")
         anonymous = AnonymousUser()
         self.assertTrue(batch.is_authorized(user))
         self.assertTrue(batch.is_authorized(other_super))
         self.assertFalse(batch.is_authorized(other_not_super))
+        self.assertFalse(batch.is_authorized(even_with_token))
         self.assertFalse(batch.is_authorized(anonymous))
+        self.api_mocker.is_admin(mocker)
+        will_be_admin = User.objects.create_user(username="will_be_admin")
+        Token.objects.create(user=will_be_admin, value="admin") # needed to perform profile request
+        self.assertTrue(batch.is_authorized(will_be_admin))
