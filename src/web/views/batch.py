@@ -23,9 +23,7 @@ def batch(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = request.user.is_authenticated and (
-            request.user.username == batch.user or request.user.is_superuser
-        )
+        user_is_authorized = batch.is_authorized(request.user)
         is_autoconfirmed = None
         return render(
             request,
@@ -52,10 +50,7 @@ def batch_stop(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = request.user.is_authenticated and (
-            request.user.username == batch.user or request.user.is_superuser
-        )
-        assert user_is_authorized
+        assert batch.is_authorized(request.user)
         batch.stop()
         return redirect(reverse("batch", args=[batch.pk]))
     except Batch.DoesNotExist:
@@ -76,10 +71,7 @@ def batch_restart(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = request.user.is_authenticated and (
-            request.user.username == batch.user or request.user.is_superuser
-        )
-        assert user_is_authorized
+        assert batch.is_authorized(request.user)
         batch.restart()
         return redirect(reverse("batch", args=[batch.pk]))
     except Batch.DoesNotExist:
@@ -99,10 +91,7 @@ def batch_rerun(request, pk):
     """
     try:
         batch = Batch.objects.get(pk=pk)
-        user_is_authorized = request.user.is_authenticated and (
-            request.user.username == batch.user or request.user.is_superuser
-        )
-        assert user_is_authorized
+        assert batch.is_authorized(request.user)
         was_combined = batch.combine_commands
         if was_combined and "uncombine_commands" in request.POST:
             batch.combine_commands = False
@@ -120,10 +109,7 @@ def batch_rerun(request, pk):
 def batch_report(request, pk):
     try:
         batch = Batch.objects.get(pk=pk, status=Batch.STATUS_DONE)
-        user_is_authorized = request.user.is_authenticated and (
-            request.user.username == batch.user or request.user.is_superuser
-        )
-        assert user_is_authorized
+        assert batch.is_authorized(request.user)
         res = HttpResponse(
             content_type="text/csv",
             headers={

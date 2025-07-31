@@ -697,6 +697,17 @@ class Batch(models.Model):
 
         return math.ceil(total_pending / MAX_REQUESTS_PER_SECOND)
 
+    def is_authorized(self, user: User) -> bool:
+        """
+        Returns True if the specified user
+        is authorized to control this batch operations.
+        """
+        is_authenticated = user.is_authenticated
+        is_owner = user.username == self.user
+        is_superuser = user.is_superuser
+        is_wikibase_admin = False  # FIXME: implement this
+        return is_authenticated and (is_owner or is_superuser or is_wikibase_admin)
+
     # ------
     # REPORT
     # ------

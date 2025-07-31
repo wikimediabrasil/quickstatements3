@@ -3,6 +3,7 @@ from unittest import mock
 import requests_mock
 from django.contrib.auth import get_user
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 from django.urls import reverse
 
@@ -1477,3 +1478,17 @@ class ViewsTest(TestCase):
         # Test as not authenticated user
         response = checks_user_report_access(None, authorized=False)
         self.assertEqual(response.status_code, 403)
+
+    @requests_mock.Mocker()
+    def test_batch_user_is_authorized(self, mocker):
+        user, api_client = self.login_user_and_get_token("wikiuser")
+        batch = BatchFactory.load_from_parser(
+            V1CommandParser(), "Batch", "wikiuser", """Q11|Len|"label" """
+        )
+        other_super = User.objects.create_user(username="other_super", is_superuser=True)
+        other_not_super = User.objects.create_user(username="other_not_super")
+        anonymous = AnonymousUser()
+        self.assertTrue(batch.is_authorized(user))
+        self.assertTrue(batch.is_authorized(other_super))
+        self.assertFalse(batch.is_authorized(other_not_super))
+        self.assertFalse(batch.is_authorized(anonymous))
