@@ -175,7 +175,7 @@
 	"statistics-hey-its-them": "مهلا إنه $1!",
 	"statistics-edits": "التعديلات",
 	"batch-py-user-not-autoconfirmed": "لم يتم تأكيد المستخدم تلقائيًا. فقط المستخدمين الذين تم تأكيدهم تلقائيًا يمكنهم تشغيل الدفعات.",
-	"batch-py-user-blocked": "تم حظر المستخدم ولا يمكنه تشغيل الدفعات.",
+	"batch-py-user-blocked": "مُنع المستخدم ولا يمكنه تشغيل الدفعات.",
 	"batch-commands-qualifier": "التصفيات",
 	"batch-commands-statement": "إفادة",
 	"batch-commands-references": "مراجع",
