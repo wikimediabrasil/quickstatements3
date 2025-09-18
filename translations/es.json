@@ -214,5 +214,6 @@
 	"batch-py-valid-command-not-found": "No se encontraron comandos válidos en la entrada proporcionada.",
 	"batch-button-rerun-uncombined": "Reintentar sin combinación",
 	"batch-button-rerun": "Reintentar",
-	"batch-button-download-report": "Descargar informe"
+	"batch-button-download-report": "Descargar informe",
+	"login-token-expired": "Tu autenticación de Wikimedia ha expirado. Esto es completamente normal y ocurre por razones de seguridad. Por favor, inicia sesión de nuevo."
 }
