@@ -27,6 +27,7 @@
 	"web-models-preferences": "Astellungen",
 	"batch-batch": "Batch",
 	"batch-view-batches": "Batche weisen",
+	"batch-no-continue": "Nee, virufueren",
 	"batch-commands-pagination": "Säit $1 vu(n) $2",
 	"batch-commands-page-size": "Gréisst vun der Säit:",
 	"batch-not-found-batch-id": "Batch-ID",
