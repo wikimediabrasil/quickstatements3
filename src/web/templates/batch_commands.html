@@ -8,7 +8,7 @@
       <th scope="row">#{{ command.index }}</th>
       <td>
         <span class="status status_{{ command.status_info.lower }}">
-          {{ command.status_info }}
+          {{ command.get_status_display }}
         </span>
       </td>
 

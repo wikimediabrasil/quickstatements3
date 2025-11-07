@@ -663,6 +663,17 @@ class Batch(models.Model):
         return self.is_done and self.has_pending_commands
 
     @property
+    def status_info(self):
+        return {
+            self.STATUS_STOPPED: "stopped",
+            self.STATUS_BLOCKED: "blocked",
+            self.STATUS_PREVIEW: "preview",
+            self.STATUS_INITIAL: "initial",
+            self.STATUS_RUNNING: "running",
+            self.STATUS_DONE: "done",
+        }.get(self.status, "").upper()
+
+    @property
     def eta(self):
         if self.estimated_runtime is None:
             return None
@@ -1045,7 +1056,21 @@ class BatchCommand(models.Model):
 
     @property
     def status_info(self):
-        return self.get_status_display().upper()
+        return {
+            self.STATUS_ERROR: "error",
+            self.STATUS_INITIAL: "initial",
+            self.STATUS_RUNNING: "running",
+            self.STATUS_DONE: "done",
+        }.get(self.status, "").upper()
+
+    @property
+    def action_info(self):
+        return {
+            self.ACTION_CREATE: "create",
+            self.ACTION_ADD: "add",
+            self.ACTION_REMOVE: "remove",
+            self.ACTION_MERGE: "merge"
+        }.get(self.action, "").upper()
 
     @property
     def language(self):

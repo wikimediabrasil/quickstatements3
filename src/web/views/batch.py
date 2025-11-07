@@ -211,6 +211,7 @@ def batch_summary(request, pk):
                 "pk": batch.pk,
                 "batch": batch,
                 "status": batch.get_status_display(),
+                "status_info": batch.status_info,
                 "error_count": batch.total_error,
                 "initial_count": batch.total_initial,
                 "running_count": batch.total_running,

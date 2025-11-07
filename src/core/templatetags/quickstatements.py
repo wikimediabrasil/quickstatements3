@@ -8,8 +8,6 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import pgettext
 
-from core.models import Wikibase
-
 register = template.Library()
 logger = logging.getLogger(__name__)
 
@@ -170,11 +168,11 @@ def language_preference(user):
 
 @register.simple_tag
 def command_operation_display(command):
-    action_display = command.get_action_display()
+    action_info = command.action_info.lower()
     text = (
-        command.get_operation_display().upper() if command.operation else action_display
+        command.get_operation_display().upper() if command.operation else command.get_action_display().upper()
     )
-    action_class = f"action_{action_display.lower()}"
+    action_class = f"action_{action_info}"
     return mark_safe(f'<span class="action {action_class}">{text}</span>')
 
 
