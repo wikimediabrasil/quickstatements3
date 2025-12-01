@@ -1,4 +1,5 @@
 import copy
+import traceback
 import csv
 import logging
 import math
@@ -214,12 +215,15 @@ class Client:
         Uses a dictionary attribute for caching.
         """
         endpoint = f"/entities/properties/{property_id}"
-        url = self.wikibase_url(endpoint)
 
         try:
-            res = self.session.get(url).json()
+            res = self.wikibase_request_wrapper("get", endpoint, {})
             data_type = res["data_type"]
         except (KeyError, UserError):
+            raise NonexistantPropertyOrNoDataType(property_id)
+        except Exception as e:
+            logger.error(f"Error while trying to get data type: {e}")
+            traceback.print_exc()
             raise NonexistantPropertyOrNoDataType(property_id)
 
         try:
@@ -285,6 +289,8 @@ class Client:
             base = "/entities/items"
         elif entity_id.startswith("P"):
             base = "/entities/properties"
+        elif entity_id.upper() == "LAST":
+            raise LastCouldNotBeEvaluated()
         else:
             raise EntityTypeNotImplemented(entity_id)
 
@@ -985,7 +991,7 @@ class BatchCommand(models.Model):
     def finish(self):
         logger.info(f"[{self}] finished")
         self.status = BatchCommand.STATUS_DONE
-        if self.is_id_last_or_create_item():
+        if self.is_entity_creation():
             self.set_entity_id(self.response_id)
         self.save()
         self.propagate_to_previous_commands()
@@ -999,6 +1005,7 @@ class BatchCommand(models.Model):
 
     def error_with_exception(self, exception: Exception):
         message = getattr(exception, "message", str(exception))
+        traceback.print_exc()
         self.error_with_message(message)
 
     def error_with_message(self, message):
@@ -1015,7 +1022,7 @@ class BatchCommand(models.Model):
             if self.is_error_status():
                 cmd.error = self.Error.COMBINING_COMMAND_FAILED
                 cmd.message = cmd.error.label
-            elif cmd.is_id_last_or_create_item():
+            elif cmd.is_entity_creation():
                 cmd.set_entity_id(self.entity_id)
             cmd.save()
 
@@ -1083,6 +1090,10 @@ class BatchCommand(models.Model):
     @property
     def what(self):
         return self.json.get("what", "").upper()
+
+    @property
+    def property_data_type(self):
+        return self.json.get("data", "").lower()
 
     @property
     def related_identifiers_set(self):
@@ -1337,11 +1348,27 @@ class BatchCommand(models.Model):
     def is_error_status(self):
         return self.status == BatchCommand.STATUS_ERROR
 
-    def is_not_create_item(self):
-        return self.operation != self.Operation.CREATE_ITEM
+    def is_not_create_entity(self):
+        return self.operation not in [self.Operation.CREATE_ITEM, self.Operation.CREATE_PROPERTY]
 
-    def is_id_last_or_create_item(self):
-        return self.entity_id == "LAST" or self.operation == self.Operation.CREATE_ITEM
+    def get_first_command_operation(self):
+        first_command = self
+        previous = getattr(self, "previous_commands", [])
+        if len(previous) > 0:
+            first_command = previous[-1]
+        return first_command.operation
+
+    def is_item_creation(self):
+        operation = self.get_first_command_operation()
+        return operation == self.Operation.CREATE_ITEM
+
+    def is_property_creation(self):
+        operation = self.get_first_command_operation()
+        return operation == self.Operation.CREATE_PROPERTY
+
+    def is_entity_creation(self):
+        operation = self.get_first_command_operation()
+        return operation in [self.Operation.CREATE_ITEM, self.Operation.CREATE_PROPERTY]
 
     # # -----------------
     # # LAST related methods
@@ -1447,6 +1474,7 @@ class BatchCommand(models.Model):
             self.Operation.CREATE_ITEM,
             self.Operation.SET_STATEMENT,
             self.Operation.CREATE_STATEMENT,
+            self.Operation.CREATE_PROPERTY,
             self.Operation.REMOVE_STATEMENT_BY_VALUE,
             self.Operation.REMOVE_QUALIFIER,
             self.Operation.REMOVE_REFERENCE,
@@ -1480,7 +1508,7 @@ class BatchCommand(models.Model):
             and self.operation_is_combinable()
             and next is not None
             and next.operation_is_combinable()
-            and next.is_not_create_item()
+            and next.is_not_create_entity()
             and self.has_combinable_id_with(next)
         )
         self.previous_entity_json = state.entity
@@ -1488,10 +1516,11 @@ class BatchCommand(models.Model):
 
     def has_combinable_id_with(self, next: "BatchCommand"):
         """
-        Returns True if `self` is CREATE_ITEM and `next`
+        Returns True if `self` is CREATE_ITEM or CREATE_PROPERTY and `next`
         has LAST as entity id, or if both have the same entity id.
         """
-        return (self.operation == self.Operation.CREATE_ITEM and next.entity_id == "LAST") or (
+        create_operations = [self.Operation.CREATE_ITEM, self.Operation.CREATE_PROPERTY]
+        return (self.operation in create_operations and next.entity_id == "LAST") or (
             self.entity_id == next.entity_id
         )
 
@@ -1528,10 +1557,11 @@ class BatchCommand(models.Model):
             self.previous_entity_json = copy.deepcopy(entity)
         return entity
 
-    def get_entity_or_empty_item(self, client: Client):
+    def get_entity_or_empty_entity(self, client: Client):
         """
         Calls the API to get the entity json or returns
-        an empty item if this command is a CREATE_ITEM.
+        an empty entity. Items for CREATE_ITEM and
+        properties for CREATE_PROPERTY.
         """
         if self.operation == self.Operation.CREATE_ITEM:
             return {
@@ -1541,6 +1571,16 @@ class BatchCommand(models.Model):
                 "aliases": {},
                 "statements": {},
                 "sitelinks": {},
+                "id": None,
+            }
+        elif self.operation == self.Operation.CREATE_PROPERTY:
+            return {
+                "type": "property",
+                "data_type": self.property_data_type,
+                "labels": {},
+                "descriptions": {},
+                "aliases": {},
+                "statements": {},
                 "id": None,
             }
         else:
@@ -1556,7 +1596,7 @@ class BatchCommand(models.Model):
         to the next command.
         """
         cached = getattr(self, "previous_entity_json", None)
-        entity = cached if cached else self.get_entity_or_empty_item(client)
+        entity = cached if cached else self.get_entity_or_empty_entity(client)
         return entity
 
     def get_final_entity_json(self, client: Client) -> dict:
@@ -1712,9 +1752,13 @@ class BatchCommand(models.Model):
         """
         if self.operation == self.Operation.CREATE_ITEM:
             return {"item": {}}
+        if self.operation == self.Operation.CREATE_PROPERTY:
+            return {"property": {"data_type": self.property_data_type}}
         if self.operation_is_combinable():
-            if self.is_id_last_or_create_item():
+            if self.is_item_creation():
                 return {"item": self.get_final_entity_json(client)}
+            elif self.is_property_creation():
+                return {"property": self.get_final_entity_json(client)}
             else:
                 return {"patch": self.entity_patch(client)}
         return {}
@@ -1739,8 +1783,6 @@ class BatchCommand(models.Model):
         - `NotImplementedError` if the operation
         is not implemented.
         """
-        if self.operation == self.Operation.CREATE_PROPERTY:
-            raise NotImplementedError()
         method, endpoint = self.operation_method_and_endpoint(client)
         body = self.api_body(client)
         return client.wikibase_request_wrapper(method, endpoint, body)
@@ -1755,8 +1797,10 @@ class BatchCommand(models.Model):
         necessary for the operation.
         """
         if self.operation_is_combinable():
-            if self.is_id_last_or_create_item():
+            if self.is_item_creation():
                 return ("POST", "/entities/items")
+            elif self.is_property_creation():
+                return ("POST", "/entities/properties")
             else:
                 return ("PATCH", Client.wikibase_entity_endpoint(self.entity_id))
         match self.operation:
