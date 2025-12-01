@@ -500,7 +500,6 @@ class ProcessingTests(TestCase):
         )
         batch = self.parse(
             """
-        CREATE_PROPERTY|url
         Q1234|P5|12
         Q1234|Sptwikix|"Cool article"
         Q5|P5|123
@@ -513,25 +512,23 @@ class ProcessingTests(TestCase):
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
         commands = batch.commands()
-        self.assertEqual(commands[0].operation, BatchCommand.Operation.CREATE_PROPERTY)
-        self.assertEqual(commands[0].error, BatchCommand.Error.OP_NOT_IMPLEMENTED)
-        self.assertEqual(commands[1].operation, BatchCommand.Operation.SET_STATEMENT)
-        self.assertEqual(commands[1].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
-        self.assertEqual(commands[2].operation, BatchCommand.Operation.SET_SITELINK)
-        self.assertEqual(commands[2].error, BatchCommand.Error.SITELINK_INVALID)
+        self.assertEqual(commands[0].operation, BatchCommand.Operation.SET_STATEMENT)
+        self.assertEqual(commands[0].error, BatchCommand.Error.COMBINING_COMMAND_FAILED)
+        self.assertEqual(commands[1].operation, BatchCommand.Operation.SET_SITELINK)
+        self.assertEqual(commands[1].error, BatchCommand.Error.SITELINK_INVALID)
+        self.assertEqual(commands[2].operation, BatchCommand.Operation.SET_STATEMENT)
+        self.assertEqual(commands[2].error, BatchCommand.Error.API_USER_ERROR)
         self.assertEqual(commands[3].operation, BatchCommand.Operation.SET_STATEMENT)
-        self.assertEqual(commands[3].error, BatchCommand.Error.API_USER_ERROR)
-        self.assertEqual(commands[4].operation, BatchCommand.Operation.SET_STATEMENT)
-        self.assertEqual(commands[4].error, BatchCommand.Error.API_SERVER_ERROR)
+        self.assertEqual(commands[3].error, BatchCommand.Error.API_SERVER_ERROR)
+        self.assertEqual(
+            commands[4].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
+        )
+        self.assertEqual(commands[4].error, BatchCommand.Error.NO_STATEMENTS_PROPERTY)
         self.assertEqual(
             commands[5].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
         )
-        self.assertEqual(commands[5].error, BatchCommand.Error.NO_STATEMENTS_PROPERTY)
-        self.assertEqual(
-            commands[6].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_VALUE
-        )
-        self.assertEqual(commands[6].error, BatchCommand.Error.NO_STATEMENTS_VALUE)
-        self.assertEqual(len(commands), 7)
+        self.assertEqual(commands[5].error, BatchCommand.Error.NO_STATEMENTS_VALUE)
+        self.assertEqual(len(commands), 6)
         for command in commands:
             self.assertEqual(command.status, BatchCommand.STATUS_ERROR)
 
