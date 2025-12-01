@@ -280,6 +280,13 @@ class ApiMocker:
             status_code=200,
         )
 
+    def create_property(self, mocker, property_id):
+        mocker.post(
+            self.wikibase_url("/entities/properties"),
+            json={"id": property_id},
+            status_code=200,
+        )
+
     def property_data_types(self, mocker, mapper):
         mocker.get(
             self.wikibase_url("/property-data-types"),
@@ -666,6 +673,7 @@ class TestBatchCommand(TestCase):
     @requests_mock.Mocker()
     def test_send_create_property(self, mocker):
         self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.create_property(mocker, "P5")
         parser = V1CommandParser()
         batch = BatchFactory.load_from_parser(
             parser, "b", "u", "CREATE_PROPERTY|wikibase-item||LAST|P1|Q1"
@@ -673,8 +681,10 @@ class TestBatchCommand(TestCase):
         cmd: BatchCommand = batch.commands()[0]
         cmd.run(self.api_client)
         self.assertEqual(cmd.operation, BatchCommand.Operation.CREATE_PROPERTY)
-        self.assertEqual(cmd.status, BatchCommand.STATUS_ERROR)
-        self.assertEqual(cmd.error, BatchCommand.Error.OP_NOT_IMPLEMENTED)
-        self.assertIsNone(cmd.response_id)
-        with self.assertRaises(NotImplementedError):
-            cmd.send_to_api(self.api_client)
+        self.assertEqual(cmd.status, BatchCommand.STATUS_DONE)
+        self.assertIsNone(cmd.error)
+        self.assertEqual(
+            cmd.api_payload(self.api_client),
+            {"property": {"data_type": "wikibase-item"}},
+        )
+        self.assertEqual(cmd.response_id, "P5")
