@@ -33,16 +33,23 @@ def redirect_to_preview_last_batch(request):
     Used for ajax calls
     """
 
-    batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).order_by("created").last()
+    batch = (
+        Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username)
+        .order_by("created")
+        .last()
+    )
     if batch:
         return redirect(reverse("preview_batch_pk", args=[batch.pk]))
     else:
         return redirect(reverse("new_batch"))
 
+
 @require_GET
 def preview_batch_pk(request, pk):
     try:
-        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(pk=pk)
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
+            pk=pk
+        )
     except Batch.DoesNotExist:
         return render(request, "batch_not_found.html", {"pk": pk}, status=404)
 
@@ -90,7 +97,9 @@ def preview_batch_pk(request, pk):
 @require_GET
 def preview_batch_commands_pk(request, pk):
     try:
-        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(pk=pk)
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
+            pk=pk
+        )
     except Batch.DoesNotExist:
         return render(request, "batch_not_found.html", {"pk": pk}, status=404)
 
@@ -124,6 +133,7 @@ def preview_batch_commands_pk(request, pk):
         },
     )
 
+
 @login_required()
 def new_batch(request):
     """
@@ -147,19 +157,23 @@ def new_batch(request):
 
             batch_commands = batch_commands.strip()
             if not batch_commands:
-                raise ParserException(pgettext_lazy(
-                    "batch-py-empty-command-input",
-                    "Command input cannot be empty. Please provide valid commands."
-                ))
+                raise ParserException(
+                    pgettext_lazy(
+                        "batch-py-empty-command-input",
+                        "Command input cannot be empty. Please provide valid commands.",
+                    )
+                )
 
             if batch_type == "v1":
                 parser = V1CommandParser()
             else:
                 if "\n" not in batch_commands:
-                    raise ParserException(pgettext_lazy(
-                        "batch-py-csv-only-header",
-                        "CSV input must include more than just the header row"
-                    ))
+                    raise ParserException(
+                        pgettext_lazy(
+                            "batch-py-csv-only-header",
+                            "CSV input must include more than just the header row",
+                        )
+                    )
                 parser = CSVCommandParser()
 
             wikibase_url = request.POST.get("wikibase")
@@ -179,10 +193,12 @@ def new_batch(request):
                 batch_command.save()
 
             if not batch.batchcommand_set.exists():
-                raise ParserException(pgettext_lazy(
-                    "batch-py-valid-command-not-found",
-                    "No valid commands found in the provided input."
-                ))
+                raise ParserException(
+                    pgettext_lazy(
+                        "batch-py-valid-command-not-found",
+                        "No valid commands found in the provided input.",
+                    )
+                )
 
             request.session["preferred_batch_type"] = batch_type
             return redirect(reverse("preview_batch_pk", args=[batch.pk]))
@@ -203,7 +219,9 @@ def new_batch(request):
         )
 
     else:
-        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).first()
+        batch = Batch.objects.filter(
+            status=Batch.STATUS_PREVIEW, user=request.user.username
+        ).first()
         try:
             token = Token.objects.get(user=request.user)
             wikibase = batch and batch.wikibase or get_default_wikibase()
@@ -233,7 +251,9 @@ def new_batch(request):
 @login_required
 def batch_allow_start_pk(request, pk):
     try:
-        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(pk=pk)
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
+            pk=pk
+        )
     except Batch.DoesNotExist:
         return render(request, "batch_not_found.html", {"pk": pk}, status=404)
 
@@ -252,7 +272,7 @@ def batch_allow_start_pk(request, pk):
     if not can_start:
         not_confirmed = pgettext_lazy(
             "batch-py-user-not-autoconfirmed",
-            "User is not autoconfirmed. Only autoconfirmed users can run batches."
+            "User is not autoconfirmed. Only autoconfirmed users can run batches.",
         )
         blocked = pgettext_lazy(
             "batch-py-user-blocked", "User is blocked and can not run batches."
