@@ -26,7 +26,7 @@
     </hgroup>
 </div>
 <div style="float: right;">
-    <form method="POST" action="{% url 'batch_allow_start' %}">
+    <form method="POST" action="{% url 'batch_allow_start_pk' pk=batch.pk %}">
         {% if is_autoconfirmed and not is_blocked %}
         {% csrf_token %}
         <input type="submit" value="{% translate 'Save and run batch' context 'preview-batch-save-and-run-batch' %}">
@@ -51,7 +51,7 @@
     {% include 'batch_summary.html' with batch=batch done_count=0 done_percentage=0 finish_percentage=0 done_to_finish_percentage=0 status="Preview" show_block_on_errors_notice=batch.block_on_errors %}
 </div>
 <h4>{% translate 'Commands' context 'preview-batch-commands' %}</h4>
-<div class="overflow-auto" id="batchCommandsDiv" hx-get="{% url 'preview_batch_commands' %}" hx-trigger="load, reload" hx-indicator="#spinner" hx-swap="innerHTML">
+<div class="overflow-auto" id="batchCommandsDiv" hx-get="{% url 'preview_batch_commands_pk' pk=batch.pk %}" hx-trigger="load, reload" hx-indicator="#spinner" hx-swap="innerHTML">
     {% translate 'Loading commands...' context 'preview-batch-loading-commands' %}
 </div>
 {% endblock %}

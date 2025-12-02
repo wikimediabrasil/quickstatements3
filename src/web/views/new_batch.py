@@ -5,13 +5,13 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import pgettext_lazy
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_POST
 
 from core.exceptions import ServerError, UnauthorizedToken
 from core.models import (
     Batch,
     BatchCommand,
-    BatchEditingSession,
     Client,
     Token,
     Wikibase,
@@ -26,21 +26,26 @@ from .auth import logout_per_token_expired
 PAGE_SIZE = 25
 
 
-@require_http_methods(["GET"])
-def preview_batch(request):
+@require_GET
+def redirect_to_preview_last_batch(request):
     """
     Base call for a batch. Returns the main page, that will load 2 fragments: commands and summary
     Used for ajax calls
     """
 
-    batch = (
-        Batch.objects.filter(
-            editing_session__session_key=request.session.session_key,
-            status=Batch.STATUS_PREVIEW,
-        )
-        .order_by("-created")
-        .first()
-    )
+    batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).order_by("created").last()
+    if batch:
+        return redirect(reverse("preview_batch_pk", args=[batch.pk]))
+    else:
+        return redirect(reverse("new_batch"))
+
+@require_GET
+def preview_batch_pk(request, pk):
+    try:
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(pk=pk)
+    except Batch.DoesNotExist:
+        return render(request, "batch_not_found.html", {"pk": pk}, status=404)
+
     if batch:
         total_count = 0
         initial_count = 0
@@ -82,21 +87,13 @@ def preview_batch(request):
         return redirect(reverse("new_batch"))
 
 
-@require_http_methods(["GET"])
-def preview_batch_commands(request):
-    """
-    RETURNS fragment page with PAGINATED COMMANDs FOR A GIVEN BATCH ID
-    Used for ajax calls
-    """
+@require_GET
+def preview_batch_commands_pk(request, pk):
+    try:
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(pk=pk)
+    except Batch.DoesNotExist:
+        return render(request, "batch_not_found.html", {"pk": pk}, status=404)
 
-    batch = (
-        Batch.objects.filter(
-            editing_session__session_key=request.session.session_key,
-            status=Batch.STATUS_PREVIEW,
-        )
-        .order_by("-created")
-        .first()
-    )
     if batch:
         batch_commands = batch.batchcommand_set.all()
         try:
@@ -115,7 +112,7 @@ def preview_batch_commands(request):
         paginator = Paginator(batch_commands, page_size)
         page = paginator.page(page)
 
-    base_url = reverse("preview_batch_commands")
+    base_url = reverse("preview_batch_commands_pk", args=[batch.pk])
     return render(
         request,
         "batch_commands.html",
@@ -127,7 +124,6 @@ def preview_batch_commands(request):
         },
     )
 
-
 @login_required()
 def new_batch(request):
     """
@@ -136,8 +132,7 @@ def new_batch(request):
 
     if request.method == "POST":
         try:
-            BatchEditingSession.objects.filter(session_key=request.session.session_key).delete()
-            Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).delete()
+            Batch.delete_old_previews(request.user.username)
             batch_type = request.POST.get("type", "v1")
             batch_commands = request.POST.get("commands")
 
@@ -190,12 +185,7 @@ def new_batch(request):
                 ))
 
             request.session["preferred_batch_type"] = batch_type
-            # Set up editing session for the newly created batch.
-            BatchEditingSession.objects.create(
-                batch=batch, session_key=request.session.session_key
-            )
-
-            return redirect(reverse("preview_batch"))
+            return redirect(reverse("preview_batch_pk", args=[batch.pk]))
         except ParserException as p:
             error = p.message
         except Exception as p:
@@ -213,10 +203,7 @@ def new_batch(request):
         )
 
     else:
-        batch = Batch.objects.filter(
-            editing_session__session_key=request.session.session_key,
-            status=Batch.STATUS_PREVIEW,
-        ).first()
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).first()
         try:
             token = Token.objects.get(user=request.user)
             wikibase = batch and batch.wikibase or get_default_wikibase()
@@ -242,15 +229,13 @@ def new_batch(request):
         )
 
 
-@require_http_methods(["POST"])
-@login_required()
-def batch_allow_start(request):
-    batch = Batch.objects.filter(
-        editing_session__session_key=request.session.session_key,
-        status=Batch.STATUS_PREVIEW,
-    ).first()
-    if not batch:
-        return render(request, "batch_not_found.html", status=404)
+@require_POST
+@login_required
+def batch_allow_start_pk(request, pk):
+    try:
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(pk=pk)
+    except Batch.DoesNotExist:
+        return render(request, "batch_not_found.html", {"pk": pk}, status=404)
 
     try:
         token = Token.objects.get(user=request.user)
