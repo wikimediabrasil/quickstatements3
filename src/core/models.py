@@ -1855,8 +1855,3 @@ class BatchCommand(models.Model):
         is_not_verified_yet = not self.value_type_verified
         is_needed_actions = self.is_add_statement()
         return is_not_verified_yet and is_needed_actions
-
-
-class BatchEditingSession(models.Model):
-    batch = models.OneToOneField(Batch, related_name="editing_session", on_delete=models.CASCADE)
-    session_key = models.CharField(max_length=64, blank=True, null=True, db_index=True)
