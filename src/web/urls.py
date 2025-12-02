@@ -18,9 +18,9 @@ from .views.batches import last_batches_by_user
 from .views.batches import last_batches_table
 from .views.new_batch import new_batch
 from .views.new_batch import redirect_to_preview_last_batch
-from .views.new_batch import preview_batch_pk
-from .views.new_batch import preview_batch_commands_pk
-from .views.new_batch import batch_allow_start_pk
+from .views.new_batch import preview_batch
+from .views.new_batch import preview_batch_commands
+from .views.new_batch import batch_allow_start
 from .views.profile import profile
 from .views.profile import language_change
 from .views.statistics import statistics
@@ -52,13 +52,13 @@ urlpatterns = [
     path("batch/<int:pk>/commands/", batch_commands, name="batch_commands"),
     path("batch/new/", new_batch, name="new_batch"),
     path("batch/new/preview/", redirect_to_preview_last_batch, name="redirect_to_preview_last_batch"),
-    path("batch/new/preview/<int:pk>/", preview_batch_pk, name="preview_batch_pk"),
+    path("batch/new/preview/<int:pk>/", preview_batch, name="preview_batch"),
     path(
         "batch/new/preview/<int:pk>/commands/",
-        preview_batch_commands_pk,
-        name="preview_batch_commands_pk",
+        preview_batch_commands,
+        name="preview_batch_commands",
     ),
-    path("batch/new/preview/<int:pk>/allow_start/", batch_allow_start_pk, name="batch_allow_start_pk"),
+    path("batch/new/preview/<int:pk>/allow_start/", batch_allow_start, name="batch_allow_start"),
     path("statistics/", statistics, name="statistics"),
     path("statistics/counters/", all_time_counters, name="statistics_all_time_counters"),
     path("statistics/plots/", plots, name="statistics_plots"),

@@ -39,13 +39,13 @@ def redirect_to_preview_last_batch(request):
         .last()
     )
     if batch:
-        return redirect(reverse("preview_batch_pk", args=[batch.pk]))
+        return redirect(reverse("preview_batch", args=[batch.pk]))
     else:
         return redirect(reverse("new_batch"))
 
 
 @require_GET
-def preview_batch_pk(request, pk):
+def preview_batch(request, pk):
     try:
         batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
             pk=pk
@@ -95,7 +95,7 @@ def preview_batch_pk(request, pk):
 
 
 @require_GET
-def preview_batch_commands_pk(request, pk):
+def preview_batch_commands(request, pk):
     try:
         batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
             pk=pk
@@ -121,7 +121,7 @@ def preview_batch_commands_pk(request, pk):
         paginator = Paginator(batch_commands, page_size)
         page = paginator.page(page)
 
-    base_url = reverse("preview_batch_commands_pk", args=[batch.pk])
+    base_url = reverse("preview_batch_commands", args=[batch.pk])
     return render(
         request,
         "batch_commands.html",
@@ -201,7 +201,7 @@ def new_batch(request):
                 )
 
             request.session["preferred_batch_type"] = batch_type
-            return redirect(reverse("preview_batch_pk", args=[batch.pk]))
+            return redirect(reverse("preview_batch", args=[batch.pk]))
         except ParserException as p:
             error = p.message
         except Exception as p:
@@ -249,7 +249,7 @@ def new_batch(request):
 
 @require_POST
 @login_required
-def batch_allow_start_pk(request, pk):
+def batch_allow_start(request, pk):
     try:
         batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
             pk=pk
