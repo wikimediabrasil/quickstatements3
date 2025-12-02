@@ -240,7 +240,8 @@ class ViewsTest(TestCase):
             response = self.client.get(response.url)
             self.assertEqual(response.status_code, 200)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 302)
 
             response = self.client.get(response.url)
@@ -270,7 +271,8 @@ class ViewsTest(TestCase):
             self.assertEqual(response.status_code, 302)
             response = self.client.get(response.url)
             self.assertEqual(response.status_code, 200)
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 302)
             response = self.client.get(response.url)
             self.assertTemplateUsed("batch.html")
@@ -364,7 +366,8 @@ class ViewsTest(TestCase):
             response = self.client.get(response.url)
             self.assertEqual(response.status_code, 200)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 302)
 
             response = self.client.get(response.url)
@@ -434,7 +437,8 @@ class ViewsTest(TestCase):
             response = self.client.get(response.url)
             self.assertEqual(response.status_code, 200)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 302)
 
             response = self.client.get(response.url)
@@ -484,7 +488,8 @@ class ViewsTest(TestCase):
             response = self.client.get(response.url)
             self.assertEqual(response.status_code, 200)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 302)
 
             response = self.client.get(response.url)
@@ -608,15 +613,20 @@ class ViewsTest(TestCase):
                 },
             )
             self.assertEqual(response.status_code, 302)
-            self.assertEqual(response.url, "/batch/new/preview/")
+            pk = Batch.objects.last().pk
+            self.assertEqual(response.url, f"/batch/new/preview/{pk}/")
+
+            response = self.client.get("/batch/new/preview/")
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(response.url, f"/batch/new/preview/{pk}/")
 
             response = self.client.get(response.url)
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed("preview_batch.html")
 
-            response = self.client.get("/batch/new/preview/allow_start/")
+            response = self.client.get(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 405)
-            response = self.client.post("/batch/new/preview/allow_start/")
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 302)
 
             response = self.client.get(response.url)
@@ -724,7 +734,8 @@ class ViewsTest(TestCase):
             url = res.url
             res = self.client.get(url)
             self.assertEqual(res.context["is_autoconfirmed"], True)
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             batch_url = response.url
             response = self.client.get(batch_url)
             batch = response.context["batch"]
@@ -810,7 +821,8 @@ class ViewsTest(TestCase):
             response = self.client.get(response.url)
             self.assertInRes("Save and run batch", response)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             response = self.client.get(response.url)
             self.assertInRes("Stop execution", response)
 
@@ -927,7 +939,8 @@ class ViewsTest(TestCase):
             res = self.client.get(res.url)
             self.assertEqual(res.status_code, 200)
             self.assertInRes("Save and run batch", res)
-            res = self.client.get("/batch/new/preview/commands/")
+            pk = Batch.objects.last().pk
+            res = self.client.get(f"/batch/new/preview/{pk}/commands/")
             self.assertEqual(res.status_code, 200)
 
     @requests_mock.Mocker()
@@ -1009,11 +1022,12 @@ class ViewsTest(TestCase):
                 """,
                 },
             )
-            response = self.client.get("/batch/new/preview/")
+            pk = Batch.objects.last().pk
+            response = self.client.get(f"/batch/new/preview/{pk}/")
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed("preview_batch.html")
             self.assertInRes("linear-gradient(to right, green 0%, #C52F21 0)", response)
-            response = self.client.post("/batch/new/preview/allow_start/")
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             self.assertEqual(response.status_code, 302)
             response = self.client.get(response.url)
             self.assertEqual(response.status_code, 200)
@@ -1175,7 +1189,8 @@ class ViewsTest(TestCase):
             response = self.client.get(response.url)
             self.assertInRes("Save and run batch", response)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             response = self.client.get(response.url)
             self.assertInRes("Stop execution", response)
 
@@ -1249,7 +1264,8 @@ class ViewsTest(TestCase):
             response = self.client.get(response.url)
             self.assertInRes("Save and run batch", response)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             response = self.client.get(response.url)
             self.assertInRes("Stop execution", response)
 
@@ -1334,7 +1350,8 @@ class ViewsTest(TestCase):
             )
             self.assertEqual(response.status_code, 302)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             response = self.client.get(response.url)
             self.assertInRes("Stop execution", response)
 
@@ -1421,7 +1438,8 @@ class ViewsTest(TestCase):
             )
             self.assertEqual(response.status_code, 302)
 
-            response = self.client.post("/batch/new/preview/allow_start/")
+            pk = Batch.objects.last().pk
+            response = self.client.post(f"/batch/new/preview/{pk}/allow_start/")
             response = self.client.get(response.url)
             self.assertInRes("Stop execution", response)
 

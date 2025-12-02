@@ -5,13 +5,13 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import pgettext_lazy
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_POST
 
 from core.exceptions import ServerError, UnauthorizedToken
 from core.models import (
     Batch,
     BatchCommand,
-    BatchEditingSession,
     Client,
     Token,
     Wikibase,
@@ -26,21 +26,33 @@ from .auth import logout_per_token_expired
 PAGE_SIZE = 25
 
 
-@require_http_methods(["GET"])
-def preview_batch(request):
+@require_GET
+def redirect_to_preview_last_batch(request):
     """
     Base call for a batch. Returns the main page, that will load 2 fragments: commands and summary
     Used for ajax calls
     """
 
     batch = (
-        Batch.objects.filter(
-            editing_session__session_key=request.session.session_key,
-            status=Batch.STATUS_PREVIEW,
-        )
-        .order_by("-created")
-        .first()
+        Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username)
+        .order_by("created")
+        .last()
     )
+    if batch:
+        return redirect(reverse("preview_batch", args=[batch.pk]))
+    else:
+        return redirect(reverse("new_batch"))
+
+
+@require_GET
+def preview_batch(request, pk):
+    try:
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
+            pk=pk
+        )
+    except Batch.DoesNotExist:
+        return render(request, "batch_not_found.html", {"pk": pk}, status=404)
+
     if batch:
         total_count = 0
         initial_count = 0
@@ -82,21 +94,15 @@ def preview_batch(request):
         return redirect(reverse("new_batch"))
 
 
-@require_http_methods(["GET"])
-def preview_batch_commands(request):
-    """
-    RETURNS fragment page with PAGINATED COMMANDs FOR A GIVEN BATCH ID
-    Used for ajax calls
-    """
-
-    batch = (
-        Batch.objects.filter(
-            editing_session__session_key=request.session.session_key,
-            status=Batch.STATUS_PREVIEW,
+@require_GET
+def preview_batch_commands(request, pk):
+    try:
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
+            pk=pk
         )
-        .order_by("-created")
-        .first()
-    )
+    except Batch.DoesNotExist:
+        return render(request, "batch_not_found.html", {"pk": pk}, status=404)
+
     if batch:
         batch_commands = batch.batchcommand_set.all()
         try:
@@ -115,7 +121,7 @@ def preview_batch_commands(request):
         paginator = Paginator(batch_commands, page_size)
         page = paginator.page(page)
 
-    base_url = reverse("preview_batch_commands")
+    base_url = reverse("preview_batch_commands", args=[batch.pk])
     return render(
         request,
         "batch_commands.html",
@@ -136,8 +142,7 @@ def new_batch(request):
 
     if request.method == "POST":
         try:
-            BatchEditingSession.objects.filter(session_key=request.session.session_key).delete()
-            Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).delete()
+            Batch.delete_old_previews(request.user.username)
             batch_type = request.POST.get("type", "v1")
             batch_commands = request.POST.get("commands")
 
@@ -152,19 +157,23 @@ def new_batch(request):
 
             batch_commands = batch_commands.strip()
             if not batch_commands:
-                raise ParserException(pgettext_lazy(
-                    "batch-py-empty-command-input",
-                    "Command input cannot be empty. Please provide valid commands."
-                ))
+                raise ParserException(
+                    pgettext_lazy(
+                        "batch-py-empty-command-input",
+                        "Command input cannot be empty. Please provide valid commands.",
+                    )
+                )
 
             if batch_type == "v1":
                 parser = V1CommandParser()
             else:
                 if "\n" not in batch_commands:
-                    raise ParserException(pgettext_lazy(
-                        "batch-py-csv-only-header",
-                        "CSV input must include more than just the header row"
-                    ))
+                    raise ParserException(
+                        pgettext_lazy(
+                            "batch-py-csv-only-header",
+                            "CSV input must include more than just the header row",
+                        )
+                    )
                 parser = CSVCommandParser()
 
             wikibase_url = request.POST.get("wikibase")
@@ -184,18 +193,15 @@ def new_batch(request):
                 batch_command.save()
 
             if not batch.batchcommand_set.exists():
-                raise ParserException(pgettext_lazy(
-                    "batch-py-valid-command-not-found",
-                    "No valid commands found in the provided input."
-                ))
+                raise ParserException(
+                    pgettext_lazy(
+                        "batch-py-valid-command-not-found",
+                        "No valid commands found in the provided input.",
+                    )
+                )
 
             request.session["preferred_batch_type"] = batch_type
-            # Set up editing session for the newly created batch.
-            BatchEditingSession.objects.create(
-                batch=batch, session_key=request.session.session_key
-            )
-
-            return redirect(reverse("preview_batch"))
+            return redirect(reverse("preview_batch", args=[batch.pk]))
         except ParserException as p:
             error = p.message
         except Exception as p:
@@ -214,8 +220,7 @@ def new_batch(request):
 
     else:
         batch = Batch.objects.filter(
-            editing_session__session_key=request.session.session_key,
-            status=Batch.STATUS_PREVIEW,
+            status=Batch.STATUS_PREVIEW, user=request.user.username
         ).first()
         try:
             token = Token.objects.get(user=request.user)
@@ -242,15 +247,15 @@ def new_batch(request):
         )
 
 
-@require_http_methods(["POST"])
-@login_required()
-def batch_allow_start(request):
-    batch = Batch.objects.filter(
-        editing_session__session_key=request.session.session_key,
-        status=Batch.STATUS_PREVIEW,
-    ).first()
-    if not batch:
-        return render(request, "batch_not_found.html", status=404)
+@require_POST
+@login_required
+def batch_allow_start(request, pk):
+    try:
+        batch = Batch.objects.filter(status=Batch.STATUS_PREVIEW, user=request.user.username).get(
+            pk=pk
+        )
+    except Batch.DoesNotExist:
+        return render(request, "batch_not_found.html", {"pk": pk}, status=404)
 
     try:
         token = Token.objects.get(user=request.user)
@@ -267,7 +272,7 @@ def batch_allow_start(request):
     if not can_start:
         not_confirmed = pgettext_lazy(
             "batch-py-user-not-autoconfirmed",
-            "User is not autoconfirmed. Only autoconfirmed users can run batches."
+            "User is not autoconfirmed. Only autoconfirmed users can run batches.",
         )
         blocked = pgettext_lazy(
             "batch-py-user-blocked", "User is blocked and can not run batches."

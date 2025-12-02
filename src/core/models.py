@@ -19,6 +19,7 @@ from django.db.models import Count
 from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
+from django.utils.timezone import now
 from requests.exceptions import HTTPError
 from urllib3.util.retry import Retry
 
@@ -748,6 +749,21 @@ class Batch(models.Model):
                     cmd.raw.replace("\t", "|"),  # tabs are weird in csv
                 ]
             )
+
+    # ------
+    # Utility, probably should be moved to a BatchManager
+    # ------
+    @classmethod
+    def delete_old_previews(cls, username: str):
+        """
+        Delete batches in PREVIEW older than a week ago for this user.
+        """
+        a_week_ago = now() - timedelta(days=7)
+        return cls.objects.filter(
+            status=cls.STATUS_PREVIEW,
+            user=username,
+            created__lte=a_week_ago,
+        ).delete()
 
 
 class BatchCommand(models.Model):
@@ -1855,8 +1871,3 @@ class BatchCommand(models.Model):
         is_not_verified_yet = not self.value_type_verified
         is_needed_actions = self.is_add_statement()
         return is_not_verified_yet and is_needed_actions
-
-
-class BatchEditingSession(models.Model):
-    batch = models.OneToOneField(Batch, related_name="editing_session", on_delete=models.CASCADE)
-    session_key = models.CharField(max_length=64, blank=True, null=True, db_index=True)
