@@ -188,11 +188,14 @@ def new_batch(request):
                 combine_commands="do_not_combine_commands" not in request.POST,
             )
 
+            all_errors = True
             for batch_command in parser.parse(batch_commands):
+                if batch_command.status != BatchCommand.STATUS_ERROR:
+                    all_errors = False
                 batch_command.batch = batch
                 batch_command.save()
 
-            if not batch.batchcommand_set.exists():
+            if not batch.batchcommand_set.exists() or all_errors:
                 raise ParserException(
                     pgettext_lazy(
                         "batch-py-valid-command-not-found",

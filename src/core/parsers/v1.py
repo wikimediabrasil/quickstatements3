@@ -129,7 +129,7 @@ class V1CommandParser(BaseParser):
         llen = len(elements)
         if llen < 3:
             raise ParserException(
-                "STATEMENT must contain at least entity, property and value"
+                "Statement must contain at least entity, property and value"
             )
 
         if first_command[0] == "-":
@@ -189,7 +189,7 @@ class V1CommandParser(BaseParser):
             # We are adding / removing values
             pproperty = elements[1]
             if not self.is_valid_property_id(pproperty):
-                raise ParserException(f"Invalid property {pproperty}")
+                raise ParserException(f"Invalid property '{pproperty}'")
 
             data = {
                 "action": action,
@@ -390,5 +390,4 @@ class V1CommandParser(BaseParser):
                 bc.status = BatchCommand.STATUS_ERROR
                 bc.message = e.message
 
-            if bc.json:
-                yield bc
+            yield bc
