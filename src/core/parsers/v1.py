@@ -390,5 +390,4 @@ class V1CommandParser(BaseParser):
                 bc.status = BatchCommand.STATUS_ERROR
                 bc.message = e.message
 
-            if bc.json:
-                yield bc
+            yield bc

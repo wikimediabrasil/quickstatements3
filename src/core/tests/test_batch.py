@@ -354,6 +354,21 @@ class TestV1Batch(TestCase):
             ],
         )
 
+    def test_errors(self):
+        v1 = V1CommandParser()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", """CREATE||LAST|abc|123||xyz"""
+        )
+        cmd0 = batch.commands()[0]
+        cmd1 = batch.commands()[1]
+        cmd2 = batch.commands()[2]
+        self.assertEqual(len(batch.commands()), 3)
+        self.assertEqual(cmd0.status,BatchCommand.STATUS_INITIAL)
+        self.assertEqual(cmd1.status,BatchCommand.STATUS_ERROR)
+        self.assertEqual(cmd1.message, "Invalid property 'abc'")
+        self.assertEqual(cmd2.status,BatchCommand.STATUS_ERROR)
+        self.assertEqual(cmd2.message, "Statement must contain at least entity, property and value")
+
 
 class TestCSVBatch(TestCase):
     def test_create_property(self):
