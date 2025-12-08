@@ -1463,10 +1463,9 @@ class BatchCommand(models.Model):
         summaries.extend([c.user_summary for c in getattr(self, "previous_commands", [])])
         combined = " | ".join([s for s in summaries[::-1] if bool(s)])
         editgroups = self.editgroups_summary()
-        if editgroups:
-            return f"{editgroups}: {combined}" if combined else editgroups
-        else:
-            return combined
+        title = str(self.batch.name)
+        summary_parts = [editgroups, title, combined]
+        return ": ".join([s for s in summary_parts if len(s) > 0])
 
     def editgroups_summary(self):
         """

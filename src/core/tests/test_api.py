@@ -647,7 +647,7 @@ class TestBatchCommand(TestCase):
         batch_id = batch.id
         cmd = batch.commands()[0]
         comment = (
-            f"QuickStatements 3.0 [[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: hello"
+            f"QuickStatements 3.0 [[:toollabs:qs-dev/batch/{batch_id}|batch #{batch_id}]]: b: hello"
         )
         self.assertEqual(
             cmd.api_body(self.api_client),

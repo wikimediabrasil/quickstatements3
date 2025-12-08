@@ -273,6 +273,20 @@ class TestV1Batch(TestCase):
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(
             cmd.edit_summary(),
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: b: my comment",
+        )
+        cmd = BatchCommand.objects.get(batch=batch, index=1)
+        self.assertEqual(
+            cmd.edit_summary(),
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: b",
+        )
+        batch = BatchFactory.load_from_parser(
+            v1, "", "u", "Q1|P1|Q2 /* my comment */||Q1|P1|Q3"
+        )
+        batch_id = batch.id
+        cmd = BatchCommand.objects.get(batch=batch, index=0)
+        self.assertEqual(
+            cmd.edit_summary(),
             f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: my comment",
         )
         cmd = BatchCommand.objects.get(batch=batch, index=1)
@@ -823,6 +837,18 @@ Q4115189,Q5,
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(
             cmd.edit_summary(),
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: b: my comment",
+        )
+        cmd = BatchCommand.objects.get(batch=batch, index=1)
+        self.assertEqual(
+            cmd.edit_summary(),
+            f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: b",
+        )
+        batch = BatchFactory.load_from_parser(par, "", "u", COMMAND)
+        batch_id = batch.id
+        cmd = BatchCommand.objects.get(batch=batch, index=0)
+        self.assertEqual(
+            cmd.edit_summary(),
             f"QuickStatements 3.0 [[:toollabs:abcdef/batch/{batch_id}|batch #{batch_id}]]: my comment",
         )
         cmd = BatchCommand.objects.get(batch=batch, index=1)
@@ -838,11 +864,16 @@ Q4115189,Q5,my comment
 Q4115189,Q5,
 """
         par = CSVCommandParser()
-        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
+        batch = BatchFactory.load_from_parser(par, "", "u", COMMAND)
         cmd = BatchCommand.objects.get(batch=batch, index=0)
         self.assertEqual(cmd.edit_summary(), "my comment")
         cmd = BatchCommand.objects.get(batch=batch, index=1)
         self.assertEqual(cmd.edit_summary(), "")
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
+        cmd = BatchCommand.objects.get(batch=batch, index=0)
+        self.assertEqual(cmd.edit_summary(), "b: my comment")
+        cmd = BatchCommand.objects.get(batch=batch, index=1)
+        self.assertEqual(cmd.edit_summary(), "b")
 
     def test_remove_statemeny_by_value(self):
         COMMAND = """qid,P31,-P31
