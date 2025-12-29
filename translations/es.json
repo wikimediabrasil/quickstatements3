@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Danielyepezgarces"
+			"Danielyepezgarces",
+			"Tecbs"
 		]
 	},
 	"batch-py-status-stopped": "Interrumpido",
@@ -13,6 +14,7 @@
 	"batch-py-batch": "Lote",
 	"batch-py-batches": "Lotes",
 	"batchcommand-py-status-error": "Error",
+	"batchcommand-py-status-initial": "Inicial",
 	"batchcommand-py-status-running": "En ejecución",
 	"batchcommand-py-status-done": "Hecho",
 	"batchcommand-py-action-create": "CREAR",
@@ -46,6 +48,7 @@
 	"batchcommand-py-error-api-server-error": "La API devolvió un error de servidor",
 	"batchcommand-py-error-last-not-evaluated": "No se pudo evaluar LAST.",
 	"batchcommand-py-batchcommand": "Comando de lote",
+	"batchcommand-py-batchcommands": "Comandos por lotes",
 	"web-models-token": "Token",
 	"web-models-tokens": "Tokens",
 	"web-models-preferences": "Preferencias",
@@ -178,7 +181,7 @@
 	"batch-commands-references": "Referencias",
 	"batch-command-somevalue": "(Valor desconocido)",
 	"batch-command-novalue": "(Sin valor)",
-	"statistics-title-username": "Estadísticas de %(1)s",
+	"statistics-title-username": "Estadísticas de $1",
 	"statistics-title": "Estadísticas",
 	"statistics-all-time-numbers": "Números de todos los tiempos",
 	"statistics-cumulative-batches": "Número acumulado de lotes",
