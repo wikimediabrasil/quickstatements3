@@ -1667,6 +1667,19 @@ class BatchCommand(models.Model):
                 return statement
         return None
 
+    def _get_statements(self, entity: dict) -> List[dict]:
+        """
+        Returns the statements that matches the command's value.
+
+        Returns an empty list if there is no matching statement.
+        """
+        statements = entity["statements"].setdefault(self.prop, [])
+        matching = []
+        for i, statement in enumerate(statements):
+            if statement["value"] == self.statement_api_value:
+                matching.append(statement)
+        return matching
+
     def _update_entity_statements(self, entity: dict):
         """
         Modifies the entity json statements in-place.
@@ -1688,21 +1701,28 @@ class BatchCommand(models.Model):
         """
         Removes a qualifier or a reference from the entity.
         """
-        statement = self._get_statement(entity)
-        statement = statement if statement else {}
+        statements = self._get_statements(entity)
         found_qualifier = False
         found_ref_part = False
-        for i, qual in enumerate(statement.get("qualifiers", [])):
-            if self.is_in_qualifiers(qual):
-                statement["qualifiers"].pop(i)
-                found_qualifier = True
-                break
-        for i, ref in enumerate(statement.get("references", [])):
-            for j, part in enumerate(ref["parts"]):
-                if self.is_part_in_references(part):
-                    statement["references"][i]["parts"].pop(j)
-                    found_ref_part = True
+        for statement in statements:
+            for i, qual in enumerate(statement.get("qualifiers", [])):
+                if self.is_in_qualifiers(qual):
+                    statement["qualifiers"].pop(i)
+                    found_qualifier = True
                     break
+            if found_qualifier:
+                break
+        for statement in statements:
+            for i, ref in enumerate(statement.get("references", [])):
+                for j, part in enumerate(ref["parts"]):
+                    if self.is_part_in_references(part):
+                        statement["references"][i]["parts"].pop(j)
+                        found_ref_part = True
+                        break
+                if found_ref_part:
+                    break
+            # any better way to do this? :P
+            # (without refactoring into a different function...)
             if found_ref_part:
                 break
         if not found_qualifier and len(self.qualifiers_for_api()) > 0:
