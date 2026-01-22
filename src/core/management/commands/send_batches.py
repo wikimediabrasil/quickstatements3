@@ -63,5 +63,8 @@ class Command(BaseCommand):
                 thread.start()
                 user_threads[user] = thread
 
-            logger.debug(f"No batches to process. Sleeping {self.TIMEOUT_SEC}s...")
+            if user_threads:
+                logger.debug(f"Running threads: {user_threads}")
+            else:
+                logger.debug(f"No batches to process. Sleeping {self.TIMEOUT_SEC}s...")
             time.sleep(self.TIMEOUT_SEC)
