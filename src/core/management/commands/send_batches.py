@@ -5,8 +5,10 @@ from datetime import datetime
 
 from core.models import Batch, BatchCommand
 from django.core.management.base import BaseCommand
+from django.conf import settings
 
 logger = logging.getLogger("qsts3")
+logging.getLogger("urllib3").setLevel(settings.LOG_LEVEL)
 
 
 def process_batches(batches):
