@@ -198,7 +198,7 @@ class Client:
 
         res = getattr(self.session, method.lower())(url, **kwargs)
 
-        logger.debug(f"{method} request at {url} | response: {res.json()}")
+        logger.debug(f"{method} request at {url} | response ({res.status_code}): {res.json()}")
         self.raise_for_status(res)
         return res.json()
 
