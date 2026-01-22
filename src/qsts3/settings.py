@@ -152,6 +152,10 @@ APPEND_SLASH = True
 
 
 LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
+
+if os.getenv("LOG_LEVEL"):
+    LOG_LEVEL = os.getenv("LOG_LEVEL").upper()
+
 APP_LOG_CONFIG = {
     "handlers": ["console"],
     "level": LOG_LEVEL,
