@@ -5,8 +5,10 @@ from datetime import datetime
 
 from core.models import Batch, BatchCommand
 from django.core.management.base import BaseCommand
+from django.conf import settings
 
 logger = logging.getLogger("qsts3")
+logging.getLogger("urllib3").setLevel(settings.LOG_LEVEL)
 
 
 def process_batches(batches):
@@ -63,5 +65,8 @@ class Command(BaseCommand):
                 thread.start()
                 user_threads[user] = thread
 
-            logger.debug(f"No batches to process. Sleeping {self.TIMEOUT_SEC}s...")
+            if user_threads:
+                logger.debug(f"Running threads: {user_threads}")
+            else:
+                logger.debug(f"No batches to process. Sleeping {self.TIMEOUT_SEC}s...")
             time.sleep(self.TIMEOUT_SEC)
