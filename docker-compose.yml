@@ -11,6 +11,7 @@ x-application-service: &application-service
     DJANGO_SETTINGS_MODULE: qsts3.settings
     DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-django-insecure-2ir3a7tRpdDNBdymZYdmvQ61Qv1gJF9CyUoxkZcQHqg}
     QSTS_DEBUG: ${QSTS_DEBUG:-True}
+    LOG_LEVEL: ${LOG_LEVEL:-}
     DB_NAME: ${DB_NAME:-quickstatements}
     DB_USER: ${DB_USER:-root}
     DB_PASSWORD: ${DB_PASSWORD:-quickstatements_pass}
