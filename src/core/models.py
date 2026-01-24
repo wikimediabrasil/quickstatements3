@@ -67,6 +67,8 @@ def unix_timestamp_to_datetime(expires_at_oauth: int):
 
 
 class Client:
+    TIMEOUT = (10, 40) # connect, read
+
     def __init__(self, token: "Token", wikibase: "Wikibase"):
         retries = Retry(
             total=10,
@@ -120,7 +122,7 @@ class Client:
         logger.debug(f"Sending GET request at {url}")
         self.token.refresh_if_needed()
 
-        response = self.session.get(url, headers=self.headers())
+        response = self.session.get(url, headers=self.headers(), timeout=self.TIMEOUT)
         self.raise_for_status(response)
         return response
 
@@ -189,6 +191,7 @@ class Client:
         kwargs = {
             "json": body,
             "headers": self.headers(),
+            "timeout": self.TIMEOUT,
         }
 
         url = self.wikibase_url(endpoint)
