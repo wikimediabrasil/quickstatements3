@@ -165,7 +165,7 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "simple": {"format": "%(levelname)s:%(module)s:%(funcName)s #%(lineno)d %(message)s"},
+        "simple": {"format": "%(asctime)s %(levelname)s:%(module)s:%(funcName)s #%(lineno)d %(message)s"},
         "complete": {
             "format": "%(asctime)s %(levelname)s:%(module)s %(process)d %(lineno)d %(message)s"
         },
@@ -186,11 +186,7 @@ LOGGING = {
             "handlers": ["django"],
             "level": "INFO",
         },
-        "urllib3": {
-            "handlers": ["console"],
-            "level": "INFO",
-            "propagate": True,
-        },
+        "urllib3": APP_LOG_CONFIG,
         "qsts3": APP_LOG_CONFIG,
     },
 }

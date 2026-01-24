@@ -74,6 +74,7 @@ class Client:
             total=10,
             backoff_factor=0.5,
             backoff_max=30,
+            respect_retry_after_header=False,
             status_forcelist=[429],
             allowed_methods=["GET", "POST", "PATCH", "DELETE"],
         )
