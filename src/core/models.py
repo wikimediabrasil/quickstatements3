@@ -70,7 +70,8 @@ class Client:
     def __init__(self, token: "Token", wikibase: "Wikibase"):
         retries = Retry(
             total=10,
-            backoff_factor=1,
+            backoff_factor=0.5,
+            backoff_max=30,
             status_forcelist=[429],
             allowed_methods=["GET", "POST", "PATCH", "DELETE"],
         )
