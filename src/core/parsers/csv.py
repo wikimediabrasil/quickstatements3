@@ -41,6 +41,7 @@ class CSVCommandParser(BaseParser):
 
         for index, cell in enumerate(row):
             cell_value = cell.strip()
+            debuginfo = f"Column {index}: {cell_value}"
             current_value = self.parse_value(cell_value)
             if current_value is None:
                 current_value = {"type": "string", "value": cell_value}
@@ -146,7 +147,7 @@ class CSVCommandParser(BaseParser):
                                 current_command["value"]["value"]
                             ]
 
-                    commands.append(current_command)
+                    commands.append((debuginfo, current_command))
 
         return commands
 
@@ -194,7 +195,7 @@ class CSVCommandParser(BaseParser):
                 first_line = False
             else:
                 commands = self.parse_line(row, header)
-                for command in commands:
+                for debuginfo, command in commands:
                     action = BatchCommand.ACTION_CREATE
                     operation = None
                     if command["action"] == "add":
@@ -221,7 +222,7 @@ class CSVCommandParser(BaseParser):
                     yield BatchCommand(
                         index=index,
                         json=command,
-                        raw=row,
+                        raw=debuginfo,
                         action=action,
                         operation=operation,
                         status=BatchCommand.STATUS_INITIAL,
