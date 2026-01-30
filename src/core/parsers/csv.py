@@ -41,12 +41,12 @@ class CSVCommandParser(BaseParser):
 
         for index, cell in enumerate(row):
             cell_value = cell.strip()
-            debuginfo = f"Column {index}: {cell_value}"
             current_value = self.parse_value(cell_value)
             if current_value is None:
                 current_value = {"type": "string", "value": cell_value}
 
             header_value = header[index]  # HEADER VALUE
+            debuginfo = f"header[{index}]={header[index]!r}\n{cell_value=},"
 
             if index == 0:  # That is the QID, alway in the firs column
                 if not cell_value:
