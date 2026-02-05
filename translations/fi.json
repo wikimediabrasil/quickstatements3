@@ -32,7 +32,7 @@
 	"batchcommand-py-operation-set-label": "Aseta nimi",
 	"batchcommand-py-operation-set-description": "Aseta kuvaus",
 	"batchcommand-py-operation-remove-sitelink": "Poista sivustolinkki",
-	"batchcommand-py-operation-remove-label": "Poisto nimi",
+	"batchcommand-py-operation-remove-label": "Poista nimi",
 	"batchcommand-py-operation-remove-description": "Poista kuvaus",
 	"batchcommand-py-operation-add-alias": "Lisää alias",
 	"batchcommand-py-operation-remove-alias": "Poista alias",
