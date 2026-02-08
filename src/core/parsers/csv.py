@@ -46,6 +46,7 @@ class CSVCommandParser(BaseParser):
                 current_value = {"type": "string", "value": cell_value}
 
             header_value = header[index]  # HEADER VALUE
+            debuginfo = f"header[{index}]={header[index]!r}\n{cell_value=},"
 
             if index == 0:  # That is the QID, alway in the firs column
                 if not cell_value:
@@ -146,7 +147,7 @@ class CSVCommandParser(BaseParser):
                                 current_command["value"]["value"]
                             ]
 
-                    commands.append(current_command)
+                    commands.append((debuginfo, current_command))
 
         return commands
 
@@ -194,7 +195,7 @@ class CSVCommandParser(BaseParser):
                 first_line = False
             else:
                 commands = self.parse_line(row, header)
-                for command in commands:
+                for debuginfo, command in commands:
                     action = BatchCommand.ACTION_CREATE
                     operation = None
                     if command["action"] == "add":
@@ -221,7 +222,7 @@ class CSVCommandParser(BaseParser):
                     yield BatchCommand(
                         index=index,
                         json=command,
-                        raw=row,
+                        raw=debuginfo,
                         action=action,
                         operation=operation,
                         status=BatchCommand.STATUS_INITIAL,
