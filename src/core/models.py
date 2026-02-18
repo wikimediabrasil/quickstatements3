@@ -49,10 +49,6 @@ oauth.register(
     client_secret=settings.OAUTH_CLIENT_SECRET,
     access_token_url=settings.OAUTH_ACCESS_TOKEN_URL,
     authorize_url=settings.OAUTH_AUTHORIZATION_URL,
-    client_kwargs={
-        "scope": "openid profile",
-        "token_endpoint_auth_method": "client_secret_post",
-    },
 )
 
 
