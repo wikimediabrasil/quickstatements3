@@ -1,3 +1,6 @@
+import logging
+import traceback
+
 from authlib.integrations.base_client.errors import MismatchingStateError
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
@@ -7,6 +10,8 @@ from django.urls import reverse
 from core.exceptions import NoToken, ServerError, UnauthorizedToken
 from core.models import get_default_wikibase, oauth
 from web.utils import clear_tokens, user_from_access_token, user_from_full_token
+
+logger = logging.getLogger("qsts3")
 
 
 def logout_per_token_expired(request):
@@ -49,6 +54,10 @@ def oauth_callback(request):
         data["error"] = "server"
     except MismatchingStateError:
         data["error"] = "mismatched_states"
+    except Exception as e:
+        logger.error(f"authentication failed: {e}")
+        traceback.print_exc()
+        data["error"] = "unknown"
     return render(request, "login.html", data, status=401)
 
 
