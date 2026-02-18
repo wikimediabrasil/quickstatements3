@@ -15,7 +15,7 @@
 
 {% if error %}
 <p style="color: var(--pico-color-red-500);">
-  {% if error == "authorization" %}
+  {% if error == "token" %}
     Authentication with your Wikimedia account failed.
   {% elif error == "server" %}
     The Wikimedia server was not able to process your authentication.
