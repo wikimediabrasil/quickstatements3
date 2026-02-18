@@ -130,6 +130,7 @@ class Client:
     def raise_for_status(self, response):
         status = response.status_code
         if status == 401:
+            logger.warning(f"Unauthorized at {response.url}: {response.text}")
             raise UnauthorizedToken()
         if 400 <= status <= 499:
             j = response.json()
