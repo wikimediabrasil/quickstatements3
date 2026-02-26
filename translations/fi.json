@@ -45,6 +45,7 @@
 	"batchcommand-py-error-combining-failed": "Seuraava komento epäonnistui",
 	"batchcommand-py-error-api-user-error": "API palautti \"käyttäjävirhe\"",
 	"batchcommand-py-error-api-server-error": "API palautti \"palvelinvirhe\"",
+	"batchcommand-py-error-last-not-evaluated": "LAST-komentoa ei voitu arvioida.",
 	"batchcommand-py-batchcommand": "Eräkomento",
 	"batchcommand-py-batchcommands": "Eräkomennot",
 	"web-models-token": "Poletti",
