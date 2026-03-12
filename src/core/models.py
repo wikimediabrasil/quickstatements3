@@ -846,6 +846,10 @@ class BatchCommand(models.Model):
             pgettext_lazy("batchcommand-py-operation-create-statement", "Create statement"),
         )
         #
+        SWITCH_STATEMENT_VALUE = (
+            "switch_statement_value",
+            pgettext_lazy("batchcommand-py-operation-switch-statement-value", "Switch statement value"),
+        )
         REMOVE_STATEMENT_BY_ID = (
             "remove_statement_by_id",
             pgettext_lazy(
