@@ -1220,6 +1220,11 @@ class BatchCommand(models.Model):
         self.update_quantity_units_if_needed()
         return self.parser_value_to_api_value(self.json["value"])
 
+    @property
+    def statement_api_value_switch(self):
+        self.update_quantity_units_if_needed()
+        return self.parser_value_to_api_value(self.json["value_switch"])
+
     def update_quantity_units_if_needed(self):
         # TODO: maybe we can add this elsewhere,
         # because `statement_api_value` above is called a lot
@@ -1236,6 +1241,9 @@ class BatchCommand(models.Model):
                 value["value"]["unit"] = full_unit
 
         update_unit(self.json["value"])
+
+        if self.json.get("value_switch"):
+            update_unit(self.json["value_switch"])
 
         for qual_ref in self.qualifiers() + self.reference_parts():
             update_unit(qual_ref["value"])
@@ -1352,6 +1360,9 @@ class BatchCommand(models.Model):
 
     def is_add_statement(self):
         return self.is_add() and self.what == "STATEMENT"
+
+    def is_switch_value(self):
+        return self.operation == self.Operation.SWITCH_STATEMENT_VALUE
 
     def is_add_label_description_alias(self):
         return self.is_add() and self.what in ["DESCRIPTION", "LABEL", "ALIAS"]
@@ -1500,6 +1511,7 @@ class BatchCommand(models.Model):
             self.Operation.SET_STATEMENT,
             self.Operation.CREATE_STATEMENT,
             self.Operation.CREATE_PROPERTY,
+            self.Operation.SWITCH_STATEMENT_VALUE,
             self.Operation.REMOVE_STATEMENT_BY_VALUE,
             self.Operation.REMOVE_QUALIFIER,
             self.Operation.REMOVE_REFERENCE,
@@ -1643,6 +1655,8 @@ class BatchCommand(models.Model):
             self._update_entity_statements(entity)
         elif self.operation == self.Operation.REMOVE_STATEMENT_BY_VALUE:
             self._remove_entity_statement(entity)
+        elif self.operation == self.Operation.SWITCH_STATEMENT_VALUE:
+            self._switch_statement_value(entity)
         elif self.operation in (self.Operation.ADD_ALIAS, self.Operation.REMOVE_ALIAS):
             self._update_entity_aliases(entity)
         elif self.operation in (
@@ -1751,6 +1765,20 @@ class BatchCommand(models.Model):
         for i, statement in enumerate(statements):
             if statement["value"] == self.statement_api_value:
                 return entity["statements"][self.prop].pop(i)
+        raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
+
+    def _switch_statement_value(self, entity: dict):
+        """
+        Switches a statement value
+        """
+        statements = entity["statements"].get(self.prop, [])
+        # TODO: this logic of getting the statement or raising erros could be refactored
+        if len(statements) == 0:
+            raise NoStatementsForThatProperty(self.entity_id, self.prop)
+        for i, statement in enumerate(statements):
+            if statement["value"] == self.statement_api_value:
+                statement["value"] = self.statement_api_value_switch
+                return
         raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
 
     def _update_entity_aliases(self, entity: dict):
@@ -1875,17 +1903,30 @@ class BatchCommand(models.Model):
         """
         if self.should_verify_value_types():
             try:
-                client.verify_value_type(self.prop, self.value_type)
-                for q in self.qualifiers():
-                    client.verify_value_type(q["property"], q["value"]["type"])
-                for p in self.reference_parts():
-                    client.verify_value_type(p["property"], p["value"]["type"])
+                for prop, value_type in self.property_and_value_types_to_verify():
+                    client.verify_value_type(prop, value_type)
             except InvalidPropertyValueType as e:
                 self.error_with_message(e.message)
                 raise e
 
         self.value_type_verified = True
         self.save()
+
+    def property_and_value_types_to_verify(self):
+        """
+        Returns a list of pairs of property and value types to verify.
+
+        Obtains it from statement value, value_switch, qualifiers and references.
+        """
+        to_verify = []
+        to_verify.append((self.prop, self.value_type))
+        for q in self.qualifiers():
+            to_verify.append((q["property"], q["value"]["type"]))
+        for p in self.reference_parts():
+            to_verify.append((p["property"], p["value"]["type"]))
+        if self.json.get("value_switch"):
+            to_verify.append((self.prop, self.json["value_switch"]["type"]))
+        return to_verify
 
     def should_verify_value_types(self):
         """
@@ -1896,7 +1937,8 @@ class BatchCommand(models.Model):
         2) It needs if it is of the following types/actions:
 
         - Statement addition
+        - Statement value switch
         """
         is_not_verified_yet = not self.value_type_verified
-        is_needed_actions = self.is_add_statement()
+        is_needed_actions = self.is_add_statement() or self.is_switch_value()
         return is_not_verified_yet and is_needed_actions

@@ -125,6 +125,26 @@ class V1CommandParser(BaseParser):
                 "entity": {"id": _split[0]},
             }
 
+    def parse_switch_value(self, elements):
+        llen = len(elements)
+        if llen != 5:
+            raise ParserException("SWITCH_VALUE command must be QID|PID|old_value|new_value")
+        elements.pop(0)
+
+        # since value is only parsed inside `parse_statement`,
+        # we do this workaround to get it
+        new = list(elements)
+        new.pop(2)
+        value_switch = self.parse_statement(new, new[0].upper())["value"]
+
+        elements.pop(3)
+        data = self.parse_statement(elements, elements[0].upper())
+        data["action"] = "switch"
+        data["what"] = "value"
+        data["value_switch"] = value_switch
+        data["operation"] = BatchCommand.Operation.SWITCH_STATEMENT_VALUE
+        return data
+
     def parse_statement(self, elements, first_command):
         llen = len(elements)
         if llen < 3:
@@ -292,6 +312,9 @@ class V1CommandParser(BaseParser):
         elif first_command == "REMOVE_REF":
             logger.debug(f"parsing remove reference: {elements}")
             data = self.parse_remove_reference(elements)
+        elif first_command == "SWITCH_VALUE":
+            logger.debug(f"parsing switch value: {elements}")
+            data = self.parse_switch_value(elements)
         else:
             logger.debug(f"parsing statement: {elements}/{first_command}")
             data = self.parse_statement(elements, first_command)
@@ -382,6 +405,8 @@ class V1CommandParser(BaseParser):
                         bc.operation = bc.Operation.CREATE_PROPERTY
                     elif what_or_type == "statement":
                         bc.operation = bc.Operation.CREATE_STATEMENT
+                elif command["action"] == "switch":
+                    bc.operation = command["operation"] # TODO: this could be done for all operations here
                 else:
                     bc.action = BatchCommand.ACTION_MERGE
                 bc.user_summary = command.pop("summary", None)

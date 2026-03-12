@@ -903,3 +903,54 @@ class ProcessingTests(TestCase):
         self.assertEqual(batch2.estimated_runtime, 120)
         self.assertIsNone(batch1.estimated_runtime_total)
         self.assertEqual(batch2.estimated_runtime_total, 120)
+
+    @requests_mock.Mocker()
+    def test_value_switch_data_type(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.property_data_type(mocker, "P5", "wikibase-item")
+        self.api_mocker.wikidata_property_data_types(mocker)
+        self.api_mocker.item(
+            mocker,
+            "Q1",
+            {
+                "statements": {
+                    "P5": [
+                        {
+                            "id": "Q1$abcdefgh-uijkl",
+                            "value": {
+                                "type": "value",
+                                "content": "Q12",
+                            },
+                            "qualifiers": [],
+                            "references": [],
+                            "property": {"id": "P5", "data_type": "wikibase-item"},
+                        },
+                    ],
+                },
+            },
+        )
+        self.api_mocker.patch_item_successful(mocker, "Q1", {})
+        raw = """
+        SWITCH_VALUE|Q1|P5|Q12|"https://kernel.org/"
+        SWITCH_VALUE|Q1|P5|Q12|+2000-01-01T00:00:00Z/11
+        SWITCH_VALUE|Q1|P5|Q12|Q24
+        """
+        batch = self.parse(raw)
+        commands = batch.commands()
+        batch.run()
+        self.assertEqual(batch.status, Batch.STATUS_DONE)
+        self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
+        self.assertIsNone(commands[0].error) # TODO: we should have an error type, no?
+        self.assertEqual(
+             commands[0].message,
+             "Invalid value type for the property P5: 'string' was provided but it needs 'wikibase-entityid'."
+         )
+        self.assertEqual(commands[1].status, BatchCommand.STATUS_ERROR)
+        self.assertIsNone(commands[1].error)
+        self.assertEqual(
+             commands[1].message,
+             "Invalid value type for the property P5: 'time' was provided but it needs 'wikibase-entityid'."
+         )
+        self.assertEqual(commands[2].status, BatchCommand.STATUS_DONE)
+        self.assertIsNone(commands[2].message)
+        self.assertIsNone(commands[2].error)
