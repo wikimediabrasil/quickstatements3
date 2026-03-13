@@ -145,6 +145,23 @@ class V1CommandParser(BaseParser):
         data["operation"] = BatchCommand.Operation.SWITCH_STATEMENT_VALUE
         return data
 
+    def parse_switch_property(self, elements):
+        llen = len(elements)
+        if llen != 5:
+            raise ParserException("SWITCH_PROPERTY command must be QID|PID|value|new_PID")
+        elements.pop(0)
+
+        property_switch = elements.pop(3)
+        if not self.is_valid_property_id(property_switch):
+            raise ParserException(f"Invalid property '{property_switch}'")
+
+        data = self.parse_statement(elements, elements[0].upper())
+        data["action"] = "switch"
+        data["what"] = "property"
+        data["property_switch"] = property_switch
+        data["operation"] = BatchCommand.Operation.SWITCH_STATEMENT_PROPERTY
+        return data
+
     def parse_statement(self, elements, first_command):
         llen = len(elements)
         if llen < 3:
@@ -315,6 +332,9 @@ class V1CommandParser(BaseParser):
         elif first_command == "SWITCH_VALUE":
             logger.debug(f"parsing switch value: {elements}")
             data = self.parse_switch_value(elements)
+        elif first_command == "SWITCH_PROPERTY":
+            logger.debug(f"parsing switch property: {elements}")
+            data = self.parse_switch_property(elements)
         else:
             logger.debug(f"parsing statement: {elements}/{first_command}")
             data = self.parse_statement(elements, first_command)

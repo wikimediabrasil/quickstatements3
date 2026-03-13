@@ -20,6 +20,7 @@
     "batchcommand-py-operation-set-statement": "Set statement",
     "batchcommand-py-operation-create-statement": "Create statement",
     "batchcommand-py-operation-switch-statement-value": "Switch statement value",
+    "batchcommand-py-operation-switch-statement-property": "Switch statement property",
     "batchcommand-py-operation-remove-statement-by-id": "Remove statement by id",
     "batchcommand-py-operation-remove-statement-by-value": "Remove statement by value",
     "batchcommand-py-operation-remove-qualifier": "Remove qualifier",
@@ -213,5 +214,6 @@
     "batch-button-rerun-uncombined": "Rerun uncombined",
     "batch-button-rerun": "Rerun",
     "batch-button-download-report": "Download report",
-    "login-token-expired": "Your Wikimedia authentication has expired. This is completely normal and it happens for security reasons. Please, log in again."
+    "login-token-expired": "Your Wikimedia authentication has expired. This is completely normal and it happens for security reasons. Please, log in again.",
+    "batchcommand-py-operation-switch-statement-property": "Switch statement property"
 }

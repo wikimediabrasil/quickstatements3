@@ -850,6 +850,10 @@ class BatchCommand(models.Model):
             "switch_statement_value",
             pgettext_lazy("batchcommand-py-operation-switch-statement-value", "Switch statement value"),
         )
+        SWITCH_STATEMENT_PROPERTY = (
+            "switch_statement_property",
+            pgettext_lazy("batchcommand-py-operation-switch-statement-property", "Switch statement property"),
+        )
         REMOVE_STATEMENT_BY_ID = (
             "remove_statement_by_id",
             pgettext_lazy(
@@ -1361,8 +1365,14 @@ class BatchCommand(models.Model):
     def is_add_statement(self):
         return self.is_add() and self.what == "STATEMENT"
 
+    def is_switch(self):
+        return self.is_switch_value() or self.is_switch_property()
+
     def is_switch_value(self):
         return self.operation == self.Operation.SWITCH_STATEMENT_VALUE
+
+    def is_switch_property(self):
+        return self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY
 
     def is_add_label_description_alias(self):
         return self.is_add() and self.what in ["DESCRIPTION", "LABEL", "ALIAS"]
@@ -1512,6 +1522,7 @@ class BatchCommand(models.Model):
             self.Operation.CREATE_STATEMENT,
             self.Operation.CREATE_PROPERTY,
             self.Operation.SWITCH_STATEMENT_VALUE,
+            self.Operation.SWITCH_STATEMENT_PROPERTY,
             self.Operation.REMOVE_STATEMENT_BY_VALUE,
             self.Operation.REMOVE_QUALIFIER,
             self.Operation.REMOVE_REFERENCE,
@@ -1657,6 +1668,8 @@ class BatchCommand(models.Model):
             self._remove_entity_statement(entity)
         elif self.operation == self.Operation.SWITCH_STATEMENT_VALUE:
             self._switch_statement_value(entity)
+        elif self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY:
+            self._switch_statement_property(entity)
         elif self.operation in (self.Operation.ADD_ALIAS, self.Operation.REMOVE_ALIAS):
             self._update_entity_aliases(entity)
         elif self.operation in (
@@ -1780,6 +1793,19 @@ class BatchCommand(models.Model):
                 statement["value"] = self.statement_api_value_switch
                 return
         raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
+
+    def _switch_statement_property(self, entity: dict):
+        """
+        Switches a statement property
+        """
+        statement = self._remove_entity_statement(entity)
+        if "id" in statement:
+            statement.pop("id") # id is read-only and defined by wikibase
+        new_prop = self.json["property_switch"]
+        statement["property"] = {"id": new_prop}
+        entity["statements"].setdefault(new_prop, [])
+        entity["statements"][new_prop].append(statement)
+        logger.debug("post switch proeprty: ", entity)
 
     def _update_entity_aliases(self, entity: dict):
         """
@@ -1926,6 +1952,8 @@ class BatchCommand(models.Model):
             to_verify.append((p["property"], p["value"]["type"]))
         if self.json.get("value_switch"):
             to_verify.append((self.prop, self.json["value_switch"]["type"]))
+        if self.json.get("property_switch"):
+            to_verify.append((self.json["property_switch"], self.value_type))
         return to_verify
 
     def should_verify_value_types(self):
@@ -1937,8 +1965,8 @@ class BatchCommand(models.Model):
         2) It needs if it is of the following types/actions:
 
         - Statement addition
-        - Statement value switch
+        - Statement value or property switch
         """
         is_not_verified_yet = not self.value_type_verified
-        is_needed_actions = self.is_add_statement() or self.is_switch_value()
+        is_needed_actions = self.is_add_statement() or self.is_switch()
         return is_not_verified_yet and is_needed_actions
