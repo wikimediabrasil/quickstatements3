@@ -5,6 +5,8 @@ from core.factories import BatchFactory
 from core.parsers.v1 import V1CommandParser
 from core.exceptions import NoQualifiers
 from core.exceptions import NoReferenceParts
+from core.exceptions import NoStatementsForThatProperty
+from core.exceptions import NoStatementsWithThatValue
 
 
 class AddRemoveQualRefTests(TestCase):
@@ -477,3 +479,68 @@ class AddRemoveQualRefTests(TestCase):
         self.assertRefPartsCount(entity, "P31", 1, ipart=3)
         self.assertRefPartsCount(entity, "P31", 2, ipart=4)
         # ----
+
+    def test_switch_value(self):
+        text = """
+        SWITCH_VALUE|Q12345678|P1|42|32 /* wrong property */
+        SWITCH_VALUE|Q12345678|P65|1111|32 /* wrong value */
+        SWITCH_VALUE|Q12345678|P65|42|32
+        SWITCH_VALUE|Q12345678|P1|somevalue|"https://meta.wikimedia.org/"
+        SWITCH_VALUE|Q12345678|P31|novalue|"https://meta.wikimedia.org/"
+        SWITCH_VALUE|Q12345678|P31|somevalue|"https://meta.wikimedia.org/"
+        """
+        batch = self.parse(text)
+        entity = copy.deepcopy(self.INITIAL)
+        self.assertStmtnCount(entity, "P65", 1)
+        self.assertEqual(
+            entity["statements"]["P65"][0]["value"]["content"]["amount"], "+42"
+        )
+        self.assertQualCount(entity, "P65", 2)
+        self.assertRefCount(entity, "P65", 0)
+        # -----
+        switch = batch.commands()[0]
+        with self.assertRaises(NoStatementsForThatProperty):
+            switch.update_entity_json(entity)
+        # -----
+        switch = batch.commands()[1]
+        with self.assertRaises(NoStatementsWithThatValue):
+            switch.update_entity_json(entity)
+        # -----
+        switch = batch.commands()[2]
+        switch.update_entity_json(entity)
+        self.assertEqual(
+            entity["statements"]["P65"][0]["value"]["content"]["amount"], "+32"
+        )
+        self.assertEqual(
+            entity["statements"]["P65"][0]["qualifiers"],
+            self.INITIAL["statements"]["P65"][0]["qualifiers"]
+        )
+        self.assertEqual(
+            entity["statements"]["P65"][0]["references"],
+            self.INITIAL["statements"]["P65"][0]["references"]
+        )
+        # -----
+        switch = batch.commands()[3]
+        with self.assertRaises(NoStatementsForThatProperty):
+            switch.update_entity_json(entity)
+        # -----
+        switch = batch.commands()[4]
+        with self.assertRaises(NoStatementsWithThatValue):
+            switch.update_entity_json(entity)
+        # -----
+        switch = batch.commands()[5]
+        switch.update_entity_json(entity)
+        self.assertEqual(
+            entity["statements"]["P31"][0]["value"]["type"], "value"
+        )
+        self.assertEqual(
+            entity["statements"]["P31"][0]["value"]["content"], "https://meta.wikimedia.org/"
+        )
+        self.assertEqual(
+            entity["statements"]["P31"][0]["qualifiers"],
+            self.INITIAL["statements"]["P31"][0]["qualifiers"]
+        )
+        self.assertEqual(
+            entity["statements"]["P31"][0]["references"],
+            self.INITIAL["statements"]["P31"][0]["references"]
+        )

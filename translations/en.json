@@ -19,6 +19,7 @@
     "batchcommand-py-operation-create-property": "Create property",
     "batchcommand-py-operation-set-statement": "Set statement",
     "batchcommand-py-operation-create-statement": "Create statement",
+    "batchcommand-py-operation-switch-statement-value": "Switch statement value",
     "batchcommand-py-operation-remove-statement-by-id": "Remove statement by id",
     "batchcommand-py-operation-remove-statement-by-value": "Remove statement by value",
     "batchcommand-py-operation-remove-qualifier": "Remove qualifier",

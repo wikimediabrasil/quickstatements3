@@ -77,6 +77,13 @@
             {% endfor %}
           </div>
           {% endif %}
+          {% if command.is_switch_value %}
+          <span class="header"></span>
+          <div>
+            <span class="property"></span>
+            <span class="value">{% datavalue_display command command.json.value_switch %}</span>
+          </div>
+          {% endif %}
         </td>
     </tr>
     {% endif %}

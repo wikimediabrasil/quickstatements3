@@ -24,6 +24,7 @@
 	"batchcommand-py-operation-create-property": "Individual command operation type displayed in command list",
 	"batchcommand-py-operation-set-statement": "Individual command operation type displayed in command list",
 	"batchcommand-py-operation-create-statement": "Individual command operation type displayed in command list",
+	"batchcommand-py-operation-switch-statement-value": "Individual command operation type displayed in command list",
 	"batchcommand-py-operation-remove-statement-by-id": "Individual command operation type displayed in command list",
 	"batchcommand-py-operation-remove-statement-by-value": "Individual command operation type displayed in command list",
 	"batchcommand-py-operation-remove-qualifier": "Individual command operation type displayed in command list",
