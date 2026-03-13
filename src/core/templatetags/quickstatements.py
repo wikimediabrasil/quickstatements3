@@ -198,7 +198,7 @@ def datavalue_display(command, datavalue):
 
 @register.simple_tag
 def entity_display(command, entity_id):
-    return mark_safe(render_entity_datavalue(command, entity_id))
+    return mark_safe(render_entity_datavalue(command, entity_id)) if entity_id else ""
 
 
 @register.simple_tag
