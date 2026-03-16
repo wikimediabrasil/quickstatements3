@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kizule"
+			"Kizule",
+			"Milicevic01"
 		]
 	},
 	"batch-py-status-stopped": "Заустављено",
@@ -24,6 +25,8 @@
 	"batchcommand-py-operation-create-property": "Креирај својство",
 	"batchcommand-py-operation-set-statement": "Постави изјаву",
 	"batchcommand-py-operation-create-statement": "Креирај изјаву",
+	"batchcommand-py-operation-switch-statement-value": "Промени вредност изјаве",
+	"batchcommand-py-operation-switch-statement-property": "Промени својство изјаве",
 	"batchcommand-py-operation-remove-statement-by-id": "Уклони изјаву по ИД-у",
 	"batchcommand-py-operation-remove-statement-by-value": "Уклони изјаву по вредности",
 	"batchcommand-py-operation-remove-qualifier": "Уклони квалификатор",
@@ -180,6 +183,7 @@
 	"batch-commands-references": "Референце",
 	"batch-command-somevalue": "(Непозната вредност)",
 	"batch-command-novalue": "(Без вредности)",
+	"statistics-title-username": " Статистика за $1",
 	"statistics-title": "Статистике",
 	"statistics-number-of-editors": "Број уредника",
 	"statistics-number-of-edits": "Број измена",
@@ -189,11 +193,17 @@
 	"batch-command-time-million-years": "милион година",
 	"batch-command-time-billion-years": "милијарда година",
 	"statistics-edits-only": "Кумулативан број измена",
+	"batch-summary-commands-eta": "Процењено време",
 	"layout-navbar-new-batch": "Нова серија",
 	"layout-navbar-last-batches": "Последње серије",
 	"layout-navbar-help": "Помоћ",
+	"layout-navbar-login": "Пријави ме",
 	"layout-navbar-help-us-translate": "Помозите у превођењу",
 	"layout-navbar-preferences": "Подешавања",
+	"layout-navbar-help-slash-documentation": "Помоћ/документација",
+	"layout-navbar-repository": "Репозиторијум",
 	"layout-navbar-statistics": "Статистике",
-	"layout-navbar-your-statistics": "Ваша статистика"
+	"layout-navbar-logout": "Одјави ме",
+	"layout-navbar-your-statistics": "Ваша статистика",
+	"batch-button-download-report": "Преузми извештај"
 }

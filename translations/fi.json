@@ -24,6 +24,8 @@
 	"batchcommand-py-operation-create-property": "Luo ominaisuus",
 	"batchcommand-py-operation-set-statement": "Aseta esitys",
 	"batchcommand-py-operation-create-statement": "Luo esitys",
+	"batchcommand-py-operation-switch-statement-value": "Vaihda esityksen arvoa",
+	"batchcommand-py-operation-switch-statement-property": "Vaihda esityksen arvoa",
 	"batchcommand-py-operation-remove-statement-by-id": "Poista esitys tunnisteen perusteella",
 	"batchcommand-py-operation-remove-statement-by-value": "Poista esitys arvon perusteella",
 	"batchcommand-py-operation-remove-qualifier": "Poista tarkenne",

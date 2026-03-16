@@ -24,6 +24,8 @@
 	"batchcommand-py-operation-create-property": "Cruthaigh maoin",
 	"batchcommand-py-operation-set-statement": "Socraigh ráiteas",
 	"batchcommand-py-operation-create-statement": "Cruthaigh ráiteas",
+	"batchcommand-py-operation-switch-statement-value": "Luach ráitis lasctha",
+	"batchcommand-py-operation-switch-statement-property": "Airíonna ráitis lasctha",
 	"batchcommand-py-operation-remove-statement-by-id": "Bain ráiteas de réir aitheantais",
 	"batchcommand-py-operation-remove-statement-by-value": "Bain ráiteas de réir luacha",
 	"batchcommand-py-operation-remove-qualifier": "Bain an cáilitheoir",
