@@ -854,6 +854,10 @@ class BatchCommand(models.Model):
             "switch_statement_property",
             pgettext_lazy("batchcommand-py-operation-switch-statement-property", "Switch statement property"),
         )
+        SWITCH_STATEMENT_PROPERTY_AND_VALUE = (
+            "switch_statement_property_value",
+            pgettext_lazy("batchcommand-py-operation-switch-statement-property-and-value", "Switch statement property and value"),
+        )
         REMOVE_STATEMENT_BY_ID = (
             "remove_statement_by_id",
             pgettext_lazy(
@@ -1366,7 +1370,11 @@ class BatchCommand(models.Model):
         return self.is_add() and self.what == "STATEMENT"
 
     def is_switch(self):
-        return self.is_switch_value() or self.is_switch_property()
+        return self.operation in (
+            self.Operation.SWITCH_STATEMENT_VALUE,
+            self.Operation.SWITCH_STATEMENT_PROPERTY,
+            self.Operation.SWITCH_STATEMENT_PROPERTY_AND_VALUE,
+        )
 
     def is_switch_value(self):
         return self.operation == self.Operation.SWITCH_STATEMENT_VALUE
@@ -1523,6 +1531,7 @@ class BatchCommand(models.Model):
             self.Operation.CREATE_PROPERTY,
             self.Operation.SWITCH_STATEMENT_VALUE,
             self.Operation.SWITCH_STATEMENT_PROPERTY,
+            self.Operation.SWITCH_STATEMENT_PROPERTY_AND_VALUE,
             self.Operation.REMOVE_STATEMENT_BY_VALUE,
             self.Operation.REMOVE_QUALIFIER,
             self.Operation.REMOVE_REFERENCE,
@@ -1670,6 +1679,8 @@ class BatchCommand(models.Model):
             self._switch_statement_value(entity)
         elif self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY:
             self._switch_statement_property(entity)
+        elif self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY_AND_VALUE:
+            self._switch_statement_property_and_value(entity)
         elif self.operation in (self.Operation.ADD_ALIAS, self.Operation.REMOVE_ALIAS):
             self._update_entity_aliases(entity)
         elif self.operation in (
@@ -1803,6 +1814,20 @@ class BatchCommand(models.Model):
             statement.pop("id") # id is read-only and defined by wikibase
         new_prop = self.json["property_switch"]
         statement["property"] = {"id": new_prop}
+        entity["statements"].setdefault(new_prop, [])
+        entity["statements"][new_prop].append(statement)
+        logger.debug("post switch proeprty: ", entity)
+
+    def _switch_statement_property_and_value(self, entity: dict):
+        """
+        Switches a statement property and value
+        """
+        statement = self._remove_entity_statement(entity)
+        if "id" in statement:
+            statement.pop("id") # id is read-only and defined by wikibase
+        new_prop = self.json["property_switch"]
+        statement["property"] = {"id": new_prop}
+        statement["value"] = self.statement_api_value_switch
         entity["statements"].setdefault(new_prop, [])
         entity["statements"][new_prop].append(statement)
         logger.debug("post switch proeprty: ", entity)
