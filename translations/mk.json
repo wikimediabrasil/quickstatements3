@@ -25,6 +25,7 @@
 	"batchcommand-py-operation-set-statement": "Задај исказ",
 	"batchcommand-py-operation-create-statement": "Создај исказ",
 	"batchcommand-py-operation-switch-statement-value": "Префрли вредност на исказ",
+	"batchcommand-py-operation-switch-statement-property": "Префрли својство на исказ",
 	"batchcommand-py-operation-remove-statement-by-id": "Отстрани исказ по назнака",
 	"batchcommand-py-operation-remove-statement-by-value": "Отстрани исказ по вредност",
 	"batchcommand-py-operation-remove-qualifier": "Отстрани определница",
