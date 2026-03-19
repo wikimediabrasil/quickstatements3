@@ -611,3 +611,54 @@ class AddRemoveQualRefTests(TestCase):
             entity["statements"]["P99"][0]["references"],
             self.INITIAL["statements"]["P65"][0]["references"]
         )
+
+    def test_switch_property_and_value(self):
+        text = """
+        SWITCH_PROPERTY_AND_VALUE|Q12345678|P1|42|P99|1337
+        SWITCH_PROPERTY_AND_VALUE|Q12345678|P65|1111|P99|1337
+        SWITCH_PROPERTY_AND_VALUE|Q12345678|P65|42|P99|1337
+        """
+        batch = self.parse(text)
+        entity = copy.deepcopy(self.INITIAL)
+        self.assertStmtnCount(entity, "P65", 1)
+        self.assertStmtnCount(entity, "P99", 0)
+        self.assertEqual(
+            entity["statements"]["P65"][0]["value"]["content"]["amount"], "+42"
+        )
+        self.assertQualCount(entity, "P65", 2)
+        self.assertRefCount(entity, "P65", 0)
+        # -----
+        switch = batch.commands()[0]
+        with self.assertRaises(NoStatementsForThatProperty):
+            switch.update_entity_json(entity)
+        # -----
+        switch = batch.commands()[1]
+        with self.assertRaises(NoStatementsWithThatValue):
+            switch.update_entity_json(entity)
+        # -----
+        switch = batch.commands()[2]
+        switch.update_entity_json(entity)
+        self.assertStmtnCount(entity, "P65", 0)
+        self.assertStmtnCount(entity, "P99", 1)
+        self.assertQualCount(entity, "P99", 2)
+        self.assertRefCount(entity, "P99", 0)
+        self.assertEqual(
+            entity["statements"]["P99"][0]["property"]["id"],
+            "P99",
+        )
+        self.assertIsNone(entity["statements"]["P99"][0].get("id"))
+        self.assertEqual(
+            entity["statements"]["P99"][0]["rank"],
+            self.INITIAL["statements"]["P65"][0]["rank"],
+        )
+        self.assertEqual(
+            entity["statements"]["P99"][0]["value"]["content"]["amount"], "+1337"
+        )
+        self.assertEqual(
+            entity["statements"]["P99"][0]["qualifiers"],
+            self.INITIAL["statements"]["P65"][0]["qualifiers"]
+        )
+        self.assertEqual(
+            entity["statements"]["P99"][0]["references"],
+            self.INITIAL["statements"]["P65"][0]["references"]
+        )

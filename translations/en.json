@@ -215,5 +215,5 @@
     "batch-button-rerun": "Rerun",
     "batch-button-download-report": "Download report",
     "login-token-expired": "Your Wikimedia authentication has expired. This is completely normal and it happens for security reasons. Please, log in again.",
-    "batchcommand-py-operation-switch-statement-property": "Switch statement property"
+    "batchcommand-py-operation-switch-statement-property-and-value": "Switch statement property and value"
 }
