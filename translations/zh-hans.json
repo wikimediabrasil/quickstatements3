@@ -29,6 +29,7 @@
 	"batchcommand-py-operation-create-statement": "创建陈述",
 	"batchcommand-py-operation-switch-statement-value": "切换陈述值",
 	"batchcommand-py-operation-switch-statement-property": "切换陈述属性",
+	"batchcommand-py-operation-switch-statement-property-and-value": "切换陈述属性和值",
 	"batchcommand-py-operation-remove-statement-by-id": "按ID移除陈述",
 	"batchcommand-py-operation-remove-statement-by-value": "按值移除陈述",
 	"batchcommand-py-operation-remove-qualifier": "移除修饰符",

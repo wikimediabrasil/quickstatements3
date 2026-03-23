@@ -27,6 +27,7 @@
 	"batchcommand-py-operation-create-statement": "Креирај изјаву",
 	"batchcommand-py-operation-switch-statement-value": "Промени вредност изјаве",
 	"batchcommand-py-operation-switch-statement-property": "Промени својство изјаве",
+	"batchcommand-py-operation-switch-statement-property-and-value": "Промени изјаву и вредност својства",
 	"batchcommand-py-operation-remove-statement-by-id": "Уклони изјаву по ИД-у",
 	"batchcommand-py-operation-remove-statement-by-value": "Уклони изјаву по вредности",
 	"batchcommand-py-operation-remove-qualifier": "Уклони квалификатор",
