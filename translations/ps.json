@@ -17,7 +17,7 @@
 	"batchcommand-py-operation-set-description": "څرگنداوی اوڼل",
 	"batchcommand-py-operation-remove-label": "نښه لرې‌کول",
 	"batchcommand-py-operation-remove-description": "څرگنداوی لرې کول",
-	"batchcommand-py-error-no-statements-value": "ورکړل شوي ارزښت سره هيڅ پرېکړه‌ليک نشته",
+	"batchcommand-py-error-no-statements-value": "ورکړل شوي ارزښت سره هېڅ پرېکړه‌ليک نشته",
 	"batchcommand-py-error-sitelink-invalid": "د وېبځي وېبتړ پېژند ناسم دی",
 	"batch-created-by": "جوړوونکی:",
 	"batch-commands-showing-only-errors": "یوازې تېروتنې ښودل",
