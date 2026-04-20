@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"CHK2605",
+			"Tensama0415",
 			"Ykhwong"
 		]
 	},
@@ -25,6 +26,9 @@
 	"batchcommand-py-operation-create-property": "속성 만들기",
 	"batchcommand-py-operation-set-statement": "서술 설정",
 	"batchcommand-py-operation-create-statement": "서술 만들기",
+	"batchcommand-py-operation-switch-statement-value": "서술 값 전환하기",
+	"batchcommand-py-operation-switch-statement-property": "서술 속성 전환하기",
+	"batchcommand-py-operation-switch-statement-property-and-value": "서술 속성과 값 전환하기",
 	"batchcommand-py-operation-remove-statement-by-id": "ID로 서술 제거",
 	"batchcommand-py-operation-remove-statement-by-value": "값으로 서술 제거",
 	"batchcommand-py-operation-remove-qualifier": "한정어 제거",
