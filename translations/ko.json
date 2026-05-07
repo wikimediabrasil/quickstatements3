@@ -222,5 +222,5 @@
 	"batch-button-rerun-uncombined": "결합 없이 재실행",
 	"batch-button-rerun": "재실행",
 	"batch-button-download-report": "보고서 다운로드",
-	"login-token-expired": "위키미디어 인증이 만료되었습니다. 이는 보안 상의 이유로 발생하는 정상적인 현상입니다. 다시 로그인해 주세요."
+	"login-token-expired": "위키미디어 인증이 만료되었습니다. 이는 보안상의 이유로 발생하는 정상적인 현상입니다. 다시 로그인해 주세요."
 }
