@@ -383,6 +383,15 @@ class TestV1Batch(TestCase):
         self.assertEqual(cmd2.status,BatchCommand.STATUS_ERROR)
         self.assertEqual(cmd2.message, "Statement must contain at least entity, property and value")
 
+    def test_utf8(self):
+        v1 = V1CommandParser()
+        batch = BatchFactory.load_from_parser(
+            v1, "b", "u", """Q1126|P14541|"zpzBD"|P1810|"𬬻" """
+        )
+        cmd0 = batch.commands()[0]
+        self.assertEqual(len(batch.commands()), 1)
+        self.assertEqual(cmd0.status,BatchCommand.STATUS_INITIAL)
+
 
 class TestCSVBatch(TestCase):
     def test_create_property(self):
@@ -942,3 +951,13 @@ Q4115189,""
         par = CSVCommandParser()
         batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
         self.assertEqual(len(batch.commands()), 1)
+
+    def test_utf8(self):
+        COMMAND = """qid,P14541,qal1810
+Q1226,zpzBD,𬬻
+Q1232,1aDV2m,𬭊
+Q1234,2VX7QW,𬭳
+"""
+        par = CSVCommandParser()
+        batch = BatchFactory.load_from_parser(par, "b", "u", COMMAND)
+        self.assertEqual(len(batch.commands()), 3)
