@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kokage si"
+			"Kokage si",
+			"Lin Xiangru"
 		]
 	},
 	"batch-py-status-stopped": "停止済み",
@@ -24,6 +25,9 @@
 	"batchcommand-py-operation-create-property": "プロパティを作成",
 	"batchcommand-py-operation-set-statement": "文を設定",
 	"batchcommand-py-operation-create-statement": "文を作成",
+	"batchcommand-py-operation-switch-statement-value": "ステートメントの値を切り替える",
+	"batchcommand-py-operation-switch-statement-property": "ステートメントのプロパティを切り替える",
+	"batchcommand-py-operation-switch-statement-property-and-value": "ステートメントのプロパティと値を切り替える",
 	"batchcommand-py-operation-remove-statement-by-id": "idで文を除去",
 	"batchcommand-py-operation-remove-statement-by-value": "値で文を除去",
 	"batchcommand-py-operation-remove-qualifier": "修飾子を除去",
@@ -195,6 +199,7 @@
 	"batch-summary-commands-eta": "推定所要時間",
 	"new-batch-file-upload": "ファイルをアップロード",
 	"new-batch-file-upload-targeting": "利用者がフォームにコマンドを書く代わりに、ファイルをアップロードしたいときのためのオプション",
+	"layout-quickstatements-title": "QuickStatements 3.0",
 	"layout-navbar-new-batch": "新しいバッチ",
 	"layout-navbar-last-batches": "最近のバッチ",
 	"layout-navbar-help": "ヘルプ",
