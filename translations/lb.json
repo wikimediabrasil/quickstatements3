@@ -137,7 +137,7 @@
 	"new-batch-block-batch-if-a-command-fails": "Batch blockéieren, wann e Befeel net klappt",
 	"new-batch-the-batch-will-stop": "De Batch wäert net weider verschafft ginn, wann e Befeel e Feeler provozéiert.",
 	"new-batch-do-not-combine-commands": "Befeeler net kombinéieren",
-	"new-batch-commands-targeting": "Befeeler, déi de selwechten Objet viséieren, ginn net zu enger eenzeler Ännerung kombinéiert.",
+	"new-batch-commands-targeting": "Befeeler, déi déi selwecht Entitéit viséieren, ginn net zu enger eenzeler Ännerung kombinéiert.",
 	"new-batch-enter-your-commands-here": "Gitt Är Befeeler hei an...",
 	"new-batch-note-only-autoconfirmed": "Hiweis: Nëmmen automatesch confirméiert Benotzer kënne Batche lafe loossen.",
 	"preview-batch-batch": "Batch",
