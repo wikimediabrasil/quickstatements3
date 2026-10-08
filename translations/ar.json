@@ -10,7 +10,7 @@
 	"batch-py-status-preview": "معاينة",
 	"batch-py-status-initial": "أولي",
 	"batch-py-status-running": "قيد التشغيل",
-	"batch-py-status-done": "نُفذ",
+	"batch-py-status-done": "تم",
 	"batch-py-batch": "حزمة",
 	"batch-py-batches": "دفعات",
 	"batchcommand-py-status-error": "خطأ",
