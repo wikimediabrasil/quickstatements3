@@ -140,6 +140,8 @@
 	"new-batch-commands-targeting": "Explanation of a toggle button",
 	"new-batch-enter-your-commands-here": "Enter your commands here... prepopulated string on input",
 	"new-batch-note-only-autoconfirmed": "Note: only autoconfirmed users can run batches.",
+	"new-batch-create": "Submit button to create and run the batch",
+	"new-batch-preview": "Submit button to preview the batch (for non-autoconfirmed users)",
 	"preview-batch-batch": "Batch",
 	"preview-batch-batch-preview": "Batch Preview",
 	"preview-batch-save-and-run-batch": "Save and run batch",
@@ -202,5 +204,12 @@
 	"batch-summary-commands-eta": "Batch estimated amount of time left to complete",
 	"new-batch-file-upload": "Form title of file upload",
 	"new-batch-file-upload-targeting": "File upload explanation",
+	"new-batch-file-upload-clear": "Button to clear the selected upload file",
+	"login-error-token": "Login error: OAuth token exchange failed",
+	"login-error-server": "Login error: the Wikimedia OAuth server returned an error",
+	"login-error-mismatched-states": "Login error: OAuth state mismatch (possible CSRF)",
+	"login-error-unknown": "Login error: unknown cause",
+	"login-error-try-again": "Appended after each login error message",
+	"batch-button-restart": "Button to restart a stopped batch",
 	"login-token-expired": "Shown when the user is forcefully logged out and needs to log in again."
 }

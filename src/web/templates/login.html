@@ -16,17 +16,15 @@
 {% if error %}
 <p style="color: var(--pico-color-red-500);">
   {% if error == "token" %}
-    Authentication with your Wikimedia account failed.
+    {% translate 'Authentication with your Wikimedia account failed.' context 'login-error-token' %}
   {% elif error == "server" %}
-    The Wikimedia server was not able to process your authentication.
+    {% translate 'The Wikimedia server was not able to process your authentication.' context 'login-error-server' %}
   {% elif error == "mismatched_states" %}
-    The authentication server is being
-    intercepted, misused, or
-    you're not supposed to be here right now.
+    {% translate "The authentication server is being intercepted, misused, or you're not supposed to be here right now." context 'login-error-mismatched-states' %}
   {% elif error == "unknown" %}
-    An unknown error happened.
+    {% translate 'An unknown error happened.' context 'login-error-unknown' %}
   {% endif %}
-  Please, try again.
+  {% translate 'Please, try again.' context 'login-error-try-again' %}
 </p>
 {% endif %}
 

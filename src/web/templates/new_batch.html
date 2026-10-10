@@ -66,7 +66,7 @@
     <div class="file-upload">
       <div class="grid" style="grid-template-columns: 10fr 1fr;">
         <input type="file" name="file" id="fileInput" />
-        <input type="button" value="Clear" onclick="document.getElementById('fileInput').value = '';" />
+        <input type="button" value="{% translate 'Clear' context 'new-batch-file-upload-clear' %}" onclick="document.getElementById('fileInput').value = '';" />
       </div>
     </div>
 
@@ -74,9 +74,9 @@
       style="height: 400px">{% if commands %}{{commands}}{% endif %}</textarea>
   </fieldset>
   {% if is_autoconfirmed %}
-  <input type="submit" value="Create" />
+  <input type="submit" value="{% translate 'Create' context 'new-batch-create' %}" />
   {% else %}
-  <input type="submit" value="Preview" />
+  <input type="submit" value="{% translate 'Preview' context 'new-batch-preview' %}" />
   <small>
     {% translate 'Note: only autoconfirmed users can run batches.' context 'new-batch-note-only-autoconfirmed' %}
   </small>
