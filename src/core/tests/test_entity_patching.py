@@ -7,6 +7,7 @@ from core.exceptions import NoQualifiers
 from core.exceptions import NoReferenceParts
 from core.exceptions import NoStatementsForThatProperty
 from core.exceptions import NoStatementsWithThatValue
+from core.models import api_values_equal
 
 
 class AddRemoveQualRefTests(TestCase):
@@ -705,3 +706,124 @@ class AddRemoveQualRefTests(TestCase):
             entity["statements"]["P99"][0]["references"],
             self.INITIAL["statements"]["P65"][0]["references"]
         )
+
+
+class TimePrecisionComparisonTests(TestCase):
+    GREGORIAN = "http://www.wikidata.org/entity/Q1985727"
+
+    def time_value(self, time: str, precision: int) -> dict:
+        return {
+            "type": "value",
+            "content": {
+                "time": time,
+                "precision": precision,
+                "calendarmodel": self.GREGORIAN,
+            },
+        }
+
+    def entity(self) -> dict:
+        return {
+            "type": "item",
+            "id": "Q16198999",
+            "labels": {},
+            "descriptions": {},
+            "aliases": {},
+            "statements": {
+                "P54": [
+                    {
+                        "id": "Q16198999$A1B2C3D4-0000-0000-0000-000000000000",
+                        "rank": "normal",
+                        "property": {"id": "P54", "data_type": "wikibase-item"},
+                        "value": {"type": "value", "content": "Q1"},
+                        "qualifiers": [
+                            {
+                                "property": {"id": "P580", "data_type": "time"},
+                                "value": self.time_value("+1889-00-00T00:00:00Z", 9),
+                            }
+                        ],
+                        "references": [],
+                    }
+                ],
+                "P569": [
+                    {
+                        "id": "Q16198999$A1B2C3D4-0000-0000-0000-000000000001",
+                        "rank": "normal",
+                        "property": {"id": "P569", "data_type": "time"},
+                        "value": self.time_value("+1870-05-00T00:00:00Z", 10),
+                        "qualifiers": [],
+                        "references": [],
+                    }
+                ],
+            },
+        }
+
+    def parse(self, text):
+        return BatchFactory.load_from_parser(V1CommandParser(), "Test", "user", text)
+
+    def test_api_values_equal(self):
+        self.assertTrue(
+            api_values_equal(
+                self.time_value("+1889-00-00T00:00:00Z", 9),
+                self.time_value("+1889-01-01T00:00:00Z", 9),
+            )
+        )
+        self.assertTrue(
+            api_values_equal(
+                self.time_value("+1870-05-00T00:00:00Z", 10),
+                self.time_value("+1870-05-01T00:00:00Z", 10),
+            )
+        )
+        self.assertTrue(
+            api_values_equal(
+                self.time_value("+1880-00-00T00:00:00Z", 8),
+                self.time_value("+1880-01-01T00:00:00Z", 8),
+            )
+        )
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("+1889-00-00T00:00:00Z", 9),
+                self.time_value("+1890-01-01T00:00:00Z", 9),
+            )
+        )
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("+1870-05-00T00:00:00Z", 10),
+                self.time_value("+1870-06-01T00:00:00Z", 10),
+            )
+        )
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("+1870-05-02T00:00:00Z", 11),
+                self.time_value("+1870-05-01T00:00:00Z", 11),
+            )
+        )
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("+1889-00-00T00:00:00Z", 9),
+                self.time_value("+1889-01-01T00:00:00Z", 11),
+            )
+        )
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("+1889-00-00T00:00:00Z", 9),
+                self.time_value("-1889-00-00T00:00:00Z", 9),
+            )
+        )
+
+    def test_remove_year_precision_qualifier(self):
+        batch = self.parse("REMOVE_QUAL|Q16198999|P54|Q1|P580|+1889-01-01T00:00:00Z/9")
+        entity = self.entity()
+        batch.commands()[0].update_entity_json(entity)
+        self.assertEqual(len(entity["statements"]["P54"][0]["qualifiers"]), 0)
+
+    def test_remove_month_precision_statement(self):
+        batch = self.parse("-Q16198999|P569|+1870-05-01T00:00:00Z/10")
+        entity = self.entity()
+        batch.commands()[0].update_entity_json(entity)
+        self.assertEqual(len(entity["statements"]["P569"]), 0)
+
+    def test_remove_statement_with_other_year_fails(self):
+        batch = self.parse("-Q16198999|P569|+1871-05-01T00:00:00Z/10")
+        entity = self.entity()
+        with self.assertRaises(NoStatementsWithThatValue):
+            batch.commands()[0].update_entity_json(entity)
