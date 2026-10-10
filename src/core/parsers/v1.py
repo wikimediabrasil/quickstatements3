@@ -201,10 +201,10 @@ class V1CommandParser(BaseParser):
 
         if first_command[0] == "-":
             action = "remove"
-            entity = first_command[1:]
+            entity = first_command[1:].strip()
         elif first_command[0] == "+":
             action = "create"
-            entity = first_command[1:]
+            entity = first_command[1:].strip()
         else:
             action = "add"
             entity = first_command

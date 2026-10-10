@@ -68,6 +68,15 @@ class TestV1ParserCommand(TestCase):
                 "what": "statement",
             },
         )
+        self.assertEqual(parser.parse_command("- Q1234\tP2\tQ1"), data)
+        self.assertEqual(parser.parse_command("-  Q1234\tP2\tQ1"), data)
+
+    def test_v1_create_statement_with_space(self):
+        parser = V1CommandParser()
+        self.assertEqual(
+            parser.parse_command("+ Q1234\tP2\tQ1"),
+            parser.parse_command("+Q1234\tP2\tQ1"),
+        )
 
     def test_v1_create_property(self):
         parser = V1CommandParser()
