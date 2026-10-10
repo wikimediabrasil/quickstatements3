@@ -33,7 +33,7 @@
   {% elif batch.is_stopped %}
     <form method="POST" action="{% url 'batch_restart' pk=batch.pk %}">
       {% csrf_token %}
-      <input type="submit" value="Restart" style="margin-bottom: 0px;">
+      <input type="submit" value="{% translate 'Restart' context 'batch-button-restart' %}" style="margin-bottom: 0px;">
     </form>
   {% elif batch.is_done %}
     {% if batch.is_done_and_has_pending %}
