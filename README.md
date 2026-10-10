@@ -40,7 +40,6 @@ LAST|Len|"Douglas Adams"
 LAST|Den|"English writer and humorist"
 LAST|P31|Q5
 LAST|P569|+1952-03-11T00:00:00Z/11|S248|Q36578
-Q42|P69|Q691283|P582|+1974-00-00T00:00:00Z/9
 ```
 
 **CSV** (one row per item; an empty `qid` creates a new item, and the header defines what each column means):
