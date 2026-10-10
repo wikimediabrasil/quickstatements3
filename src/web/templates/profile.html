@@ -68,14 +68,20 @@
     <form method="POST">
         {% csrf_token %}
         <p>{% translate 'Here, you can generate a token to use when querying batch jobs programatically.' context 'profile-here-you-can-generate-a-token' %}</p>
+        {% if token %}
         <p>
             {% translate 'You currently have the following token. This token must be kept private:' context 'profile-you-currently-have-the-following-token' %}
             <article style="background: var(--pico-color-grey-100);">
                 <center><h5>{{token}}</h5><center>
             </article>
         </p>
+        {% endif %}
         <input type="hidden" name="action" value="update_token">
+        {% if token %}
         <input type="submit" value="{% translate 'Update token' context 'profile-update-token' %}">
+        {% else %}
+        <input type="submit" value="{% translate 'Generate token' context 'profile-generate-token' %}">
+        {% endif %}
     </form>
 </article>
 

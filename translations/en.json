@@ -164,6 +164,7 @@
     "profile-here-you-can-generate-a-token": "Here, you can generate a token to use when querying batch jobs programatically.",
     "profile-you-currently-have-the-following-token": "You currently have the following token. This token must be kept private:",
     "profile-update-token": "Update token",
+    "profile-generate-token": "Generate token",
     "profile-click-here-to-log-out": "Click here to log out.",
     "profile-youre-not-logged-in": "You're not logged in.",
     "profile-click-here-to-log-in": "Click here to log in.",

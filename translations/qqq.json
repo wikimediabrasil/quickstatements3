@@ -169,6 +169,7 @@
 	"profile-here-you-can-generate-a-token": "Profile API token explanation message",
 	"profile-you-currently-have-the-following-token": "Profile API token explanation message",
 	"profile-update-token": "Button to update token",
+	"profile-generate-token": "Button to generate an API token, shown when the user has none yet",
 	"profile-click-here-to-log-out": "Log out link",
 	"profile-youre-not-logged-in": "Not logged in message",
 	"profile-click-here-to-log-in": "Log in link",

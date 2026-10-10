@@ -36,7 +36,7 @@ def profile(request):
         data["token_failed"] = token_failed
 
         # TOKEN
-        auth_token, created = AuthToken.objects.get_or_create(user=user)
+        auth_token = AuthToken.objects.filter(user=user).first()
 
         # POSTing
         if request.method == "POST":
@@ -53,7 +53,7 @@ def profile(request):
                     auth_token.delete()
                 auth_token = AuthToken.objects.create(user=user)
 
-        data["token"] = auth_token.key
+        data["token"] = auth_token.key if auth_token else None
 
         data["language"] = Preferences.objects.get_language(user, "en")
         data["language_choices"] = LANGUAGE_CHOICES
