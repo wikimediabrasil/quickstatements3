@@ -68,6 +68,8 @@ class Command(BaseCommand):
         
         for key, value in self.flatten_dict(translations).items():
             if isinstance(value, str):
+                # Resolve {{#FORMAL:informal|formal}} to the informal form (MediaWiki default)
+                value = re.sub(r'\{\{#FORMAL:([^|}]*)(?:\|[^}]*)?\}\}', '\\1', value)
                 # Count the number of placeholders in the string
                 count = len(re.findall(r'\$\d+', value))
                 if count > 0:
