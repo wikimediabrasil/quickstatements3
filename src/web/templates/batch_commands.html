@@ -44,7 +44,7 @@
           <span class="header">{% translate 'Statement' context 'batch-commands-statement' %}</span>
           <div>
             {% if command.is_merge_command %}
-            {{ command.json.item1 }} - {{ command.json.item2 }}
+            {% entity_display command command.json.item1 %} ⇒ {% entity_display command command.json.item2 %}
             {% else %}
               {% if command.is_label_alias_description_command %}
               <span class="alias"> <span class="language-id">{{ command.language }}:</span> </span>
