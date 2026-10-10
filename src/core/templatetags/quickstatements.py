@@ -5,6 +5,7 @@ import re
 
 from django import template
 from django.conf import settings
+from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import pgettext
 
@@ -13,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def render_entity_label(entity_id):
+    entity_id = escape(entity_id)
     return (
         f'<span class="wikibase-label" data-entity-id="{entity_id}">{entity_id}</span>'
     )
@@ -20,6 +22,7 @@ def render_entity_label(entity_id):
 
 def render_entity_datavalue(command, value):
     label = render_entity_label(value)
+    value = escape(value)
     link = f'<a href="{command.batch.wikibase.url}/entity/{value}">[{value}]</a>'
     return f"{label} {link}"
 
@@ -141,15 +144,17 @@ def render_novalue_datavalue(command, value):
 
 
 def render_aliases_datavalue(command, value):
-    return value[0]
+    return escape(value[0])
 
 
 def render_monolingualtext_datavalue(command, value):
-    return f'<span class="language-id">{value.get("language","")}:</span> {value.get("text","")}'
+    language = escape(value.get("language", ""))
+    text = escape(value.get("text", ""))
+    return f'<span class="language-id">{language}:</span> {text}'
 
 
 def render_default_datavalue(command, value):
-    return str(value)
+    return escape(str(value))
 
 
 @register.simple_tag
