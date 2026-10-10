@@ -80,9 +80,12 @@
     const sunThemeSrc = document.currentScript.dataset.sun;
     const moonThemeSrc = document.currentScript.dataset.moon;
     const setTheme = (theme) => {
-      theme ??= localStorage.theme || "light";
+      if (theme) {
+        localStorage.theme = theme;
+      } else {
+        theme = localStorage.theme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      }
       document.documentElement.dataset.theme = theme;
-      localStorage.theme = theme;
       const themeSwitcherSrc = theme === 'light' ? moonThemeSrc : sunThemeSrc;
       document.getElementById("themeSwitcher").src = themeSwitcherSrc;
     };
@@ -90,6 +93,9 @@
       const newTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
       setTheme(newTheme);
     };
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (!localStorage.theme) setTheme();
+    });
   </script>
 </head>
 
