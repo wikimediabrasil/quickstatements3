@@ -202,5 +202,10 @@ def entity_display(command, entity_id):
 
 
 @register.simple_tag
+def app_version():
+    return settings.APP_VERSION
+
+
+@register.simple_tag
 def get_translated_languages():
     return settings.TRANSLATED_LANGUAGES

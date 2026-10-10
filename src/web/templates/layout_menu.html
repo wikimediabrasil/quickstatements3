@@ -1,9 +1,10 @@
 {% load i18n %}
 {% load static %}
+{% load quickstatements %}
 <nav>
   <ul>
     <li>
-      <a href="{% url 'home' %}">
+      <a href="{% url 'home' %}" title="github.com/wikimediabrasil/quickstatements3 · {% app_version %}">
         <span style="font-weight: bold;">
           {% translate "QuickStatements 3.0" context "layout-quickstatements-title" %}
         </span>

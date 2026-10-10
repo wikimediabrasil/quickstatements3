@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 import glob
+import subprocess
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -231,6 +232,23 @@ for path in glob.glob("../translations/*.json"):
         translations.append(code)
 
 TRANSLATED_LANGUAGES = sorted(translations)
+
+
+def get_app_version():
+    try:
+        return subprocess.run(
+            ["git", "describe", "--always"],
+            cwd=BASE_DIR,
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=5,
+        ).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
+APP_VERSION = get_app_version()
 
 # -----------------
 # App configuration
