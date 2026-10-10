@@ -1,6 +1,67 @@
-# quickstatements3
+# QuickStatements 3.0
 
-Repository for the development of a version 3 of the [QuickStatements](https://www.wikidata.org/wiki/Help:QuickStatements) tool for making bulk edits to [Wikidata](https://www.wikidata.org).
+QuickStatements is a tool for making bulk edits to [Wikidata](https://www.wikidata.org) and other [Wikibase](https://wikiba.se/) instances: write a list of commands (or upload a CSV file), preview them, and let QuickStatements run them as edits for you.
+
+This repository contains version 3.0, a rewrite of [QuickStatements 2](https://www.wikidata.org/wiki/Help:QuickStatements) developed by [Wikimedia Brasil](https://meta.wikimedia.org/wiki/Wikimedia_Brasil).
+
+**Useful links:**
+
+* 🚀 **Use it:** <https://qs-dev.toolforge.org/>
+* 📰 [Project page and timeline](https://meta.wikimedia.org/wiki/QuickStatements_3.0) on meta.wikimedia.org
+* 📖 [Documentation](https://meta.wikimedia.org/wiki/QuickStatements_3.0/Documentation) and [user guide](https://meta.wikimedia.org/wiki/QuickStatements_3.0/Documentation/User_guide) on meta.wikimedia.org
+* 🎬 [Launch video](https://commons.wikimedia.org/wiki/File:Wikidata_Lab_XLIV_-_QuickStatements_3.0.webm) (Wikidata Lab XLIV, February 2025)
+* 🐞 [Report a bug or request a feature](https://github.com/wikimediabrasil/quickstatements3/issues) on GitHub
+* 🌐 [Help translate the interface](https://translatewiki.net/wiki/Translating:Quickstatements3) on translatewiki.net
+
+## Features
+
+* Write commands in the **V1** syntax or upload a **CSV** file
+* **Preview** a batch and see errors before running it
+* Create and edit items and properties: statements, **qualifiers**, **references**, **ranks**, labels, descriptions, aliases and sitelinks
+* Add or remove qualifiers and references while preserving the rest of the statement
+* Optionally **combine** all commands for the same entity into a single edit
+* Optionally **stop a batch** as soon as a command fails
+* **Rerun** a batch or restart a stopped one
+* Run several batches at the same time
+* Works with **multiple Wikibase** instances
+* Batch reports with items created, edits and errors, plus a [statistics page](https://qs-dev.toolforge.org/statistics/)
+* [REST API](https://qs-dev.toolforge.org/api/docs) to create and follow batches programmatically
+* Interface available in many languages
+
+## Command formats
+
+Both examples create a new item with an English label and description, add "instance of: human" (`P31`) and a date of birth (`P569`) with a reference (`S248`, "stated in").
+
+**V1** (one command per line, columns separated by `|` or `TAB`; `LAST` refers to the item just created). The last line adds a statement with a qualifier (`P582`, "end time") to an existing item:
+
+```
+CREATE
+LAST|Len|"Douglas Adams"
+LAST|Den|"English writer and humorist"
+LAST|P31|Q5
+LAST|P569|+1952-03-11T00:00:00Z/11|S248|Q36578
+```
+
+**CSV** (one row per item; an empty `qid` creates a new item, and the header defines what each column means):
+
+```csv
+qid,Len,Den,P31,P569,S248
+,Douglas Adams,English writer and humorist,Q5,+1952-03-11T00:00:00Z/11,Q36578
+```
+
+## Compared to QuickStatements 2
+
+QuickStatements 3.0 keeps the familiar V1 and CSV command syntaxes, so existing commands can mostly be reused. The main differences are:
+
+* It uses the new [Wikibase REST API](https://www.wikidata.org/wiki/Wikidata:REST_API) instead of the Action API.
+* Commands for the same entity can be combined into one edit, which keeps item histories shorter.
+* Qualifiers and references can be added or removed without replacing the whole statement, and ranks can be set.
+* Batches are validated and previewed before running, with clearer error reports.
+* Values are shown with localized labels, and dates and coordinates support custom calendars, precision and globes.
+
+See the [documentation](https://meta.wikimedia.org/wiki/QuickStatements_3.0/Documentation/User_guide) for the full command reference.
+
+# Development
 
 ## Local setup
 
@@ -80,11 +141,11 @@ To run Integration tests on https://test.wikidata.org, you'll need a developer a
 
 After obtaining it, define the environment variable `INTEGRATION_TEST_AUTH_TOKEN` in `.env` file as your developer access token. Then, run the tests with `make integration`.
 
-Alternatively, define that environment varibale inside the container shell and run the tests directly with `python3 manage.py test integration`.
+Alternatively, define that environment variable inside the container shell and run the tests directly with `python3 manage.py test integration`.
 
 ### Custom Authorization Servers
 
-If you want to use QuickStatements for a deploy that is completely independent form wikidata.org, (e.g, you are running your own [deployment of wikibase](https://wikiba.se/)) you will need to customize the following environment variables:
+If you want to use QuickStatements for a deploy that is completely independent from wikidata.org, (e.g, you are running your own [deployment of wikibase](https://wikiba.se/)) you will need to customize the following environment variables:
 
  - `OAUTH_AUTHORIZATION_SERVER` (Default: "https://www.wikidata.org")
  - `OAUTH_ACCESS_TOKEN_URL`     (Default: `OAUTH_AUTHORIZATION_SERVER`/w/rest.php/oauth2/access_token)
