@@ -40,7 +40,8 @@
           {% command_operation_display command %}
         </td>
 
-        <td class="statement-details">
+        <td>
+          <div class="statement-details">
           <span class="header">{% translate 'Statement' context 'batch-commands-statement' %}</span>
           <div>
             {% if command.is_merge_command %}
@@ -84,8 +85,8 @@
             <span class="value">{% datavalue_display command command.json.value_switch %}</span>
           </div>
           {% endif %}
+          </div>
         </td>
-    </tr>
     {% endif %}
     </tr>
     {% endfor %}
