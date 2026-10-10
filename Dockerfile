@@ -12,12 +12,7 @@ ENV PATH="/root/www/python/venv/bin:${PATH}"
 ENV DJANGO_SETTINGS_MODULE=qsts3.settings
 ENV PYTHONPATH="/root/www/python/src:${PYTHONPATH}"
 
-# Bootstrap like in Toolforge
+# Bootstrap like in Toolforge, then install dependencies, including dev dependencies
 WORKDIR /root/www/python/src/
-COPY src/requirements.txt ./requirements.txt
-RUN webservice-python-bootstrap
-
-# Install dev dependencies
-COPY requirements-dev.txt .
-RUN pip install -r ./requirements-dev.txt
-COPY pytest.ini /root/www/python/pytest.ini
+COPY pyproject.toml README.md LICENSE /root/www/python/
+RUN webservice-python-bootstrap && pip install "/root/www/python[dev]"

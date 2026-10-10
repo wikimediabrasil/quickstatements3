@@ -7,6 +7,7 @@ on:
     paths:
       - "uwsgi.ini"
       - "src/**"
+      - "pyproject.toml"
       - "translations/**"
       - ".github/workflows/toolforge-deploy.yml"
 
@@ -32,7 +33,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r src/requirements.txt
+          pip install .
 
       - name: Compile translations
         run: |
@@ -66,6 +67,7 @@ jobs:
             become qs-dev mv ./locale ./www/python/src/locale
             become qs-dev kubectl delete pods -n tool-qs-dev -l app.kubernetes.io/component=webservice-interactive
             become qs-dev webservice --mem 512Mi python3.11 shell -- webservice-python-bootstrap
+            become qs-dev webservice --mem 512Mi python3.11 shell -- ./www/python/venv/bin/pip install ./www/python
             become qs-dev webservice --mem 512Mi python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
             become qs-dev webservice --mem 512Mi python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput
             become qs-dev webservice python3.11 restart --mem 4Gi

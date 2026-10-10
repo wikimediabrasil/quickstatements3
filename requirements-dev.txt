@@ -1,5 +1,0 @@
-pytest
-pytest-django
-pytest-env
-pytest-watch
-ipython
