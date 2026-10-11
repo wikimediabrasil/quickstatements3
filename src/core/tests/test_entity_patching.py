@@ -710,14 +710,19 @@ class AddRemoveQualRefTests(TestCase):
 
 class TimePrecisionComparisonTests(TestCase):
     GREGORIAN = "http://www.wikidata.org/entity/Q1985727"
+    JULIAN = "http://www.wikidata.org/entity/Q1985786"
 
-    def time_value(self, time: str, precision: int) -> dict:
+    def time_value(self, time: str, precision: int, calendar: str = GREGORIAN) -> dict:
+        """
+        A time value as returned by the Wikibase REST API, e.g.
+        GET /wikibase/v1/entities/items/Q42/statements
+        """
         return {
             "type": "value",
             "content": {
                 "time": time,
                 "precision": precision,
-                "calendarmodel": self.GREGORIAN,
+                "calendarmodel": calendar,
             },
         }
 
@@ -808,6 +813,41 @@ class TimePrecisionComparisonTests(TestCase):
                 self.time_value("+1889-00-00T00:00:00Z", 9),
                 self.time_value("-1889-00-00T00:00:00Z", 9),
             )
+        )
+
+    def test_api_values_equal_requires_same_precision_and_calendar(self):
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("+1889-01-01T00:00:00Z", 11),
+                self.time_value("+1889-01-01T00:00:00Z", 9),
+            )
+        )
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("+1889-00-00T00:00:00Z", 9),
+                self.time_value("+1889-01-01T00:00:00Z", 9, self.JULIAN),
+            )
+        )
+        self.assertTrue(
+            api_values_equal(
+                self.time_value("+1889-00-00T00:00:00Z", 9, self.JULIAN),
+                self.time_value("+1889-01-01T00:00:00Z", 9, self.JULIAN),
+            )
+        )
+
+    def test_api_values_equal_other_values(self):
+        def item(qid):
+            return {"type": "value", "content": qid}
+
+        self.assertTrue(api_values_equal(item("Q5"), item("Q5")))
+        self.assertFalse(api_values_equal(item("Q5"), item("Q6")))
+        self.assertTrue(api_values_equal({"type": "somevalue"}, {"type": "somevalue"}))
+        self.assertFalse(api_values_equal({"type": "somevalue"}, {"type": "novalue"}))
+        quantity = {"type": "value", "content": {"amount": "+1", "unit": "1"}}
+        other_quantity = {"type": "value", "content": {"amount": "+2", "unit": "1"}}
+        self.assertFalse(api_values_equal(quantity, other_quantity))
+        self.assertFalse(
+            api_values_equal(self.time_value("+1889-00-00T00:00:00Z", 9), item("Q5"))
         )
 
     def test_api_values_equal_without_sign(self):

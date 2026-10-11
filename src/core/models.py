@@ -94,6 +94,9 @@ def api_values_equal(a: dict, b: dict) -> bool:
     """
     Checks if two Wikibase REST API values are equal.
 
+    REST API values look like `{"type": "value", "content": ...}`, where the
+    content of a time value is a dict with `time`, `precision` and `calendarmodel`.
+
     Time values are compared only up to their precision.
     """
     if a == b:
@@ -109,9 +112,10 @@ def api_values_equal(a: dict, b: dict) -> bool:
         and "precision" in content_a
     ):
         return False
-    rest_a = {k: v for k, v in content_a.items() if k != "time"}
-    rest_b = {k: v for k, v in content_b.items() if k != "time"}
-    if rest_a != rest_b:
+    # Only the time itself may differ, precision and calendar must be equal
+    if content_a["precision"] != content_b.get("precision"):
+        return False
+    if content_a.get("calendarmodel") != content_b.get("calendarmodel"):
         return False
     precision = content_a["precision"]
     try:
