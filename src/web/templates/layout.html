@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% load quickstatements %}
 
 <!DOCTYPE HTML>
 <html>
@@ -105,6 +106,10 @@
     {% block content %}
     {% endblock content %}
   </main>
+
+  <footer class="container" style="text-align: center; font-size: 12px;">
+    <a href="https://github.com/wikimediabrasil/quickstatements3">github.com/wikimediabrasil/quickstatements3</a> · {% app_version %}
+  </footer>
 
   {% block scripts %}
   {% endblock scripts %}

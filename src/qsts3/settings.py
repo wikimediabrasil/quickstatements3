@@ -237,7 +237,7 @@ TRANSLATED_LANGUAGES = sorted(translations)
 def get_app_version():
     try:
         return subprocess.run(
-            ["git", "describe", "--always"],
+            ["git", "describe", "--tags", "--always"],
             cwd=BASE_DIR,
             capture_output=True,
             text=True,
