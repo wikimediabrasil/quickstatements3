@@ -78,9 +78,11 @@ def _time_with_significant_parts(time: str, precision: int) -> str:
     Wikibase may store a year precision date as either `+1889-00-00T00:00:00Z`
     or `+1889-01-01T00:00:00Z`, so month and day must be ignored.
     """
+    if time[:1] not in ("+", "-"):
+        time = f"+{time}"
     date = time.split("T")[0]
-    sign = date[0] if date[0] in "+-" else ""
-    year, month, day = date.lstrip("+-").split("-")
+    sign = date[0]
+    year, month, day = date[1:].split("-")
     if precision <= TIME_PRECISION_YEAR:
         return f"{sign}{year}"
     if precision == TIME_PRECISION_MONTH:

@@ -810,6 +810,32 @@ class TimePrecisionComparisonTests(TestCase):
             )
         )
 
+    def test_api_values_equal_without_sign(self):
+        self.assertTrue(
+            api_values_equal(
+                self.time_value("+1889-00-00T00:00:00Z", 9),
+                self.time_value("1889-01-01T00:00:00Z", 9),
+            )
+        )
+        self.assertTrue(
+            api_values_equal(
+                self.time_value("+1870-05-00T00:00:00Z", 10),
+                self.time_value("1870-05-01T00:00:00Z", 10),
+            )
+        )
+        self.assertTrue(
+            api_values_equal(
+                self.time_value("+1870-05-01T00:00:00Z", 11),
+                self.time_value("1870-05-01T00:00:00Z", 11),
+            )
+        )
+        self.assertFalse(
+            api_values_equal(
+                self.time_value("-1889-00-00T00:00:00Z", 9),
+                self.time_value("1889-01-01T00:00:00Z", 9),
+            )
+        )
+
     def test_remove_year_precision_qualifier(self):
         batch = self.parse("REMOVE_QUAL|Q16198999|P54|Q1|P580|+1889-01-01T00:00:00Z/9")
         entity = self.entity()
@@ -827,3 +853,15 @@ class TimePrecisionComparisonTests(TestCase):
         entity = self.entity()
         with self.assertRaises(NoStatementsWithThatValue):
             batch.commands()[0].update_entity_json(entity)
+
+    def test_remove_year_precision_qualifier_without_sign(self):
+        batch = self.parse("REMOVE_QUAL|Q16198999|P54|Q1|P580|1889-01-01T00:00:00Z/9")
+        entity = self.entity()
+        batch.commands()[0].update_entity_json(entity)
+        self.assertEqual(len(entity["statements"]["P54"][0]["qualifiers"]), 0)
+
+    def test_remove_month_precision_statement_without_sign(self):
+        batch = self.parse("-Q16198999|P569|1870-05-01T00:00:00Z/10")
+        entity = self.entity()
+        batch.commands()[0].update_entity_json(entity)
+        self.assertEqual(len(entity["statements"]["P569"]), 0)
