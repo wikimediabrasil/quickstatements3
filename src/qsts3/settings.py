@@ -234,16 +234,22 @@ for path in glob.glob("../translations/*.json"):
 TRANSLATED_LANGUAGES = sorted(translations)
 
 
+def run_git(*args):
+    return subprocess.run(
+        ["git", *args],
+        cwd=BASE_DIR,
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=5,
+    ).stdout.strip()
+
+
 def get_app_version():
     try:
-        return subprocess.run(
-            ["git", "describe", "--tags", "--always"],
-            cwd=BASE_DIR,
-            capture_output=True,
-            text=True,
-            check=True,
-            timeout=5,
-        ).stdout.strip()
+        describe = run_git("describe", "--tags", "--always")
+        date = run_git("log", "-1", "--format=%cs")
+        return f"{describe} ({date})"
     except (OSError, subprocess.SubprocessError):
         return ""
 
