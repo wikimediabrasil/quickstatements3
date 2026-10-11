@@ -162,6 +162,7 @@ If you want to use QuickStatements for a deploy that is completely independent f
 6. Initialize your webservice environment, database tables and static directory with:
    ```bash
    webservice python3.11 shell -- webservice-python-bootstrap
+   webservice python3.11 shell -- ./www/python/venv/bin/pip install ./www/python
    webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py migrate
    webservice python3.11 shell -- ./www/python/venv/bin/python ./www/python/src/manage.py collectstatic --noinput
    ```

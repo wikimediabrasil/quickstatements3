@@ -1,0 +1,8 @@
+# Ignore virtual environments
+venv/
+env/
+.venv/
+src/venv/
+
+# Git
+.git/
