@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 language_code = self.convert_language_code(language_code)
                 
                 # Step 3: Convert JSON to PO files
-                call_command('makemessages', f'-l{language_code}')
+                call_command('makemessages', f'-l{language_code}', ignore_patterns=['*/site-packages/*', '*/dist-packages/*', '*/lib/python*/site-packages/*'])
                 po_path = os.path.join(settings.BASE_DIR, 'locale', language_code, 'LC_MESSAGES', 'django.po')
                 po = self.convert_to_po(translations, language_code, po_path)
                 if language_code == self.DEFAULT_APP_LANGUAGE:
