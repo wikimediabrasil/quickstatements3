@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,7 @@ from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 
 from core.exceptions import ServerError, UnauthorizedToken
+from core.exporters import entity_to_v1
 from core.models import (
     Batch,
     BatchCommand,
@@ -237,15 +239,42 @@ def new_batch(request):
         except UnauthorizedToken:
             return logout_per_token_expired(request)
 
+        batch_type = request.session.get("preferred_batch_type", "v1")
+        commands = request.GET.get("v1")
+        entity_id = request.GET.get("entity", "").strip().upper()
+        error = None
+        skipped = []
+        if entity_id:
+            try:
+                if not re.match(r"^[QP]\d+$", entity_id):
+                    raise ParserException(
+                        pgettext_lazy("new-batch-invalid-entity", "Invalid item or property id")
+                    )
+                token = Token.objects.get(user=request.user)
+                entity = Client(token=token, wikibase=get_default_wikibase()).get_entity(
+                    entity_id
+                )
+                commands, skipped = entity_to_v1(entity)
+                batch_type = "v1"
+            except UnauthorizedToken:
+                return logout_per_token_expired(request)
+            except ParserException as p:
+                error = p.message
+            except Exception as p:
+                error = str(p)
+
         return render(
             request,
             "new_batch.html",
             {
-                "batch_type": request.session.get("preferred_batch_type", "v1"),
+                "batch_type": batch_type,
                 "is_autoconfirmed": is_autoconfirmed,
                 "is_blocked": is_blocked,
                 "wikibases": Wikibase.objects.all(),
-                "commands": request.GET.get("v1"),
+                "commands": commands,
+                "entity": entity_id,
+                "error": error,
+                "skipped": skipped,
             },
         )
 

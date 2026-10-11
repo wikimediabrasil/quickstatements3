@@ -23,6 +23,22 @@
 
 {% endif %}
 
+{% if skipped %}
+<article class="pico-background-amber-200">
+  {% translate 'These values contain characters that cannot be represented as commands and were skipped:' context 'new-batch-entity-skipped' %}
+  {{ skipped|join:", " }}
+</article>
+{% endif %}
+
+<form method="GET" role="search">
+  <input type="search" name="entity" aria-label="entity" placeholder="Q42"
+    {% if entity %}value="{{ entity }}"{% endif %}>
+  <input type="submit" value="{% translate 'Load item' context 'new-batch-load-entity' %}">
+</form>
+<small>
+  {% translate 'Loads the labels, descriptions, aliases, sitelinks and statements of an item or property as commands, so that you can edit them as text.' context 'new-batch-load-entity-explanation' %}
+</small>
+
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <fieldset>
