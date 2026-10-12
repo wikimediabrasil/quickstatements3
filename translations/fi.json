@@ -128,6 +128,7 @@
 	"login-dev-access-token": "Käyttöoikeustunnus",
 	"login-dev-log-in": "Kirjaudu sisään",
 	"login-dev-your-access-token-is-not-valid": "Käyttöoikeustunnuksesi ei ole kelvollinen:",
+	"login-error-try-again": "Yritä uudelleen.",
 	"new-batch-quickstatements-new-batch": "QuickStatements 3.0 – Uusi erä",
 	"new-batch-new-batch": "Uusi erä",
 	"new-batch-your-account-is-blocked": "Tunnuksesi on estetty etkä voi siksi ajaa eriä.",
@@ -140,6 +141,8 @@
 	"new-batch-commands-targeting": "Samaan entiteettiin kohdistettuja komentoja ei yhdistetä yhdeksi muokkaukseksi.",
 	"new-batch-enter-your-commands-here": "Syötä komentosi tähän...",
 	"new-batch-note-only-autoconfirmed": "Huom. vain automaattisesti hyväksytyt käyttäjät voivat ajaa eriä.",
+	"new-batch-create": "Luo",
+	"new-batch-preview": "Esikatselu",
 	"preview-batch-batch": "Erä",
 	"preview-batch-batch-preview": "Erän esikatselu",
 	"preview-batch-save-and-run-batch": "Tallenna ja aja erä",
@@ -202,6 +205,7 @@
 	"batch-summary-commands-eta": "Kestoarvio",
 	"new-batch-file-upload": "Tiedoston lataus",
 	"new-batch-file-upload-targeting": "Vaihtoehto mikäli käyttäjä haluaa ladata tiedoston sen sijaan, että kirjoittaisi komennot lomakkeeseen",
+	"new-batch-file-upload-clear": "Tyhjennä",
 	"layout-quickstatements-title": "QuickStatements 3.0",
 	"layout-navbar-new-batch": "Uusi erä",
 	"layout-navbar-last-batches": "Tuoreet erät",
@@ -220,6 +224,7 @@
 	"batch-py-valid-command-not-found": "Annetusta syötteestä ei löytynyt kelvollisia komentoja.",
 	"batch-button-rerun-uncombined": "Aja uudelleen yhdistämättömänä",
 	"batch-button-rerun": "Aja uudelleen",
+	"batch-button-restart": "Käynnistä uudelleen",
 	"batch-button-download-report": "Lataa raportti",
 	"login-token-expired": "Wikimedia-tunnistautumisesi on vanhentunut. Tämä on täysin normaalia ja se tapahtuu turvallisuussyistä. Kirjaudu uudelleen sisään."
 }

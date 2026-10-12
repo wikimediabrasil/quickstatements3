@@ -128,6 +128,11 @@
 	"login-dev-access-token": "Prepopulated string on developer login input box",
 	"login-dev-log-in": "Log in button",
 	"login-dev-your-access-token-is-not-valid": "Error mesage of your access token is not valid:",
+	"login-error-token": "Login error: OAuth token exchange failed",
+	"login-error-server": "Login error: the Wikimedia OAuth server returned an error",
+	"login-error-mismatched-states": "Login error: OAuth state mismatch (possible CSRF)",
+	"login-error-unknown": "Login error: unknown cause",
+	"login-error-try-again": "Appended after each login error message",
 	"new-batch-quickstatements-new-batch": "Page title",
 	"new-batch-new-batch": "New batch heading",
 	"new-batch-your-account-is-blocked": "Error message",
@@ -205,11 +210,6 @@
 	"new-batch-file-upload": "Form title of file upload",
 	"new-batch-file-upload-targeting": "File upload explanation",
 	"new-batch-file-upload-clear": "Button to clear the selected upload file",
-	"login-error-token": "Login error: OAuth token exchange failed",
-	"login-error-server": "Login error: the Wikimedia OAuth server returned an error",
-	"login-error-mismatched-states": "Login error: OAuth state mismatch (possible CSRF)",
-	"login-error-unknown": "Login error: unknown cause",
-	"login-error-try-again": "Appended after each login error message",
 	"batch-button-restart": "Button to restart a stopped batch",
 	"login-token-expired": "Shown when the user is forcefully logged out and needs to log in again."
 }

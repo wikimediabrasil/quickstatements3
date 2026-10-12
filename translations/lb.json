@@ -128,6 +128,9 @@
 	"login-dev-access-token": "Zougangstoken",
 	"login-dev-log-in": "Aloggen",
 	"login-dev-your-access-token-is-not-valid": "Ären Zougangstoken ass net gülteg:",
+	"login-error-server": "De Wikimedia-Server konnt Är Authentifizéierung net traitéieren.",
+	"login-error-unknown": "Et ass en onbekannte Feeler geschitt.",
+	"login-error-try-again": "Probéiert wgl. nach eng Kéier.",
 	"new-batch-quickstatements-new-batch": "QuickStatements 3.0 – Neie Batch",
 	"new-batch-new-batch": "Neie Batch",
 	"new-batch-your-account-is-blocked": "Äre Kont ass gespaart an Dir kënnt keng Batche lafe loossen.",
@@ -140,6 +143,7 @@
 	"new-batch-commands-targeting": "Befeeler, déi déi selwecht Entitéit viséieren, ginn net zu enger eenzeler Ännerung kombinéiert.",
 	"new-batch-enter-your-commands-here": "Gitt Är Befeeler hei an...",
 	"new-batch-note-only-autoconfirmed": "Hiweis: Nëmmen automatesch confirméiert Benotzer kënne Batche lafe loossen.",
+	"new-batch-preview": "Virschau",
 	"preview-batch-batch": "Batch",
 	"preview-batch-batch-preview": "Batch-Virschau",
 	"preview-batch-save-and-run-batch": "Batch späicheren a lafe loossen",
@@ -216,6 +220,7 @@
 	"batch-py-valid-command-not-found": "Keng gülteg Befeeler am geliwwerten Input fonnt.",
 	"batch-button-rerun-uncombined": "Onkombinéiert nei lafe loossen",
 	"batch-button-rerun": "Nei lafe loossen",
+	"batch-button-restart": "Neistarten",
 	"batch-button-download-report": "Rapport eroflueden",
 	"login-token-expired": "Är Wikimedia-Authentifizéierung ass ofgelaf. Dat ass ganz normal a geschitt aus Sécherheetsgrënn. Loggt Iech wgl. nei an."
 }
