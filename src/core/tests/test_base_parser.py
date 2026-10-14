@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils.timezone import localdate
 
 from core.parsers.v1 import BaseParser
 
@@ -418,6 +419,37 @@ class TestBaseParser(TestCase):
             },
         }
         self.assertEqual(parser.parse_value("-1967-01-00T00:00:00Z/10"), ret)
+
+    def test_parse_value_time_today(self):
+        parser = BaseParser()
+        today = localdate()
+        expected = parser.parse_value(f"{today.strftime('%Y-%m-%d')}T00:00:00Z/11")
+
+        result = parser.parse_value("today")
+        self.assertEqual(result["type"], "time")
+        self.assertEqual(result["value"]["precision"], 11)
+        self.assertEqual(result["value"]["calendarmodel"], "http://www.wikidata.org/entity/Q1985727")
+        self.assertEqual(result, expected)
+
+        result = parser.parse_value("+today")
+        self.assertEqual(result["type"], "time")
+        self.assertEqual(result["value"]["precision"], 11)
+        self.assertEqual(result["value"]["calendarmodel"], "http://www.wikidata.org/entity/Q1985727")
+        self.assertEqual(result, expected)
+
+        # variations
+        self.assertEqual(parser.parse_value("TODAY"), expected)
+        self.assertEqual(parser.parse_value("+TODAY"), expected)
+        self.assertEqual(parser.parse_value("+ToDAy"), expected)
+        self.assertEqual(parser.parse_value("  today  "), expected)
+
+        # wrong values or unsupported
+        self.assertIsNone(parser.parse_value("tonight"))
+        self.assertIsNone(parser.parse_value("tomorrow"))
+        self.assertIsNone(parser.parse_value("yesterday"))
+        self.assertIsNone(parser.parse_value("next week"))
+        self.assertIsNone(parser.parse_value("todayly"))
+        self.assertIsNone(parser.parse_value("day"))
 
     def test_parse_value_time_other_signs_are_none(self):
         parser = BaseParser()
