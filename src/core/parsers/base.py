@@ -283,7 +283,7 @@ class BaseParser(object):
         today or +today                    → Current date (Gregorian, precision 11)
         """
 
-        if v.strip().lower() in ['today', '+today']:
+        if v.lower() in ['today', '+today']:
             today = localdate()
             # switch to +today-T00:00:00Z/11
             v = today.strftime('+%Y-%m-%dT00:00:00Z/11')
