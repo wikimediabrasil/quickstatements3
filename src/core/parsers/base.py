@@ -1,6 +1,7 @@
 import re
 
 from decimal import Decimal
+from django.utils.timezone import localdate
 
 
 class ParserException(Exception):
@@ -278,8 +279,14 @@ class BaseParser(object):
         Examples:
         +1967-01-17T00:00:00Z/11           → Gregorian
         +1967-01-17T00:00:00Z/11/J         → Julian (Q1985786)
-        +2968-09-22T00:00:00Z/11/C999999  → Custom calendar (Q999999)
+        +2968-09-22T00:00:00Z/11/C999999   → Custom calendar (Q999999)
+        today or +today                    → Current date (Gregorian, precision 11)
         """
+
+        if v.lower() in ['today', '+today']:
+            today = localdate()
+            # switch to +today-T00:00:00Z/11
+            v = today.strftime('+%Y-%m-%dT00:00:00Z/11')
 
         pattern = re.compile(
             r"""^

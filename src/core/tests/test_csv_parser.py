@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils.timezone import localdate
 
 from core.parsers.csv import CSVCommandParser
 
@@ -722,4 +723,64 @@ class TestCSVParser(TestCase):
                     "value": {"type": "wikibase-entityid", "value": "Q95074"},
                 },
             ],
+        )
+
+    def test_parse_datetime_today(self):
+        parser = CSVCommandParser()
+        today = localdate()
+        equivalent = today.strftime('%Y-%m-%dT00:00:00Z/11')
+        self.assertEqual(
+            parser.parse_line(["Q1", "today"], ["qid", "P577"]),
+            parser.parse_line(["Q1", equivalent], ["qid", "P577"]),
+        )
+        self.assertEqual(
+            parser.parse_line(["Q1", "+today"], ["qid", "P577"]),
+            parser.parse_line(["Q1", equivalent], ["qid", "P577"]),
+        )
+        self.assertEqual(
+            parser.parse_line(["Q1", "TODAY"], ["qid", "P577"]),
+            parser.parse_line(["Q1", equivalent], ["qid", "P577"]),
+        )
+        self.assertEqual(
+            parser.parse_line(["Q1", "+TODAY"], ["qid", "P577"]),
+            parser.parse_line(["Q1", equivalent], ["qid", "P577"]),
+        )
+
+    def test_parse_datetime_today_qualifier_reference(self):
+        parser = CSVCommandParser()
+        today = localdate()
+        expected_time = today.strftime('+%Y-%m-%dT00:00:00Z')
+
+        result = parser.parse_line(
+            ["Q1", "Q2", "today"],
+            ["qid", "P1", "qal2"],
+        )
+        equivalent = parser.parse_line(
+            ["Q1", "Q2", f"{expected_time}/11"],
+            ["qid", "P1", "qal2"],
+        )
+        self.assertEqual(
+            result[0]["qualifiers"][0]["value"]["value"]["time"],
+            expected_time,
+        )
+        self.assertEqual(
+            result,
+            equivalent,
+        )
+
+        result = parser.parse_line(
+            ["Q1", "Q2", "today"],
+            ["qid", "P21", "S813"],
+        )
+        equivalent = parser.parse_line(
+            ["Q1", "Q2", f"{expected_time}/11"],
+            ["qid", "P21", "S813"],
+        )
+        self.assertEqual(
+            result[0]["references"][0][0]["value"]["value"]["time"],
+            expected_time,
+        )
+        self.assertEqual(
+            result,
+            equivalent,
         )

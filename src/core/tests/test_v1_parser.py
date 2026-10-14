@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils.timezone import localdate
 
 from core.parsers.v1 import V1CommandParser
 
@@ -840,4 +841,36 @@ class TestV1ParserCommand(TestCase):
         self.assertEqual(
             raw,
             'MERGE\tQ1\tQ2 /* This is a comment with | pipe. */',
+        )
+
+    def test_v1_add_time_today(self):
+        parser = V1CommandParser()
+        today = localdate()
+        equivalent = today.strftime('%Y-%m-%dT00:00:00Z/11')
+        self.assertEqual(
+            parser.parse_command("Q1234\tP10\ttoday"),
+            parser.parse_command(f"Q1234\tP10\t{equivalent}"),
+        )
+        self.assertEqual(
+            parser.parse_command("Q1234\tP10\t+today"),
+            parser.parse_command(f"Q1234\tP10\t{equivalent}"),
+        )
+
+        self.assertEqual(
+            parser.parse_command("REMOVE_QUAL\tQ1234\tP1\tQ444\tP5\ttoday"),
+            parser.parse_command(f"REMOVE_QUAL\tQ1234\tP1\tQ444\tP5\t{equivalent}"),
+        )
+        self.assertEqual(
+            parser.parse_command("Q1234\tP1\tQ444\tS813\t+today"),
+            parser.parse_command(f"Q1234\tP1\tQ444\tS813\t{equivalent}"),
+        )
+        expected_time = today.strftime('+%Y-%m-%dT00:00:00Z')
+        data = parser.parse_command("Q1234\tP1\tQ444\tP99\ttoday\tS813\t+today")
+        self.assertEqual(
+            data["references"][0][0]["value"]["value"]["time"],
+            expected_time,
+        )
+        self.assertEqual(
+            data["qualifiers"][0]["value"]["value"]["time"],
+            expected_time,
         )
