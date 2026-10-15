@@ -159,6 +159,7 @@
 	"profile-here-you-can-generate-a-token": "Aquí puedes generar un token para usar al consultar trabajos por lotes mediante programación.",
 	"profile-you-currently-have-the-following-token": "Actualmente tienes el siguiente token. Este token debe mantenerse privado:",
 	"profile-update-token": "Actualizar token",
+	"profile-generate-token": "Generar token",
 	"profile-click-here-to-log-out": "Haga clic aquí para cerrar sesión.",
 	"profile-youre-not-logged-in": "No has iniciado sesión",
 	"profile-click-here-to-log-in": "Haga clic aquí para iniciar sesión.",

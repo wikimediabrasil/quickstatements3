@@ -161,6 +161,7 @@
 	"profile-here-you-can-generate-a-token": "Aqui você pode gerar um token para manipular lotes programaticamente",
 	"profile-you-currently-have-the-following-token": "Você atualmente possui o seguinte token. Este token deve ser mantido em segredo:",
 	"profile-update-token": "Atualizar token",
+	"profile-generate-token": "Gerar token",
 	"profile-click-here-to-log-out": "Clique aqui para sair.",
 	"profile-youre-not-logged-in": "Você não está logado(a).",
 	"profile-click-here-to-log-in": "Clique aqui para entrar.",
