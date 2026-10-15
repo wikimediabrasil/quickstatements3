@@ -169,6 +169,7 @@
 	"profile-here-you-can-generate-a-token": "Тука можете да создадете шифра за програмски пристап при работа со купчиња.",
 	"profile-you-currently-have-the-following-token": "Моментално ја имате следнава шифра. Оваа шифра мора да се чува доверливо:",
 	"profile-update-token": "Поднови шифра",
+	"profile-generate-token": "Создај шифра",
 	"profile-click-here-to-log-out": "Стиснете тука за да се одјавите.",
 	"profile-youre-not-logged-in": "Не сте најавени.",
 	"profile-click-here-to-log-in": "Стиснете тука за да се најавите.",
