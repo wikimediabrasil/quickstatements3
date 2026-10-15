@@ -104,3 +104,30 @@ class ProfileTest(TestCase):
         self.assertNotEqual(prev_token, new_token)
 
         self.assertEqual(Token.objects.filter(user=user).count(), 1)
+
+    def test_view_profile_with_token(self):
+        c = Client()
+        user = User.objects.create_user(username="with_token")
+        c.force_login(user)
+        token = Token.objects.create(user=user)
+        self.assertTrue(Token.objects.filter(user=user).exists())
+        response = c.get("/auth/profile/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("profile.html")
+        self.assertEqual(response.context["language"], "en")
+        self.assertEqual(response.context["token"], token.key)
+        self.assertIn("You currently have the following token", str(response.content))
+        self.assertTrue(Token.objects.filter(user=user).exists())
+
+    def test_view_profile_without_token(self):
+        c = Client()
+        user = User.objects.create_user(username="without_token")
+        c.force_login(user)
+        self.assertFalse(Token.objects.filter(user=user).exists())
+        response = c.get("/auth/profile/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("profile.html")
+        self.assertEqual(response.context["language"], "en")
+        self.assertIsNone(response.context["token"])
+        self.assertIn("you can generate a token", str(response.content))
+        self.assertFalse(Token.objects.filter(user=user).exists())
