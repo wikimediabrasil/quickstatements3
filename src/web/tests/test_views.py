@@ -1495,3 +1495,59 @@ class ViewsTest(TestCase):
         # Test as not authenticated user
         response = checks_user_report_access(None, authorized=False)
         self.assertEqual(response.status_code, 403)
+
+    @requests_mock.Mocker()
+    def test_new_batch_load_entity(self, mocker):
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.item(
+            mocker,
+            "Q42",
+            {
+                "id": "Q42",
+                "labels": {"en": "Douglas Adams"},
+                "statements": {
+                    "P31": [
+                        {
+                            "id": "Q42$1",
+                            "rank": "normal",
+                            "property": {"id": "P31", "data_type": "wikibase-item"},
+                            "value": {"type": "value", "content": "Q5"},
+                            "qualifiers": [],
+                            "references": [],
+                        }
+                    ],
+                    "P1477": [
+                        {
+                            "id": "Q42$2",
+                            "rank": "normal",
+                            "property": {"id": "P1477", "data_type": "monolingualtext"},
+                            "value": {
+                                "type": "value",
+                                "content": {"text": 'a "b"', "language": "en"},
+                            },
+                            "qualifiers": [],
+                            "references": [],
+                        }
+                    ],
+                },
+            },
+        )
+        self.login_user_and_get_token("user")
+
+        with mock.patch("web.views.new_batch.get_default_wikibase") as patched_wikibase:
+            patched_wikibase.return_value = self.api_mocker.wikibase
+
+            response = self.client.get("/batch/new/?entity=q42")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.context["entity"], "Q42")
+            self.assertEqual(
+                response.context["commands"], 'Q42|Len|"Douglas Adams"\nQ42|P31|Q5'
+            )
+            self.assertEqual(response.context["skipped"], ["Q42$2"])
+            self.assertIsNone(response.context["error"])
+            self.assertInRes("Q42$2", response)
+
+            response = self.client.get("/batch/new/?entity=L1")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.context["error"], "Invalid item or property id")
+            self.assertIsNone(response.context["commands"])
