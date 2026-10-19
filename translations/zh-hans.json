@@ -173,6 +173,7 @@
 	"profile-here-you-can-generate-a-token": "此处可生成用于编程查询批处理作业的令牌。",
 	"profile-you-currently-have-the-following-token": "您当前的令牌如下（需严格保密）：",
 	"profile-update-token": "更新令牌",
+	"profile-generate-token": "生成令牌",
 	"profile-click-here-to-log-out": "点击此处退出。",
 	"profile-youre-not-logged-in": "您尚未登录。",
 	"profile-click-here-to-log-in": "点击此处登录。",

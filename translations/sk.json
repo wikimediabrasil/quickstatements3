@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"KormiSK",
 			"Spider 001757",
 			"Wizzard"
 		]
@@ -163,6 +164,7 @@
 	"profile-here-you-can-generate-a-token": "Tu môžete vygenerovať token, ktorý sa použije pri programovom vyžiadaní dávkových úloh.",
 	"profile-you-currently-have-the-following-token": "Momentálne máte nasledujúci token. Tento token musí byť uchovávaný ako súkromný:",
 	"profile-update-token": "Aktualizovať token",
+	"profile-generate-token": "Vygenerovať token",
 	"profile-click-here-to-log-out": "Kliknite sem pre odhlásenie.",
 	"profile-youre-not-logged-in": "Nie ste prihlásení",
 	"profile-click-here-to-log-in": "Kliknite sem pre prihlásenie.",
