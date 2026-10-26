@@ -66,6 +66,66 @@ def unix_timestamp_to_datetime(expires_at_oauth: int):
     return datetime.fromtimestamp(expires_at_oauth, UTC)
 
 
+# Wikibase time precisions
+TIME_PRECISION_YEAR = 9
+TIME_PRECISION_MONTH = 10
+
+
+def _time_with_significant_parts(time: str, precision: int) -> str:
+    """
+    Returns the part of the time string that is significant for the precision.
+
+    Wikibase may store a year precision date as either `+1889-00-00T00:00:00Z`
+    or `+1889-01-01T00:00:00Z`, so month and day must be ignored.
+    """
+    if time[:1] not in ("+", "-"):
+        time = f"+{time}"
+    date = time.split("T")[0]
+    sign = date[0]
+    year, month, day = date[1:].split("-")
+    if precision <= TIME_PRECISION_YEAR:
+        return f"{sign}{year}"
+    if precision == TIME_PRECISION_MONTH:
+        return f"{sign}{year}-{month}"
+    return time
+
+
+def api_values_equal(a: dict, b: dict) -> bool:
+    """
+    Checks if two Wikibase REST API values are equal.
+
+    REST API values look like `{"type": "value", "content": ...}`, where the
+    content of a time value is a dict with `time`, `precision` and `calendarmodel`.
+
+    Time values are compared only up to their precision.
+    """
+    if a == b:
+        return True
+    content_a = a.get("content")
+    content_b = b.get("content")
+    if not (
+        a.get("type") == b.get("type")
+        and isinstance(content_a, dict)
+        and isinstance(content_b, dict)
+        and "time" in content_a
+        and "time" in content_b
+        and "precision" in content_a
+    ):
+        return False
+    # Only the time itself may differ, precision and calendar must be equal
+    if content_a["precision"] != content_b.get("precision"):
+        return False
+    if content_a.get("calendarmodel") != content_b.get("calendarmodel"):
+        return False
+    precision = content_a["precision"]
+    try:
+        return _time_with_significant_parts(
+            content_a["time"], precision
+        ) == _time_with_significant_parts(content_b["time"], precision)
+    except (ValueError, IndexError):
+        return False
+
+
 class Client:
     TIMEOUT = (10, 40) # connect, read
 
@@ -1347,7 +1407,7 @@ class BatchCommand(models.Model):
         property_id = qualifier["property"]["id"]
         api_value = qualifier["value"]
         for q in self.qualifiers_for_api():
-            if q["property"]["id"] == property_id and q["value"] == api_value:
+            if q["property"]["id"] == property_id and api_values_equal(q["value"], api_value):
                 return True
         return False
 
@@ -1359,7 +1419,9 @@ class BatchCommand(models.Model):
         api_value = reference_part["value"]
         for r in self.references_for_api():
             for part in r.get("parts", []):
-                if part["property"]["id"] == property_id and part["value"] == api_value:
+                if part["property"]["id"] == property_id and api_values_equal(
+                    part["value"], api_value
+                ):
                     return True
         return False
 
@@ -1717,7 +1779,7 @@ class BatchCommand(models.Model):
         """
         statements = entity["statements"].setdefault(self.prop, [])
         for i, statement in enumerate(statements):
-            if statement["value"] == self.statement_api_value:
+            if api_values_equal(statement["value"], self.statement_api_value):
                 return statement
         return None
 
@@ -1730,7 +1792,7 @@ class BatchCommand(models.Model):
         statements = entity["statements"].setdefault(self.prop, [])
         matching = []
         for i, statement in enumerate(statements):
-            if statement["value"] == self.statement_api_value:
+            if api_values_equal(statement["value"], self.statement_api_value):
                 matching.append(statement)
         return matching
 
@@ -1793,7 +1855,7 @@ class BatchCommand(models.Model):
             raise NoStatementsForThatProperty(self.entity_id, self.prop)
 
         for i, statement in enumerate(statements):
-            if statement["value"] == self.statement_api_value:
+            if api_values_equal(statement["value"], self.statement_api_value):
                 return entity["statements"][self.prop].pop(i)
         raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
 
@@ -1806,7 +1868,7 @@ class BatchCommand(models.Model):
         if len(statements) == 0:
             raise NoStatementsForThatProperty(self.entity_id, self.prop)
         for i, statement in enumerate(statements):
-            if statement["value"] == self.statement_api_value:
+            if api_values_equal(statement["value"], self.statement_api_value):
                 statement["value"] = self.statement_api_value_switch
                 return
         raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
