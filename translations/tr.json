@@ -3,6 +3,7 @@
 		"authors": [
 			"HakanIST",
 			"Hedda",
+			"Leo",
 			"Nabbegat"
 		]
 	},
@@ -130,6 +131,8 @@
 	"login-dev-access-token": "Erişim Jetonu",
 	"login-dev-log-in": "Giriş yap",
 	"login-dev-your-access-token-is-not-valid": "Erişim jetonunuz geçerli değil:",
+	"login-error-token": "Wikimedia hesabınızla kimlik doğrulama başarısız oldu.",
+	"login-error-server": "Wikimedia sunucusu kimlik doğrulama işleminizi gerçekleştiremedi.",
 	"new-batch-quickstatements-new-batch": "QuickStatements 3.0 - Yeni toplu işlem",
 	"new-batch-new-batch": "Yeni toplu işlem",
 	"new-batch-your-account-is-blocked": "Hesabınız engellenmiş ve toplu işlem çalıştıramazsınız.",
