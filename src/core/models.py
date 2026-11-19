@@ -1011,6 +1011,7 @@ class BatchCommand(models.Model):
         indexes = [
             models.Index(fields=["batch", "index"]),
             models.Index(fields=["batch", "status"]),
+            models.Index(fields=["created"], name="core_batchcommand_created_idx"),
         ]
         ordering = ("batch", "index")
 

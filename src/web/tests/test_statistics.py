@@ -1,16 +1,19 @@
+from datetime import timedelta
+
 import requests_mock
 from django.contrib.auth.models import User
 from django.test import TransactionTestCase
 from django.core.cache import cache
+from django.utils.timezone import now
 
 from core.factories import TokenFactory, UserFactory, BatchFactory
 from core.models import Batch
+from core.models import BatchCommand
 from core.parsers.v1 import V1CommandParser
 from core.tests.test_api import ApiMocker
 
 
 class ProfileTest(TransactionTestCase):
-    # using TransactionTestCase due to statistics using ThreadPoolExecutor
     def assertInRes(self, substring, response):
         """Checks if a substring is contained in response content"""
         self.assertIn(substring.lower(), str(response.content).lower().strip())
@@ -129,4 +132,53 @@ class ProfileTest(TransactionTestCase):
         response = self.client.get("/statistics/ikiw/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "statistics.html")
+        cache.clear()
+
+    @requests_mock.Mocker()
+    def test_old_commands_are_cached(self, mocker):
+        api_mocker = ApiMocker()
+        api_mocker.is_autoconfirmed(mocker)
+        api_mocker.wikidata_property_data_types(mocker)
+        api_mocker.property_data_type(mocker, "P1", "wikibase-item")
+        api_mocker.create_item(mocker, "Q123")
+        user = UserFactory(username="wiki")
+        TokenFactory(user=user)
+        parser = V1CommandParser()
+        old_batch = BatchFactory.load_from_parser(
+            parser,
+            "Old",
+            "wiki",
+            "CREATE||LAST|P1|Q1",
+            combine_commands=True,
+            wikibase=api_mocker.wikibase,
+        )
+        old_batch.run()
+        old_created = now() - timedelta(days=30)
+        Batch.objects.filter(pk=old_batch.pk).update(created=old_created)
+        BatchCommand.objects.filter(batch=old_batch).update(created=old_created)
+        recent_batch = BatchFactory.load_from_parser(
+            parser,
+            "Recent",
+            "wiki",
+            "CREATE||LAST|P1|Q5",
+            combine_commands=True,
+            wikibase=api_mocker.wikibase,
+        )
+        recent_batch.run()
+        self.client.force_login(user)
+        response = self.client.get("/statistics/counters/wiki/")
+        self.assertEqual(response.context["commands_count"], 4)
+        self.assertEqual(response.context["items_created"], 2)
+        self.assertEqual(response.context["edits"], 2)
+        response = self.client.get("/statistics/plots/wiki/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["editors_and_edits_per_day"]["edits"][-1], 2)
+        self.assertEqual(sum(response.context["commands_per_day"]["done"]), 4)
+        # old counts are cached, so deleting old commands is not reflected yet
+        BatchCommand.objects.filter(batch=old_batch).delete()
+        response = self.client.get("/statistics/counters/wiki/?nocache=1")
+        self.assertEqual(response.context["commands_count"], 4)
+        cache.clear()
+        response = self.client.get("/statistics/counters/wiki/?nocache=2")
+        self.assertEqual(response.context["commands_count"], 2)
         cache.clear()
