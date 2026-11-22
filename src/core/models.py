@@ -3,6 +3,7 @@ import traceback
 import csv
 import logging
 import math
+import time
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import List, Optional
@@ -23,6 +24,7 @@ from django.utils.timezone import now
 from requests.exceptions import HTTPError
 from urllib3.util.retry import Retry
 
+from . import maxlag
 from .decorators import cache_with_first_arg
 from .exceptions import (
     ApiException,
@@ -545,6 +547,9 @@ class Batch(models.Model):
                 if self.is_stopped:
                     # The status changed, so we have to stop
                     return
+                if not self.wait_while_lagged():
+                    # Stopped while paused
+                    return
                 try:
                     upcoming = next(iterator)
                 except StopIteration:
@@ -572,6 +577,42 @@ class Batch(models.Model):
             self.save()
             return
         self.finish()
+
+    def wait_while_lagged(self):
+        """
+        Blocks while the Wikibase lag is above `settings.MAXLAG_THRESHOLD`.
+
+        The batch stays RUNNING while paused; its message says why it is waiting.
+
+        Returns False if the batch was stopped while paused, True otherwise.
+        """
+        paused_since = None
+        while True:
+            lagged, lag = maxlag.is_lagged(self.wikibase.api_endpoint)
+            if not lagged:
+                break
+            if paused_since is None:
+                paused_since = datetime.now()
+                logger.info(f"[{self}] paused, lag is {lag}s")
+            self.message = (
+                f"Paused since {paused_since}: the server lag is {lag:.1f}s, "
+                f"above the {settings.MAXLAG_THRESHOLD:g}s limit (maxlag). "
+                "The batch will resume automatically."
+            )
+            # Only save the message, so we don't overwrite a concurrent stop.
+            self.save(update_fields=["message", "modified"])
+
+            time.sleep(settings.MAXLAG_CHECK_INTERVAL)
+
+            self.refresh_from_db()
+            if self.is_stopped:
+                return False
+
+        if paused_since is not None:
+            logger.info(f"[{self}] resumed after lag pause")
+            self.message = f"Batch resumed processing at {datetime.now()}"
+            self.save(update_fields=["message", "modified"])
+        return True
 
     def start(self):
         logger.debug(f"[{self}] running...")
