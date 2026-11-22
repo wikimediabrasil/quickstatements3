@@ -1,6 +1,7 @@
 from unittest import mock
 
 import requests_mock
+from django.core.cache import cache
 from django.test import TestCase, override_settings
 
 from core import maxlag
@@ -25,12 +26,12 @@ def lag_response(lag):
 @override_settings(MAXLAG_PAUSE_ENABLED=True, MAXLAG_THRESHOLD=5, MAXLAG_CHECK_INTERVAL=15)
 class MaxlagTests(TestCase):
     def setUp(self):
-        maxlag.clear_cache()
+        cache.clear()
         self.api_mocker = ApiMocker()
         self.api_url = self.api_mocker.wikibase.api_endpoint
 
     def tearDown(self):
-        maxlag.clear_cache()
+        cache.clear()
 
     @requests_mock.Mocker()
     def test_fetch_lag_from_maxlag_error(self, mocker):
@@ -44,15 +45,6 @@ class MaxlagTests(TestCase):
     def test_fetch_lag_without_error_is_zero(self, mocker):
         mocker.get(self.api_url, json={"batchcomplete": "", "query": {}})
         self.assertEqual(maxlag.fetch_lag(self.api_url), 0.0)
-
-    @requests_mock.Mocker()
-    def test_fetch_lag_uses_header_when_body_has_no_lag(self, mocker):
-        mocker.get(
-            self.api_url,
-            json={"error": {"code": "maxlag"}},
-            headers={"X-Database-Lag": "3"},
-        )
-        self.assertEqual(maxlag.fetch_lag(self.api_url), 3.0)
 
     @requests_mock.Mocker()
     def test_fetch_lag_unknown_on_failure(self, mocker):
@@ -71,16 +63,16 @@ class MaxlagTests(TestCase):
         self.assertEqual(maxlag.get_lag(self.api_url), 1.0)
         self.assertEqual(mocker.call_count, 1)
 
-        with mock.patch("core.maxlag.time.monotonic", return_value=10**9):
-            mocker.get(self.api_url, json=lag_response(2))
-            self.assertEqual(maxlag.get_lag(self.api_url), 2.0)
+        cache.clear()  # as if the check interval had passed
+        mocker.get(self.api_url, json=lag_response(2))
+        self.assertEqual(maxlag.get_lag(self.api_url), 2.0)
         self.assertEqual(mocker.call_count, 2)
 
     @requests_mock.Mocker()
     def test_is_lagged(self, mocker):
         mocker.get(self.api_url, json=lag_response(5))
         self.assertEqual(maxlag.is_lagged(self.api_url), (False, 5.0))
-        maxlag.clear_cache()
+        cache.clear()
         mocker.get(self.api_url, json=lag_response(5.1))
         self.assertEqual(maxlag.is_lagged(self.api_url), (True, 5.1))
 
@@ -99,14 +91,14 @@ class MaxlagTests(TestCase):
 @override_settings(MAXLAG_PAUSE_ENABLED=True, MAXLAG_THRESHOLD=5, MAXLAG_CHECK_INTERVAL=15)
 class BatchMaxlagTests(TestCase):
     def setUp(self):
-        maxlag.clear_cache()
+        cache.clear()
         self.api_mocker = ApiMocker()
         self.api_url = self.api_mocker.wikibase.api_endpoint
         self.user = UserFactory(username="user")
         self.token = TokenFactory(user=self.user)
 
     def tearDown(self):
-        maxlag.clear_cache()
+        cache.clear()
 
     def parse(self, text):
         return BatchFactory.load_from_parser(
@@ -154,7 +146,7 @@ class BatchMaxlagTests(TestCase):
             messages.append(batch.message)
             self.assertEqual(batch.status, Batch.STATUS_RUNNING)
             # Expire the cache so the next check fetches a new value
-            maxlag.clear_cache()
+            cache.clear()
 
         with mock.patch("core.models.time.sleep", side_effect=fake_sleep) as sleep:
             batch.run()

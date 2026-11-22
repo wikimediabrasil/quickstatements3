@@ -9,23 +9,18 @@ See https://www.mediawiki.org/wiki/Manual:Maxlag_parameter
 """
 
 import logging
-import threading
-import time
 from typing import Optional
 
 import requests
 from django.conf import settings
+from django.core.cache import cache
 
 logger = logging.getLogger("qsts3")
 
 USER_AGENT = "QuickStatements 3.0"
 TIMEOUT = (5, 10)  # connect, read
 
-# Action API URL -> (monotonic time of the check, lag in seconds or None if unknown).
-# Shared by all batch threads in the process, so each Wikibase is queried at most
-# once per `settings.MAXLAG_CHECK_INTERVAL` seconds.
-_cache: dict[str, tuple[float, Optional[float]]] = {}
-_lock = threading.Lock()
+_MISSING = object()
 
 
 def fetch_lag(api_url: str) -> Optional[float]:
@@ -56,13 +51,6 @@ def fetch_lag(api_url: str) -> Optional[float]:
         except (KeyError, TypeError, ValueError):
             pass
 
-    header = response.headers.get("X-Database-Lag")
-    if header is not None:
-        try:
-            return float(header)
-        except ValueError:
-            pass
-
     # No lag error even with maxlag=-1: the wiki isn't reporting any lag.
     if error is None:
         return 0.0
@@ -78,14 +66,13 @@ def get_lag(api_url: str) -> Optional[float]:
 
     Returns None if the lag could not be determined.
     """
-    with _lock:
-        cached = _cache.get(api_url)
-        if cached is not None and time.monotonic() - cached[0] < settings.MAXLAG_CHECK_INTERVAL:
-            return cached[1]
-        # Fetch while holding the lock so concurrent batch threads don't all query at once.
+    key = f"maxlag:{api_url}"
+    lag = cache.get(key, _MISSING)
+    if lag is _MISSING:
         lag = fetch_lag(api_url)
-        _cache[api_url] = (time.monotonic(), lag)
-        return lag
+        # Unknown lag (None) is cached too, so a failing API isn't queried on every command.
+        cache.set(key, lag, settings.MAXLAG_CHECK_INTERVAL)
+    return lag
 
 
 def is_lagged(api_url: str) -> tuple[bool, Optional[float]]:
@@ -99,8 +86,3 @@ def is_lagged(api_url: str) -> tuple[bool, Optional[float]]:
         return False, None
     lag = get_lag(api_url)
     return lag is not None and lag > settings.MAXLAG_THRESHOLD, lag
-
-
-def clear_cache():
-    with _lock:
-        _cache.clear()
