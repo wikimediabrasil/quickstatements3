@@ -1,4 +1,5 @@
 import copy
+import time
 import traceback
 import csv
 import logging
@@ -206,6 +207,14 @@ class Client:
 
         logger.debug(f"{method} request at {url} | response ({res.status_code}): {res.json()}")
         self.raise_for_status(res)
+
+        if method.lower() in ("patch", "post"):
+            # #maxlagissues
+            # lightweight workaround to not send too many edits at once
+            # this will cap the edit at ~86 edits per minute
+            logger.debug(f"{method} request at {url} | PATCH or POST wait 0.7s...")
+            time.sleep(0.7)
+
         return res.json()
 
     # ---
