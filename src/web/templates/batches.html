@@ -27,7 +27,7 @@
 
 <div
   id="batchesTableDiv"
-  hx-get="{% url 'last_batches_table' %}?page={{ page_number|default:'1' }}&page_size={{ page_size|default:'25' }}&username={{ username|default:'' }}"
+  hx-get="{% url 'last_batches_table' %}?page={{ page_number|default:'1' }}&page_size={{ page_size|default:'25' }}&username={{ username|default:'' }}&status={{ status|default:'' }}"
   hx-trigger="load, every 10s" hx-indicator="#spinner">
   {% include "batches_table.html" %}
 </div>

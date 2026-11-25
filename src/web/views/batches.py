@@ -38,6 +38,19 @@ def last_batches_table(request):
         .values_list("id", flat=True)
     )
 
+    status = request.GET.get("status")
+    if status:
+        status_map = {
+            "stopped": Batch.STATUS_STOPPED,
+            "blocked": Batch.STATUS_BLOCKED,
+            "initial": Batch.STATUS_INITIAL,
+            "running": Batch.STATUS_RUNNING,
+            "done": Batch.STATUS_DONE,
+        }
+        status_filter = status_map.get(status.lower())
+        if status_filter:
+            batch_ids = batch_ids.filter(status=status_filter)
+
     if username:
         batch_ids = batch_ids.filter(user=username)
         base_url = reverse("last_batches_by_user", args=[username])
@@ -64,6 +77,7 @@ def last_batches_table(request):
         "batches_table.html",
         {
             "username": username,
+            "status": status,
             "batches": batches,
             "page": page,
             "base_url": base_url,
@@ -86,4 +100,8 @@ def last_batches_by_user(request, user):
     """
     List last PAGE_SIZE batches modified created by user
     """
-    return render(request, "batches.html", {"username": user, **page_number_and_size(request)})
+    return render(request, "batches.html", {
+        "username": user,
+        "status": request.GET.get("status", ""),
+        **page_number_and_size(request)
+    })

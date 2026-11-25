@@ -56,13 +56,13 @@
 
         {% if page.has_previous %}
         <span class="pagination prev-page">
-          <a href="{{base_url}}?page=1&page_size={{page_size}}">
+          <a href="{{base_url}}?page=1&page_size={{page_size}}&status={{status}}">
             &lt;&lt; {% translate 'FIRST' context 'batches-first' %}
           </a>
         </span>
 
         <span class="pagination prev-page">
-          <a href="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}">
+          <a href="{{base_url}}?page={{page.previous_page_number}}&page_size={{page_size}}&status={{status}}">
             &lt; {% translate 'PREVIOUS' context 'batches-previous' %}
           </a>
         </span>
@@ -80,13 +80,13 @@
 
       {% if page.has_next %}
       <span class="pagination next-page">
-        <a href="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}">
+        <a href="{{base_url}}?page={{page.next_page_number}}&page_size={{page_size}}&status={{status}}">
             {% translate 'NEXT' context 'batches-next' %} &gt;
         </a>
       </span>
 
       <span class="pagination next-page">
-        <a href="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}">
+        <a href="{{base_url}}?page={{page.paginator.num_pages}}&page_size={{page_size}}&status={{status}}">
             {% translate 'LAST' context 'batches-last' %} &gt;&gt;
         </a>
       </span>
@@ -104,7 +104,7 @@
             name="page_size"
             aria-label="{% translate 'Page size:' context 'batches-page-size' %}"
             required
-            onchange="location.href='{{ base_url }}?page=1&page_size=' + this.value">
+            onchange="location.href='{{ base_url }}?page=1&page_size=' + this.value + '&status={{ status }}'">
       <option selected disabled value="">
         {% translate 'Page size:' context 'batches-page-size' %}
       </option>
