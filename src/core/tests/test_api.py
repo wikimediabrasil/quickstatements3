@@ -1,10 +1,11 @@
 from datetime import timedelta
 
+import requests
 import requests_mock
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.cache import cache as django_cache
-from django.test import TestCase, override_settings
+from django.test import SimpleTestCase, TestCase, override_settings
 from django.utils.timezone import now
 
 from core.exceptions import (
@@ -15,7 +16,7 @@ from core.exceptions import (
     UnauthorizedToken,
 )
 from core.factories import TokenFactory, UserFactory, WikibaseFactory, BatchFactory
-from core.models import BatchCommand, Client, Token
+from core.models import BatchCommand, Client, QsRetry, Token
 from core.parsers.v1 import V1CommandParser
 
 
@@ -688,3 +689,77 @@ class TestBatchCommand(TestCase):
             {"property": {"data_type": "wikibase-item"}},
         )
         self.assertEqual(cmd.response_id, "P5")
+
+
+class QsRetryTests(SimpleTestCase):
+
+    def setUp(self):
+        self.retry = QsRetry()
+
+    def _make_response(self, status=429, headers=dict, url="https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/Q42"):
+        response = requests.Response()
+        response.status_code = status
+        response.url = url
+        response.headers.update(headers)
+        return response
+
+    def test_retry_after_header_present(self):
+        response = self._make_response(headers={'Retry-After': '10'})
+        result = self.retry.get_retry_after(response)
+        self.assertEqual(result, 10)
+
+    def test_retry_after_header_string_to_int(self):
+        response = self._make_response(headers={'Retry-After': '30'})
+        result = self.retry.get_retry_after(response)
+        self.assertEqual(result, 30)
+
+    def test_no_retry_after_header_429_returns_5(self):
+        response = self._make_response(status=429, headers={})
+        result = self.retry.get_retry_after(response)
+        self.assertEqual(result, 5)
+
+    def test_no_retry_after_header_non_429_returns_none(self):
+        response = self._make_response(status=500, headers={})
+        result = self.retry.get_retry_after(response)
+        self.assertIsNone(result)
+
+    def test_db_lag_greater_than_5_returns_5(self):
+        response = self._make_response(status=200, headers={'X-Database-Lag': '10'})
+        result = self.retry.get_retry_after(response)
+        self.assertEqual(result, 5)
+
+    def test_db_lag_equal_to_5_returns_5(self):
+        response = self._make_response(status=200, headers={'X-Database-Lag': '5'})
+        result = self.retry.get_retry_after(response)
+        self.assertEqual(result, 5)
+
+    def test_db_lag_less_than_5_returns_none(self):
+        response = self._make_response(status=200, headers={'X-Database-Lag': '3'})
+        result = self.retry.get_retry_after(response)
+        self.assertIsNone(result)
+
+    def test_db_lag_non_numeric_returns_none(self):
+        response = self._make_response(status=200, headers={'X-Database-Lag': 'invalid'})
+        result = self.retry.get_retry_after(response)
+        self.assertIsNone(result)
+
+    def test_db_lag_missing_returns_none(self):
+        response = self._make_response(status=200, headers={})
+        result = self.retry.get_retry_after(response)
+        self.assertIsNone(result)
+
+    def test_retry_after_takes_precedence_over_db_lag(self):
+        response = self._make_response(
+            status=429,
+            headers={'Retry-After': '30', 'X-Database-Lag': '100'}
+        )
+        result = self.retry.get_retry_after(response)
+        self.assertEqual(result, 30)
+
+    def test_429_no_retry_after_but_db_lag_high_returns_5(self):
+        response = self._make_response(
+            status=429,
+            headers={'X-Database-Lag': '100'}
+        )
+        result = self.retry.get_retry_after(response)
+        self.assertEqual(result, 5)

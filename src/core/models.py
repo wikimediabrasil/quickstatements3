@@ -1,4 +1,5 @@
 import copy
+import time
 import traceback
 import csv
 import logging
@@ -24,6 +25,43 @@ from requests.exceptions import HTTPError
 from urllib3.util.retry import Retry
 
 from .decorators import cache_with_first_arg
+
+
+class QsRetry(Retry):
+    """
+    Retry that uses Retry-After, or 5 seconds, or 5 seconds if X-Database-Lag >= 5.
+    """
+
+    def get_retry_after(self, response):
+        retry_after = response.headers.get('Retry-After')
+        db_lag = response.headers.get('X-Database-Lag')
+        if retry_after:
+            logger.debug(f"request at {response.url} | Retry-After header: {retry_after}")
+        if db_lag:
+            logger.debug(f"request at {response.url} | X-Database-Lag header: {db_lag}")
+        # urllib3 HTTPResponse (status) and requests.Response (status_code)
+        status = getattr(response, 'status', getattr(response, 'status_code', None))
+        # 1. Retry-After
+        if retry_after:
+            try:
+                retry_after = int(retry_after)
+            except (TypeError, ValueError):
+                retry_after = 5
+            if retry_after > 300:
+                logger.debug(f"request at {response.url} | Retry-After bigger than 5 minutes: {retry_after}")
+            return retry_after
+        # 2. status 429 defaults to 5 seconds
+        if status == 429:
+            return 5
+        # 3. if X-Database-Lag > 5 use 5 seconds
+        if db_lag:
+            try:
+                if int(db_lag) >= 5:
+                    return 5
+            except (TypeError, ValueError):
+                pass
+        return super().get_retry_after(response)
+
 from .exceptions import (
     ApiException,
     EntityTypeNotImplemented,
@@ -70,11 +108,11 @@ class Client:
     TIMEOUT = (10, 40) # connect, read
 
     def __init__(self, token: "Token", wikibase: "Wikibase"):
-        retries = Retry(
+        retries = QsRetry(
             total=10,
-            backoff_factor=0.5,
+            backoff_factor=5,
             backoff_max=30,
-            respect_retry_after_header=False,
+            respect_retry_after_header=True,
             status_forcelist=[429],
             allowed_methods=["GET", "POST", "PATCH", "DELETE"],
         )
@@ -206,6 +244,14 @@ class Client:
 
         logger.debug(f"{method} request at {url} | response ({res.status_code}): {res.json()}")
         self.raise_for_status(res)
+
+        if method.lower() in ("patch", "post"):
+            # #maxlagissues
+            # lightweight workaround to not send too many edits at once
+            # this will cap the edit at ~86 edits per minute
+            logger.debug(f"{method} request at {url} | PATCH or POST wait 0.7s...")
+            time.sleep(0.7)
+
         return res.json()
 
     # ---
