@@ -53,6 +53,7 @@ env = [
     "DEFAULT_WIKIBASE_URL=https://wikidata.example.org",
     "OAUTH_AUTHORIZATION_SERVER=https://oauth.example.org",
     "WHITELISTED_USERS=",
+    "MAXLAG_PAUSE_ENABLED=False",
 ]
 
 [tool.ruff]

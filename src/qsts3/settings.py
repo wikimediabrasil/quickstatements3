@@ -259,3 +259,10 @@ DEFAULT_WIKIBASE_URL = os.getenv("DEFAULT_WIKIBASE_URL", "https://www.wikidata.o
 
 # To use with EditGroups integration
 TOOLFORGE_TOOL_NAME = os.getenv("TOOLFORGE_TOOL_NAME")
+
+# Pause running batches while the Wikibase lag is above MAXLAG_THRESHOLD seconds.
+# The lag is read from the Action API every MAXLAG_CHECK_INTERVAL seconds.
+# See https://www.mediawiki.org/wiki/Manual:Maxlag_parameter
+MAXLAG_PAUSE_ENABLED = os.getenv("MAXLAG_PAUSE_ENABLED", "True") == "True"
+MAXLAG_THRESHOLD = float(os.getenv("MAXLAG_THRESHOLD", "5"))
+MAXLAG_CHECK_INTERVAL = max(5, int(os.getenv("MAXLAG_CHECK_INTERVAL", "15")))
