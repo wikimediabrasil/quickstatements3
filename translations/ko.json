@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"CHK2605",
+			"Suleiman the Magnificent Television",
 			"Tensama0415",
 			"Ykhwong"
 		]
@@ -130,6 +131,11 @@
 	"login-dev-access-token": "접근 토큰",
 	"login-dev-log-in": "로그인",
 	"login-dev-your-access-token-is-not-valid": "접근 토큰이 유효하지 않습니다:",
+	"login-error-token": "위키미디어 계정 인증에 실패했습니다.",
+	"login-error-server": "위키미디어 서버가 당신의 인증을 처리할 수 없었습니다.",
+	"login-error-mismatched-states": "인증 서버가 차단되거나, 잘못 사용되었거나, 지금 여기가 당신이 있어야 하는 곳이 아닙니다.",
+	"login-error-unknown": "알 수 없는 오류가 발생했습니다.",
+	"login-error-try-again": "다시 시도해 주세요.",
 	"new-batch-quickstatements-new-batch": "QuickStatements 3.0 - 새 일괄 작업",
 	"new-batch-new-batch": "새 일괄 작업",
 	"new-batch-your-account-is-blocked": "계정이 차단되어 일괄 작업을 실행할 수 없습니다.",
@@ -142,6 +148,8 @@
 	"new-batch-commands-targeting": "동일한 개체를 가리키는 명령어는 하나의 편집으로 결합되지 않습니다.",
 	"new-batch-enter-your-commands-here": "여기에 명령어를 입력하세요...",
 	"new-batch-note-only-autoconfirmed": "참고: 인증된 사용자만 일괄 작업을 실행할 수 있습니다.",
+	"new-batch-create": "만들기",
+	"new-batch-preview": "미리 보기",
 	"preview-batch-batch": "일괄 작업",
 	"preview-batch-batch-preview": "일괄 작업 미리 보기",
 	"preview-batch-save-and-run-batch": "일괄 작업 저장 및 실행",
@@ -164,6 +172,7 @@
 	"profile-here-you-can-generate-a-token": "여기서 프로그래밍 방식으로 일괄 작업을 쿼리할 때 사용할 토큰을 생성할 수 있습니다.",
 	"profile-you-currently-have-the-following-token": "현재 다음 토큰을 보유하고 있습니다. 이 토큰은 비공개로 유지해야 합니다:",
 	"profile-update-token": "토큰 업데이트",
+	"profile-generate-token": "토큰 만들기",
 	"profile-click-here-to-log-out": "로그아웃하려면 여기를 클릭하세요.",
 	"profile-youre-not-logged-in": "로그인되어 있지 않습니다.",
 	"profile-click-here-to-log-in": "로그인하려면 여기를 클릭하세요.",
@@ -204,6 +213,7 @@
 	"batch-summary-commands-eta": "예상 완료 시간",
 	"new-batch-file-upload": "파일 업로드",
 	"new-batch-file-upload-targeting": "양식에 명령어를 직접 작성하는 대신 파일을 업로드하려는 사용자를 위한 옵션입니다",
+	"new-batch-file-upload-clear": "지우기",
 	"layout-quickstatements-title": "QuickStatements 3.0",
 	"layout-navbar-new-batch": "새 일괄 작업",
 	"layout-navbar-last-batches": "최근 일괄 작업",
@@ -222,6 +232,7 @@
 	"batch-py-valid-command-not-found": "제공된 입력에서 유효한 명령어를 찾을 수 없습니다.",
 	"batch-button-rerun-uncombined": "결합 없이 재실행",
 	"batch-button-rerun": "재실행",
+	"batch-button-restart": "다시 시작",
 	"batch-button-download-report": "보고서 다운로드",
 	"login-token-expired": "위키미디어 인증이 만료되었습니다. 이는 보안상의 이유로 발생하는 정상적인 현상입니다. 다시 로그인해 주세요."
 }

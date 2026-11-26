@@ -3,7 +3,8 @@
 		"authors": [
 			"ACheJu",
 			"Ederporto",
-			"Eduardoaddad"
+			"Eduardoaddad",
+			"Felipe L. Ewald"
 		]
 	},
 	"batch-py-status-stopped": "Parado",
@@ -26,6 +27,9 @@
 	"batchcommand-py-operation-create-property": "Criar propriedade",
 	"batchcommand-py-operation-set-statement": "Definir declaração",
 	"batchcommand-py-operation-create-statement": "Criar declaração",
+	"batchcommand-py-operation-switch-statement-value": "Valor da instrução switch",
+	"batchcommand-py-operation-switch-statement-property": "Propriedade da instrução switch",
+	"batchcommand-py-operation-switch-statement-property-and-value": "Propriedade e valor da instrução switch",
 	"batchcommand-py-operation-remove-statement-by-id": "Remover declaração por id",
 	"batchcommand-py-operation-remove-statement-by-value": "Remover declaração por valor",
 	"batchcommand-py-operation-remove-qualifier": "Remover qualificador",
@@ -127,6 +131,11 @@
 	"login-dev-access-token": "Chave de acesso",
 	"login-dev-log-in": "Entrar",
 	"login-dev-your-access-token-is-not-valid": "Sua chave de acesso não é válida:",
+	"login-error-token": "A autenticação com sua conta da Wikimedia falhou.",
+	"login-error-server": "O servidor da Wikimedia não conseguiu processar sua autenticação.",
+	"login-error-mismatched-states": "O servidor de autenticação está sendo interceptado, usado indevidamente ou você não deveria estar aqui neste momento.",
+	"login-error-unknown": "Ocorreu um erro desconhecido.",
+	"login-error-try-again": "Por favor, tente novamente.",
 	"new-batch-quickstatements-new-batch": "Novo lote | QS 3.0",
 	"new-batch-new-batch": "Novo lote",
 	"new-batch-your-account-is-blocked": "Sua conta está bloqueada e você não poderá rodar lotes",
@@ -139,6 +148,8 @@
 	"new-batch-commands-targeting": "Comandos realizados na mesma entidade não serão combinados numa mesma edição.",
 	"new-batch-enter-your-commands-here": "Entre com os comandos aqui...",
 	"new-batch-note-only-autoconfirmed": "Nota: apenas usuários(a) autoconfirmados(as) podem rodar lotes.",
+	"new-batch-create": "Criar",
+	"new-batch-preview": "Pré-visualizar",
 	"preview-batch-batch": "Lote",
 	"preview-batch-batch-preview": "Pré-visualização de lote",
 	"preview-batch-save-and-run-batch": "Salvar e rodar lote",
@@ -202,6 +213,7 @@
 	"batch-summary-commands-eta": "Tempo restante estimado",
 	"new-batch-file-upload": "Upload de arquivo",
 	"new-batch-file-upload-targeting": "Opção para quando o(a) usuário(a) prefere fazer upload de um arquivo, em vez de escrever os comandos no formulário",
+	"new-batch-file-upload-clear": "Limpar",
 	"layout-quickstatements-title": "QuickStatements 3.0",
 	"layout-navbar-new-batch": "Novo lote",
 	"layout-navbar-last-batches": "Últimos lotes",
@@ -219,6 +231,8 @@
 	"batch-py-csv-only-header": "A entrada CSV deve incluir mais do que apenas a linha de cabeçalho",
 	"batch-py-valid-command-not-found": "Nenhum comando válido encontrado na entrada fornecida.",
 	"batch-button-rerun-uncombined": "Repetição não combinada",
+	"batch-button-rerun": "Repetir",
+	"batch-button-restart": "Reiniciar",
 	"batch-button-download-report": "Fazer o download do relatório",
 	"login-token-expired": "Sua autenticação na Wikimedia expirou. Isso é completamente normal e acontece por motivos de segurança. Por favor, faça login novamente."
 }
