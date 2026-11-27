@@ -453,6 +453,8 @@ class BaseParser(object):
             lowerBound = Decimal(bounds_match.group(3))
             upperBound = Decimal(bounds_match.group(5))
             unit = bounds_match.group(8)
+            if lowerBound > upperBound:
+                lowerBound, upperBound = upperBound, lowerBound
             return {
                 "type": "quantity",
                 "value": {
