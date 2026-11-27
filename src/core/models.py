@@ -1426,12 +1426,6 @@ class BatchCommand(models.Model):
             self.Operation.SWITCH_STATEMENT_PROPERTY_AND_VALUE,
         )
 
-    def is_switch_value(self):
-        return self.operation == self.Operation.SWITCH_STATEMENT_VALUE
-
-    def is_switch_property(self):
-        return self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY
-
     def is_add_label_description_alias(self):
         return self.is_add() and self.what in ["DESCRIPTION", "LABEL", "ALIAS"]
 
@@ -1868,7 +1862,6 @@ class BatchCommand(models.Model):
         statement["property"] = {"id": new_prop}
         entity["statements"].setdefault(new_prop, [])
         entity["statements"][new_prop].append(statement)
-        logger.debug("post switch proeprty: ", entity)
 
     def _switch_statement_property_and_value(self, entity: dict):
         """
@@ -1882,7 +1875,6 @@ class BatchCommand(models.Model):
         statement["value"] = self.statement_api_value_switch
         entity["statements"].setdefault(new_prop, [])
         entity["statements"][new_prop].append(statement)
-        logger.debug("post switch proeprty: ", entity)
 
     def _update_entity_aliases(self, entity: dict):
         """
