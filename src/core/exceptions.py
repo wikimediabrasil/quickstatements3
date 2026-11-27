@@ -60,6 +60,17 @@ class NoStatementsWithThatValue(ApiException):
         return super().__init__(message)
 
 
+class NoStatementsWithThatId(ApiException):
+    def __init__(self, entity_id, statement_id):
+        self.entity_id = entity_id
+        self.statement_id = statement_id
+        message = (
+            f"The entity {entity_id} has no statements "
+            f"with id '{statement_id}'"
+        )
+        return super().__init__(message)
+
+
 class NoQualifiers(ApiException):
     def __init__(self):
         return super().__init__("There are no qualifiers with the given value")
