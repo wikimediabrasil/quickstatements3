@@ -460,10 +460,10 @@ class V1CommandParser(BaseParser):
                         bc.operation = bc.Operation.CREATE_PROPERTY
                     elif what_or_type == "statement":
                         bc.operation = bc.Operation.CREATE_STATEMENT
-                elif command["action"] == "switch":
-                    bc.operation = command["operation"] # TODO: this could be done for all operations here
-                else:
+                elif command["action"] == "merge":
                     bc.action = BatchCommand.ACTION_MERGE
+                elif command.get("operation"):
+                    bc.operation = command["operation"] # TODO: this could be done for all operations here
                 bc.user_summary = command.pop("summary", None)
                 bc.json = command
             except ParserException as e:
