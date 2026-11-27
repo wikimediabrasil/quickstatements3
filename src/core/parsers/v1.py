@@ -185,15 +185,15 @@ class V1CommandParser(BaseParser):
 
     def parse_switch_property(self, elements):
         llen = len(elements)
-        if llen != 5:
+        if llen != 5 and llen != 3:
             raise ParserException("SWITCH_PROPERTY command must be QID|PID|value|new_PID")
         elements.pop(0)
 
-        property_switch = elements.pop(3)
+        property_switch = elements.pop(-1)
         if not self.is_valid_property_id(property_switch):
             raise ParserException(f"Invalid property '{property_switch}'")
 
-        data = self.parse_statement(elements, elements[0].upper())
+        data = self.parse_triplet_or_statement_id(elements)
         data["action"] = "switch"
         data["what"] = "property"
         data["property_switch"] = property_switch

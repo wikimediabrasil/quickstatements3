@@ -1846,6 +1846,21 @@ class BatchCommand(models.Model):
                 return entity["statements"][self.prop].pop(i)
         raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
 
+    def _remove_statement_by_id(self, entity: dict):
+        """
+        Removes an entity statement by command's statement id.
+        """
+        for prop in entity["statements"]:
+            statements = entity["statements"].get(prop, [])
+            for i, statement in enumerate(statements):
+                # NOTE: it should be .get("id") because
+                # new statements added by QS3 itself won't have ID
+                if statement.get("id") == self.statement_id:
+                    # TODO: update command with newly
+                    # found information! to show it nicely
+                    return entity["statements"][prop].pop(i)
+        raise NoStatementsWithThatId(self.entity_id, self.statement_id)
+
     def _switch_statement_value(self, entity: dict):
         """
         Switches a statement value
@@ -1864,7 +1879,12 @@ class BatchCommand(models.Model):
         """
         Switches a statement property
         """
-        statement = self._remove_entity_statement(entity)
+        # TODO: refactor this out gradually and implement
+        # it to other operations as well
+        if self.statement_id:
+            statement = self._remove_statement_by_id(entity)
+        else:
+            statement = self._remove_entity_statement(entity)
         if "id" in statement:
             statement.pop("id") # id is read-only and defined by wikibase
         new_prop = self.json["property_switch"]

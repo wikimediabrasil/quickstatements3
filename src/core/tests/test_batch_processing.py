@@ -1069,3 +1069,39 @@ class ProcessingTests(TestCase):
             commands[4].message,
             "Invalid value type for the property P5: 'time' was provided but it needs 'wikibase-entityid'.",
         )
+
+    @requests_mock.Mocker()
+    def test_switch_property_statement_by_id_will_pick_correct(self, mocker):
+        statements = {
+            "P5": [
+                {
+                    "id": "Q1234$abcdefgh-uijkl",
+                    "value": {
+                        "type": "value",
+                        "content": "Q12",
+                    },
+                },
+                {
+                    "id": "Q1234$defgh-xyzabc",
+                    "value": {
+                        "type": "value",
+                        "content": "Q12",
+                    },
+                },
+            ],
+        }
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
+        batch = self.parse("SWITCH_PROPERTY|Q1234$defgh-xyzabc|P123")
+        cmd = batch.commands()[0]
+        res = cmd.get_final_entity_json(self.api_client)
+        self.assertEqual(res["statements"]["P5"][0]["id"], "Q1234$abcdefgh-uijkl")
+        self.assertEqual(res["statements"]["P123"][0]["value"]["content"], "Q12")
+        # final id should be none
+        self.assertIsNone(res["statements"]["P123"][0].get("id"))
+        # now let's run
+        batch.run()
+        self.assertEqual(batch.status, Batch.STATUS_DONE)
+        cmd.refresh_from_db()
+        self.assertEqual(cmd.status, BatchCommand.STATUS_DONE)
