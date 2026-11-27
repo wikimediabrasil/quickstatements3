@@ -159,7 +159,7 @@ class V1CommandParser(BaseParser):
             return {
                 "action": "remove",
                 "what": "statement",
-                "id": _id,
+                "statement_id": _id,
                 "entity": {"id": _split[0]},
             }
 
@@ -469,7 +469,7 @@ class V1CommandParser(BaseParser):
                     bc.action = BatchCommand.ACTION_REMOVE
                     what = command.get("what")
                     if what == "statement":
-                        if "id" in command:
+                        if "statement_id" in command:
                             bc.operation = bc.Operation.REMOVE_STATEMENT_BY_ID
                         else:
                             bc.operation = bc.Operation.REMOVE_STATEMENT_BY_VALUE

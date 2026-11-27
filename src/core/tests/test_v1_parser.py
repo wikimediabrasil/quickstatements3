@@ -118,7 +118,7 @@ class TestV1ParserCommand(TestCase):
             {
                 "action": "remove",
                 "entity": {"id": "Q4115189"},
-                "id": "Q4115189$0d52b2b4-4fa4-3bfa-8eda-cfe87ea23c34",
+                "statement_id": "Q4115189$0d52b2b4-4fa4-3bfa-8eda-cfe87ea23c34",
                 "what": "statement",
             },
         )

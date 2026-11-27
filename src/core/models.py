@@ -1586,6 +1586,7 @@ class BatchCommand(models.Model):
             self.Operation.SWITCH_STATEMENT_PROPERTY,
             self.Operation.SWITCH_STATEMENT_PROPERTY_AND_VALUE,
             self.Operation.REMOVE_STATEMENT_BY_VALUE,
+            self.Operation.REMOVE_STATEMENT_BY_ID,
             self.Operation.REMOVE_QUALIFIER,
             self.Operation.REMOVE_REFERENCE,
             self.Operation.REMOVE_REFERENCE_BLOCK,
@@ -1729,6 +1730,8 @@ class BatchCommand(models.Model):
             self._update_entity_statements(entity)
         elif self.operation == self.Operation.REMOVE_STATEMENT_BY_VALUE:
             self._remove_entity_statement(entity)
+        elif self.operation == self.Operation.REMOVE_STATEMENT_BY_ID:
+            self._remove_statement_by_id(entity)
         elif self.operation == self.Operation.SWITCH_STATEMENT_VALUE:
             self._switch_statement_value(entity)
         elif self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY:
@@ -2000,10 +2003,6 @@ class BatchCommand(models.Model):
                 return ("POST", "/entities/properties")
             else:
                 return ("PATCH", Client.wikibase_entity_endpoint(self.entity_id))
-        match self.operation:
-            case self.Operation.REMOVE_STATEMENT_BY_ID:
-                statement_id = self.json["id"]
-                return ("DELETE", f"/statements/{statement_id}")
 
     # -----------------
     # Value type verification

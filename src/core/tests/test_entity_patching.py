@@ -726,3 +726,28 @@ class AddRemoveQualRefTests(TestCase):
             entity["statements"]["P99"][0]["references"],
             self.INITIAL["statements"]["P65"][0]["references"]
         )
+
+    def test_remove_statement_by_id(self):
+        text = """
+        -STATEMENT|Q12345678$FD9DA04C-1967-4949-92FF-BD8405BCE4D9
+        -STATEMENT|Q12345678$96026FB3-7D84-48E3-8C64-6D2E2D033B7E
+        -STATEMENT|Q12345678$failed-id
+        """
+        batch = self.parse(text)
+        entity = copy.deepcopy(self.INITIAL)
+        self.assertStmtnCount(entity, "P31", 1)
+        self.assertStmtnCount(entity, "P65", 1)
+        # ---
+        rm = batch.commands()[0]
+        rm.update_entity_json(entity)
+        self.assertStmtnCount(entity, "P31", 1)
+        self.assertStmtnCount(entity, "P65", 0)
+        # ---
+        rm = batch.commands()[1]
+        rm.update_entity_json(entity)
+        self.assertStmtnCount(entity, "P31", 0)
+        self.assertStmtnCount(entity, "P65", 0)
+        # ---
+        rm = batch.commands()[2]
+        with self.assertRaises(NoStatementsWithThatId):
+            rm.update_entity_json(entity)

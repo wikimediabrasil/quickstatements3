@@ -302,8 +302,14 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_remove_statement_by_id(self, mocker):
+        statements = {
+            "P1": [
+                {"id": "Q1234$abcdefgh-uijkl"}
+            ]
+        }
         self.api_mocker.is_autoconfirmed(mocker)
-        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
         batch = self.parse("-STATEMENT|Q1234$abcdefgh-uijkl")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -312,6 +318,25 @@ class ProcessingTests(TestCase):
             commands[0].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_ID
         )
         self.assertEqual(commands[0].status, BatchCommand.STATUS_DONE)
+
+    @requests_mock.Mocker()
+    def test_remove_statement_by_id_non_existant(self, mocker):
+        statements = {
+            "P1": [
+                {"id": "Q1234$xyzxyz-uijkl"}
+            ]
+        }
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
+        batch = self.parse("-STATEMENT|Q1234$abcdefgh-uijkl")
+        batch.run()
+        self.assertEqual(batch.status, Batch.STATUS_DONE)
+        commands = batch.commands()
+        self.assertEqual(
+            commands[0].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_ID
+        )
+        self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
 
     @requests_mock.Mocker()
     def test_remove_statement_by_value_success(self, mocker):
@@ -328,7 +353,7 @@ class ProcessingTests(TestCase):
         }
         self.api_mocker.is_autoconfirmed(mocker)
         self.api_mocker.statements(mocker, "Q1234", statements)
-        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
         batch = self.parse("-Q1234|P5|Q12")
         res = batch.commands()[0].get_final_entity_json(self.api_client)
         self.assertEqual(len(res["statements"]["P5"]), 0)
@@ -355,8 +380,7 @@ class ProcessingTests(TestCase):
         }
         self.api_mocker.is_autoconfirmed(mocker)
         self.api_mocker.statements(mocker, "Q1234", statements)
-        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
-        self.api_mocker.delete_statement_fail(mocker, "Q1234$defgh-xyzabc")
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
         batch = self.parse("-Q1234|P5|Q12")
         res = batch.commands()[0].get_final_entity_json(self.api_client)
         self.assertEqual(res["statements"]["P5"][0]["id"], "Q1234$defgh-xyzabc")
