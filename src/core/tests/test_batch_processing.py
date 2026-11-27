@@ -401,6 +401,7 @@ class ProcessingTests(TestCase):
         self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[0].error, BatchCommand.Error.NO_STATEMENTS_VALUE)
 
+
     @requests_mock.Mocker()
     def test_set_sitelink_success(self, mocker):
         self.api_mocker.is_autoconfirmed(mocker)

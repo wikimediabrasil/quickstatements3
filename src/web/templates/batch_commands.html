@@ -51,6 +51,8 @@
               <span class="alias"> <span class="language-id">{{ command.language }}:</span> </span>
               {% elif command.is_sitelink_command %}
               <span class="sitelink"> {{ command.sitelink }}: </span>
+              {% elif command.statement_id != "" %}
+              <span class="statement_id"> {{ command.statement_id }} </span>
               {% elif command.prop != "" %}
               <span class="property"> {% entity_display command command.prop %}</span>
               {% endif %}

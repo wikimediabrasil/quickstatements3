@@ -72,6 +72,7 @@ from .exceptions import (
     NoReferenceParts,
     NoStatementsForThatProperty,
     NoStatementsWithThatValue,
+    NoStatementsWithThatId,
     NoValueTypeForThisDataType,
     ServerError,
     UnauthorizedToken,
@@ -1142,6 +1143,14 @@ class BatchCommand(models.Model):
             return ""
 
     # -----------------
+    # Statement id methods
+    # -----------------
+
+    @property
+    def statement_id(self):
+        return self.json.get("statement_id", None)
+
+    # -----------------
     # Property methods
     # -----------------
 
@@ -2035,7 +2044,11 @@ class BatchCommand(models.Model):
 
         - Statement addition
         - Statement value or property switch
+
+        3) It is not matching by statement id. In this case,
+        property and value are not known beforehand.
         """
         is_not_verified_yet = not self.value_type_verified
         is_needed_actions = self.is_add_statement() or self.is_switch()
-        return is_not_verified_yet and is_needed_actions
+        is_not_statement_id = not self.statement_id
+        return is_not_verified_yet and is_needed_actions and is_not_statement_id
