@@ -53,6 +53,22 @@
            span.innerHTML = label
          }
        })
+
+       // fall back to a label in any language
+       const missingIds = entityIds.filter(id => {
+         const labels = data.entities?.[id]?.labels
+         return labels && !labels[userLanguage] && !labels.en
+       })
+       if (missingIds.length > 0) {
+         const fallbackUrl = `${wikibaseUrl}/w/api.php?action=wbgetentities&ids=${missingIds.join('|')}&format=json&props=labels&origin=*`
+         const fallbackData = await (await fetch(fallbackUrl)).json()
+         spans.forEach(span => {
+           const labels = fallbackData.entities?.[span.getAttribute("data-entity-id")]?.labels
+           if (labels && Object.keys(labels).length > 0) {
+             span.innerHTML = lexemeLabel(labels)
+           }
+         })
+       }
      } catch (err) {
        console.error("Error fetching localized labels from Wikidata:", err)
      }
