@@ -302,8 +302,14 @@ class ProcessingTests(TestCase):
 
     @requests_mock.Mocker()
     def test_remove_statement_by_id(self, mocker):
+        statements = {
+            "P1": [
+                {"id": "Q1234$abcdefgh-uijkl"}
+            ]
+        }
         self.api_mocker.is_autoconfirmed(mocker)
-        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
         batch = self.parse("-STATEMENT|Q1234$abcdefgh-uijkl")
         batch.run()
         self.assertEqual(batch.status, Batch.STATUS_DONE)
@@ -312,6 +318,25 @@ class ProcessingTests(TestCase):
             commands[0].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_ID
         )
         self.assertEqual(commands[0].status, BatchCommand.STATUS_DONE)
+
+    @requests_mock.Mocker()
+    def test_remove_statement_by_id_non_existant(self, mocker):
+        statements = {
+            "P1": [
+                {"id": "Q1234$xyzxyz-uijkl"}
+            ]
+        }
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
+        batch = self.parse("-STATEMENT|Q1234$abcdefgh-uijkl")
+        batch.run()
+        self.assertEqual(batch.status, Batch.STATUS_DONE)
+        commands = batch.commands()
+        self.assertEqual(
+            commands[0].operation, BatchCommand.Operation.REMOVE_STATEMENT_BY_ID
+        )
+        self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
 
     @requests_mock.Mocker()
     def test_remove_statement_by_value_success(self, mocker):
@@ -328,7 +353,7 @@ class ProcessingTests(TestCase):
         }
         self.api_mocker.is_autoconfirmed(mocker)
         self.api_mocker.statements(mocker, "Q1234", statements)
-        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
         batch = self.parse("-Q1234|P5|Q12")
         res = batch.commands()[0].get_final_entity_json(self.api_client)
         self.assertEqual(len(res["statements"]["P5"]), 0)
@@ -355,8 +380,7 @@ class ProcessingTests(TestCase):
         }
         self.api_mocker.is_autoconfirmed(mocker)
         self.api_mocker.statements(mocker, "Q1234", statements)
-        self.api_mocker.delete_statement_sucessful(mocker, "Q1234$abcdefgh-uijkl")
-        self.api_mocker.delete_statement_fail(mocker, "Q1234$defgh-xyzabc")
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
         batch = self.parse("-Q1234|P5|Q12")
         res = batch.commands()[0].get_final_entity_json(self.api_client)
         self.assertEqual(res["statements"]["P5"][0]["id"], "Q1234$defgh-xyzabc")
@@ -400,6 +424,7 @@ class ProcessingTests(TestCase):
         )
         self.assertEqual(commands[0].status, BatchCommand.STATUS_ERROR)
         self.assertEqual(commands[0].error, BatchCommand.Error.NO_STATEMENTS_VALUE)
+
 
     @requests_mock.Mocker()
     def test_set_sitelink_success(self, mocker):
@@ -1068,3 +1093,39 @@ class ProcessingTests(TestCase):
             commands[4].message,
             "Invalid value type for the property P5: 'time' was provided but it needs 'wikibase-entityid'.",
         )
+
+    @requests_mock.Mocker()
+    def test_switch_property_statement_by_id_will_pick_correct(self, mocker):
+        statements = {
+            "P5": [
+                {
+                    "id": "Q1234$abcdefgh-uijkl",
+                    "value": {
+                        "type": "value",
+                        "content": "Q12",
+                    },
+                },
+                {
+                    "id": "Q1234$defgh-xyzabc",
+                    "value": {
+                        "type": "value",
+                        "content": "Q12",
+                    },
+                },
+            ],
+        }
+        self.api_mocker.is_autoconfirmed(mocker)
+        self.api_mocker.statements(mocker, "Q1234", statements)
+        self.api_mocker.patch_item_successful(mocker, "Q1234", {})
+        batch = self.parse("SWITCH_PROPERTY|Q1234$defgh-xyzabc|P123")
+        cmd = batch.commands()[0]
+        res = cmd.get_final_entity_json(self.api_client)
+        self.assertEqual(res["statements"]["P5"][0]["id"], "Q1234$abcdefgh-uijkl")
+        self.assertEqual(res["statements"]["P123"][0]["value"]["content"], "Q12")
+        # final id should be none
+        self.assertIsNone(res["statements"]["P123"][0].get("id"))
+        # now let's run
+        batch.run()
+        self.assertEqual(batch.status, Batch.STATUS_DONE)
+        cmd.refresh_from_db()
+        self.assertEqual(cmd.status, BatchCommand.STATUS_DONE)

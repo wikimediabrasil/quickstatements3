@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.utils.timezone import localdate
 
 from core.parsers.v1 import V1CommandParser
+from core.models import BatchCommand
 
 
 class TestV1ParserCommand(TestCase):
@@ -117,7 +118,7 @@ class TestV1ParserCommand(TestCase):
             {
                 "action": "remove",
                 "entity": {"id": "Q4115189"},
-                "id": "Q4115189$0d52b2b4-4fa4-3bfa-8eda-cfe87ea23c34",
+                "statement_id": "Q4115189$0d52b2b4-4fa4-3bfa-8eda-cfe87ea23c34",
                 "what": "statement",
             },
         )
@@ -873,4 +874,19 @@ class TestV1ParserCommand(TestCase):
         self.assertEqual(
             data["qualifiers"][0]["value"]["value"]["time"],
             expected_time,
+        )
+
+    def test_v1_switch_with_id(self):
+        parser = V1CommandParser()
+        data = parser.parse_command("SWITCH_PROPERTY\tQ42$32C860DF-F954-4142-9F11-5AFD52CB613E\tP1303")
+        self.assertEqual(
+            data,
+            {
+                "action": "switch",
+                "what": "property",
+                "entity": {"id": "Q42"},
+                "statement_id": "Q42$32C860DF-F954-4142-9F11-5AFD52CB613E",
+                "property_switch": "P1303",
+                "operation": BatchCommand.Operation.SWITCH_STATEMENT_PROPERTY,
+            }
         )

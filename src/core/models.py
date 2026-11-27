@@ -72,6 +72,7 @@ from .exceptions import (
     NoReferenceParts,
     NoStatementsForThatProperty,
     NoStatementsWithThatValue,
+    NoStatementsWithThatId,
     NoValueTypeForThisDataType,
     ServerError,
     UnauthorizedToken,
@@ -1142,6 +1143,14 @@ class BatchCommand(models.Model):
             return ""
 
     # -----------------
+    # Statement id methods
+    # -----------------
+
+    @property
+    def statement_id(self):
+        return self.json.get("statement_id", None)
+
+    # -----------------
     # Property methods
     # -----------------
 
@@ -1426,12 +1435,6 @@ class BatchCommand(models.Model):
             self.Operation.SWITCH_STATEMENT_PROPERTY_AND_VALUE,
         )
 
-    def is_switch_value(self):
-        return self.operation == self.Operation.SWITCH_STATEMENT_VALUE
-
-    def is_switch_property(self):
-        return self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY
-
     def is_add_label_description_alias(self):
         return self.is_add() and self.what in ["DESCRIPTION", "LABEL", "ALIAS"]
 
@@ -1583,6 +1586,7 @@ class BatchCommand(models.Model):
             self.Operation.SWITCH_STATEMENT_PROPERTY,
             self.Operation.SWITCH_STATEMENT_PROPERTY_AND_VALUE,
             self.Operation.REMOVE_STATEMENT_BY_VALUE,
+            self.Operation.REMOVE_STATEMENT_BY_ID,
             self.Operation.REMOVE_QUALIFIER,
             self.Operation.REMOVE_REFERENCE,
             self.Operation.REMOVE_REFERENCE_BLOCK,
@@ -1726,6 +1730,8 @@ class BatchCommand(models.Model):
             self._update_entity_statements(entity)
         elif self.operation == self.Operation.REMOVE_STATEMENT_BY_VALUE:
             self._remove_entity_statement(entity)
+        elif self.operation == self.Operation.REMOVE_STATEMENT_BY_ID:
+            self._remove_statement_by_id(entity)
         elif self.operation == self.Operation.SWITCH_STATEMENT_VALUE:
             self._switch_statement_value(entity)
         elif self.operation == self.Operation.SWITCH_STATEMENT_PROPERTY:
@@ -1843,6 +1849,21 @@ class BatchCommand(models.Model):
                 return entity["statements"][self.prop].pop(i)
         raise NoStatementsWithThatValue(self.entity_id, self.prop, self.statement_api_value)
 
+    def _remove_statement_by_id(self, entity: dict):
+        """
+        Removes an entity statement by command's statement id.
+        """
+        for prop in entity["statements"]:
+            statements = entity["statements"].get(prop, [])
+            for i, statement in enumerate(statements):
+                # NOTE: it should be .get("id") because
+                # new statements added by QS3 itself won't have ID
+                if statement.get("id") == self.statement_id:
+                    # TODO: update command with newly
+                    # found information! to show it nicely
+                    return entity["statements"][prop].pop(i)
+        raise NoStatementsWithThatId(self.entity_id, self.statement_id)
+
     def _switch_statement_value(self, entity: dict):
         """
         Switches a statement value
@@ -1861,14 +1882,18 @@ class BatchCommand(models.Model):
         """
         Switches a statement property
         """
-        statement = self._remove_entity_statement(entity)
+        # TODO: refactor this out gradually and implement
+        # it to other operations as well
+        if self.statement_id:
+            statement = self._remove_statement_by_id(entity)
+        else:
+            statement = self._remove_entity_statement(entity)
         if "id" in statement:
             statement.pop("id") # id is read-only and defined by wikibase
         new_prop = self.json["property_switch"]
         statement["property"] = {"id": new_prop}
         entity["statements"].setdefault(new_prop, [])
         entity["statements"][new_prop].append(statement)
-        logger.debug("post switch proeprty: ", entity)
 
     def _switch_statement_property_and_value(self, entity: dict):
         """
@@ -1882,7 +1907,6 @@ class BatchCommand(models.Model):
         statement["value"] = self.statement_api_value_switch
         entity["statements"].setdefault(new_prop, [])
         entity["statements"][new_prop].append(statement)
-        logger.debug("post switch proeprty: ", entity)
 
     def _update_entity_aliases(self, entity: dict):
         """
@@ -1979,10 +2003,6 @@ class BatchCommand(models.Model):
                 return ("POST", "/entities/properties")
             else:
                 return ("PATCH", Client.wikibase_entity_endpoint(self.entity_id))
-        match self.operation:
-            case self.Operation.REMOVE_STATEMENT_BY_ID:
-                statement_id = self.json["id"]
-                return ("DELETE", f"/statements/{statement_id}")
 
     # -----------------
     # Value type verification
@@ -2043,7 +2063,11 @@ class BatchCommand(models.Model):
 
         - Statement addition
         - Statement value or property switch
+
+        3) It is not matching by statement id. In this case,
+        property and value are not known beforehand.
         """
         is_not_verified_yet = not self.value_type_verified
         is_needed_actions = self.is_add_statement() or self.is_switch()
-        return is_not_verified_yet and is_needed_actions
+        is_not_statement_id = not self.statement_id
+        return is_not_verified_yet and is_needed_actions and is_not_statement_id

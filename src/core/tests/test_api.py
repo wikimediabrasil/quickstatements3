@@ -199,20 +199,6 @@ class ApiMocker:
             status_code=500,
         )
 
-    def delete_statement_sucessful(self, mocker, statement_id):
-        mocker.delete(
-            self.wikibase_url(f"/statements/{statement_id}"),
-            json="Statement deleted",
-            status_code=200,
-        )
-
-    def delete_statement_fail(self, mocker, statement_id):
-        mocker.delete(
-            self.wikibase_url(f"/statements/{statement_id}"),
-            json="Unknown error",
-            status_code=500,
-        )
-
     def statements(self, mocker, item_id, statements):
         mocker.get(
             self.wikibase_url(f"/entities/items/{item_id}"),

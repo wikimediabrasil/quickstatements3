@@ -7,6 +7,7 @@ from core.exceptions import NoQualifiers
 from core.exceptions import NoReferenceParts
 from core.exceptions import NoStatementsForThatProperty
 from core.exceptions import NoStatementsWithThatValue
+from core.exceptions import NoStatementsWithThatId
 
 
 class AddRemoveQualRefTests(TestCase):
@@ -47,7 +48,7 @@ class AddRemoveQualRefTests(TestCase):
             ],
             "P31": [
                 {
-                    "id": "Q238107$96026FB3-7D84-48E3-8C64-6D2E2D033B7E",
+                    "id": "Q12345678$96026FB3-7D84-48E3-8C64-6D2E2D033B7E",
                     "rank": "normal",
                     "qualifiers": [
                         {
@@ -594,6 +595,8 @@ class AddRemoveQualRefTests(TestCase):
         SWITCH_PROPERTY|Q12345678|P65|1111|P99 /* wrong value */
         SWITCH_PROPERTY|Q12345678|P65|42|P99
         SWITCH_VALUE|Q12345678|P99|42|1337
+        SWITCH_PROPERTY|Q12345678-96026FB3-7D84-48E3-8C64-6D2E2D033B7E|P666
+        SWITCH_PROPERTY|Q12345678-failed_id|P666
         """
         batch = self.parse(text)
         entity = copy.deepcopy(self.INITIAL)
@@ -654,6 +657,24 @@ class AddRemoveQualRefTests(TestCase):
             entity["statements"]["P99"][0]["references"],
             self.INITIAL["statements"]["P65"][0]["references"]
         )
+        # -----
+        switch = batch.commands()[4]
+        self.assertStmtnCount(entity, "P31", 1)
+        switch.update_entity_json(entity)
+        self.assertStmtnCount(entity, "P31", 0)
+        self.assertStmtnCount(entity, "P666", 1)
+        self.assertEqual(
+            entity["statements"]["P666"][0]["qualifiers"],
+            self.INITIAL["statements"]["P31"][0]["qualifiers"]
+        )
+        self.assertEqual(
+            entity["statements"]["P666"][0]["references"],
+            self.INITIAL["statements"]["P31"][0]["references"]
+        )
+        # -----
+        switch = batch.commands()[5]
+        with self.assertRaises(NoStatementsWithThatId):
+            switch.update_entity_json(entity)
 
     def test_switch_property_and_value(self):
         text = """
@@ -705,3 +726,28 @@ class AddRemoveQualRefTests(TestCase):
             entity["statements"]["P99"][0]["references"],
             self.INITIAL["statements"]["P65"][0]["references"]
         )
+
+    def test_remove_statement_by_id(self):
+        text = """
+        -STATEMENT|Q12345678$FD9DA04C-1967-4949-92FF-BD8405BCE4D9
+        -STATEMENT|Q12345678$96026FB3-7D84-48E3-8C64-6D2E2D033B7E
+        -STATEMENT|Q12345678$failed-id
+        """
+        batch = self.parse(text)
+        entity = copy.deepcopy(self.INITIAL)
+        self.assertStmtnCount(entity, "P31", 1)
+        self.assertStmtnCount(entity, "P65", 1)
+        # ---
+        rm = batch.commands()[0]
+        rm.update_entity_json(entity)
+        self.assertStmtnCount(entity, "P31", 1)
+        self.assertStmtnCount(entity, "P65", 0)
+        # ---
+        rm = batch.commands()[1]
+        rm.update_entity_json(entity)
+        self.assertStmtnCount(entity, "P31", 0)
+        self.assertStmtnCount(entity, "P65", 0)
+        # ---
+        rm = batch.commands()[2]
+        with self.assertRaises(NoStatementsWithThatId):
+            rm.update_entity_json(entity)

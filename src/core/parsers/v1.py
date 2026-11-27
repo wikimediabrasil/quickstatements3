@@ -32,6 +32,42 @@ class V1CommandParser(BaseParser):
     ]
     WHAT = {"L": "label", "D": "description", "A": "alias", "S": "sitelink"}
 
+    def parse_triplet_or_statement_id(self, elements):
+        # TODO: this should be the new default for all operations
+        # gradually implementing it
+        llen = len(elements)
+        if llen == 1 and '$' in elements[0]:
+            statement_id = elements[0]
+            entity_id = statement_id.split("$")[0]
+            if self.get_entity_type(entity_id) is None:
+                raise ParserException(f"Invalid entity {entity_id}")
+            return {"statement_id": statement_id, "entity": {"id": entity_id}}
+        elif llen == 1 and '-' in elements[0]:
+            statement_id = elements[0]
+            entity_id = statement_id.split("-")[0]
+            if self.get_entity_type(entity_id) is None:
+                raise ParserException(f"Invalid entity {entity_id}")
+            statement_id = statement_id.replace("-", "$", 1)
+            return {"statement_id": statement_id, "entity": {"id": entity_id}}
+        elif llen == 3:
+            entity_id = elements[0]
+            entity_type = self.get_entity_type(entity_id)
+            if entity_type is None:
+                raise ParserException(f"Invalid entity {entity_id}")
+            property_id = elements[1]
+            if not self.is_valid_property_id(property_id):
+                raise ParserException(f"Invalid property '{property_id}'")
+            value = self.parse_value(elements[2])
+            if value is None:
+                raise ParserException(f"Invalid value {elements[2]}")
+            return {
+                "entity": {"type": entity_type, "id": entity_id},
+                "property": property_id,
+                "value": value,
+            }
+        else:
+            raise ParserException("Statement is QID|PID|Value or QID-StatementId")
+
     def parse_create(self, elements):
         llen = len(elements)
         if llen != 1:
@@ -123,7 +159,7 @@ class V1CommandParser(BaseParser):
             return {
                 "action": "remove",
                 "what": "statement",
-                "id": _id,
+                "statement_id": _id,
                 "entity": {"id": _split[0]},
             }
 
@@ -149,15 +185,15 @@ class V1CommandParser(BaseParser):
 
     def parse_switch_property(self, elements):
         llen = len(elements)
-        if llen != 5:
+        if llen != 5 and llen != 3:
             raise ParserException("SWITCH_PROPERTY command must be QID|PID|value|new_PID")
         elements.pop(0)
 
-        property_switch = elements.pop(3)
+        property_switch = elements.pop(-1)
         if not self.is_valid_property_id(property_switch):
             raise ParserException(f"Invalid property '{property_switch}'")
 
-        data = self.parse_statement(elements, elements[0].upper())
+        data = self.parse_triplet_or_statement_id(elements)
         data["action"] = "switch"
         data["what"] = "property"
         data["property_switch"] = property_switch
@@ -433,7 +469,7 @@ class V1CommandParser(BaseParser):
                     bc.action = BatchCommand.ACTION_REMOVE
                     what = command.get("what")
                     if what == "statement":
-                        if "id" in command:
+                        if "statement_id" in command:
                             bc.operation = bc.Operation.REMOVE_STATEMENT_BY_ID
                         else:
                             bc.operation = bc.Operation.REMOVE_STATEMENT_BY_VALUE
@@ -460,10 +496,10 @@ class V1CommandParser(BaseParser):
                         bc.operation = bc.Operation.CREATE_PROPERTY
                     elif what_or_type == "statement":
                         bc.operation = bc.Operation.CREATE_STATEMENT
-                elif command["action"] == "switch":
-                    bc.operation = command["operation"] # TODO: this could be done for all operations here
-                else:
+                elif command["action"] == "merge":
                     bc.action = BatchCommand.ACTION_MERGE
+                elif command.get("operation"):
+                    bc.operation = command["operation"] # TODO: this could be done for all operations here
                 bc.user_summary = command.pop("summary", None)
                 bc.json = command
             except ParserException as e:
