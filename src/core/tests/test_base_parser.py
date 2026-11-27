@@ -614,3 +614,31 @@ class TestBaseParser(TestCase):
         }
         self.assertEqual(parser.parse_value("9.123~0.123"), ret)
         self.assertEqual(parser.parse_value("9.123[9.000,9.246]"), ret)
+
+    def test_parse_value_quantity_bounds_reordered(self):
+        parser = BaseParser()
+        ret = {
+            "type": "quantity",
+            "value": {
+                "amount": "+9.6",
+                "upperBound": "+9.7",
+                "lowerBound": "+9.5",
+                "unit": "11573",
+            },
+        }
+        # upper bound entered first is reordered
+        self.assertEqual(parser.parse_value("9.6[9.7, 9.5]U11573"), ret)
+        # correctly ordered input is unchanged
+        self.assertEqual(parser.parse_value("9.6[9.5, 9.7]U11573"), ret)
+
+        ret = {
+            "type": "quantity",
+            "value": {
+                "amount": "+0.9",
+                "upperBound": "+0.99",
+                "lowerBound": "+0.8",
+                "unit": "1",
+            },
+        }
+        self.assertEqual(parser.parse_value("0.9[0.99,0.8]"), ret)
+        self.assertEqual(parser.parse_value("0.9[0.8,0.99]"), ret)
