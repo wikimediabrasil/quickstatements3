@@ -32,6 +32,42 @@ class V1CommandParser(BaseParser):
     ]
     WHAT = {"L": "label", "D": "description", "A": "alias", "S": "sitelink"}
 
+    def parse_triplet_or_statement_id(self, elements):
+        # TODO: this should be the new default for all operations
+        # gradually implementing it
+        llen = len(elements)
+        if llen == 1 and '$' in elements[0]:
+            statement_id = elements[0]
+            entity_id = statement_id.split("$")[0]
+            if self.get_entity_type(entity_id) is None:
+                raise ParserException(f"Invalid entity {entity_id}")
+            return {"statement_id": statement_id, "entity": {"id": entity_id}}
+        elif llen == 1 and '-' in elements[0]:
+            statement_id = elements[0]
+            entity_id = statement_id.split("-")[0]
+            if self.get_entity_type(entity_id) is None:
+                raise ParserException(f"Invalid entity {entity_id}")
+            statement_id = statement_id.replace("-", "$", 1)
+            return {"statement_id": statement_id, "entity": {"id": entity_id}}
+        elif llen == 3:
+            entity_id = elements[0]
+            entity_type = self.get_entity_type(entity_id)
+            if entity_type is None:
+                raise ParserException(f"Invalid entity {entity_id}")
+            property_id = elements[1]
+            if not self.is_valid_property_id(property_id):
+                raise ParserException(f"Invalid property '{property_id}'")
+            value = self.parse_value(elements[2])
+            if value is None:
+                raise ParserException(f"Invalid value {elements[2]}")
+            return {
+                "entity": {"type": entity_type, "id": entity_id},
+                "property": property_id,
+                "value": value,
+            }
+        else:
+            raise ParserException("Statement is QID|PID|Value or QID-StatementId")
+
     def parse_create(self, elements):
         llen = len(elements)
         if llen != 1:
