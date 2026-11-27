@@ -24,6 +24,7 @@ dependencies = [
     "polib",
     "drf-spectacular",
     "drf-spectacular-sidecar",
+    "tzdata",  # Time zone data for zoneinfo, missing on minimal systems (e.g. the Docker image).
 ]
 
 [project.optional-dependencies]
